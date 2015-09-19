@@ -17,7 +17,8 @@ public class VerticalLineDrawer extends AbstractLineDrawer {
     }
 
     @Override
-    protected void drawLine(Canvas canvas, DotsGameSnapshot brain, float lineWidth, float lineHeight,
+    protected void drawLine(Canvas canvas, DotsGameSnapshot brain, float lineWidth,
+                            float lineHeight,
                             int row, int col, float x,
                             float y, Paint paint) {
         if (brain.getLastClickedLineType() == LineType.VERTICAL
@@ -26,7 +27,8 @@ public class VerticalLineDrawer extends AbstractLineDrawer {
             // don't draw the last clicked line
         }
         else {
-            canvas.drawLine(x, y, x, y + lineHeight, paint);
+            canvas.drawRect(x - lineHeight * 0.05f, y, x + lineHeight * 0.05f, y + lineHeight,
+                    paint);
         }
     }
 

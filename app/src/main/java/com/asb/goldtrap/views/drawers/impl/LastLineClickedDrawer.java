@@ -23,7 +23,8 @@ public class LastLineClickedDrawer implements AnimatedBoardComponentDrawer {
     }
 
     @Override
-    public void onDraw(Canvas canvas, int width, int height, DotsGameSnapshot brain, long elapsedTime,
+    public void onDraw(Canvas canvas, int width, int height, DotsGameSnapshot brain,
+                       long elapsedTime,
                        long animationDuration) {
 
         float percentage = (float) elapsedTime / (float) animationDuration;
@@ -49,13 +50,15 @@ public class LastLineClickedDrawer implements AnimatedBoardComponentDrawer {
 
             switch (lastLineType) {
                 case HORIZONTAL:
-                    canvas.drawLine(x, y, x + (lineWidth * percentage), y, paint);
+                    canvas.drawRect(x, y - lineHeight * 0.05f, x + lineWidth * percentage,
+                            y + lineHeight * 0.05f, paint);
                     canvas.drawCircle(x + lineWidth, y, pointRadius, dotsPaint);
                     break;
                 case NONE:
                     break;
                 case VERTICAL:
-                    canvas.drawLine(x, y, x, y + (lineHeight * percentage), paint);
+                    canvas.drawRect(x - lineHeight * 0.05f, y, x + lineHeight * 0.05f,
+                            y + lineHeight * percentage, paint);
                     canvas.drawCircle(x, y + lineHeight, pointRadius, dotsPaint);
                     break;
                 default:

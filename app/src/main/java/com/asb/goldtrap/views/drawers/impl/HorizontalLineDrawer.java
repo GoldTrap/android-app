@@ -17,7 +17,8 @@ public class HorizontalLineDrawer extends AbstractLineDrawer {
     }
 
     @Override
-    protected void drawLine(Canvas canvas, DotsGameSnapshot brain, float lineWidth, float lineHeight,
+    protected void drawLine(Canvas canvas, DotsGameSnapshot brain, float lineWidth,
+                            float lineHeight,
                             int row, int col, float x,
                             float y, Paint paint) {
         if (brain.getLastClickedLineType() == LineType.HORIZONTAL
@@ -26,7 +27,8 @@ public class HorizontalLineDrawer extends AbstractLineDrawer {
             // don't draw the last clicked line
         }
         else {
-            canvas.drawLine(x, y, x + lineWidth, y, paint);
+            canvas.drawRect(x, y - lineHeight * 0.05f, x + lineWidth, y + lineHeight * 0.05f,
+                    paint);
         }
     }
 

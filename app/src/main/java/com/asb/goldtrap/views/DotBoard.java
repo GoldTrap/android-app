@@ -87,12 +87,12 @@ public class DotBoard extends View implements View.OnTouchListener {
         Paint firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         // firstPlayerLinePaint.setColor(Color.rgb(255, 245, 195));
         firstPlayerLinePaint.setColor(Color.rgb(141, 205, 193));
-        firstPlayerLinePaint.setStrokeWidth(20f);
+        // firstPlayerLinePaint.setStrokeWidth(20f);
 
         Paint secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         // secondPlayerLinePaint.setColor(Color.rgb(211, 227, 151));
         secondPlayerLinePaint.setColor(Color.rgb(235, 110, 68));
-        secondPlayerLinePaint.setStrokeWidth(20f);
+        // secondPlayerLinePaint.setStrokeWidth(20f);
 
         Bitmap coins = BitmapFactory.decodeResource(getResources(), R.drawable.coins);
         goodiesCollection.put(GoodiesState.ONE_K, coins);
