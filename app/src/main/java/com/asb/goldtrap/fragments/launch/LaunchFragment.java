@@ -24,9 +24,10 @@ import java.util.Random;
 public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver,
         DotBoard.Listener {
     public static final String TAG = LaunchFragment.class.getSimpleName();
-    public static final int ROWS = 6;
-    public static final int COLS = 5;
-    public static final int GOODIES_COUNT = 12;
+    public static final int MIN_ROWS = 4;
+    public static final int MIN_COLS = 4;
+    public static final int ADDITIONAL_ROWS = 3;
+    public static final int ADDITIONAL_COLS = 3;
     public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 2000;
     private Random random = new Random();
     private DotBoard dotBoard;
@@ -60,7 +61,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     }
 
     private void startGame() {
-        conductor = new AiVsAi(this, ROWS, COLS, GOODIES_COUNT);
+        int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
+        int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
+        conductor = new AiVsAi(this, row, col, (row * col) / 3);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
         if (random.nextBoolean()) {
             conductor.setState(conductor.getFirstPlayerState());
