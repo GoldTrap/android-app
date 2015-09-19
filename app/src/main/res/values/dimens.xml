@@ -3,5 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="dot_board_padding">30dp</dimen>
+    <dimen name="title_padding">30dp</dimen>
     <dimen name="loading_padding">20dp</dimen>
+    <dimen name="loading_app_name">20dp</dimen>
 </resources>
