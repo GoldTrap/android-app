@@ -2,10 +2,11 @@ package com.asb.goldtrap.views.drawers.impl;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 
 import com.asb.goldtrap.models.components.Cell;
-import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
+import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 
 import java.util.List;
@@ -24,7 +25,8 @@ public class LastFilledCellDrawer implements AnimatedBoardComponentDrawer {
     }
 
     @Override
-    public void onDraw(Canvas canvas, int width, int height, DotsGameSnapshot brain, long elapsedTime,
+    public void onDraw(Canvas canvas, int width, int height, DotsGameSnapshot brain,
+                       long elapsedTime,
                        long animationDuration) {
         float percentage = (float) elapsedTime / (float) animationDuration;
         if (percentage > 1) {
@@ -49,9 +51,19 @@ public class LastFilledCellDrawer implements AnimatedBoardComponentDrawer {
                 if (null != paint) {
                     float xDelta = lineWidth * 0.1f;
                     float yDelta = lineHeight * 0.1f;
-                    canvas.drawRect(x + xDelta, y + yDelta, (x
-                            + (lineWidth * percentage) - xDelta), (y
-                            + (lineHeight * percentage) - yDelta), paint);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        canvas.drawRoundRect(
+                                x + xDelta + ((lineWidth - (lineWidth * percentage)) / 2),
+                                y + yDelta + ((lineHeight - (lineHeight * percentage)) / 2),
+                                (x + (lineWidth * percentage) - xDelta),
+                                (y + (lineHeight * percentage) - yDelta), xDelta, yDelta, paint);
+                    }
+                    else {
+                        canvas.drawRect(x + xDelta + ((lineWidth - (lineWidth * percentage)) / 2),
+                                y + yDelta + ((lineHeight - (lineHeight * percentage)) / 2),
+                                (x + (lineWidth * percentage) - xDelta),
+                                (y + (lineHeight * percentage) - yDelta), paint);
+                    }
                 }
             }
 

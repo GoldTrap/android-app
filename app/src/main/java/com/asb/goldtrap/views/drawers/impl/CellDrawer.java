@@ -2,6 +2,7 @@ package com.asb.goldtrap.views.drawers.impl;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 
 import com.asb.goldtrap.models.components.Cell;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
@@ -51,8 +52,15 @@ public class CellDrawer implements BoardComponentDrawer {
 
                 // Draw cell if it's not previously added
                 if (null != paint && !lookup.contains(i + ", " + j)) {
-                    canvas.drawRect(x + xDelta, y + yDelta, x + lineWidth
-                            - xDelta, y + lineHeight - yDelta, paint);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        canvas.drawRoundRect(x + xDelta, y + yDelta, x + lineWidth
+                                - xDelta, y + lineHeight - yDelta, xDelta, yDelta, paint);
+                    }
+                    else {
+                        canvas.drawRect(x + xDelta, y + yDelta, x + lineWidth
+                                - xDelta, y + lineHeight - yDelta, paint);
+                    }
+
                 }
                 x += lineWidth;
             }
