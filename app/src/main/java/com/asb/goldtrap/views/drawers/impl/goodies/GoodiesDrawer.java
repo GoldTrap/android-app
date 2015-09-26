@@ -1,4 +1,4 @@
-package com.asb.goldtrap.views.drawers.impl;
+package com.asb.goldtrap.views.drawers.impl.goodies;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

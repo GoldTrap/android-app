@@ -16,13 +16,13 @@ import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.models.states.enums.LineState;
 import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
-import com.asb.goldtrap.views.drawers.impl.CellDrawer;
-import com.asb.goldtrap.views.drawers.impl.GoodiesDrawer;
-import com.asb.goldtrap.views.drawers.impl.HorizontalLineDrawer;
-import com.asb.goldtrap.views.drawers.impl.LastFilledCellDrawer;
-import com.asb.goldtrap.views.drawers.impl.LastLineClickedDrawer;
-import com.asb.goldtrap.views.drawers.impl.PointDrawer;
-import com.asb.goldtrap.views.drawers.impl.VerticalLineDrawer;
+import com.asb.goldtrap.views.drawers.impl.cells.CellDrawerThatSkipsLastScoredCells;
+import com.asb.goldtrap.views.drawers.impl.goodies.GoodiesDrawer;
+import com.asb.goldtrap.views.drawers.impl.lines.HorizontalLineDrawerThatSkipsLastSelectedLine;
+import com.asb.goldtrap.views.drawers.impl.cells.LastFilledCellDrawer;
+import com.asb.goldtrap.views.drawers.impl.lines.LastLineClickedDrawer;
+import com.asb.goldtrap.views.drawers.impl.points.PointDrawer;
+import com.asb.goldtrap.views.drawers.impl.lines.VerticalLineDrawerThatSkipsLastSelectedLine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -99,11 +99,16 @@ public class DotBoard extends View implements View.OnTouchListener {
 
         // Drawers
         pointDrawer = new PointDrawer(dotsPaint);
-        cellDrawer = new CellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
-        horizontalLineDrawer = new HorizontalLineDrawer(secondPlayerLinePaint, firstPlayerLinePaint);
-        verticalLineDrawer = new VerticalLineDrawer(secondPlayerLinePaint, firstPlayerLinePaint);
+        cellDrawer =
+                new CellDrawerThatSkipsLastScoredCells(secondPlayerCellPaint, firstPlayerCellPaint);
+        horizontalLineDrawer =
+                new HorizontalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
+                        firstPlayerLinePaint);
+        verticalLineDrawer = new VerticalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
+                firstPlayerLinePaint);
         goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
-        lastFilledCellDrawer = new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
+        lastFilledCellDrawer =
+                new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
         lastLineClickedDrawer =
                 new LastLineClickedDrawer(dotsPaint, secondPlayerLinePaint, firstPlayerLinePaint);
 

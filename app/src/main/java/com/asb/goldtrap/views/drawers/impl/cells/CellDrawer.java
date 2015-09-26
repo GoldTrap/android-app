@@ -1,4 +1,4 @@
-package com.asb.goldtrap.views.drawers.impl;
+package com.asb.goldtrap.views.drawers.impl.cells;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -51,7 +51,7 @@ public class CellDrawer implements BoardComponentDrawer {
                 float yDelta = lineHeight * 0.1f;
 
                 // Draw cell if it's not previously added
-                if (null != paint && !lookup.contains(i + ", " + j)) {
+                if (shouldPaintTheCell(paint, lookup, i, j)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         canvas.drawRoundRect(x + xDelta, y + yDelta, x + lineWidth
                                 - xDelta, y + lineHeight - yDelta, xDelta, yDelta, paint);
@@ -68,6 +68,10 @@ public class CellDrawer implements BoardComponentDrawer {
             y += lineHeight;
         }
 
+    }
+
+    protected boolean shouldPaintTheCell(Paint paint, Set<String> lookup, int row, int col) {
+        return null != paint;
     }
 
     private Paint resolvePaint(CellState cellState) {

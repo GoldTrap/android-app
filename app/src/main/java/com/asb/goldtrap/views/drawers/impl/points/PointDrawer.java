@@ -1,4 +1,4 @@
-package com.asb.goldtrap.views.drawers.impl;
+package com.asb.goldtrap.views.drawers.impl.points;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

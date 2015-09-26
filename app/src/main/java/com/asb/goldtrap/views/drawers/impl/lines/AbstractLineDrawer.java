@@ -1,4 +1,4 @@
-package com.asb.goldtrap.views.drawers.impl;
+package com.asb.goldtrap.views.drawers.impl.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -34,8 +34,8 @@ public abstract class AbstractLineDrawer implements BoardComponentDrawer {
             LineState line[] = lines[i];
             for (int j = 0; j < line.length; j += 1) {
                 Paint paint = resolvePaint(line[j]);
-                if (null != paint) {
-                    drawLine(canvas, brain, lineWidth, lineHeight, i, j, x, y, paint);
+                if (shouldDrawLine(paint, brain, i, j)) {
+                    drawLine(canvas, lineWidth, lineHeight, x, y, paint);
                 }
                 x += lineWidth;
             }
@@ -44,8 +44,11 @@ public abstract class AbstractLineDrawer implements BoardComponentDrawer {
         }
     }
 
-    protected abstract void drawLine(Canvas canvas, DotsGameSnapshot brain, float lineWidth,
-                                     float lineHeight, int row, int col, float x,
+    protected abstract boolean shouldDrawLine(Paint paint, DotsGameSnapshot brain, int row,
+                                              int col);
+
+    protected abstract void drawLine(Canvas canvas, float lineWidth,
+                                     float lineHeight, float x,
                                      float y, Paint paint);
 
     private Paint resolvePaint(LineState line) {
