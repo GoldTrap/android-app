@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
@@ -14,6 +16,7 @@ import com.asb.goldtrap.models.conductor.impl.AiVsAi;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.views.DotBoard;
+import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.Random;
@@ -21,16 +24,17 @@ import java.util.Random;
 /**
  * Launch Fragment
  */
-public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver,
-        DotBoard.Listener {
+public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver {
     public static final String TAG = LaunchFragment.class.getSimpleName();
-    public static final int MIN_ROWS = 4;
-    public static final int MIN_COLS = 4;
+    public static final int MIN_ROWS = 1;
+    public static final int MIN_COLS = 1;
     public static final int ADDITIONAL_ROWS = 3;
     public static final int ADDITIONAL_COLS = 3;
     public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 2000;
     private Random random = new Random();
+    private FrameLayout gameLayout;
     private DotBoard dotBoard;
+    private GameCompleteDotBoard gameConductorDotBoard;
     private TextView loading;
     private GameConductor conductor;
 
@@ -61,10 +65,13 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     }
 
     private void startGame() {
+        gameLayout.removeAllViews();
+        gameLayout.addView(dotBoard);
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
         conductor = new AiVsAi(this, row, col, (row * col) / 3);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        gameConductorDotBoard.setGameSnapShot(conductor.getGameSnapshot());
         if (random.nextBoolean()) {
             conductor.setState(conductor.getFirstPlayerState());
             firstPlayerTurn();
@@ -79,37 +86,49 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_launch, container, false);
+        gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
-        dotBoard.setmListener(this);
+        dotBoard.setmListener(new DotBoard.Listener() {
+            @Override
+            public void onLineClick(int row, int col, LineType lineType) {
+
+            }
+
+            @Override
+            public void animationComplete() {
+                if (conductor.getState() instanceof GameOver) {
+                    gameLayout.removeAllViews();
+                    gameLayout.addView(gameConductorDotBoard);
+                    gameConductorDotBoard.requestRedraw();
+                }
+                if (conductor.getState() == conductor.getFirstPlayerState()) {
+                    firstPlayerTurn();
+                }
+                else if (conductor.getState() == conductor.getSecondPlayerState()) {
+                    otherPlayerTurn();
+                }
+            }
+        });
+
+        gameConductorDotBoard = new GameCompleteDotBoard(getContext(), null);
+        gameConductorDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
+            @Override
+            public void animationComplete() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startGame();
+                    }
+                }, DELAY_BETWEEN_GAMES_IN_MILLIS);
+            }
+        });
         loading = (TextView) view.findViewById(R.id.loading);
         return view;
     }
 
     @Override
     public void stateChanged(GameState state) {
-        if (state instanceof GameOver) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startGame();
-                }
-            }, DELAY_BETWEEN_GAMES_IN_MILLIS);
-        }
-    }
 
-    @Override
-    public void onLineClick(int row, int col, LineType lineType) {
-
-    }
-
-    @Override
-    public void animationComplete() {
-        if (conductor.getState() == conductor.getFirstPlayerState()) {
-            firstPlayerTurn();
-        }
-        else if (conductor.getState() == conductor.getSecondPlayerState()) {
-            otherPlayerTurn();
-        }
     }
 
     private void firstPlayerTurn() {
