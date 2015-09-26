@@ -12,12 +12,10 @@ import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
  * Created by arjun on 17/09/15.
  */
 public class LastLineClickedDrawer implements AnimatedBoardComponentDrawer {
-    private Paint dotsPaint;
     private Paint aiPaint;
     private Paint playerPaint;
 
-    public LastLineClickedDrawer(Paint dotsPaint, Paint aiPaint, Paint playerPaint) {
-        this.dotsPaint = dotsPaint;
+    public LastLineClickedDrawer(Paint aiPaint, Paint playerPaint) {
         this.aiPaint = aiPaint;
         this.playerPaint = playerPaint;
     }
@@ -43,7 +41,6 @@ public class LastLineClickedDrawer implements AnimatedBoardComponentDrawer {
         float y = lineHeight / 2;
         x += col * lineWidth;
         y += row * lineHeight;
-        float pointRadius = Math.min(lineHeight, lineWidth) * 0.1f;
         LineType lastLineType = brain.getLastClickedLineType();
         if (LineType.NONE != lastLineType) {
             Paint paint = resolvePaint(brain.getLastClickedLineState());
@@ -52,20 +49,17 @@ public class LastLineClickedDrawer implements AnimatedBoardComponentDrawer {
                 case HORIZONTAL:
                     canvas.drawRect(x, y - lineHeight * 0.05f, x + lineWidth * percentage,
                             y + lineHeight * 0.05f, paint);
-                    canvas.drawCircle(x + lineWidth, y, pointRadius, dotsPaint);
                     break;
                 case NONE:
                     break;
                 case VERTICAL:
                     canvas.drawRect(x - lineHeight * 0.05f, y, x + lineHeight * 0.05f,
                             y + lineHeight * percentage, paint);
-                    canvas.drawCircle(x, y + lineHeight, pointRadius, dotsPaint);
                     break;
                 default:
                     break;
 
             }
-            canvas.drawCircle(x, y, pointRadius, dotsPaint);
         }
     }
 

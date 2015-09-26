@@ -110,7 +110,7 @@ public class DotBoard extends View implements View.OnTouchListener {
         lastFilledCellDrawer =
                 new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
         lastLineClickedDrawer =
-                new LastLineClickedDrawer(dotsPaint, secondPlayerLinePaint, firstPlayerLinePaint);
+                new LastLineClickedDrawer(secondPlayerLinePaint, firstPlayerLinePaint);
 
         this.startTime = System.currentTimeMillis();
         this.postInvalidate();
@@ -251,13 +251,12 @@ public class DotBoard extends View implements View.OnTouchListener {
             verticalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             horizontalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             cellDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             lastFilledCellDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
                     ANIMATION_DURATION);
             lastLineClickedDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
                     ANIMATION_DURATION);
             goodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-
+            pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             if (elapsedTime < ANIMATION_DURATION) {
                 this.postInvalidateDelayed(DELAY_MILLISECONDS);
             }
