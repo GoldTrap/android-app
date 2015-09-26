@@ -11,11 +11,11 @@ import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 /**
  * Created by arjun on 17/09/15.
  */
-public class LastLineClickedDrawer implements AnimatedBoardComponentDrawer {
+public class LastSelectedLineDrawer implements AnimatedBoardComponentDrawer {
     private Paint aiPaint;
     private Paint playerPaint;
 
-    public LastLineClickedDrawer(Paint aiPaint, Paint playerPaint) {
+    public LastSelectedLineDrawer(Paint aiPaint, Paint playerPaint) {
         this.aiPaint = aiPaint;
         this.playerPaint = playerPaint;
     }

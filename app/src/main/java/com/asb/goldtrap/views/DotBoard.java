@@ -20,7 +20,7 @@ import com.asb.goldtrap.views.drawers.impl.cells.CellDrawerThatSkipsLastScoredCe
 import com.asb.goldtrap.views.drawers.impl.goodies.GoodiesDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.HorizontalLineDrawerThatSkipsLastSelectedLine;
 import com.asb.goldtrap.views.drawers.impl.cells.LastFilledCellDrawer;
-import com.asb.goldtrap.views.drawers.impl.lines.LastLineClickedDrawer;
+import com.asb.goldtrap.views.drawers.impl.lines.LastSelectedLineDrawer;
 import com.asb.goldtrap.views.drawers.impl.points.PointDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.VerticalLineDrawerThatSkipsLastSelectedLine;
 
@@ -110,7 +110,7 @@ public class DotBoard extends View implements View.OnTouchListener {
         lastFilledCellDrawer =
                 new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
         lastLineClickedDrawer =
-                new LastLineClickedDrawer(secondPlayerLinePaint, firstPlayerLinePaint);
+                new LastSelectedLineDrawer(secondPlayerLinePaint, firstPlayerLinePaint);
 
         this.startTime = System.currentTimeMillis();
         this.postInvalidate();
