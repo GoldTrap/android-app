@@ -30,7 +30,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public static final int MIN_COLS = 4;
     public static final int ADDITIONAL_ROWS = 3;
     public static final int ADDITIONAL_COLS = 3;
-    public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 12000;
+    public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 5000;
     private Random random = new Random();
     private FrameLayout gameLayout;
     private DotBoard dotBoard;

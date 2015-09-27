@@ -13,7 +13,7 @@ import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
  * Created by arjun on 26/09/15.
  */
 public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
-    public static final float SCALING_FACTOR = 0.50f;
+    public static final float SCALING_FACTOR = 0.45f;
     private static final String TAG = AchievementsDrawer.class.getSimpleName();
     private Paint paint;
     private Paint bitmapPaint;
@@ -54,34 +54,36 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
 
             for (Line line : score.getLines()) {
                 if (linesDrawn == maxLinesToDrawCompletely) {
-                    drawLine(canvas, width, height, line, lineWidth, lineHeight,
+                    drawSpark(canvas, width, height, line, lineWidth, lineHeight,
                             percentageOfLastLine);
                     break;
                 }
                 else {
-                    drawLine(canvas, width, height, line, lineWidth, lineHeight, 1.0f);
+                    drawSpark(canvas, width, height, line, lineWidth, lineHeight, 1.0f);
                 }
                 linesDrawn += 1;
             }
         }
     }
 
-    private void drawLine(Canvas canvas, int width, int height, Line line,
-                          float lineWidth, float lineHeight, float percentageOfLastLine) {
+    private void drawSpark(Canvas canvas, int width, int height, Line line,
+                           float lineWidth, float lineHeight, float percentageOfLastLine) {
         switch (line.lineType) {
             case HORIZONTAL:
+                float x = width * percentageOfLastLine;
                 float y = lineHeight + (lineHeight * line.row);
-                canvas.drawLine(0, y, width * percentageOfLastLine, y, paint);
-                canvas.drawBitmap(scaledSpark, (width * percentageOfLastLine) - lineWidth / 2,
-                        (lineHeight * 0.75f) + (lineHeight * line.row),
-                        bitmapPaint);
+                float bitmapY = y - (lineHeight / 2) + ((lineHeight - scaledSpark.getHeight()) / 2);
+                float bitmapX = x - scaledSpark.getWidth();
+                canvas.drawLine(0, y, x, y, paint);
+                canvas.drawBitmap(scaledSpark, bitmapX, bitmapY, bitmapPaint);
                 break;
             case VERTICAL:
-                float x = lineWidth + (lineWidth * line.col);
-                canvas.drawLine(x, 0, x, height * percentageOfLastLine, paint);
-                canvas.drawBitmap(scaledSpark, (lineWidth * 0.75f) + (lineWidth * line.col),
-                        (height * percentageOfLastLine) - lineHeight / 2,
-                        bitmapPaint);
+                x = lineWidth + (lineWidth * line.col);
+                y = height * percentageOfLastLine;
+                bitmapY = y - scaledSpark.getHeight();
+                bitmapX = x - (lineWidth / 2) + ((lineWidth - scaledSpark.getWidth()) / 2);
+                canvas.drawLine(x, 0, x, y, paint);
+                canvas.drawBitmap(scaledSpark, bitmapX, bitmapY, bitmapPaint);
                 break;
             case NONE:
                 break;
