@@ -26,11 +26,11 @@ import java.util.Random;
  */
 public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver {
     public static final String TAG = LaunchFragment.class.getSimpleName();
-    public static final int MIN_ROWS = 1;
-    public static final int MIN_COLS = 1;
+    public static final int MIN_ROWS = 4;
+    public static final int MIN_COLS = 4;
     public static final int ADDITIONAL_ROWS = 3;
     public static final int ADDITIONAL_COLS = 3;
-    public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 2000;
+    public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 12000;
     private Random random = new Random();
     private FrameLayout gameLayout;
     private DotBoard dotBoard;

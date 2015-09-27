@@ -7,6 +7,7 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.impl.BasicGreedySolver;
 import com.asb.goldtrap.models.solvers.impl.RandomGreedySolver;
+import com.asb.goldtrap.models.solvers.impl.RandomSolver;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.impl.AITurn;
@@ -51,7 +52,7 @@ public class AiVsAi implements GameConductor {
         mGameStateObserver = gameStateObserver;
 
         findAllLineCombinations();
-        aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
+        aiSolver = new RandomGreedySolver(dotsGameSnapshot, combinations);
         otherAiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
     }
 
@@ -130,7 +131,7 @@ public class AiVsAi implements GameConductor {
     public void setState(GameState state) {
         this.state = state;
         if (state instanceof GameOver) {
-
+            this.dotsGameSnapshot.computeScore();
         }
         this.mGameStateObserver.stateChanged(state);
     }

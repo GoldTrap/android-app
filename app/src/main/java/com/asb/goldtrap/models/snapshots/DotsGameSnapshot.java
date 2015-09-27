@@ -1,6 +1,8 @@
 package com.asb.goldtrap.models.snapshots;
 
 import com.asb.goldtrap.models.components.Cell;
+import com.asb.goldtrap.models.components.Line;
+import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.models.states.enums.LineState;
@@ -17,6 +19,7 @@ public class DotsGameSnapshot {
     private LineState horizontalLines[][];
     private LineState verticalLines[][];
     private GoodiesState goodies[][];
+    private Score score;
 
     private LineState lastClickedLineState = LineState.FREE;
     private LineType lastClickedLineType = LineType.NONE;
@@ -92,7 +95,7 @@ public class DotsGameSnapshot {
 
     public List<Cell> getLastScoredCells() {
         if (null == lastScoredCells) {
-            lastScoredCells = new ArrayList<Cell>();
+            lastScoredCells = new ArrayList<>();
         }
         return lastScoredCells;
     }
@@ -109,4 +112,46 @@ public class DotsGameSnapshot {
         this.goodies = goodies;
     }
 
+    public Score getScore() {
+        if (null == score) {
+            computeScore();
+        }
+        return score;
+    }
+
+    public void computeScore() {
+        this.score = new Score();
+        CellState[][] cells = this.getCells();
+        GoodiesState[][] goodies = this.getGoodies();
+        int rows = cells.length;
+        int cols = cells[0].length;
+
+        for (int i = 0; i < rows; i += 1) {
+            int cellsOccupied = 0;
+            for (int j = 0; j < cols; j += 1) {
+                if (CellState.PLAYER == cells[i][j]) {
+                    cellsOccupied += 1;
+                    score.getCells().add(cells[i][j]);
+                    if (GoodiesState.ONE_K == goodies[i][j]) {
+                        score.getGoodies().add(goodies[i][j]);
+                    }
+                }
+            }
+            if (cellsOccupied == cols) {
+                score.getLines().add(new Line(LineType.HORIZONTAL, i, -1));
+            }
+        }
+
+        for (int i = 0; i < cols; i += 1) {
+            int cellsOccupied = 0;
+            for (int j = 0; j < rows; j += 1) {
+                if (CellState.PLAYER == cells[j][i]) {
+                    cellsOccupied += 1;
+                }
+            }
+            if (cellsOccupied == rows) {
+                score.getLines().add(new Line(LineType.VERTICAL, -1, i));
+            }
+        }
+    }
 }

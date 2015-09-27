@@ -12,7 +12,9 @@ import android.view.View;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
+import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
+import com.asb.goldtrap.views.drawers.impl.achievements.AchievementsDrawer;
 import com.asb.goldtrap.views.drawers.impl.cells.CellDrawer;
 import com.asb.goldtrap.views.drawers.impl.goodies.GoodiesDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.HorizontalLineDrawer;
@@ -37,12 +39,13 @@ public class GameCompleteDotBoard extends View {
     private DotsGameSnapshot dotsGameSnapshot;
     private Listener mListener;
     private Map<GoodiesState, Bitmap> goodiesCollection = new HashMap<>();
+    private Bitmap spark;
     private BoardComponentDrawer pointDrawer;
     private BoardComponentDrawer cellDrawer;
     private BoardComponentDrawer horizontalLineDrawer;
     private BoardComponentDrawer verticalLineDrawer;
     private BoardComponentDrawer goodiesDrawer;
-
+    private AnimatedBoardComponentDrawer achievementsDrawer;
 
     public GameCompleteDotBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -51,6 +54,9 @@ public class GameCompleteDotBoard extends View {
 
     private void init() {
         Paint bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        Paint achievementsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        achievementsPaint.setColor(Color.rgb(160, 82, 45));
 
         Paint dotsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         dotsPaint.setColor(Color.rgb(74, 70, 56));
@@ -72,6 +78,7 @@ public class GameCompleteDotBoard extends View {
         // secondPlayerLinePaint.setStrokeWidth(20f);
 
         Bitmap coins = BitmapFactory.decodeResource(getResources(), R.drawable.coins);
+        spark = BitmapFactory.decodeResource(getResources(), R.drawable.spark);
         goodiesCollection.put(GoodiesState.ONE_K, coins);
 
         // Drawers
@@ -84,7 +91,7 @@ public class GameCompleteDotBoard extends View {
         verticalLineDrawer = new VerticalLineDrawer(secondPlayerLinePaint,
                 firstPlayerLinePaint);
         goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
-
+        achievementsDrawer = new AchievementsDrawer(achievementsPaint, bitmapPaint, spark);
         this.startTime = System.currentTimeMillis();
 
     }
@@ -155,13 +162,17 @@ public class GameCompleteDotBoard extends View {
             int height = this.getMeasuredHeight();
             int width = this.getMeasuredWidth();
             long elapsedTime = System.currentTimeMillis() - startTime;
+            long animationDuration =
+                    dotsGameSnapshot.getScore().getLines().size() * ANIMATION_DURATION;
 
             verticalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             horizontalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             cellDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             goodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            if (elapsedTime < ANIMATION_DURATION) {
+            achievementsDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
+                    animationDuration);
+            if (elapsedTime < animationDuration) {
                 this.postInvalidateDelayed(DELAY_MILLISECONDS);
             }
             else {
