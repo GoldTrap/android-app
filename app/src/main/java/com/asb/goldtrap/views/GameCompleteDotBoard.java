@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -46,6 +45,13 @@ public class GameCompleteDotBoard extends View {
     private BoardComponentDrawer verticalLineDrawer;
     private BoardComponentDrawer goodiesDrawer;
     private AnimatedBoardComponentDrawer achievementsDrawer;
+    private Paint bitmapPaint;
+    private Paint dotsPaint;
+    private Paint firstPlayerCellPaint;
+    private Paint secondPlayerCellPaint;
+    private Paint firstPlayerLinePaint;
+    private Paint secondPlayerLinePaint;
+    private Paint achievementsPaint;
 
     public GameCompleteDotBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -53,29 +59,16 @@ public class GameCompleteDotBoard extends View {
     }
 
     private void init() {
-        Paint bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dotsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        firstPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        secondPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        achievementsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        Paint achievementsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        achievementsPaint.setColor(Color.rgb(160, 82, 45));
-
-        Paint dotsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        dotsPaint.setColor(Color.rgb(74, 70, 56));
-
-        Paint firstPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        firstPlayerCellPaint.setColor(Color.rgb(141, 205, 193));
-
-        Paint secondPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        secondPlayerCellPaint.setColor(Color.rgb(235, 110, 68));
-
-        Paint firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        // firstPlayerLinePaint.setColor(Color.rgb(255, 245, 195));
-        firstPlayerLinePaint.setColor(Color.rgb(141, 205, 193));
-        // firstPlayerLinePaint.setStrokeWidth(20f);
-
-        Paint secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        // secondPlayerLinePaint.setColor(Color.rgb(211, 227, 151));
-        secondPlayerLinePaint.setColor(Color.rgb(235, 110, 68));
-        // secondPlayerLinePaint.setStrokeWidth(20f);
+        int[] colors = getResources().getIntArray(R.array.default_game_complete_theme);
+        setColors(colors);
 
         Bitmap coins = BitmapFactory.decodeResource(getResources(), R.drawable.coins);
         spark = BitmapFactory.decodeResource(getResources(), R.drawable.spark);
@@ -94,6 +87,15 @@ public class GameCompleteDotBoard extends View {
         achievementsDrawer = new AchievementsDrawer(achievementsPaint, bitmapPaint, spark);
         this.startTime = System.currentTimeMillis();
 
+    }
+
+    private void setColors(int[] colors) {
+        dotsPaint.setColor(colors[0]);
+        firstPlayerCellPaint.setColor(colors[1]);
+        secondPlayerCellPaint.setColor(colors[2]);
+        firstPlayerLinePaint.setColor(colors[3]);
+        secondPlayerLinePaint.setColor(colors[4]);
+        achievementsPaint.setColor(colors[5]);
     }
 
 

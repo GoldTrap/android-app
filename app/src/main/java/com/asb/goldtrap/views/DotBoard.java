@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -17,12 +16,12 @@ import com.asb.goldtrap.models.states.enums.LineState;
 import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.impl.cells.CellDrawerThatSkipsLastScoredCells;
+import com.asb.goldtrap.views.drawers.impl.cells.LastFilledCellDrawer;
 import com.asb.goldtrap.views.drawers.impl.goodies.GoodiesDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.HorizontalLineDrawerThatSkipsLastSelectedLine;
-import com.asb.goldtrap.views.drawers.impl.cells.LastFilledCellDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.LastSelectedLineDrawer;
-import com.asb.goldtrap.views.drawers.impl.points.PointDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.VerticalLineDrawerThatSkipsLastSelectedLine;
+import com.asb.goldtrap.views.drawers.impl.points.PointDrawer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +45,12 @@ public class DotBoard extends View implements View.OnTouchListener {
     private BoardComponentDrawer goodiesDrawer;
     private AnimatedBoardComponentDrawer lastFilledCellDrawer;
     private AnimatedBoardComponentDrawer lastLineClickedDrawer;
+    private Paint bitmapPaint;
+    private Paint dotsPaint;
+    private Paint firstPlayerCellPaint;
+    private Paint secondPlayerCellPaint;
+    private Paint firstPlayerLinePaint;
+    private Paint secondPlayerLinePaint;
 
     public DotBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -73,26 +78,15 @@ public class DotBoard extends View implements View.OnTouchListener {
     }
 
     private void init() {
-        Paint bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dotsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        firstPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        secondPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        Paint dotsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        dotsPaint.setColor(Color.rgb(124, 120, 106));
-
-        Paint firstPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        firstPlayerCellPaint.setColor(Color.rgb(141, 205, 193));
-
-        Paint secondPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        secondPlayerCellPaint.setColor(Color.rgb(235, 110, 68));
-
-        Paint firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        // firstPlayerLinePaint.setColor(Color.rgb(255, 245, 195));
-        firstPlayerLinePaint.setColor(Color.rgb(141, 205, 193));
-        // firstPlayerLinePaint.setStrokeWidth(20f);
-
-        Paint secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        // secondPlayerLinePaint.setColor(Color.rgb(211, 227, 151));
-        secondPlayerLinePaint.setColor(Color.rgb(235, 110, 68));
-        // secondPlayerLinePaint.setStrokeWidth(20f);
+        int[] colors = getResources().getIntArray(R.array.default_theme);
+        setColors(colors);
 
         Bitmap coins = BitmapFactory.decodeResource(getResources(), R.drawable.coins);
         goodiesCollection.put(GoodiesState.ONE_K, coins);
@@ -113,6 +107,14 @@ public class DotBoard extends View implements View.OnTouchListener {
                 new LastSelectedLineDrawer(secondPlayerLinePaint, firstPlayerLinePaint);
 
         this.startTime = System.currentTimeMillis();
+    }
+
+    public void setColors(int[] colors) {
+        dotsPaint.setColor(colors[0]);
+        firstPlayerCellPaint.setColor(colors[1]);
+        secondPlayerCellPaint.setColor(colors[2]);
+        firstPlayerLinePaint.setColor(colors[3]);
+        secondPlayerLinePaint.setColor(colors[4]);
     }
 
     @Override

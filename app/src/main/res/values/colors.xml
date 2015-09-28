@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dot_black">#000000</color>
+    <color name="dot_grey">#7C786A</color>
+    <color name="dot_blue">#8DCDC1</color>
+    <color name="dot_orange">#EB6E44</color>
+    <color name="dot_coffee">#A0522D</color>
+    <color name="dot_light_blue">#9DDDD1</color>
+    <color name="dot_light_orange">#FB7E54</color>
+
+    <array name="default_theme">
+        <item>@color/dot_grey</item>
+        <item>@color/dot_light_blue</item>
+        <item>@color/dot_light_orange</item>
+        <item>@color/dot_blue</item>
+        <item>@color/dot_orange</item>
+        <item>@color/dot_coffee</item>
+    </array>
+
+    <array name="default_game_complete_theme">
+        <item>@color/dot_black</item>
+        <item>@color/dot_light_blue</item>
+        <item>@color/dot_light_orange</item>
+        <item>@color/dot_blue</item>
+        <item>@color/dot_orange</item>
+        <item>@color/dot_coffee</item>
+    </array>
+</resources>
