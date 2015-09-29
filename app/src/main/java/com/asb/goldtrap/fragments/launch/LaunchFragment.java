@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
@@ -37,7 +36,10 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     private GameCompleteDotBoard gameConductorDotBoard;
     private TextView loading;
     private GameConductor conductor;
-
+    private int[][] themes = {
+            {R.array.default_theme, R.array.default_game_complete_theme},
+            {R.array.experimental_theme, R.array.experimental_game_complete_theme}
+    };
     private Handler handler = new Handler();
 
     public LaunchFragment() {
@@ -65,13 +67,17 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     }
 
     private void startGame() {
+        int[] gameTheme = themes[random.nextInt(themes.length)];
         gameLayout.removeAllViews();
         gameLayout.addView(dotBoard);
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
         conductor = new AiVsAi(this, row, col, (row * col) / 3);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
         gameConductorDotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        gameConductorDotBoard.setColors(getResources().getIntArray(gameTheme[1]));
+
         if (random.nextBoolean()) {
             conductor.setState(conductor.getFirstPlayerState());
             firstPlayerTurn();

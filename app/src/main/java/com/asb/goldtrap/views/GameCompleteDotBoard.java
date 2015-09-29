@@ -89,7 +89,7 @@ public class GameCompleteDotBoard extends View {
 
     }
 
-    private void setColors(int[] colors) {
+    public void setColors(int[] colors) {
         dotsPaint.setColor(colors[0]);
         firstPlayerCellPaint.setColor(colors[1]);
         secondPlayerCellPaint.setColor(colors[2]);

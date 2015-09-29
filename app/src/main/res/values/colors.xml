@@ -8,6 +8,13 @@
     <color name="dot_light_blue">#9DDDD1</color>
     <color name="dot_light_orange">#FB7E54</color>
 
+    <color name="super_light_blue">#2f2b7c</color>
+    <color name="super_blue">#1f1b6c</color>
+    <color name="super_light_cream">#cdb959</color>
+    <color name="super_cream">#bda949</color>
+    <color name="super_crimson">#a03246</color>
+    <color name="super_dark_crimson">#800216</color>
+
     <array name="default_theme">
         <item>@color/dot_grey</item>
         <item>@color/dot_light_blue</item>
@@ -24,5 +31,23 @@
         <item>@color/dot_blue</item>
         <item>@color/dot_orange</item>
         <item>@color/dot_coffee</item>
+    </array>
+
+    <array name="experimental_theme">
+        <item>@color/super_crimson</item>
+        <item>@color/super_light_cream</item>
+        <item>@color/super_light_blue</item>
+        <item>@color/super_cream</item>
+        <item>@color/super_blue</item>
+        <item>@color/dot_orange</item>
+    </array>
+
+    <array name="experimental_game_complete_theme">
+        <item>@color/super_dark_crimson</item>
+        <item>@color/super_light_cream</item>
+        <item>@color/super_light_blue</item>
+        <item>@color/super_cream</item>
+        <item>@color/super_blue</item>
+        <item>@color/dot_orange</item>
     </array>
 </resources>
