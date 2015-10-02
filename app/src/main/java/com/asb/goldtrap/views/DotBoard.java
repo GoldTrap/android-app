@@ -110,11 +110,13 @@ public class DotBoard extends View implements View.OnTouchListener {
     }
 
     public void setColors(int[] colors) {
-        dotsPaint.setColor(colors[0]);
-        firstPlayerCellPaint.setColor(colors[1]);
-        secondPlayerCellPaint.setColor(colors[2]);
-        firstPlayerLinePaint.setColor(colors[3]);
-        secondPlayerLinePaint.setColor(colors[4]);
+        if (null != colors && 5 <= colors.length) {
+            dotsPaint.setColor(colors[0]);
+            firstPlayerCellPaint.setColor(colors[1]);
+            secondPlayerCellPaint.setColor(colors[2]);
+            firstPlayerLinePaint.setColor(colors[3]);
+            secondPlayerLinePaint.setColor(colors[4]);
+        }
     }
 
     @Override
