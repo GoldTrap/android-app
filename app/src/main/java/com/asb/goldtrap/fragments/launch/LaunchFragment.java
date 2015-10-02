@@ -2,6 +2,7 @@ package com.asb.goldtrap.fragments.launch;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,17 +31,32 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public static final int ADDITIONAL_ROWS = 3;
     public static final int ADDITIONAL_COLS = 3;
     public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 5000;
+    public static final int TIME_BETWEEN_LOADING_MESSAGE_UPDATES = 1500;
     private Random random = new Random();
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameConductorDotBoard;
     private TextView loading;
     private GameConductor conductor;
+    private String[] loadingMessages;
+    private int msgIndex = 0;
     private int[][] themes = {
             {R.array.default_theme, R.array.default_game_complete_theme},
             {R.array.experimental_theme, R.array.experimental_game_complete_theme}
     };
     private Handler handler = new Handler();
+
+    private Runnable mUpdateLoading = new Runnable() {
+        @Override
+        public void run() {
+            if (null != loading) {
+                loading.setText(loadingMessages[msgIndex % loadingMessages.length]);
+                msgIndex += 1;
+            }
+            handler.postAtTime(this, SystemClock.uptimeMillis() +
+                    TIME_BETWEEN_LOADING_MESSAGE_UPDATES);
+        }
+    };
 
     public LaunchFragment() {
         // Required empty public constructor
@@ -129,6 +145,8 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             }
         });
         loading = (TextView) view.findViewById(R.id.loading);
+        loadingMessages = getResources().getStringArray(R.array.loading);
+        handler.post(mUpdateLoading);
         return view;
     }
 
