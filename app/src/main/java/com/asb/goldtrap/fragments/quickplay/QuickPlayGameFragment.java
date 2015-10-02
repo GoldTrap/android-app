@@ -27,8 +27,8 @@ import java.util.Random;
  * QuickPlayGameFragment
  */
 public class QuickPlayGameFragment extends Fragment implements GameConductor.GameStateObserver {
-    private static final int MIN_ROWS = 1;
-    private static final int MIN_COLS = 1;
+    private static final int MIN_ROWS = 4;
+    private static final int MIN_COLS = 4;
     private static final int ADDITIONAL_ROWS = 3;
     private static final int ADDITIONAL_COLS = 3;
     public static final String TAG = QuickPlayGameFragment.class.getSimpleName();

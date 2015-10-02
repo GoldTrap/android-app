@@ -47,8 +47,8 @@ public class CellDrawer implements BoardComponentDrawer {
             CellState cell[] = cells[i];
             for (int j = 0; j < cell.length; j += 1) {
                 Paint paint = resolvePaint(cell[j]);
-                float xDelta = lineWidth * 0.1f;
-                float yDelta = lineHeight * 0.1f;
+                float xDelta = lineWidth * 0.15f;
+                float yDelta = lineHeight * 0.15f;
 
                 // Draw cell if it's not previously added
                 if (shouldPaintTheCell(paint, lookup, i, j)) {

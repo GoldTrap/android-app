@@ -145,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements
     private void loadHomeScreen() {
         Fragment fragment = HomeFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container, fragment, HomeFragment.TAG)
                 .commit();
     }

@@ -49,8 +49,8 @@ public class LastFilledCellDrawer implements AnimatedBoardComponentDrawer {
                 Paint paint = resolvePaint(cell.getCellState());
 
                 if (null != paint) {
-                    float xDelta = lineWidth * 0.1f;
-                    float yDelta = lineHeight * 0.1f;
+                    float xDelta = lineWidth * 0.15f;
+                    float yDelta = lineHeight * 0.15f;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         canvas.drawRoundRect(
                                 x + xDelta + ((lineWidth - (lineWidth * percentage)) / 2),
