@@ -40,6 +40,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameConductorDotBoard;
     private GameConductor conductor;
+    private Button quickPlay;
     private Button signOut;
     private SignInButton signInButton;
     private int[][] themes = {
@@ -99,6 +100,13 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
             signInButton.setVisibility(View.VISIBLE);
             signOut.setVisibility(View.GONE);
         }
+        quickPlay = (Button) view.findViewById(R.id.quick_play);
+        quickPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.quickPlay();
+            }
+        });
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
         dotBoard.setmListener(new DotBoard.Listener() {
@@ -183,13 +191,13 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     }
 
     private void firstPlayerTurn() {
-        if (conductor.playFirstPlayerTurn()) {
+        if (conductor.playMyTurn()) {
             dotBoard.requestRedraw();
         }
     }
 
     private void otherPlayerTurn() {
-        if (conductor.playSecondPlayerTurn()) {
+        if (conductor.playTheirTurn()) {
             dotBoard.requestRedraw();
         }
     }
@@ -200,6 +208,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         void signOut();
 
         void signIn();
+
+        void quickPlay();
     }
 
 }

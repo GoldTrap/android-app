@@ -3,6 +3,7 @@ package com.asb.goldtrap.models.conductor;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
+import com.asb.goldtrap.views.LineType;
 
 import java.util.List;
 import java.util.Set;
@@ -22,9 +23,11 @@ public interface GameConductor {
 
     Set<Line> getcSet();
 
-    boolean playFirstPlayerTurn();
+    boolean playMyTurn();
 
-    boolean playSecondPlayerTurn();
+    boolean playMyTurn(LineType lineType, int row, int col);
+
+    boolean playTheirTurn();
 
     DotsGameSnapshot getGameSnapshot();
 

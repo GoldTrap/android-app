@@ -167,13 +167,13 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     }
 
     private void firstPlayerTurn() {
-        if (conductor.playFirstPlayerTurn()) {
+        if (conductor.playMyTurn()) {
             dotBoard.requestRedraw();
         }
     }
 
     private void otherPlayerTurn() {
-        if (conductor.playSecondPlayerTurn()) {
+        if (conductor.playTheirTurn()) {
             dotBoard.requestRedraw();
         }
     }

@@ -6,15 +6,13 @@ import com.asb.goldtrap.models.factory.DotsGameFactory;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.impl.BasicGreedySolver;
-import com.asb.goldtrap.models.solvers.impl.RandomGreedySolver;
-import com.asb.goldtrap.models.solvers.impl.RandomSolver;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameExited;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.models.states.impl.Gamer;
-import com.asb.goldtrap.models.states.impl.OtherAITurn;
+import com.asb.goldtrap.models.states.impl.PlayerTurn;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
@@ -23,15 +21,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * AI vs AI game conductor
+ * Created by arjun on 02/10/15.
  */
-public class AiVsAi implements GameConductor {
+public class PlayerVsAi implements GameConductor {
 
-    private static final String TAG = AiVsAi.class.getSimpleName();
+    private static final String TAG = PlayerVsAi.class.getSimpleName();
     List<Line> combinations = new ArrayList<>();
     Set<Line> cSet = new HashSet<>();
     private AISolver aiSolver;
-    private AISolver otherAiSolver;
     private DotsGameSnapshot dotsGameSnapshot;
     private boolean extraChance;
     private GameState state;
@@ -41,23 +38,18 @@ public class AiVsAi implements GameConductor {
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
 
-    public AiVsAi(GameStateObserver gameStateObserver, int rows,
-                  int cols, int goodiesCount) {
+    public PlayerVsAi(GameStateObserver gameStateObserver, int rows,
+                      int cols, int goodiesCount) {
         dotsGameSnapshot = DotsGameFactory.createGameSnapshot(rows, cols, goodiesCount);
-        firstPlayerState = new AITurn(this, new Gamer());
-        secondPlayerState = new OtherAITurn(this, new Gamer());
+        firstPlayerState = new PlayerTurn(this, new Gamer());
+        secondPlayerState = new AITurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
 
         findAllLineCombinations();
-        aiSolver = new RandomGreedySolver(dotsGameSnapshot, combinations);
-        otherAiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
-    }
-
-    public void flipBoard() {
-        state.flipBoard();
+        aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
     }
 
     private void findAllLineCombinations() {
@@ -87,17 +79,39 @@ public class AiVsAi implements GameConductor {
 
     }
 
+    @Override
+    public void flipBoard() {
+        state.flipBoard();
+    }
+
+    @Override
     public List<Line> getCombinations() {
         return combinations;
     }
 
+    @Override
     public Set<Line> getcSet() {
         return cSet;
     }
 
+    @Override
     public boolean playMyTurn() {
+        return false;
+    }
+
+    @Override
+    public boolean playMyTurn(LineType lineType, int row, int col) {
         boolean played = false;
-        if (state instanceof AITurn && state == firstPlayerState) {
+        if (state instanceof PlayerTurn) {
+            played = state.playTurn(lineType, row, col);
+        }
+        return played;
+    }
+
+    @Override
+    public boolean playTheirTurn() {
+        boolean played = false;
+        if (state instanceof AITurn) {
             Line line = aiSolver.getNextLine();
             played = state.playTurn(line.lineType, line.row, line.col);
         }
@@ -105,42 +119,32 @@ public class AiVsAi implements GameConductor {
     }
 
     @Override
-    public boolean playMyTurn(LineType lineType, int row, int col) {
-        return false;
-    }
-
-    public boolean playTheirTurn() {
-        boolean played = false;
-        if (state instanceof AITurn && state == secondPlayerState) {
-            Line line = otherAiSolver.getNextLine();
-            played = state.playTurn(line.lineType, line.row, line.col);
-        }
-        return played;
-    }
-
     public DotsGameSnapshot getGameSnapshot() {
         return dotsGameSnapshot;
     }
 
-    private int getCells() {
-        CellState[][] cells = dotsGameSnapshot.getCells();
-        int rows = cells.length;
-        int cols = cells[0].length;
-        return rows * cols;
+    @Override
+    public void setState(GameState state) {
+        this.state = state;
+        this.mGameStateObserver.stateChanged(state);
     }
 
+    @Override
     public GameState getState() {
         return state;
     }
 
-    public void setState(GameState state) {
-        this.state = state;
-        if (state instanceof GameOver) {
-            this.dotsGameSnapshot.computeScore();
-        }
-        this.mGameStateObserver.stateChanged(state);
+    @Override
+    public GameState getFirstPlayerState() {
+        return firstPlayerState;
     }
 
+    @Override
+    public GameState getSecondPlayerState() {
+        return secondPlayerState;
+    }
+
+    @Override
     public GameState getOtherPlayerState() {
         GameState state = secondPlayerState;
         if (this.state == secondPlayerState) {
@@ -149,28 +153,23 @@ public class AiVsAi implements GameConductor {
         return state;
     }
 
-    public GameState getFirstPlayerState() {
-        return firstPlayerState;
-    }
-
-    public GameState getSecondPlayerState() {
-        return secondPlayerState;
-    }
-
+    @Override
     public GameState getGameOverState() {
         return gameOverState;
     }
 
+    @Override
     public GameState getGameExitedState() {
         return gameExitedState;
     }
 
+    @Override
     public boolean isExtraChance() {
         return extraChance;
     }
 
+    @Override
     public void setExtraChance(boolean extraChance) {
         this.extraChance = extraChance;
     }
-
 }

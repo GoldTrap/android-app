@@ -7,5 +7,9 @@
     <string name="heart">Heart</string>
     <string name="multiplayer">Multiplayer</string>
     <string name="sign_out">Sign Out</string>
-    <string name="points">Points</string>
+    <string name="title_activity_quick_play">QuickPlayActivity</string>
+    <string name="points">Points: %d</string>
+    <string name="extra_chance">+1</string>
+    <string name="flip">Flip</string>
+
 </resources>

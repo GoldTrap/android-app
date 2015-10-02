@@ -163,4 +163,10 @@ public class MainActivity extends AppCompatActivity implements
     public boolean isConnected() {
         return null != mGoogleApiClient && mGoogleApiClient.isConnected();
     }
+
+    @Override
+    public void quickPlay() {
+        Intent quickPlay = new Intent(this, QuickPlayActivity.class);
+        startActivity(quickPlay);
+    }
 }
