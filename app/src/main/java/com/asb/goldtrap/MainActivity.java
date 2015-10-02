@@ -143,10 +143,14 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void loadHomeScreen() {
-        Fragment fragment = HomeFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment, HomeFragment.TAG)
-                .commit();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(HomeFragment.TAG);
+        if (null == fragment || !fragment.isVisible()) {
+            fragment = HomeFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.fragment_container, fragment, HomeFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
