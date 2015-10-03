@@ -19,7 +19,7 @@
         android:id="@+id/game_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/sign_in_button"
+        android:layout_above="@+id/title"
         android:layout_below="@+id/app_name"
         android:layout_centerHorizontal="true"
         android:padding="@dimen/dot_board_padding">
@@ -38,28 +38,33 @@
 
     </FrameLayout>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/progress_bar"
-        android:layout_centerHorizontal="true"/>
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/loading"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/loading_padding"/>
-
-    <TextView
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/loading_padding"
-        android:text="@string/loading"/>
+        android:orientation="vertical">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/loading_padding"/>
+
+        <TextView
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/loading_padding"
+            android:text="@string/loading"/>
+    </LinearLayout>
 
 </RelativeLayout>
