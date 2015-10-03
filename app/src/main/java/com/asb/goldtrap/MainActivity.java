@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        doSignIn();
     }
 
     @Override

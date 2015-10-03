@@ -1,6 +1,7 @@
 package com.asb.goldtrap.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -32,8 +33,6 @@ public class DotBoard extends View implements View.OnTouchListener {
     private static final int FRAMES_PER_SECOND = 30;
     private static final int DELAY_MILLISECONDS = ONE_SECOND_IN_MILLIS / FRAMES_PER_SECOND;
     private static final long ANIMATION_DURATION = 500; // 0.5 seconds
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 400;
     private long startTime;
     private DotsGameSnapshot dotsGameSnapshot;
     private Listener mListener;
@@ -45,6 +44,7 @@ public class DotBoard extends View implements View.OnTouchListener {
     private BoardComponentDrawer goodiesDrawer;
     private AnimatedBoardComponentDrawer lastFilledCellDrawer;
     private AnimatedBoardComponentDrawer lastLineClickedDrawer;
+    private int dotBoardType;
     private Paint bitmapPaint;
     private Paint dotsPaint;
     private Paint firstPlayerCellPaint;
@@ -54,6 +54,10 @@ public class DotBoard extends View implements View.OnTouchListener {
 
     public DotBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
+        TypedArray typedArray =
+                context.getTheme().obtainStyledAttributes(attrs, R.styleable.GameBoard, 0, 0);
+        dotBoardType = typedArray.getInt(R.styleable.GameBoard_board_style, 1);
+        typedArray.recycle();
         this.setOnTouchListener(this);
         init();
     }
@@ -203,44 +207,20 @@ public class DotBoard extends View implements View.OnTouchListener {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        // Get size requested and size mode
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-
-        int width, height = 0;
-
-        // Determine Width
-        switch (widthMode) {
-            case MeasureSpec.EXACTLY:
-                width = widthSize;
+        int minSize = Math.min(widthSize, heightSize);
+        switch (dotBoardType) {
+            case 1:
+                setMeasuredDimension(minSize, minSize);
                 break;
-            case MeasureSpec.AT_MOST:
-                width = Math.min(WIDTH, widthSize);
+            case 2:
+                setMeasuredDimension(minSize, minSize * 4 / 3);
                 break;
-            case MeasureSpec.UNSPECIFIED:
-            default:
-                width = WIDTH;
+            case 3:
+                setMeasuredDimension(minSize * 4 / 3, minSize);
                 break;
         }
-
-        // Determine Height
-        switch (heightMode) {
-            case MeasureSpec.EXACTLY:
-                height = heightSize;
-                break;
-            case MeasureSpec.AT_MOST:
-                height = Math.min(HEIGHT, heightSize);
-                break;
-            case MeasureSpec.UNSPECIFIED:
-            default:
-                height = HEIGHT;
-                break;
-        }
-        setMeasuredDimension(width, height);
-
     }
 
     @Override

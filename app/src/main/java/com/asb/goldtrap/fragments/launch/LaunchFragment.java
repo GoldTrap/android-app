@@ -39,7 +39,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     private Random random = new Random();
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
-    private GameCompleteDotBoard gameConductorDotBoard;
+    private GameCompleteDotBoard gameCompleteDotBoard;
     private TextView loading;
     private GameConductor conductor;
     private String[] loadingMessages;
@@ -88,15 +88,15 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
 
     private void startGame() {
         int[] gameTheme = themes[random.nextInt(themes.length)];
-        gameLayout.removeAllViews();
-        gameLayout.addView(dotBoard);
+        gameCompleteDotBoard.setVisibility(View.INVISIBLE);
+        dotBoard.setVisibility(View.VISIBLE);
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
         conductor = new AiVsAi(this, row, col, (row * col) / 3);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
         dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
-        gameConductorDotBoard.setGameSnapShot(conductor.getGameSnapshot());
-        gameConductorDotBoard.setColors(getResources().getIntArray(gameTheme[1]));
+        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        gameCompleteDotBoard.setColors(getResources().getIntArray(gameTheme[1]));
 
         if (random.nextBoolean()) {
             conductor.setState(conductor.getFirstPlayerState());
@@ -130,9 +130,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             @Override
             public void animationComplete() {
                 if (conductor.getState() instanceof GameOver) {
-                    gameLayout.removeAllViews();
-                    gameLayout.addView(gameConductorDotBoard);
-                    gameConductorDotBoard.requestRedraw();
+                    gameCompleteDotBoard.setVisibility(View.VISIBLE);
+                    dotBoard.setVisibility(View.INVISIBLE);
+                    gameCompleteDotBoard.requestRedraw();
                 }
                 if (conductor.getState() == conductor.getFirstPlayerState()) {
                     firstPlayerTurn();
@@ -143,8 +143,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             }
         });
 
-        gameConductorDotBoard = new GameCompleteDotBoard(getContext(), null);
-        gameConductorDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
+        gameCompleteDotBoard =
+                (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
+        gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
                 handler.postDelayed(new Runnable() {
