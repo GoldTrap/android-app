@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,14 +26,10 @@ public class MainActivity extends AppCompatActivity implements
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static int RC_SIGN_IN = 9001;
-    // Are we currently resolving a connection failure?
     private boolean mResolvingConnectionFailure = false;
-
-    // Has the user clicked the sign-in button?
     private boolean mSignInClicked = false;
-
-    // Automatically start the sign-in flow when the Activity starts
-    private boolean mAutoStartSignInFlow = true;
+    private boolean mSignInComplete = false;
+    private boolean migrationComplete = false;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -45,9 +42,15 @@ public class MainActivity extends AppCompatActivity implements
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, LaunchFragment.newInstance(), LaunchFragment.TAG)
-                .commit();
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentByTag(LaunchFragment.TAG);
+
+        if (fragment == null) {
+            fm.beginTransaction().replace(R.id.fragment_container, LaunchFragment.newInstance(),
+                    LaunchFragment.TAG)
+                    .commit();
+        }
+
     }
 
     @Override
@@ -69,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements
             return;
         }
 
-        if (mSignInClicked || mAutoStartSignInFlow) {
-            mAutoStartSignInFlow = false;
+        if (mSignInClicked) {
             mSignInClicked = false;
+            mSignInComplete = false;
             mResolvingConnectionFailure = true;
             if (!BaseGameUtils.resolveConnectionFailure(this, mGoogleApiClient, connectionResult,
                     RC_SIGN_IN, getString(R.string.signin_other_error))) {
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == RC_SIGN_IN) {
             mSignInClicked = false;
+            mSignInComplete = true;
             mResolvingConnectionFailure = false;
             if (resultCode == RESULT_OK) {
                 mGoogleApiClient.connect();
@@ -93,19 +97,6 @@ public class MainActivity extends AppCompatActivity implements
             else {
                 loadHomeScreen();
             }
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
         }
     }
 
@@ -134,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements
     private void doSignIn() {
         if (NetworkUtils.isConnected(getApplicationContext())) {
             mSignInClicked = true;
+            mSignInComplete = false;
             mGoogleApiClient.connect();
         }
         else {
@@ -144,17 +136,20 @@ public class MainActivity extends AppCompatActivity implements
     private void loadHomeScreen() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(HomeFragment.TAG);
         if (null == fragment || !fragment.isVisible()) {
-            fragment = HomeFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.fragment_container, fragment, HomeFragment.TAG)
-                    .commit();
+            if (migrationComplete) {
+                fragment = HomeFragment.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                        .replace(R.id.fragment_container, fragment, HomeFragment.TAG)
+                        .commit();
+            }
         }
     }
 
     @Override
     public void signOut() {
         mSignInClicked = false;
+        mSignInComplete = false;
         Games.signOut(mGoogleApiClient);
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -167,6 +162,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean isSignInInProgress() {
+        return mSignInClicked && !mSignInComplete;
+    }
+
+    @Override
     public void quickPlay() {
         Intent quickPlay = new Intent(this, QuickPlayActivity.class);
         startActivity(quickPlay);
@@ -175,5 +175,13 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void launch() {
         loadHomeScreen();
+    }
+
+    @Override
+    public void migrationComplete() {
+        migrationComplete = true;
+        if (mSignInComplete) {
+            loadHomeScreen();
+        }
     }
 }

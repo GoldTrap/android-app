@@ -5,5 +5,6 @@
     <dimen name="dot_board_padding">30dp</dimen>
     <dimen name="title_padding">20dp</dimen>
     <dimen name="loading_padding">20dp</dimen>
+    <dimen name="fab_padding">20dp</dimen>
     <dimen name="loading_app_name">20dp</dimen>
 </resources>

@@ -32,6 +32,8 @@ import java.util.Random;
  * Launch Fragment
  */
 public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver,
+        View.OnClickListener,
+        DotBoard.Listener,
         Migration.Listener {
     public static final String TAG = LaunchFragment.class.getSimpleName();
     public static final int MIN_ROWS = 4;
@@ -40,6 +42,8 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public static final int ADDITIONAL_COLS = 3;
     public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 5000;
     public static final int TIME_BETWEEN_LOADING_MESSAGE_UPDATES = 1500;
+    private boolean migrationComplete = false;
+    private boolean viewCreated = false;
     private OnFragmentInteractionListener mListener;
     private SignInButton signInButton;
     private FloatingActionButton launchButton;
@@ -88,12 +92,13 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         migration = new MigrationImpl(this);
+        migration.doMigrationOfData();
+        setRetainInstance(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        migration.doMigrationOfData();
         startGame();
     }
 
@@ -104,46 +109,11 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
         signInButton = (SignInButton) view.findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.signIn();
-                loading.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
-                launchButton.setVisibility(View.GONE);
-            }
-        });
+        signInButton.setOnClickListener(this);
         launchButton = (FloatingActionButton) view.findViewById(R.id.launch_button);
-        launchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.launch();
-            }
-        });
-        launchButton.setVisibility(View.GONE);
+        launchButton.setOnClickListener(this);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-        dotBoard.setmListener(new DotBoard.Listener() {
-            @Override
-            public void onLineClick(int row, int col, LineType lineType) {
-
-            }
-
-            @Override
-            public void animationComplete() {
-                if (conductor.getState() instanceof GameOver) {
-                    gameCompleteDotBoard.setVisibility(View.VISIBLE);
-                    dotBoard.setVisibility(View.INVISIBLE);
-                    gameCompleteDotBoard.requestRedraw();
-                }
-                if (conductor.getState() == conductor.getFirstPlayerState()) {
-                    firstPlayerTurn();
-                }
-                else if (conductor.getState() == conductor.getSecondPlayerState()) {
-                    otherPlayerTurn();
-                }
-            }
-        });
-
+        dotBoard.setmListener(this);
         gameCompleteDotBoard =
                 (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
@@ -164,6 +134,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         if (mListener.isConnected()) {
             signInButton.setVisibility(View.GONE);
         }
+        launchButton.setVisibility(View.GONE);
+        viewCreated = true;
+        showLaunchButton();
         return view;
     }
 
@@ -189,6 +162,25 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         mListener = null;
     }
 
+    @Override
+    public void onLineClick(int row, int col, LineType lineType) {
+
+    }
+
+    @Override
+    public void animationComplete() {
+        if (conductor.getState() instanceof GameOver) {
+            gameCompleteDotBoard.setVisibility(View.VISIBLE);
+            dotBoard.setVisibility(View.INVISIBLE);
+            gameCompleteDotBoard.requestRedraw();
+        }
+        if (conductor.getState() == conductor.getFirstPlayerState()) {
+            firstPlayerTurn();
+        }
+        else if (conductor.getState() == conductor.getSecondPlayerState()) {
+            otherPlayerTurn();
+        }
+    }
 
     private void startGame() {
         int[] gameTheme = themes[random.nextInt(themes.length)];
@@ -226,16 +218,55 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
 
     @Override
     public void migrationComplete() {
-        launchButton.setVisibility(View.VISIBLE);
-        loading.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
+        migrationComplete = true;
+        if (!mListener.isSignInInProgress()) {
+            if (viewCreated) {
+                showLaunchButton();
+            }
+        }
+        mListener.migrationComplete();
+    }
+
+    private void showLaunchButton() {
+        if (migrationComplete) {
+            launchButton.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.sign_in_button:
+                handleSignIn();
+                break;
+            case R.id.launch_button:
+                handleLaunch();
+                break;
+        }
+    }
+
+    private void handleLaunch() {
+        mListener.launch();
+    }
+
+    private void handleSignIn() {
+        mListener.signIn();
+        loading.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        launchButton.setVisibility(View.GONE);
     }
 
     public interface OnFragmentInteractionListener {
         void signIn();
 
+        boolean isSignInInProgress();
+
         boolean isConnected();
 
         void launch();
+
+        void migrationComplete();
     }
 }
