@@ -4,16 +4,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.AiVsAi;
+import com.asb.goldtrap.models.gameplay.Migration;
+import com.asb.goldtrap.models.gameplay.impl.MigrationImpl;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.views.DotBoard;
@@ -23,10 +27,12 @@ import com.google.android.gms.common.SignInButton;
 
 import java.util.Random;
 
+
 /**
  * Launch Fragment
  */
-public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver {
+public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver,
+        Migration.Listener {
     public static final String TAG = LaunchFragment.class.getSimpleName();
     public static final int MIN_ROWS = 4;
     public static final int MIN_COLS = 4;
@@ -36,13 +42,16 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public static final int TIME_BETWEEN_LOADING_MESSAGE_UPDATES = 1500;
     private OnFragmentInteractionListener mListener;
     private SignInButton signInButton;
+    private FloatingActionButton launchButton;
     private Random random = new Random();
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
+    private ProgressBar progressBar;
     private TextView loading;
     private GameConductor conductor;
     private String[] loadingMessages;
+    private Migration migration;
     private int msgIndex = 0;
     private int[][] themes = {
             {R.array.default_theme, R.array.default_game_complete_theme},
@@ -78,34 +87,14 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        migration = new MigrationImpl(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        migration.doMigrationOfData();
         startGame();
-    }
-
-    private void startGame() {
-        int[] gameTheme = themes[random.nextInt(themes.length)];
-        gameCompleteDotBoard.setVisibility(View.INVISIBLE);
-        dotBoard.setVisibility(View.VISIBLE);
-        int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
-        int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
-        conductor = new AiVsAi(this, row, col, (row * col) / 3);
-        dotBoard.setGameSnapShot(conductor.getGameSnapshot());
-        dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
-        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
-        gameCompleteDotBoard.setColors(getResources().getIntArray(gameTheme[1]));
-
-        if (random.nextBoolean()) {
-            conductor.setState(conductor.getFirstPlayerState());
-            firstPlayerTurn();
-        }
-        else {
-            conductor.setState(conductor.getOtherPlayerState());
-            otherPlayerTurn();
-        }
     }
 
     @Override
@@ -119,8 +108,20 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             @Override
             public void onClick(View v) {
                 mListener.signIn();
+                loading.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+                launchButton.setVisibility(View.GONE);
             }
         });
+        launchButton = (FloatingActionButton) view.findViewById(R.id.launch_button);
+        launchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.launch();
+            }
+        });
+        launchButton.setVisibility(View.GONE);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         dotBoard.setmListener(new DotBoard.Listener() {
             @Override
             public void onLineClick(int row, int col, LineType lineType) {
@@ -159,24 +160,16 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         loading = (TextView) view.findViewById(R.id.loading);
         loadingMessages = getResources().getStringArray(R.array.loading);
         handler.post(mUpdateLoading);
+
+        if (mListener.isConnected()) {
+            signInButton.setVisibility(View.GONE);
+        }
         return view;
     }
 
     @Override
     public void stateChanged(GameState state) {
 
-    }
-
-    private void firstPlayerTurn() {
-        if (conductor.playMyTurn()) {
-            dotBoard.requestRedraw();
-        }
-    }
-
-    private void otherPlayerTurn() {
-        if (conductor.playTheirTurn()) {
-            dotBoard.requestRedraw();
-        }
     }
 
     @Override
@@ -197,7 +190,52 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     }
 
 
+    private void startGame() {
+        int[] gameTheme = themes[random.nextInt(themes.length)];
+        gameCompleteDotBoard.setVisibility(View.INVISIBLE);
+        dotBoard.setVisibility(View.VISIBLE);
+        int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
+        int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
+        conductor = new AiVsAi(this, row, col, (row * col) / 3);
+        dotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
+        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        gameCompleteDotBoard.setColors(getResources().getIntArray(gameTheme[1]));
+
+        if (random.nextBoolean()) {
+            conductor.setState(conductor.getFirstPlayerState());
+            firstPlayerTurn();
+        }
+        else {
+            conductor.setState(conductor.getOtherPlayerState());
+            otherPlayerTurn();
+        }
+    }
+
+    private void firstPlayerTurn() {
+        if (conductor.playMyTurn()) {
+            dotBoard.requestRedraw();
+        }
+    }
+
+    private void otherPlayerTurn() {
+        if (conductor.playTheirTurn()) {
+            dotBoard.requestRedraw();
+        }
+    }
+
+    @Override
+    public void migrationComplete() {
+        launchButton.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+    }
+
     public interface OnFragmentInteractionListener {
         void signIn();
+
+        boolean isConnected();
+
+        void launch();
     }
 }

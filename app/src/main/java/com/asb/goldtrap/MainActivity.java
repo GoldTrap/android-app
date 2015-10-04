@@ -171,4 +171,9 @@ public class MainActivity extends AppCompatActivity implements
         Intent quickPlay = new Intent(this, QuickPlayActivity.class);
         startActivity(quickPlay);
     }
+
+    @Override
+    public void launch() {
+        loadHomeScreen();
+    }
 }
