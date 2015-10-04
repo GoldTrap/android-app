@@ -55,7 +55,12 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quick_play_game, container, false);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
-        gameCompleteDotBoard = new GameCompleteDotBoard(getContext(), null);
+        gameCompleteDotBoard =
+                (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
+        dotBoard.setVisibility(View.VISIBLE);
+        gameCompleteDotBoard.setVisibility(View.INVISIBLE);
+        dotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
         flip = (Button) view.findViewById(R.id.flip);
         flip.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +95,8 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
             @Override
             public void animationComplete() {
                 if (conductor.getState() instanceof GameOver) {
-                    gameLayout.removeAllViews();
-                    gameLayout.addView(gameCompleteDotBoard);
+                    dotBoard.setVisibility(View.INVISIBLE);
+                    gameCompleteDotBoard.setVisibility(View.VISIBLE);
                     gameCompleteDotBoard.requestRedraw();
                 }
                 if (conductor.getState() instanceof AITurn) {
@@ -117,8 +122,9 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         startGame();
     }
 
@@ -140,15 +146,10 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     private void startGame() {
-        gameLayout.removeAllViews();
-        gameLayout.addView(dotBoard);
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
         conductor = new PlayerVsAi(this, row, col, (row * col) / 3);
-        dotBoard.setGameSnapShot(conductor.getGameSnapshot());
-        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
         conductor.setState(conductor.getFirstPlayerState());
-
     }
 
     @Override

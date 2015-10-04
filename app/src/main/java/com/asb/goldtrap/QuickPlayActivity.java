@@ -14,10 +14,12 @@ public class QuickPlayActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_play);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, QuickPlayGameFragment.newInstance(),
-                        QuickPlayGameFragment.TAG)
-                .commit();
+        if (null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, QuickPlayGameFragment.newInstance(),
+                            QuickPlayGameFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
