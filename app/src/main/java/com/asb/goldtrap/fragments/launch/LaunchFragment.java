@@ -122,7 +122,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        startGame();
+                        if (null != mListener) {
+                            startGame();
+                        }
                     }
                 }, DELAY_BETWEEN_GAMES_IN_MILLIS);
             }

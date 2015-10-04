@@ -42,15 +42,16 @@ public class MainActivity extends AppCompatActivity implements
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(LaunchFragment.TAG);
 
-        if (fragment == null) {
-            fm.beginTransaction().replace(R.id.fragment_container, LaunchFragment.newInstance(),
-                    LaunchFragment.TAG)
-                    .commit();
+        if (!isHomeFragmentVisible()) {
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = fm.findFragmentByTag(LaunchFragment.TAG);
+            if (null == fragment) {
+                fm.beginTransaction().replace(R.id.fragment_container, LaunchFragment.newInstance(),
+                        LaunchFragment.TAG)
+                        .commit();
+            }
         }
-
     }
 
     @Override
@@ -134,10 +135,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void loadHomeScreen() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(HomeFragment.TAG);
-        if (null == fragment || !fragment.isVisible()) {
+        if (!isHomeFragmentVisible()) {
             if (migrationComplete) {
-                fragment = HomeFragment.newInstance();
+                Fragment fragment = HomeFragment.newInstance();
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                         .replace(R.id.fragment_container, fragment, HomeFragment.TAG)
@@ -184,4 +184,10 @@ public class MainActivity extends AppCompatActivity implements
             loadHomeScreen();
         }
     }
+
+    private boolean isHomeFragmentVisible() {
+        Fragment homeFragment = getSupportFragmentManager().findFragmentByTag(HomeFragment.TAG);
+        return null != homeFragment && homeFragment.isVisible();
+    }
+
 }

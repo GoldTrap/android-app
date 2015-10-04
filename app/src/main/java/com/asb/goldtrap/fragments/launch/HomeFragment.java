@@ -64,6 +64,12 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         startGame();
