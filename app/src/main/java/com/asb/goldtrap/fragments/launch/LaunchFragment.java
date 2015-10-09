@@ -18,6 +18,7 @@ import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.AiVsAi;
 import com.asb.goldtrap.models.gameplay.Migration;
 import com.asb.goldtrap.models.gameplay.impl.MigrationImpl;
+import com.asb.goldtrap.models.solvers.factory.impl.BiasedTowardsMeSolversFactory;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.views.DotBoard;
@@ -188,7 +189,8 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         dotBoard.setVisibility(View.VISIBLE);
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
-        conductor = new AiVsAi(this, row, col, (row * col) / 3);
+        conductor =
+                new AiVsAi(new BiasedTowardsMeSolversFactory(), this, row, col, (row * col) / 3);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
         dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
         gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());

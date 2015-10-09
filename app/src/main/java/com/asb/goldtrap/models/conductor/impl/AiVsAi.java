@@ -5,9 +5,9 @@ import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.factory.DotsGameFactory;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
+import com.asb.goldtrap.models.solvers.factory.SolversFactory;
 import com.asb.goldtrap.models.solvers.impl.BasicGreedySolver;
 import com.asb.goldtrap.models.solvers.impl.RandomGreedySolver;
-import com.asb.goldtrap.models.solvers.impl.RandomSolver;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.impl.AITurn;
@@ -41,7 +41,7 @@ public class AiVsAi implements GameConductor {
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
 
-    public AiVsAi(GameStateObserver gameStateObserver, int rows,
+    public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, int rows,
                   int cols, int goodiesCount) {
         dotsGameSnapshot = DotsGameFactory.createGameSnapshot(rows, cols, goodiesCount);
         firstPlayerState = new AITurn(this, new Gamer());
@@ -52,8 +52,8 @@ public class AiVsAi implements GameConductor {
         mGameStateObserver = gameStateObserver;
 
         findAllLineCombinations();
-        aiSolver = new RandomGreedySolver(dotsGameSnapshot, combinations);
-        otherAiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
+        aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
+        otherAiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
     }
 
     public void flipBoard() {

@@ -13,6 +13,10 @@ import android.widget.FrameLayout;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.AiVsAi;
+import com.asb.goldtrap.models.solvers.factory.SolversFactory;
+import com.asb.goldtrap.models.solvers.factory.impl.BiasedTowardsMeSolversFactory;
+import com.asb.goldtrap.models.solvers.factory.impl.StronglyMatchedAwesomeSolversFactory;
+import com.asb.goldtrap.models.solvers.factory.impl.StronglyMatchedSucksSolversFactory;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.views.DotBoard;
@@ -40,6 +44,11 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameConductorDotBoard;
     private GameConductor conductor;
+    private SolversFactory[] solversFactory = {
+            new BiasedTowardsMeSolversFactory(),
+            new StronglyMatchedAwesomeSolversFactory(),
+            new StronglyMatchedSucksSolversFactory()
+    };
     private Button quickPlay;
     private Button signOut;
     private SignInButton signInButton;
@@ -180,7 +189,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         gameLayout.addView(dotBoard);
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
-        conductor = new AiVsAi(this, row, col, (row * col) / 3);
+        int factoryIndex = random.nextInt(solversFactory.length);
+        conductor = new AiVsAi(solversFactory[factoryIndex], this, row, col, (row * col) / 3);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
         dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
         gameConductorDotBoard.setGameSnapShot(conductor.getGameSnapshot());
