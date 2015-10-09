@@ -43,7 +43,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 5000;
     public static final int TIME_BETWEEN_LOADING_MESSAGE_UPDATES = 1500;
     private boolean migrationComplete = false;
-    private boolean viewCreated = false;
     private OnFragmentInteractionListener mListener;
     private SignInButton signInButton;
     private FloatingActionButton launchButton;
@@ -92,7 +91,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         migration = new MigrationImpl(this);
-        migration.doMigrationOfData();
         setRetainInstance(true);
     }
 
@@ -137,7 +135,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             signInButton.setVisibility(View.GONE);
         }
         launchButton.setVisibility(View.GONE);
-        viewCreated = true;
+        migration.doMigrationOfData();
         showLaunchButton();
         return view;
     }
@@ -222,9 +220,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public void migrationComplete() {
         migrationComplete = true;
         if (!mListener.isSignInInProgress()) {
-            if (viewCreated) {
-                showLaunchButton();
-            }
+            showLaunchButton();
         }
         mListener.migrationComplete();
     }
