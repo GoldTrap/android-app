@@ -53,7 +53,7 @@ public class AiVsAi implements GameConductor {
 
         findAllLineCombinations();
         aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
-        otherAiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
+        otherAiSolver = solversFactory.getOtherPlayerSolver(dotsGameSnapshot, combinations);
     }
 
     public void flipBoard() {
