@@ -40,8 +40,8 @@ public class LastFilledCellDrawer implements AnimatedBoardComponentDrawer {
         List<Cell> lastScoredCells = brain.getLastScoredCells();
         if (null != lastScoredCells && !lastScoredCells.isEmpty()) {
             for (Cell cell : lastScoredCells) {
-                int col = cell.getLastScoreCellCol();
-                int row = cell.getLastScoredCellRow();
+                int col = cell.getCol();
+                int row = cell.getRow();
                 float x = lineWidth / 2;
                 float y = lineHeight / 2;
                 x += col * lineWidth;

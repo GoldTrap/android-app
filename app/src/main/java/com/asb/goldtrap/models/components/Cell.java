@@ -4,14 +4,14 @@ import com.asb.goldtrap.models.states.enums.CellState;
 
 public class Cell {
     CellState cellState;
-    private int lastScoredCellRow = -1;
-    private int lastScoreCellCol = -1;
+    private int row = -1;
+    private int col = -1;
 
-    public Cell(CellState cellState, int lastScoredCellRow, int lastScoreCellCol) {
+    public Cell(CellState cellState, int row, int col) {
         super();
         this.cellState = cellState;
-        this.lastScoredCellRow = lastScoredCellRow;
-        this.lastScoreCellCol = lastScoreCellCol;
+        this.row = row;
+        this.col = col;
     }
 
     public CellState getCellState() {
@@ -22,20 +22,20 @@ public class Cell {
         this.cellState = cellState;
     }
 
-    public int getLastScoredCellRow() {
-        return lastScoredCellRow;
+    public int getRow() {
+        return row;
     }
 
-    public void setLastScoredCellRow(int lastScoredCellRow) {
-        this.lastScoredCellRow = lastScoredCellRow;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public int getLastScoreCellCol() {
-        return lastScoreCellCol;
+    public int getCol() {
+        return col;
     }
 
-    public void setLastScoreCellCol(int lastScoreCellCol) {
-        this.lastScoreCellCol = lastScoreCellCol;
+    public void setCol(int col) {
+        this.col = col;
     }
 
 }
