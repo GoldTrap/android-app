@@ -1,5 +1,7 @@
 package com.asb.goldtrap.models.conductor.impl;
 
+import com.asb.goldtrap.models.complications.goodies.GoodieMover;
+import com.asb.goldtrap.models.complications.goodies.impl.NullGoodieMover;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.factory.DotsGameFactory;
@@ -37,6 +39,7 @@ public class PlayerVsAi implements GameConductor {
     private GameState gameOverState;
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
+    private GoodieMover goodieMover;
 
     public PlayerVsAi(GameStateObserver gameStateObserver, int rows,
                       int cols, int goodiesCount) {
@@ -47,7 +50,7 @@ public class PlayerVsAi implements GameConductor {
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
-
+        goodieMover = new NullGoodieMover();
         findAllLineCombinations();
         aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
     }
@@ -171,5 +174,10 @@ public class PlayerVsAi implements GameConductor {
     @Override
     public void setExtraChance(boolean extraChance) {
         this.extraChance = extraChance;
+    }
+
+    @Override
+    public void moveGoodie() {
+        goodieMover.moveGoodie(dotsGameSnapshot);
     }
 }

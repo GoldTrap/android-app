@@ -29,6 +29,8 @@ public interface GameConductor {
 
     boolean playTheirTurn();
 
+    void moveGoodie();
+
     DotsGameSnapshot getGameSnapshot();
 
     void setState(GameState state);
