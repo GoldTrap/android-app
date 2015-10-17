@@ -133,7 +133,8 @@ public class DotsGameSnapshot {
             for (int j = 0; j < cols; j += 1) {
                 if (CellState.PLAYER == cells[i][j]) {
                     cellsOccupied += 1;
-                    score.getCells().add(cells[i][j]);
+                    Cell cell = new Cell(cells[i][j], i, j);
+                    score.getCells().add(cell);
                 }
             }
             if (cellsOccupied == cols) {
@@ -156,7 +157,7 @@ public class DotsGameSnapshot {
         for (Goodie goodie : goodies) {
             if (CellState.PLAYER == cells[goodie.getRow()][goodie.getCol()]) {
                 if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
-                    score.getGoodies().add(goodie.getGoodiesState());
+                    score.getGoodies().add(goodie);
                 }
             }
         }

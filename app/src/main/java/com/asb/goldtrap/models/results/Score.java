@@ -1,26 +1,28 @@
 package com.asb.goldtrap.models.results;
 
+import com.asb.goldtrap.models.components.Cell;
+import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.components.Line;
-import com.asb.goldtrap.models.states.enums.CellState;
-import com.asb.goldtrap.models.states.enums.GoodiesState;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Score {
     private List<Line> lines = new ArrayList<>();
-    private List<CellState> cells = new ArrayList<>();
-    private List<GoodiesState> goodies = new ArrayList<>();
+    private List<Cell> cells = new ArrayList<>();
+    private Set<Goodie> goodies = new HashSet<>();
 
     public List<Line> getLines() {
         return lines;
     }
 
-    public List<CellState> getCells() {
+    public List<Cell> getCells() {
         return cells;
     }
 
-    public List<GoodiesState> getGoodies() {
+    public Set<Goodie> getGoodies() {
         return goodies;
     }
 }
