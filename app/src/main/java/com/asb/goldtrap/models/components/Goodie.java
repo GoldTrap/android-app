@@ -6,9 +6,9 @@ import com.asb.goldtrap.models.states.enums.GoodiesState;
  * Created by arjun on 17/10/15.
  */
 public class Goodie {
-    private GoodiesState goodiesState = GoodiesState.NOTHING;
-    private int row;
-    private int col;
+    final private GoodiesState goodiesState;
+    final private int row;
+    final private int col;
 
     public Goodie(GoodiesState goodiesState, int row, int col) {
         this.goodiesState = goodiesState;
@@ -20,24 +20,12 @@ public class Goodie {
         return goodiesState;
     }
 
-    public void setGoodiesState(GoodiesState goodiesState) {
-        this.goodiesState = goodiesState;
-    }
-
     public int getRow() {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getCol() {
         return col;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
     }
 
     @Override
