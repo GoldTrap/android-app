@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Score {
+    public static final int CELL_SCORE = 100;
     private List<Line> lines = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private Set<Goodie> goodies = new HashSet<>();
@@ -24,5 +25,15 @@ public class Score {
 
     public Set<Goodie> getGoodies() {
         return goodies;
+    }
+
+    public int basicScore() {
+        return cells.size() * CELL_SCORE;
+    }
+
+    public void clearScore() {
+        lines.clear();
+        cells.clear();
+        goodies.clear();
     }
 }

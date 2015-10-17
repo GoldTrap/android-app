@@ -114,11 +114,13 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                 mListener.gameOver();
             }
         });
+        updateScoreBoard();
         return view;
     }
 
     private void updateScoreBoard() {
-        scoreBoard.setText(getString(R.string.points, 100));
+        scoreBoard.setText(
+                getString(R.string.points, conductor.getGameSnapshot().getScore().basicScore()));
     }
 
     @Override

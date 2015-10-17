@@ -21,7 +21,7 @@ public class DotsGameSnapshot {
     private LineState horizontalLines[][];
     private LineState verticalLines[][];
     private Set<Goodie> goodies;
-    private Score score;
+    private Score score = new Score();
 
     private LineState lastClickedLineState = LineState.FREE;
     private LineType lastClickedLineType = LineType.NONE;
@@ -115,14 +115,12 @@ public class DotsGameSnapshot {
     }
 
     public Score getScore() {
-        if (null == score) {
-            computeScore();
-        }
+        computeScore();
         return score;
     }
 
     public void computeScore() {
-        this.score = new Score();
+        this.score.clearScore();
         CellState[][] cells = this.getCells();
         Set<Goodie> goodies = this.getGoodies();
         int rows = cells.length;
