@@ -36,7 +36,7 @@ public class CellDrawer implements BoardComponentDrawer {
         CellState cells[][] = brain.getCells();
         float x = lineWidth / 2;
         float y = lineHeight / 2;
-        List<Cell> Refactoring the = brain.getLastScoredCells();
+        List<Cell> lastScoredCells = brain.getLastScoredCells();
         Set<String> lookup = new HashSet<>();
 
         for (Cell lastScoredCell : lastScoredCells) {
