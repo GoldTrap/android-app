@@ -6,15 +6,13 @@ import com.asb.goldtrap.models.factory.DotsGameFactory;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.factory.SolversFactory;
-import com.asb.goldtrap.models.solvers.impl.BasicGreedySolver;
-import com.asb.goldtrap.models.solvers.impl.RandomGreedySolver;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameExited;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.models.states.impl.Gamer;
-import com.asb.goldtrap.models.states.impl.OtherAITurn;
+import com.asb.goldtrap.models.states.impl.PlayerWhoIsAITurn;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
@@ -44,8 +42,8 @@ public class AiVsAi implements GameConductor {
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, int rows,
                   int cols, int goodiesCount) {
         dotsGameSnapshot = DotsGameFactory.createGameSnapshot(rows, cols, goodiesCount);
-        firstPlayerState = new AITurn(this, new Gamer());
-        secondPlayerState = new OtherAITurn(this, new Gamer());
+        firstPlayerState = new PlayerWhoIsAITurn(this, new Gamer());
+        secondPlayerState = new AITurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
