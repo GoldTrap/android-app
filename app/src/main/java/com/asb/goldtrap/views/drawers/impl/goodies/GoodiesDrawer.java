@@ -4,12 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by arjun on 17/09/15.
@@ -34,34 +37,27 @@ public class GoodiesDrawer implements BoardComponentDrawer {
         float lineWidth = width / (cols);
         float lineHeight = height / (rows);
         // cells
-        GoodiesState goodies[][] = brain.getGoodies();
-        float x = lineWidth / 2;
-        float y = lineHeight / 2;
+        Set<Goodie> goodies = brain.getGoodies();
 
         int scaled = (int) (Math.min(lineHeight, lineWidth) * SCALING_FACTOR);
 
-        for (int i = 0; i < goodies.length; i += 1) {
-            GoodiesState goodiesStates[] = goodies[i];
-            for (int j = 0; j < goodiesStates.length; j += 1) {
-                if (GoodiesState.NOTHING != goodiesStates[j]) {
-                    Bitmap scaledGoodie = scaledGoodieCollection.get(goodiesStates[j]);
-                    if (null == scaledGoodie) {
-                        Bitmap goodie = goodieCollection.get(goodiesStates[j]);
-                        scaledGoodie = Bitmap.createScaledBitmap(goodie, scaled, scaled,
-                                true);
-                        scaledGoodieCollection.put(goodiesStates[j], scaledGoodie);
+        for (Goodie goodie : goodies) {
+            if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
+                float x = (lineWidth / 2) + lineWidth * goodie.getCol();
+                float y = (lineHeight / 2) + lineHeight * goodie.getRow();
+                Bitmap scaledGoodie = scaledGoodieCollection.get(goodie.getGoodiesState());
+                if (null == scaledGoodie) {
+                    Bitmap goodieBitmap = goodieCollection.get(goodie.getGoodiesState());
+                    scaledGoodie = Bitmap.createScaledBitmap(goodieBitmap, scaled, scaled,
+                            true);
+                    scaledGoodieCollection.put(goodie.getGoodiesState(), scaledGoodie);
 
-                    }
-                    int bHStart = (int) (lineHeight - scaledGoodie.getHeight()) / 2;
-                    int bWStart = (int) (lineWidth - scaledGoodie.getWidth()) / 2;
-                    canvas.drawBitmap(scaledGoodie, x + bWStart, y + bHStart,
-                            bitmapPaint);
                 }
-                x += lineWidth;
+                int bHStart = (int) (lineHeight - scaledGoodie.getHeight()) / 2;
+                int bWStart = (int) (lineWidth - scaledGoodie.getWidth()) / 2;
+                canvas.drawBitmap(scaledGoodie, x + bWStart, y + bHStart,
+                        bitmapPaint);
             }
-            x = lineWidth / 2;
-            y += lineHeight;
         }
-
     }
 }

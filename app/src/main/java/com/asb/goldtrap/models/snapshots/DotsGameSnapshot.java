@@ -1,6 +1,7 @@
 package com.asb.goldtrap.models.snapshots;
 
 import com.asb.goldtrap.models.components.Cell;
+import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.states.enums.CellState;
@@ -10,6 +11,7 @@ import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Holds the state of the game
@@ -18,7 +20,7 @@ public class DotsGameSnapshot {
     private CellState cells[][];
     private LineState horizontalLines[][];
     private LineState verticalLines[][];
-    private GoodiesState goodies[][];
+    private Set<Goodie> goodies;
     private Score score;
 
     private LineState lastClickedLineState = LineState.FREE;
@@ -29,7 +31,7 @@ public class DotsGameSnapshot {
     private List<Cell> lastScoredCells;
 
     public DotsGameSnapshot(CellState[][] cells, LineState[][] horizontalLines,
-                            LineState[][] verticalLines, GoodiesState goodies[][]) {
+                            LineState[][] verticalLines, Set<Goodie> goodies) {
         super();
         this.cells = cells;
         this.horizontalLines = horizontalLines;
@@ -104,11 +106,11 @@ public class DotsGameSnapshot {
         this.lastScoredCells = lastScoredCells;
     }
 
-    public GoodiesState[][] getGoodies() {
+    public Set<Goodie> getGoodies() {
         return goodies;
     }
 
-    public void setGoodies(GoodiesState[][] goodies) {
+    public void setGoodies(Set<Goodie> goodies) {
         this.goodies = goodies;
     }
 
@@ -122,7 +124,7 @@ public class DotsGameSnapshot {
     public void computeScore() {
         this.score = new Score();
         CellState[][] cells = this.getCells();
-        GoodiesState[][] goodies = this.getGoodies();
+        Set<Goodie> goodies = this.getGoodies();
         int rows = cells.length;
         int cols = cells[0].length;
 
@@ -132,9 +134,6 @@ public class DotsGameSnapshot {
                 if (CellState.PLAYER == cells[i][j]) {
                     cellsOccupied += 1;
                     score.getCells().add(cells[i][j]);
-                    if (GoodiesState.ONE_K == goodies[i][j]) {
-                        score.getGoodies().add(goodies[i][j]);
-                    }
                 }
             }
             if (cellsOccupied == cols) {
@@ -151,6 +150,14 @@ public class DotsGameSnapshot {
             }
             if (cellsOccupied == rows) {
                 score.getLines().add(new Line(LineType.VERTICAL, -1, i));
+            }
+        }
+
+        for (Goodie goodie : goodies) {
+            if (CellState.PLAYER == cells[goodie.getRow()][goodie.getCol()]) {
+                if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
+                    score.getGoodies().add(goodie.getGoodiesState());
+                }
             }
         }
     }

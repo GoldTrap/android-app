@@ -2,12 +2,17 @@ package com.asb.goldtrap.models.factory;
 
 import android.util.Log;
 
+import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.models.states.enums.LineState;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class DotsGameFactory {
 
@@ -21,7 +26,7 @@ public class DotsGameFactory {
         LineState horizontalLines[][] = new LineState[rows + 1][cols];
         LineState verticalLines[][] = new LineState[rows][cols + 1];
         CellState cells[][] = new CellState[rows][cols];
-        GoodiesState goodies[][] = new GoodiesState[rows][cols];
+        Set<Goodie> goodies = new HashSet<>();
 
         fillHorizontalLinesForEmptyGame(horizontalLines, rows, cols);
         fillVerticalLinesForEmptyGame(verticalLines, rows, cols);
@@ -40,7 +45,7 @@ public class DotsGameFactory {
         LineState horizontalLines[][] = new LineState[rows + 1][cols];
         LineState verticalLines[][] = new LineState[rows][cols + 1];
         CellState cells[][] = new CellState[rows][cols];
-        GoodiesState goodies[][] = new GoodiesState[rows][cols];
+        Set<Goodie> goodies = new HashSet<>(goodiesCount);
 
         fillHorizontalLinesForEmptyGame(horizontalLines, rows, cols);
         fillVerticalLinesForEmptyGame(verticalLines, rows, cols);
@@ -52,20 +57,16 @@ public class DotsGameFactory {
         return gameSnapshot;
     }
 
-    private static void fillGoodies(GoodiesState goodies[][], int goodiesCount,
+    private static void fillGoodies(Set<Goodie> goodies, int goodiesCount,
                                     int rows, int cols) {
         Random random = new Random();
-        for (int i = 0; i < rows; i += 1) {
-            for (int j = 0; j < cols; j += 1) {
-                goodies[i][j] = GoodiesState.NOTHING;
-            }
-        }
         int max = rows * cols;
         for (int i = 0; i < goodiesCount; i += 1) {
             int rd = random.nextInt(max);
             int r = rd / cols;
             int c = rd % cols;
-            goodies[r][c] = GoodiesState.ONE_K;
+            Goodie goodie = new Goodie(GoodiesState.ONE_K, r, c);
+            goodies.add(goodie);
         }
     }
 
