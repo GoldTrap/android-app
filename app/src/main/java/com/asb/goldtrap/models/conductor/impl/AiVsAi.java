@@ -1,5 +1,7 @@
 package com.asb.goldtrap.models.conductor.impl;
 
+import com.asb.goldtrap.models.complications.goodies.GoodieMover;
+import com.asb.goldtrap.models.complications.goodies.impl.VerticalGoodieMover;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.factory.DotsGameFactory;
@@ -38,6 +40,7 @@ public class AiVsAi implements GameConductor {
     private GameState gameOverState;
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
+    private GoodieMover goodieMover;
 
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, int rows,
                   int cols, int goodiesCount) {
@@ -48,7 +51,7 @@ public class AiVsAi implements GameConductor {
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
-
+        goodieMover = new VerticalGoodieMover();
         findAllLineCombinations();
         aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
         otherAiSolver = solversFactory.getOtherPlayerSolver(dotsGameSnapshot, combinations);
@@ -98,6 +101,9 @@ public class AiVsAi implements GameConductor {
         if (state instanceof AITurn && state == firstPlayerState) {
             Line line = aiSolver.getNextLine();
             played = state.playTurn(line.lineType, line.row, line.col);
+            if (played) {
+                goodieMover.moveGoodie(dotsGameSnapshot);
+            }
         }
         return played;
     }
@@ -112,6 +118,9 @@ public class AiVsAi implements GameConductor {
         if (state instanceof AITurn && state == secondPlayerState) {
             Line line = otherAiSolver.getNextLine();
             played = state.playTurn(line.lineType, line.row, line.col);
+            if (played) {
+                goodieMover.moveGoodie(dotsGameSnapshot);
+            }
         }
         return played;
     }
