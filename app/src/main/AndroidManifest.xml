@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.asb.goldtrap"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.asb.goldtrap">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -28,6 +27,11 @@
             android:name=".QuickPlayActivity"
             android:label="@string/title_activity_quick_play">
         </activity>
+
+        <service
+            android:name=".models.services.DataInitializationService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

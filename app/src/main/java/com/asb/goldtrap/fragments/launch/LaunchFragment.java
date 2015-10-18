@@ -1,11 +1,15 @@
 package com.asb.goldtrap.fragments.launch;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +20,7 @@ import android.widget.TextView;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.AiVsAi;
-import com.asb.goldtrap.models.gameplay.Migration;
-import com.asb.goldtrap.models.gameplay.impl.MigrationImpl;
+import com.asb.goldtrap.models.services.DataInitializationService;
 import com.asb.goldtrap.models.solvers.factory.impl.BiasedTowardsMeSolversFactory;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameOver;
@@ -34,8 +37,7 @@ import java.util.Random;
  */
 public class LaunchFragment extends Fragment implements GameConductor.GameStateObserver,
         View.OnClickListener,
-        DotBoard.Listener,
-        Migration.Listener {
+        DotBoard.Listener {
     public static final String TAG = LaunchFragment.class.getSimpleName();
     public static final int MIN_ROWS = 4;
     public static final int MIN_COLS = 4;
@@ -55,7 +57,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     private TextView loading;
     private GameConductor conductor;
     private String[] loadingMessages;
-    private Migration migration;
     private int msgIndex = 0;
     private int[][] themes = {
             {R.array.default_theme, R.array.default_game_complete_theme},
@@ -75,6 +76,13 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         }
     };
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            migrationComplete();
+        }
+    };
+
     public LaunchFragment() {
         // Required empty public constructor
     }
@@ -91,8 +99,15 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        migration = new MigrationImpl(this);
         setRetainInstance(true);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver,
+                new IntentFilter(DataInitializationService.INITIALIZATION_COMPLETE));
+    }
+
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
+        super.onDestroy();
     }
 
     @Override
@@ -136,7 +151,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             signInButton.setVisibility(View.GONE);
         }
         launchButton.setVisibility(View.GONE);
-        migration.doMigrationOfData();
+        DataInitializationService.startMigration(getContext());
         showLaunchButton();
         return view;
     }
@@ -218,8 +233,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         }
     }
 
-    @Override
-    public void migrationComplete() {
+    private void migrationComplete() {
         migrationComplete = true;
         if (!mListener.isSignInInProgress()) {
             showLaunchButton();
