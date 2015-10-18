@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.asb.goldtrap.models.dao.helper.DBHelper;
+import com.asb.goldtrap.models.gameplay.Migration;
+import com.asb.goldtrap.models.gameplay.impl.MigrationImpl;
+
 /**
  * Migrates all the data from JSON
  */
 public class DataInitializationService extends IntentService {
     public static final String INITIALIZATION_COMPLETE =
             "com.asb.goldtrap.fragments.launch.INITIALIZATION_COMPLETE";
+    private Migration migration;
 
     /**
      * Starts this service to perform migration
@@ -23,6 +28,12 @@ public class DataInitializationService extends IntentService {
 
     public DataInitializationService() {
         super("DataInitializationService");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        migration = new MigrationImpl(new DBHelper(getApplicationContext()));
     }
 
     @Override
@@ -39,10 +50,8 @@ public class DataInitializationService extends IntentService {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (!migration.isMigrationComplete()) {
+                    migration.doMigrationOfData();
                 }
                 return null;
             }

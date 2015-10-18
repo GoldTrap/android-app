@@ -1,37 +1,29 @@
 package com.asb.goldtrap.models.gameplay.impl;
 
-import android.os.AsyncTask;
+import android.text.TextUtils;
 
+import com.asb.goldtrap.models.dao.PropertiesDao;
+import com.asb.goldtrap.models.dao.helper.DBHelper;
+import com.asb.goldtrap.models.dao.impl.PropertiesDaoImpl;
 import com.asb.goldtrap.models.gameplay.Migration;
 
 /**
  * Created by arjun on 04/10/15.
  */
 public class MigrationImpl implements Migration {
-    private Listener listener;
+    private PropertiesDao propertiesDao;
 
-    public MigrationImpl(Listener listener) {
-        this.listener = listener;
+    public MigrationImpl(DBHelper dbHelper) {
+        propertiesDao = new PropertiesDaoImpl(dbHelper.getWritableDatabase());
     }
 
     @Override
     public void doMigrationOfData() {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                listener.migrationComplete();
-            }
-        }.execute();
+    }
+
+    @Override
+    public boolean isMigrationComplete() {
+        return !TextUtils.isEmpty(propertiesDao.getValue(MIGRATION_COMPLETE));
     }
 }
