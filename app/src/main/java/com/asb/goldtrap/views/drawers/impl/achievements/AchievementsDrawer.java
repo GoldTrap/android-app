@@ -3,6 +3,7 @@ package com.asb.goldtrap.views.drawers.impl.achievements;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.results.Score;
@@ -18,12 +19,13 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
     private Paint paint;
     private Paint bitmapPaint;
     private Bitmap spark;
-    private Bitmap scaledSpark;
+    private Rect scaledRect;
 
     public AchievementsDrawer(Paint paint, Paint bitmapPaint, Bitmap spark) {
         this.paint = paint;
         this.bitmapPaint = bitmapPaint;
         this.spark = spark;
+        this.scaledRect = new Rect(0, 0, 0, 0);
     }
 
     @Override
@@ -45,21 +47,16 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
                     (percentage - (maxLinesToDrawCompletely * percentageForEachLine)) /
                             percentageForEachLine;
             int linesDrawn = 0;
-
-            if (null == scaledSpark) {
-                int scaled = (int) (Math.min(lineHeight, lineWidth) * SCALING_FACTOR);
-                scaledSpark = Bitmap.createScaledBitmap(spark, scaled, scaled,
-                        true);
-            }
+            int scaled = (int) (Math.min(lineHeight, lineWidth) * SCALING_FACTOR);
 
             for (Line line : score.getLines()) {
                 if (linesDrawn == maxLinesToDrawCompletely) {
                     drawSpark(canvas, width, height, line, lineWidth, lineHeight,
-                            percentageOfLastLine);
+                            percentageOfLastLine, scaled);
                     break;
                 }
                 else {
-                    drawSpark(canvas, width, height, line, lineWidth, lineHeight, 1.0f);
+                    drawSpark(canvas, width, height, line, lineWidth, lineHeight, 1.0f, scaled);
                 }
                 linesDrawn += 1;
             }
@@ -67,23 +64,26 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
     }
 
     private void drawSpark(Canvas canvas, int width, int height, Line line,
-                           float lineWidth, float lineHeight, float percentageOfLastLine) {
+                           float lineWidth, float lineHeight, float percentageOfLastLine,
+                           int scaled) {
         switch (line.lineType) {
             case HORIZONTAL:
                 float x = width * percentageOfLastLine;
                 float y = lineHeight + (lineHeight * line.row);
-                float bitmapY = y - (lineHeight / 2) + ((lineHeight - scaledSpark.getHeight()) / 2);
-                float bitmapX = x - scaledSpark.getWidth();
+                int bitmapY = (int) (y - (lineHeight / 2) + ((lineHeight - scaled) / 2));
+                int bitmapX = (int) (x - scaled);
                 canvas.drawLine(0, y, x, y, paint);
-                canvas.drawBitmap(scaledSpark, bitmapX, bitmapY, bitmapPaint);
+                scaledRect.set(bitmapX, bitmapY, bitmapX + scaled, bitmapY + scaled);
+                canvas.drawBitmap(spark, null, scaledRect, bitmapPaint);
                 break;
             case VERTICAL:
                 x = lineWidth + (lineWidth * line.col);
                 y = height * percentageOfLastLine;
-                bitmapY = y - scaledSpark.getHeight();
-                bitmapX = x - (lineWidth / 2) + ((lineWidth - scaledSpark.getWidth()) / 2);
+                bitmapY = (int) (y - scaled);
+                bitmapX = (int) (x - (lineWidth / 2) + ((lineWidth - scaled) / 2));
                 canvas.drawLine(x, 0, x, y, paint);
-                canvas.drawBitmap(scaledSpark, bitmapX, bitmapY, bitmapPaint);
+                scaledRect.set(bitmapX, bitmapY, bitmapX + scaled, bitmapY + scaled);
+                canvas.drawBitmap(spark, null, scaledRect, bitmapPaint);
                 break;
             case NONE:
                 break;
