@@ -205,7 +205,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
         conductor =
-                new AiVsAi(new BiasedTowardsMeSolversFactory(), this, row, col, (row * col) / 3);
+                new AiVsAi(new BiasedTowardsMeSolversFactory(), this, row, col, (row * col) / 3, 0);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
         dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
         gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());

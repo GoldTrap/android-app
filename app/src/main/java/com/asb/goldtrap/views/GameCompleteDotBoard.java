@@ -51,8 +51,10 @@ public class GameCompleteDotBoard extends View {
     private Paint dotsPaint;
     private Paint firstPlayerCellPaint;
     private Paint secondPlayerCellPaint;
+    private Paint blockedCellPaint;
     private Paint firstPlayerLinePaint;
     private Paint secondPlayerLinePaint;
+    private Paint blockedLinePaint;
     private Paint achievementsPaint;
 
     public GameCompleteDotBoard(Context context, AttributeSet attrs) {
@@ -69,7 +71,9 @@ public class GameCompleteDotBoard extends View {
         firstPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         secondPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        blockedCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        blockedLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         achievementsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -83,12 +87,12 @@ public class GameCompleteDotBoard extends View {
         // Drawers
         pointDrawer = new PointDrawer(dotsPaint);
         cellDrawer =
-                new CellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
+                new CellDrawer(secondPlayerCellPaint, firstPlayerCellPaint, blockedCellPaint);
         horizontalLineDrawer =
                 new HorizontalLineDrawer(secondPlayerLinePaint,
-                        firstPlayerLinePaint);
+                        firstPlayerLinePaint, blockedLinePaint);
         verticalLineDrawer = new VerticalLineDrawer(secondPlayerLinePaint,
-                firstPlayerLinePaint);
+                firstPlayerLinePaint, blockedLinePaint);
         goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
         achievementsDrawer = new AchievementsDrawer(achievementsPaint, bitmapPaint, spark);
         this.startTime = System.currentTimeMillis();
@@ -96,13 +100,16 @@ public class GameCompleteDotBoard extends View {
     }
 
     public void setColors(int[] colors) {
-        if (null != colors && 6 <= colors.length) {
-            dotsPaint.setColor(colors[0]);
-            firstPlayerCellPaint.setColor(colors[1]);
-            secondPlayerCellPaint.setColor(colors[2]);
-            firstPlayerLinePaint.setColor(colors[3]);
-            secondPlayerLinePaint.setColor(colors[4]);
-            achievementsPaint.setColor(colors[5]);
+        int index = 0;
+        if (null != colors && 7 <= colors.length) {
+            dotsPaint.setColor(colors[index++]);
+            firstPlayerCellPaint.setColor(colors[index++]);
+            secondPlayerCellPaint.setColor(colors[index++]);
+            blockedCellPaint.setColor(colors[index++]);
+            firstPlayerLinePaint.setColor(colors[index++]);
+            secondPlayerLinePaint.setColor(colors[index++]);
+            blockedLinePaint.setColor(colors[index++]);
+            achievementsPaint.setColor(colors[index]);
         }
     }
 

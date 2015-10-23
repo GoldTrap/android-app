@@ -4,7 +4,8 @@
     <color name="dot_grey">#7C786A</color>
     <color name="dot_blue">#8DCDC1</color>
     <color name="dot_orange">#EB6E44</color>
-    <color name="dot_coffee">#A0522D</color>
+    <color name="dot_coffee">#90421D</color>
+    <color name="dot_light_coffee">#A0522D</color>
     <color name="dot_light_blue">#9DDDD1</color>
     <color name="dot_light_orange">#FB7E54</color>
 
@@ -19,8 +20,10 @@
         <item>@color/dot_grey</item>
         <item>@color/dot_light_blue</item>
         <item>@color/dot_light_orange</item>
+        <item>@color/dot_light_coffee</item>
         <item>@color/dot_blue</item>
         <item>@color/dot_orange</item>
+        <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
     </array>
 
@@ -28,8 +31,10 @@
         <item>@color/dot_black</item>
         <item>@color/dot_light_blue</item>
         <item>@color/dot_light_orange</item>
+        <item>@color/dot_light_coffee</item>
         <item>@color/dot_blue</item>
         <item>@color/dot_orange</item>
+        <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
     </array>
 
@@ -37,8 +42,10 @@
         <item>@color/super_crimson</item>
         <item>@color/super_light_cream</item>
         <item>@color/super_light_blue</item>
+        <item>@color/dot_light_orange</item>
         <item>@color/super_cream</item>
         <item>@color/super_blue</item>
+        <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
     </array>
 
@@ -46,8 +53,10 @@
         <item>@color/super_dark_crimson</item>
         <item>@color/super_light_cream</item>
         <item>@color/super_light_blue</item>
+        <item>@color/dot_light_orange</item>
         <item>@color/super_cream</item>
         <item>@color/super_blue</item>
+        <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
     </array>
 </resources>

@@ -8,9 +8,7 @@ import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.models.states.enums.LineState;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -31,14 +29,15 @@ public class DotsGameFactory {
         fillHorizontalLinesForEmptyGame(horizontalLines, rows, cols);
         fillVerticalLinesForEmptyGame(verticalLines, rows, cols);
         fillCellsForEmptyGame(cells, rows, cols);
-        fillGoodies(goodies, (rows * cols) / 3, rows, cols);
+        fillGoodies(cells, goodies, (rows * cols) / 3, rows, cols);
 
         gameSnapshot = new DotsGameSnapshot(cells, horizontalLines, verticalLines,
                 goodies);
         return gameSnapshot;
     }
 
-    public static DotsGameSnapshot createGameSnapshot(int rows, int cols, int goodiesCount) {
+    public static DotsGameSnapshot createGameSnapshot(int rows, int cols, int goodiesCount,
+                                                      int blockedCount) {
         DotsGameSnapshot gameSnapshot = null;
 
         Log.v("DotsGameFactory", "rows: " + rows + ", cols: " + cols);
@@ -50,23 +49,44 @@ public class DotsGameFactory {
         fillHorizontalLinesForEmptyGame(horizontalLines, rows, cols);
         fillVerticalLinesForEmptyGame(verticalLines, rows, cols);
         fillCellsForEmptyGame(cells, rows, cols);
-        fillGoodies(goodies, goodiesCount, rows, cols);
+        fillBlocked(cells, horizontalLines, verticalLines, rows, cols, blockedCount);
+        fillGoodies(cells, goodies, rows, cols, goodiesCount);
 
         gameSnapshot = new DotsGameSnapshot(cells, horizontalLines, verticalLines,
                 goodies);
         return gameSnapshot;
     }
 
-    private static void fillGoodies(Set<Goodie> goodies, int goodiesCount,
-                                    int rows, int cols) {
+    private static void fillGoodies(CellState[][] cells, Set<Goodie> goodies,
+                                    int rows, int cols, int goodiesCount) {
         Random random = new Random();
         int max = rows * cols;
         for (int i = 0; i < goodiesCount; i += 1) {
             int rd = random.nextInt(max);
             int r = rd / cols;
             int c = rd % cols;
+            if (cells[r][c] != CellState.FREE) {
+                continue;
+            }
             Goodie goodie = new Goodie(GoodiesState.ONE_K, r, c);
             goodies.add(goodie);
+        }
+    }
+
+    private static void fillBlocked(CellState[][] cells, LineState[][] horizontalLines,
+                                    LineState[][] verticalLines,
+                                    int rows, int cols, int blockedCount) {
+        Random random = new Random();
+        int max = rows * cols;
+        for (int i = 0; i < blockedCount; i += 1) {
+            int rd = random.nextInt(max);
+            int r = rd / cols;
+            int c = rd % cols;
+            cells[r][c] = CellState.BLOCKED;
+            horizontalLines[r][c] = LineState.BLOCKED;
+            horizontalLines[r + 1][c] = LineState.BLOCKED;
+            verticalLines[r][c] = LineState.BLOCKED;
+            verticalLines[r][c + 1] = LineState.BLOCKED;
         }
     }
 

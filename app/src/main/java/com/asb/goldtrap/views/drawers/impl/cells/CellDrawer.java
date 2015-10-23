@@ -20,10 +20,12 @@ public class CellDrawer implements BoardComponentDrawer {
 
     private Paint aiPaint;
     private Paint playerPaint;
+    private Paint blockedPaint;
 
-    public CellDrawer(Paint aiPaint, Paint playerPaint) {
+    public CellDrawer(Paint aiPaint, Paint playerPaint, Paint blockedPaint) {
         this.aiPaint = aiPaint;
         this.playerPaint = playerPaint;
+        this.blockedPaint = blockedPaint;
     }
 
     @Override
@@ -84,6 +86,9 @@ public class CellDrawer implements BoardComponentDrawer {
                 break;
             case PLAYER:
                 paint = playerPaint;
+                break;
+            case BLOCKED:
+                paint = blockedPaint;
                 break;
             default:
                 break;

@@ -11,8 +11,8 @@ import com.asb.goldtrap.views.LineType;
 public class HorizontalLineDrawerThatSkipsLastSelectedLine extends HorizontalLineDrawer {
 
     public HorizontalLineDrawerThatSkipsLastSelectedLine(Paint aiPaint,
-                                                         Paint playerPaint) {
-        super(aiPaint, playerPaint);
+                                                         Paint playerPaint, Paint blockedPaint) {
+        super(aiPaint, playerPaint, blockedPaint);
     }
 
     @Override

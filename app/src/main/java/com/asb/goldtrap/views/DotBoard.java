@@ -49,6 +49,8 @@ public class DotBoard extends View implements View.OnTouchListener {
     private Paint dotsPaint;
     private Paint firstPlayerCellPaint;
     private Paint secondPlayerCellPaint;
+    private Paint blockedCellPaint;
+    private Paint blockedLinePaint;
     private Paint firstPlayerLinePaint;
     private Paint secondPlayerLinePaint;
 
@@ -85,6 +87,8 @@ public class DotBoard extends View implements View.OnTouchListener {
         dotsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         firstPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         secondPlayerCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        blockedCellPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        blockedLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -98,12 +102,13 @@ public class DotBoard extends View implements View.OnTouchListener {
         // Drawers
         pointDrawer = new PointDrawer(dotsPaint);
         cellDrawer =
-                new CellDrawerThatSkipsLastScoredCells(secondPlayerCellPaint, firstPlayerCellPaint);
+                new CellDrawerThatSkipsLastScoredCells(secondPlayerCellPaint, firstPlayerCellPaint,
+                        blockedCellPaint);
         horizontalLineDrawer =
                 new HorizontalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
-                        firstPlayerLinePaint);
+                        firstPlayerLinePaint, blockedLinePaint);
         verticalLineDrawer = new VerticalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
-                firstPlayerLinePaint);
+                firstPlayerLinePaint, blockedLinePaint);
         goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
         lastFilledCellDrawer =
                 new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
@@ -114,12 +119,15 @@ public class DotBoard extends View implements View.OnTouchListener {
     }
 
     public void setColors(int[] colors) {
-        if (null != colors && 5 <= colors.length) {
-            dotsPaint.setColor(colors[0]);
-            firstPlayerCellPaint.setColor(colors[1]);
-            secondPlayerCellPaint.setColor(colors[2]);
-            firstPlayerLinePaint.setColor(colors[3]);
-            secondPlayerLinePaint.setColor(colors[4]);
+        int index = 0;
+        if (null != colors && 7 <= colors.length) {
+            dotsPaint.setColor(colors[index++]);
+            firstPlayerCellPaint.setColor(colors[index++]);
+            secondPlayerCellPaint.setColor(colors[index++]);
+            blockedCellPaint.setColor(colors[index++]);
+            firstPlayerLinePaint.setColor(colors[index++]);
+            secondPlayerLinePaint.setColor(colors[index++]);
+            blockedLinePaint.setColor(colors[index]);
         }
     }
 

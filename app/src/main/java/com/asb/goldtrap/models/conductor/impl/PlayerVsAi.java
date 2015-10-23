@@ -10,6 +10,7 @@ import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.impl.BasicGreedySolver;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
+import com.asb.goldtrap.models.states.enums.LineState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameExited;
 import com.asb.goldtrap.models.states.impl.GameOver;
@@ -42,8 +43,9 @@ public class PlayerVsAi implements GameConductor {
     private GoodieMover goodieMover;
 
     public PlayerVsAi(GameStateObserver gameStateObserver, int rows,
-                      int cols, int goodiesCount) {
-        dotsGameSnapshot = DotsGameFactory.createGameSnapshot(rows, cols, goodiesCount);
+                      int cols, int goodiesCount, int blockedCount) {
+        dotsGameSnapshot =
+                DotsGameFactory.createGameSnapshot(rows, cols, goodiesCount, blockedCount);
         firstPlayerState = new PlayerTurn(this, new Gamer());
         secondPlayerState = new AITurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
@@ -57,26 +59,31 @@ public class PlayerVsAi implements GameConductor {
 
     private void findAllLineCombinations() {
         CellState[][] cells = dotsGameSnapshot.getCells();
+        LineState[][] horizontalLines = dotsGameSnapshot.getHorizontalLines();
 
         int horiRow = cells.length + 1;
         int horiCol = cells[0].length;
 
         for (int row = 0; row < horiRow; row += 1) {
             for (int col = 0; col < horiCol; col += 1) {
-                Line line = new Line(LineType.HORIZONTAL, row, col);
-                combinations.add(line);
-                cSet.add(line);
+                if (horizontalLines[row][col] == LineState.FREE) {
+                    Line line = new Line(LineType.HORIZONTAL, row, col);
+                    combinations.add(line);
+                    cSet.add(line);
+                }
             }
         }
 
         int vertiRow = cells.length;
         int vertiCol = cells[0].length + 1;
-
+        LineState[][] verticalLines = dotsGameSnapshot.getVerticalLines();
         for (int row = 0; row < vertiRow; row += 1) {
             for (int col = 0; col < vertiCol; col += 1) {
-                Line line = new Line(LineType.VERTICAL, row, col);
-                combinations.add(line);
-                cSet.add(line);
+                if (verticalLines[row][col] == LineState.FREE) {
+                    Line line = new Line(LineType.VERTICAL, row, col);
+                    combinations.add(line);
+                    cSet.add(line);
+                }
             }
         }
 

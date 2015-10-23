@@ -190,7 +190,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
         int factoryIndex = random.nextInt(solversFactory.length);
-        conductor = new AiVsAi(solversFactory[factoryIndex], this, row, col, (row * col) / 3);
+        conductor = new AiVsAi(solversFactory[factoryIndex], this, row, col, (row * col) / 3,
+                (row * col) / 6);
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
         dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
         gameConductorDotBoard.setGameSnapShot(conductor.getGameSnapshot());

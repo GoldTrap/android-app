@@ -9,8 +9,9 @@ import java.util.Set;
  */
 public class CellDrawerThatSkipsLastScoredCells extends CellDrawer {
 
-    public CellDrawerThatSkipsLastScoredCells(Paint aiPaint, Paint playerPaint) {
-        super(aiPaint, playerPaint);
+    public CellDrawerThatSkipsLastScoredCells(Paint aiPaint, Paint playerPaint,
+                                              Paint blockedCellPaint) {
+        super(aiPaint, playerPaint, blockedCellPaint);
     }
 
     protected boolean shouldPaintTheCell(Paint paint, Set<String> lookup, int row, int col) {

@@ -12,8 +12,8 @@ import com.asb.goldtrap.models.states.enums.LineState;
  */
 public class VerticalLineDrawer extends AbstractLineDrawer {
 
-    public VerticalLineDrawer(Paint aiPaint, Paint playerPaint) {
-        super(aiPaint, playerPaint);
+    public VerticalLineDrawer(Paint aiPaint, Paint playerPaint, Paint blockedPaint) {
+        super(aiPaint, playerPaint, blockedPaint);
     }
 
     @Override

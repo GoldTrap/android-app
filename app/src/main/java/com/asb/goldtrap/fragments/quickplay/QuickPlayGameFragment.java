@@ -150,7 +150,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private void startGame() {
         int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
         int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
-        conductor = new PlayerVsAi(this, row, col, (row * col) / 3);
+        conductor = new PlayerVsAi(this, row, col, (row * col) / 3, (row * col) / 6);
         conductor.setState(conductor.getFirstPlayerState());
     }
 
