@@ -68,7 +68,13 @@ public class DotsGameFactory {
             if (cells[r][c] != CellState.FREE) {
                 continue;
             }
-            Goodie goodie = new Goodie(GoodiesState.ONE_K, r, c);
+            Goodie goodie;
+            if (random.nextBoolean()) {
+                goodie = new Goodie(GoodiesState.DYNAMIC_GOODIE, r, c, random.nextInt(15) + 1);
+            }
+            else {
+                goodie = new Goodie(GoodiesState.ONE_K, r, c);
+            }
             goodies.add(goodie);
         }
     }

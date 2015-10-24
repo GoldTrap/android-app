@@ -28,7 +28,8 @@ public class HorizontalGoodieMover implements GoodieOperator {
                 int col = (startCol + 1) % cols;
                 while (!(col == startCol)) {
                     if (CellState.FREE == cells[row][col]) {
-                        Goodie newGoodie = new Goodie(goodie.getGoodiesState(), row, col);
+                        Goodie newGoodie = new Goodie(goodie.getGoodiesState(), row, col,
+                                goodie.getDisplayValue());
                         goodies.add(newGoodie);
                         break;
                     }

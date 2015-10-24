@@ -54,8 +54,8 @@ public class PlayerVsAi implements GameConductor {
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
-        // goodieOperators.add(new VerticalGoodieMover());
-        // goodieOperators.add(new HorizontalGoodieMover());
+//        goodieOperators.add(new VerticalGoodieMover());
+//        goodieOperators.add(new HorizontalGoodieMover());
         findAllLineCombinations();
         aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
     }

@@ -9,11 +9,17 @@ public class Goodie {
     final private GoodiesState goodiesState;
     final private int row;
     final private int col;
+    private int displayValue = 0;
 
     public Goodie(GoodiesState goodiesState, int row, int col) {
         this.goodiesState = goodiesState;
         this.row = row;
         this.col = col;
+    }
+
+    public Goodie(GoodiesState goodiesState, int row, int col, int displayValue) {
+        this(goodiesState, row, col);
+        this.displayValue = displayValue;
     }
 
     public GoodiesState getGoodiesState() {
@@ -26,6 +32,14 @@ public class Goodie {
 
     public int getCol() {
         return col;
+    }
+
+    public int getDisplayValue() {
+        return displayValue;
+    }
+
+    public void setDisplayValue(int displayValue) {
+        this.displayValue = displayValue;
     }
 
     @Override

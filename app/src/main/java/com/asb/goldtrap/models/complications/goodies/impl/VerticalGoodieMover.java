@@ -28,7 +28,8 @@ public class VerticalGoodieMover implements GoodieOperator {
                 int col = startCol;
                 while (!(row == startRow)) {
                     if (CellState.FREE == cells[row][col]) {
-                        Goodie newGoodie = new Goodie(goodie.getGoodiesState(), row, col);
+                        Goodie newGoodie = new Goodie(goodie.getGoodiesState(), row, col,
+                                goodie.getDisplayValue());
                         goodies.add(newGoodie);
                         break;
                     }
