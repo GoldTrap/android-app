@@ -5,6 +5,6 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 /**
  * Created by arjun on 17/10/15.
  */
-public interface GoodieMover {
-    void moveGoodie(DotsGameSnapshot dotsGameSnapshot);
+public interface GoodieOperator {
+    void operateOnGoodie(DotsGameSnapshot dotsGameSnapshot);
 }

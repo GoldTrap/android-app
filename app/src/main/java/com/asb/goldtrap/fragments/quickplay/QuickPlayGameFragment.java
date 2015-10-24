@@ -2,6 +2,7 @@ package com.asb.goldtrap.fragments.quickplay;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private OnFragmentInteractionListener mListener;
     private Random random = new Random();
     private GameConductor conductor;
+    private Handler handler = new Handler();
 
     public static QuickPlayGameFragment newInstance() {
         return new QuickPlayGameFragment();
@@ -99,6 +101,8 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                     gameCompleteDotBoard.setVisibility(View.VISIBLE);
                     gameCompleteDotBoard.requestRedraw();
                 }
+                conductor.doPostProcess();
+                dotBoard.postInvalidate();
                 if (conductor.getState() instanceof AITurn) {
                     if (conductor.playTheirTurn()) {
                         dotBoard.requestRedraw();

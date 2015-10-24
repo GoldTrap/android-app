@@ -1,7 +1,8 @@
 package com.asb.goldtrap.models.conductor.impl;
 
-import com.asb.goldtrap.models.complications.goodies.GoodieMover;
-import com.asb.goldtrap.models.complications.goodies.impl.NullGoodieMover;
+import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
+import com.asb.goldtrap.models.complications.goodies.impl.HorizontalGoodieMover;
+import com.asb.goldtrap.models.complications.goodies.impl.VerticalGoodieMover;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.factory.DotsGameFactory;
@@ -40,7 +41,7 @@ public class PlayerVsAi implements GameConductor {
     private GameState gameOverState;
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
-    private GoodieMover goodieMover;
+    private List<GoodieOperator> goodieOperators;
 
     public PlayerVsAi(GameStateObserver gameStateObserver, int rows,
                       int cols, int goodiesCount, int blockedCount) {
@@ -52,7 +53,9 @@ public class PlayerVsAi implements GameConductor {
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
-        goodieMover = new NullGoodieMover();
+        goodieOperators = new ArrayList<>();
+        // goodieOperators.add(new VerticalGoodieMover());
+        // goodieOperators.add(new HorizontalGoodieMover());
         findAllLineCombinations();
         aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
     }
@@ -184,7 +187,9 @@ public class PlayerVsAi implements GameConductor {
     }
 
     @Override
-    public void moveGoodie() {
-        goodieMover.moveGoodie(dotsGameSnapshot);
+    public void doPostProcess() {
+        for (GoodieOperator goodieOperator : goodieOperators) {
+            goodieOperator.operateOnGoodie(dotsGameSnapshot);
+        }
     }
 }

@@ -29,7 +29,7 @@ public interface GameConductor {
 
     boolean playTheirTurn();
 
-    void moveGoodie();
+    void doPostProcess();
 
     DotsGameSnapshot getGameSnapshot();
 
