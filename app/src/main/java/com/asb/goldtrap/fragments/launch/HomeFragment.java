@@ -138,6 +138,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
                     gameLayout.addView(gameConductorDotBoard);
                     gameConductorDotBoard.requestRedraw();
                 }
+                conductor.doPostProcess();
+                dotBoard.postInvalidate();
                 if (conductor.getState() == conductor.getFirstPlayerState()) {
                     firstPlayerTurn();
                 }

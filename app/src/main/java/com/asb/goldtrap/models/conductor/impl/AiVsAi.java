@@ -1,7 +1,9 @@
 package com.asb.goldtrap.models.conductor.impl;
 
 import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
+import com.asb.goldtrap.models.complications.goodies.impl.DynamicGoodieValueModifier;
 import com.asb.goldtrap.models.complications.goodies.impl.NullGoodieMover;
+import com.asb.goldtrap.models.complications.series.impl.AP;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.factory.DotsGameFactory;
@@ -41,7 +43,7 @@ public class AiVsAi implements GameConductor {
     private GameState gameOverState;
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
-    private GoodieOperator goodieOperator;
+    private List<GoodieOperator> goodieOperators;
 
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, int rows,
                   int cols, int goodiesCount, int blockedCount) {
@@ -53,7 +55,8 @@ public class AiVsAi implements GameConductor {
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
-        goodieOperator = new NullGoodieMover();
+        goodieOperators = new ArrayList<>();
+        goodieOperators.add(new DynamicGoodieValueModifier(new AP(100)));
         findAllLineCombinations();
         aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
         otherAiSolver = solversFactory.getOtherPlayerSolver(dotsGameSnapshot, combinations);
@@ -183,6 +186,8 @@ public class AiVsAi implements GameConductor {
 
     @Override
     public void doPostProcess() {
-        goodieOperator.operateOnGoodie(dotsGameSnapshot);
+        for (GoodieOperator goodieOperator : goodieOperators) {
+            goodieOperator.operateOnGoodie(dotsGameSnapshot);
+        }
     }
 }

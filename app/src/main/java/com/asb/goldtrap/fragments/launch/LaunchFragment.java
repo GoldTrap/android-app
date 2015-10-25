@@ -190,6 +190,8 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             dotBoard.setVisibility(View.INVISIBLE);
             gameCompleteDotBoard.requestRedraw();
         }
+        conductor.doPostProcess();
+        dotBoard.postInvalidate();
         if (conductor.getState() == conductor.getFirstPlayerState()) {
             firstPlayerTurn();
         }
