@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.PlayerVsAi;
+import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameOver;
@@ -21,7 +23,11 @@ import com.asb.goldtrap.models.states.impl.PlayerTurn;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 /**
@@ -131,7 +137,16 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        doGSONStuff();
         startGame();
+    }
+
+    private void doGSONStuff() {
+        Gson gson = new Gson();
+        InputStream inputStream = getResources().openRawResource(R.raw.level);
+        Level level =
+                gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
+        Log.d(TAG, gson.toJson(level));
     }
 
     @Override
