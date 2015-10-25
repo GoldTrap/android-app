@@ -6,7 +6,7 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 /**
  * Created by arjun on 17/10/15.
  */
-public class NullGoodieMover implements GoodieOperator {
+public class NullGoodieOperator implements GoodieOperator {
 
     @Override
     public void operateOnGoodie(DotsGameSnapshot dotsGameSnapshot) {

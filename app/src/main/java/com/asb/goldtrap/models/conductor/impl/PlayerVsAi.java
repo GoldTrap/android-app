@@ -3,6 +3,7 @@ package com.asb.goldtrap.models.conductor.impl;
 import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
 import com.asb.goldtrap.models.complications.goodies.impl.DynamicGoodieValueModifier;
 import com.asb.goldtrap.models.complications.series.impl.AP;
+import com.asb.goldtrap.models.complications.series.impl.GP;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.factory.DotsGameFactory;
@@ -54,9 +55,7 @@ public class PlayerVsAi implements GameConductor {
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
-        goodieOperators.add(new DynamicGoodieValueModifier(new AP(100)));
-//        goodieOperators.add(new VerticalGoodieMover());
-//        goodieOperators.add(new HorizontalGoodieMover());
+        goodieOperators.add(new DynamicGoodieValueModifier(new AP(-2)));
         findAllLineCombinations();
         aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
     }

@@ -1,6 +1,7 @@
 package com.asb.goldtrap.models.complications.goodies.impl;
 
 import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
+import com.asb.goldtrap.models.complications.mover.GoodieMover;
 import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.CellState;
@@ -11,7 +12,13 @@ import java.util.Set;
 /**
  * Created by arjun on 17/10/15.
  */
-public class HorizontalGoodieMover implements GoodieOperator {
+public class GoodiePositionModifier implements GoodieOperator {
+
+    private GoodieMover mover;
+
+    public GoodiePositionModifier(GoodieMover mover) {
+        this.mover = mover;
+    }
 
     @Override
     public void operateOnGoodie(DotsGameSnapshot dotsGameSnapshot) {
@@ -24,20 +31,7 @@ public class HorizontalGoodieMover implements GoodieOperator {
             int startRow = goodie.getRow();
             int startCol = goodie.getCol();
             if (CellState.FREE == cells[startRow][startCol]) {
-                int row = startRow;
-                int col = (startCol + 1) % cols;
-                while (!(col == startCol)) {
-                    if (CellState.FREE == cells[row][col]) {
-                        Goodie newGoodie = new Goodie(goodie.getGoodiesState(), row, col,
-                                goodie.getDisplayValue());
-                        goodies.add(newGoodie);
-                        break;
-                    }
-                    col = (col + 1) % cols;
-                }
-                if (col == startCol) {
-                    goodies.add(goodie);
-                }
+                mover.moveGoodie(cells, cols, rows, goodies, goodie, startRow, startCol);
             }
             else {
                 goodies.add(goodie);
@@ -45,4 +39,5 @@ public class HorizontalGoodieMover implements GoodieOperator {
         }
         dotsGameSnapshot.setGoodies(goodies);
     }
+
 }
