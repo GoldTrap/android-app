@@ -79,7 +79,10 @@ public class GoodiesDrawer implements BoardComponentDrawer {
         int top = (int) (y + bHStart);
         int right = left + widthScaled;
         int bottom = top + heightScaled;
-        int noOfDigits = getNumberOfDigits(goodie.getDisplayValue());
+        int noOfDigits = getNumberOfDigits(Math.abs(goodie.getDisplayValue()));
+        if (0 == noOfDigits) {
+            noOfDigits = 1;
+        }
         float textSize = widthScaled / noOfDigits;
         bitmapPaint.setTextSize(textSize);
         canvas.drawText(String.valueOf(goodie.getDisplayValue()),
