@@ -11,12 +11,12 @@ public class Level {
     private int rows;
     private int cols;
     private Map<String, Integer> tasks;
-    private Map<String, Integer> goodies;
-    private List<DynamicGoodieValue> dynamicGoodies;
+    private List<GoodieData> goodies;
+    private List<DynamicGoodieData> dynamicGoodies;
     private String firstPlayer;
     private String adType;
     private List<Complication> complications;
-    private Map<String, Unlocks> unlocks;
+    private List<Unlocks> unlocks;
 
     public String getSolver() {
         return solver;
@@ -50,20 +50,20 @@ public class Level {
         this.tasks = tasks;
     }
 
-    public Map<String, Integer> getGoodies() {
+    public List<GoodieData> getGoodies() {
         return goodies;
     }
 
-    public void setGoodies(Map<String, Integer> goodies) {
+    public void setGoodies(List<GoodieData> goodies) {
         this.goodies = goodies;
     }
 
-    public List<DynamicGoodieValue> getDynamicGoodies() {
+    public List<DynamicGoodieData> getDynamicGoodies() {
         return dynamicGoodies;
     }
 
     public void setDynamicGoodies(
-            List<DynamicGoodieValue> dynamicGoodies) {
+            List<DynamicGoodieData> dynamicGoodies) {
         this.dynamicGoodies = dynamicGoodies;
     }
 
@@ -92,12 +92,11 @@ public class Level {
         this.complications = complications;
     }
 
-    public Map<String, Unlocks> getUnlocks() {
+    public List<Unlocks> getUnlocks() {
         return unlocks;
     }
 
-    public void setUnlocks(
-            Map<String, Unlocks> unlocks) {
+    public void setUnlocks(List<Unlocks> unlocks) {
         this.unlocks = unlocks;
     }
 }

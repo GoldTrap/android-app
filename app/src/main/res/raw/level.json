@@ -6,15 +6,20 @@
     "LINES": 1,
     "GOODIES": 2
   },
-  "goodies": {
-    "1K": 3
-  },
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 3
+    }
+  ],
   "dynamicGoodies": [
     {
-      "value": 100
+      "value": 100,
+      "count": 1
     },
     {
-      "value": 1500
+      "value": 1500,
+      "count": 3
     }
   ],
   "firstPlayer": "ANY",
@@ -29,12 +34,14 @@
       "strategy": "HORIZONTAL"
     }
   ],
-  "unlocks": {
-    "EXPLORER": {
+  "unlocks": [
+    {
+      "unlockType": "EXPLORER",
       "points": 1000
     },
-    "BRAVE_HEART": {
+    {
+      "unlockType": "BRAVE_HEART",
       "points": 1000
     }
-  }
+  ]
 }
