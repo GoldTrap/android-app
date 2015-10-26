@@ -2,6 +2,7 @@ package com.asb.goldtrap.models.factory;
 
 import android.util.Log;
 
+import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.CellState;
@@ -25,6 +26,7 @@ public class DotsGameFactory {
         LineState verticalLines[][] = new LineState[rows][cols + 1];
         CellState cells[][] = new CellState[rows][cols];
         Set<Goodie> goodies = new HashSet<>();
+        Set<DynamicGoodie> dynamicGoodies = new HashSet<>();
 
         fillHorizontalLinesForEmptyGame(horizontalLines, rows, cols);
         fillVerticalLinesForEmptyGame(verticalLines, rows, cols);
@@ -32,7 +34,7 @@ public class DotsGameFactory {
         fillGoodies(cells, goodies, (rows * cols) / 3, rows, cols);
 
         gameSnapshot = new DotsGameSnapshot(cells, horizontalLines, verticalLines,
-                goodies);
+                goodies, dynamicGoodies);
         return gameSnapshot;
     }
 
@@ -45,16 +47,36 @@ public class DotsGameFactory {
         LineState verticalLines[][] = new LineState[rows][cols + 1];
         CellState cells[][] = new CellState[rows][cols];
         Set<Goodie> goodies = new HashSet<>(goodiesCount);
+        Set<DynamicGoodie> dynamicGoodies = new HashSet<>(goodiesCount);
 
         fillHorizontalLinesForEmptyGame(horizontalLines, rows, cols);
         fillVerticalLinesForEmptyGame(verticalLines, rows, cols);
         fillCellsForEmptyGame(cells, rows, cols);
         fillBlocked(cells, horizontalLines, verticalLines, rows, cols, blockedCount);
-        fillGoodies(cells, goodies, rows, cols, goodiesCount);
+        fillGoodies(cells, goodies, rows, cols, goodiesCount / 2);
+        fillDynamicGoodies(cells, dynamicGoodies, rows, cols, goodiesCount / 2);
 
         gameSnapshot = new DotsGameSnapshot(cells, horizontalLines, verticalLines,
-                goodies);
+                goodies, dynamicGoodies);
         return gameSnapshot;
+    }
+
+    private static void fillDynamicGoodies(CellState[][] cells, Set<DynamicGoodie> goodies,
+                                           int rows,
+                                           int cols, int goodiesCount) {
+        Random random = new Random();
+        int max = rows * cols;
+        for (int i = 0; i < goodiesCount; i += 1) {
+            int rd = random.nextInt(max);
+            int r = rd / cols;
+            int c = rd % cols;
+            if (cells[r][c] != CellState.FREE) {
+                continue;
+            }
+            DynamicGoodie goodie =
+                    new DynamicGoodie(GoodiesState.DYNAMIC_GOODIE, r, c, random.nextInt(15) + 1);
+            goodies.add(goodie);
+        }
     }
 
     private static void fillGoodies(CellState[][] cells, Set<Goodie> goodies,
@@ -68,13 +90,7 @@ public class DotsGameFactory {
             if (cells[r][c] != CellState.FREE) {
                 continue;
             }
-            Goodie goodie;
-            if (random.nextBoolean()) {
-                goodie = new Goodie(GoodiesState.DYNAMIC_GOODIE, r, c, random.nextInt(15) + 1);
-            }
-            else {
-                goodie = new Goodie(GoodiesState.ONE_K, r, c);
-            }
+            Goodie goodie = new Goodie(GoodiesState.ONE_K, r, c);
             goodies.add(goodie);
         }
     }

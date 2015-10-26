@@ -1,6 +1,7 @@
 package com.asb.goldtrap.models.snapshots;
 
 import com.asb.goldtrap.models.components.Cell;
+import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.results.Score;
@@ -21,6 +22,7 @@ public class DotsGameSnapshot {
     private LineState horizontalLines[][];
     private LineState verticalLines[][];
     private Set<Goodie> goodies;
+    private Set<DynamicGoodie> dynamicGoodies;
     private Score score = new Score();
 
     private LineState lastClickedLineState = LineState.FREE;
@@ -31,12 +33,14 @@ public class DotsGameSnapshot {
     private List<Cell> lastScoredCells;
 
     public DotsGameSnapshot(CellState[][] cells, LineState[][] horizontalLines,
-                            LineState[][] verticalLines, Set<Goodie> goodies) {
+                            LineState[][] verticalLines, Set<Goodie> goodies,
+                            Set<DynamicGoodie> dynamicGoodies) {
         super();
         this.cells = cells;
         this.horizontalLines = horizontalLines;
         this.verticalLines = verticalLines;
         this.goodies = goodies;
+        this.dynamicGoodies = dynamicGoodies;
     }
 
     public LineState getLastClickedLineState() {
@@ -114,6 +118,15 @@ public class DotsGameSnapshot {
         this.goodies = goodies;
     }
 
+    public Set<DynamicGoodie> getDynamicGoodies() {
+        return dynamicGoodies;
+    }
+
+    public void setDynamicGoodies(
+            Set<DynamicGoodie> dynamicGoodies) {
+        this.dynamicGoodies = dynamicGoodies;
+    }
+
     public Score getScore() {
         computeScore();
         return score;
@@ -156,6 +169,14 @@ public class DotsGameSnapshot {
             if (CellState.PLAYER == cells[goodie.getRow()][goodie.getCol()]) {
                 if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
                     score.getGoodies().add(goodie);
+                }
+            }
+        }
+
+        for (DynamicGoodie goodie : dynamicGoodies) {
+            if (CellState.PLAYER == cells[goodie.getRow()][goodie.getCol()]) {
+                if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
+                    score.getDynamicGoodies().add(goodie);
                 }
             }
         }

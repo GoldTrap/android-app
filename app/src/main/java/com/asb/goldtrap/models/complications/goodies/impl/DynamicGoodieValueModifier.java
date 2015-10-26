@@ -2,6 +2,7 @@ package com.asb.goldtrap.models.complications.goodies.impl;
 
 import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
 import com.asb.goldtrap.models.complications.series.Series;
+import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.CellState;
@@ -22,8 +23,8 @@ public class DynamicGoodieValueModifier implements GoodieOperator {
     @Override
     public void operateOnGoodie(DotsGameSnapshot dotsGameSnapshot) {
         CellState[][] cells = dotsGameSnapshot.getCells();
-        Set<Goodie> goodies = dotsGameSnapshot.getGoodies();
-        for (Goodie goodie : goodies) {
+        Set<DynamicGoodie> goodies = dotsGameSnapshot.getDynamicGoodies();
+        for (DynamicGoodie goodie : goodies) {
             if (GoodiesState.DYNAMIC_GOODIE == goodie.getGoodiesState()) {
                 if (CellState.FREE == cells[goodie.getRow()][goodie.getCol()]) {
                     goodie.setDisplayValue(series.getNextTerm(goodie.getDisplayValue()));

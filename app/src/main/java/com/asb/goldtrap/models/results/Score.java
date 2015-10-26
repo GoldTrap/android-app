@@ -1,6 +1,7 @@
 package com.asb.goldtrap.models.results;
 
 import com.asb.goldtrap.models.components.Cell;
+import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.components.Line;
 
@@ -14,6 +15,7 @@ public class Score {
     private List<Line> lines = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private Set<Goodie> goodies = new HashSet<>();
+    private Set<DynamicGoodie> dynamicGoodies = new HashSet<>();
 
     public List<Line> getLines() {
         return lines;
@@ -25,6 +27,10 @@ public class Score {
 
     public Set<Goodie> getGoodies() {
         return goodies;
+    }
+
+    public Set<DynamicGoodie> getDynamicGoodies() {
+        return dynamicGoodies;
     }
 
     public int basicScore() {

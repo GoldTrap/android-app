@@ -7,25 +7,28 @@
     "GOODIES": 2
   },
   "goodies": {
-    "1K": [
-      {
-        "value": 1000
-      },
-      {
-        "value": 1000
-      }
-    ],
-    "DYNAMIC": [
-      {
-        "value": 100
-      },
-      {
-        "value": 1500
-      }
-    ]
+    "1K": 3
   },
+  "dynamicGoodies": [
+    {
+      "value": 100
+    },
+    {
+      "value": 1500
+    }
+  ],
   "firstPlayer": "ANY",
   "adType": "NONE",
+  "complications": [
+    {
+      "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
+      "strategy": "AP"
+    },
+    {
+      "operator": "GOODIE_POSITION_MODIFIER",
+      "strategy": "HORIZONTAL"
+    }
+  ],
   "unlocks": {
     "EXPLORER": {
       "points": 1000

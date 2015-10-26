@@ -18,6 +18,7 @@ import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.impl.cells.CellDrawerThatSkipsLastScoredCells;
 import com.asb.goldtrap.views.drawers.impl.cells.LastFilledCellDrawer;
+import com.asb.goldtrap.views.drawers.impl.goodies.DynamicGoodiesDrawer;
 import com.asb.goldtrap.views.drawers.impl.goodies.GoodiesDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.HorizontalLineDrawerThatSkipsLastSelectedLine;
 import com.asb.goldtrap.views.drawers.impl.lines.LastSelectedLineDrawer;
@@ -42,6 +43,7 @@ public class DotBoard extends View implements View.OnTouchListener {
     private BoardComponentDrawer horizontalLineDrawer;
     private BoardComponentDrawer verticalLineDrawer;
     private BoardComponentDrawer goodiesDrawer;
+    private BoardComponentDrawer dynamicGoodiesDrawer;
     private AnimatedBoardComponentDrawer lastFilledCellDrawer;
     private AnimatedBoardComponentDrawer lastLineClickedDrawer;
     private boolean animationRequested = false;
@@ -112,6 +114,7 @@ public class DotBoard extends View implements View.OnTouchListener {
         verticalLineDrawer = new VerticalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
                 firstPlayerLinePaint, blockedLinePaint);
         goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
+        dynamicGoodiesDrawer = new DynamicGoodiesDrawer(bitmapPaint);
         lastFilledCellDrawer =
                 new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
         lastLineClickedDrawer =
@@ -122,14 +125,15 @@ public class DotBoard extends View implements View.OnTouchListener {
 
     public void setColors(int[] colors) {
         int index = 0;
-        if (null != colors && 7 <= colors.length) {
+        if (null != colors && 8 <= colors.length) {
             dotsPaint.setColor(colors[index++]);
             firstPlayerCellPaint.setColor(colors[index++]);
             secondPlayerCellPaint.setColor(colors[index++]);
             blockedCellPaint.setColor(colors[index++]);
             firstPlayerLinePaint.setColor(colors[index++]);
             secondPlayerLinePaint.setColor(colors[index++]);
-            blockedLinePaint.setColor(colors[index]);
+            blockedLinePaint.setColor(colors[index++]);
+            bitmapPaint.setColor(colors[index]);
         }
     }
 
@@ -248,6 +252,7 @@ public class DotBoard extends View implements View.OnTouchListener {
             lastLineClickedDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
                     ANIMATION_DURATION);
             goodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
+            dynamicGoodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             if (animationRequested) {
                 if (elapsedTime < ANIMATION_DURATION) {

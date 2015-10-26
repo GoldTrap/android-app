@@ -44,12 +44,7 @@ public class GoodiesDrawer implements BoardComponentDrawer {
             if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
                 float x = (lineWidth / 2) + lineWidth * goodie.getCol();
                 float y = (lineHeight / 2) + lineHeight * goodie.getRow();
-                if (goodie.getGoodiesState() == GoodiesState.DYNAMIC_GOODIE) {
-                    drawDynamicGoodie(canvas, lineWidth, lineHeight, goodie, x, y);
-                }
-                else {
-                    drawGoodie(canvas, lineWidth, lineHeight, goodie, x, y);
-                }
+                drawGoodie(canvas, lineWidth, lineHeight, goodie, x, y);
             }
         }
     }
@@ -68,33 +63,4 @@ public class GoodiesDrawer implements BoardComponentDrawer {
         canvas.drawBitmap(goodieBitmap, null, destinationRect, bitmapPaint);
     }
 
-    private void drawDynamicGoodie(Canvas canvas, float lineWidth, float lineHeight, Goodie goodie,
-                                   float x, float y) {
-        int widthScaled = (int) (lineWidth * SCALING_FACTOR);
-        int heightScaled = (int) (lineHeight * SCALING_FACTOR);
-        int paddingWidth = (int) (lineWidth * PADDING_FACTOR);
-        float bHStart = (lineHeight - heightScaled) / 2;
-        float bWStart = (lineWidth - widthScaled) / 2;
-        int left = (int) (x + bWStart);
-        int top = (int) (y + bHStart);
-        int right = left + widthScaled;
-        int bottom = top + heightScaled;
-        int noOfDigits = getNumberOfDigits(Math.abs(goodie.getDisplayValue()));
-        if (0 == noOfDigits) {
-            noOfDigits = 1;
-        }
-        float textSize = widthScaled / noOfDigits;
-        bitmapPaint.setTextSize(textSize);
-        canvas.drawText(String.valueOf(goodie.getDisplayValue()),
-                left + paddingWidth, (top + bottom) / 2 + textSize / 2, bitmapPaint);
-    }
-
-    private int getNumberOfDigits(int displayValue) {
-        int numberOfDigits = 0;
-        while (displayValue > 0) {
-            displayValue /= 10;
-            numberOfDigits += 1;
-        }
-        return numberOfDigits;
-    }
 }

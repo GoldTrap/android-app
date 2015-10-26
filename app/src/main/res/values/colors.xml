@@ -25,6 +25,7 @@
         <item>@color/dot_orange</item>
         <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
+        <item>@color/dot_coffee</item>
     </array>
 
     <array name="default_game_complete_theme">
@@ -34,6 +35,7 @@
         <item>@color/dot_light_coffee</item>
         <item>@color/dot_blue</item>
         <item>@color/dot_orange</item>
+        <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
     </array>
@@ -47,6 +49,7 @@
         <item>@color/super_blue</item>
         <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
+        <item>@color/dot_orange</item>
     </array>
 
     <array name="experimental_game_complete_theme">
@@ -56,6 +59,7 @@
         <item>@color/dot_light_orange</item>
         <item>@color/super_cream</item>
         <item>@color/super_blue</item>
+        <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
     </array>

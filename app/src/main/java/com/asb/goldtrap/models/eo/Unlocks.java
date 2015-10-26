@@ -9,4 +9,12 @@ public class Unlocks {
     public Unlocks(int points) {
         this.points = points;
     }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 }

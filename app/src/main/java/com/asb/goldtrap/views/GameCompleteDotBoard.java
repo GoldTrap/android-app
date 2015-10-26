@@ -16,6 +16,7 @@ import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
 import com.asb.goldtrap.views.drawers.impl.achievements.AchievementsDrawer;
 import com.asb.goldtrap.views.drawers.impl.cells.CellDrawer;
+import com.asb.goldtrap.views.drawers.impl.goodies.DynamicGoodiesDrawer;
 import com.asb.goldtrap.views.drawers.impl.goodies.GoodiesDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.HorizontalLineDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.VerticalLineDrawer;
@@ -46,6 +47,7 @@ public class GameCompleteDotBoard extends View {
     private BoardComponentDrawer horizontalLineDrawer;
     private BoardComponentDrawer verticalLineDrawer;
     private BoardComponentDrawer goodiesDrawer;
+    private BoardComponentDrawer dynamicGoodiesDrawer;
     private AnimatedBoardComponentDrawer achievementsDrawer;
     private Paint bitmapPaint;
     private Paint dotsPaint;
@@ -94,6 +96,8 @@ public class GameCompleteDotBoard extends View {
         verticalLineDrawer = new VerticalLineDrawer(secondPlayerLinePaint,
                 firstPlayerLinePaint, blockedLinePaint);
         goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
+        dynamicGoodiesDrawer = new DynamicGoodiesDrawer(bitmapPaint);
+
         achievementsDrawer = new AchievementsDrawer(achievementsPaint, bitmapPaint, spark);
         this.startTime = System.currentTimeMillis();
 
@@ -101,7 +105,7 @@ public class GameCompleteDotBoard extends View {
 
     public void setColors(int[] colors) {
         int index = 0;
-        if (null != colors && 7 <= colors.length) {
+        if (null != colors && 8 <= colors.length) {
             dotsPaint.setColor(colors[index++]);
             firstPlayerCellPaint.setColor(colors[index++]);
             secondPlayerCellPaint.setColor(colors[index++]);
@@ -109,6 +113,7 @@ public class GameCompleteDotBoard extends View {
             firstPlayerLinePaint.setColor(colors[index++]);
             secondPlayerLinePaint.setColor(colors[index++]);
             blockedLinePaint.setColor(colors[index++]);
+            bitmapPaint.setColor(colors[index++]);
             achievementsPaint.setColor(colors[index]);
         }
     }
@@ -162,6 +167,7 @@ public class GameCompleteDotBoard extends View {
             horizontalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             cellDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             goodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
+            dynamicGoodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             achievementsDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
                     animationDuration);
