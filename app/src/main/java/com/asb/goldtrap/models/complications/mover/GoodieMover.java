@@ -9,6 +9,6 @@ import java.util.Set;
  * Created by arjun on 25/10/15.
  */
 public interface GoodieMover {
-    void moveGoodie(CellState[][] cells, int cols, int rows, Set<Goodie> goodies,
+    void moveGoodie(CellState[][] cells, int cols, int rows, Set goodies,
                     Goodie goodie, int startRow, int startCol);
 }

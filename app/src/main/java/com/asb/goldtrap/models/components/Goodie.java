@@ -7,8 +7,8 @@ import com.asb.goldtrap.models.states.enums.GoodiesState;
  */
 public class Goodie {
     final private GoodiesState goodiesState;
-    final private int row;
-    final private int col;
+    private int row;
+    private int col;
 
     public Goodie(GoodiesState goodiesState, int row, int col) {
         this.goodiesState = goodiesState;
@@ -26,6 +26,14 @@ public class Goodie {
 
     public int getCol() {
         return col;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 
     @Override

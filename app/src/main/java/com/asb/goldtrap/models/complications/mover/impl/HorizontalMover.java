@@ -11,14 +11,15 @@ import java.util.Set;
  */
 public class HorizontalMover implements GoodieMover {
     @Override
-    public void moveGoodie(CellState[][] cells, int cols, int rows, Set<Goodie> goodies,
+    public void moveGoodie(CellState[][] cells, int cols, int rows, Set goodies,
                            Goodie goodie, int startRow, int startCol) {
         int row = startRow;
         int col = (startCol + 1) % cols;
         while (!(col == startCol)) {
             if (CellState.FREE == cells[row][col]) {
-                Goodie newGoodie = new Goodie(goodie.getGoodiesState(), row, col);
-                goodies.add(newGoodie);
+                goodie.setRow(row);
+                goodie.setCol(col);
+                goodies.add(goodie);
                 break;
             }
             col = (col + 1) % cols;
