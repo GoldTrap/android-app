@@ -2,12 +2,11 @@ package com.asb.goldtrap.models.conductor.impl;
 
 import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
 import com.asb.goldtrap.models.complications.goodies.impl.DynamicGoodieValueModifier;
-import com.asb.goldtrap.models.complications.goodies.impl.GoodiePositionModifier;
-import com.asb.goldtrap.models.complications.mover.impl.HorizontalMover;
 import com.asb.goldtrap.models.complications.series.impl.AP;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
-import com.asb.goldtrap.models.factory.DotsGameFactory;
+import com.asb.goldtrap.models.eo.Level;
+import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.impl.BasicGreedySolver;
@@ -34,6 +33,7 @@ public class PlayerVsAi implements GameConductor {
     private static final String TAG = PlayerVsAi.class.getSimpleName();
     List<Line> combinations = new ArrayList<>();
     Set<Line> cSet = new HashSet<>();
+    private GameSnapshotCreator gameSnapshotCreator = new GameSnapshotCreator();
     private AISolver aiSolver;
     private DotsGameSnapshot dotsGameSnapshot;
     private boolean extraChance;
@@ -45,10 +45,8 @@ public class PlayerVsAi implements GameConductor {
     private GameStateObserver mGameStateObserver;
     private List<GoodieOperator> goodieOperators;
 
-    public PlayerVsAi(GameStateObserver gameStateObserver, int rows,
-                      int cols, int goodiesCount, int blockedCount) {
-        dotsGameSnapshot =
-                DotsGameFactory.createGameSnapshot(rows, cols, goodiesCount, blockedCount);
+    public PlayerVsAi(GameStateObserver gameStateObserver, Level level) {
+        dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
         firstPlayerState = new PlayerTurn(this, new Gamer());
         secondPlayerState = new AITurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
@@ -57,7 +55,6 @@ public class PlayerVsAi implements GameConductor {
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
         goodieOperators.add(new DynamicGoodieValueModifier(new AP(-2)));
-        goodieOperators.add(new GoodiePositionModifier(new HorizontalMover()));
         findAllLineCombinations();
         aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
     }

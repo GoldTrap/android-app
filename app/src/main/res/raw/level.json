@@ -2,6 +2,7 @@
   "solver": "RANDOM",
   "rows": 5,
   "cols": 5,
+  "blocked": 2,
   "tasks": {
     "LINES": 1,
     "GOODIES": 2

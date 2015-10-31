@@ -38,4 +38,21 @@ public class Cell {
         this.col = col;
     }
 
+    @Override
+    public int hashCode() {
+        return this.cellState.hashCode() + row + col;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean equals = false;
+        if (o instanceof Cell) {
+            Cell cell = (Cell) o;
+            if (cell.col == this.col && cell.row == this.row && cell.cellState == this.cellState) {
+                equals = true;
+            }
+
+        }
+        return equals;
+    }
 }

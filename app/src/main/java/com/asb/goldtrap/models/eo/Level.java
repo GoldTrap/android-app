@@ -10,6 +10,7 @@ public class Level {
     private String solver;
     private int rows;
     private int cols;
+    private int blocked;
     private Map<String, Integer> tasks;
     private List<GoodieData> goodies;
     private List<DynamicGoodieData> dynamicGoodies;
@@ -40,6 +41,14 @@ public class Level {
 
     public void setCols(int cols) {
         this.cols = cols;
+    }
+
+    public int getBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(int blocked) {
+        this.blocked = blocked;
     }
 
     public Map<String, Integer> getTasks() {

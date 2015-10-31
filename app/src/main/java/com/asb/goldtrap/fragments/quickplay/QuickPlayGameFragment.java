@@ -49,6 +49,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private Random random = new Random();
     private GameConductor conductor;
     private Handler handler = new Handler();
+    private Level level;
 
     public static QuickPlayGameFragment newInstance() {
         return new QuickPlayGameFragment();
@@ -144,8 +145,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private void doGSONStuff() {
         Gson gson = new Gson();
         InputStream inputStream = getResources().openRawResource(R.raw.level);
-        Level level =
-                gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
+        level = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
         Log.d(TAG, gson.toJson(level));
     }
 
@@ -167,9 +167,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     private void startGame() {
-        int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
-        int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
-        conductor = new PlayerVsAi(this, row, col, (row * col) / 3, (row * col) / 6);
+        conductor = new PlayerVsAi(this, level);
         conductor.setState(conductor.getFirstPlayerState());
     }
 
