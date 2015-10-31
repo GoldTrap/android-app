@@ -33,8 +33,8 @@ import java.util.Set;
 public class PlayerVsAi implements GameConductor {
 
     private static final String TAG = PlayerVsAi.class.getSimpleName();
-    List<Line> combinations = new ArrayList<>();
-    Set<Line> cSet = new HashSet<>();
+    private List<Line> combinations = new ArrayList<>();
+    private Set<Line> cSet = new HashSet<>();
     private Random random = new Random();
     private GameSnapshotCreator gameSnapshotCreator = new GameSnapshotCreator();
     private AISolver aiSolver;
