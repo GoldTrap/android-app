@@ -1,8 +1,8 @@
 {
   "solver": "RANDOM",
-  "rows": 5,
-  "cols": 5,
-  "blocked": 2,
+  "rows": 7,
+  "cols": 6,
+  "blocked": 0,
   "tasks": {
     "LINES": 1,
     "GOODIES": 2
@@ -28,11 +28,17 @@
   "complications": [
     {
       "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
-      "strategy": "AP"
+      "strategy": {
+        "type": "AP",
+        "value": 15
+      }
     },
     {
       "operator": "GOODIE_POSITION_MODIFIER",
-      "strategy": "HORIZONTAL"
+      "strategy": {
+        "type": "HORIZONTAL",
+        "value": 0
+      }
     }
   ],
   "unlocks": [

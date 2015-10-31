@@ -5,12 +5,7 @@ package com.asb.goldtrap.models.eo;
  */
 public class Complication {
     private String operator;
-    private String strategy;
-
-    public Complication(String operator, String strategy) {
-        this.operator = operator;
-        this.strategy = strategy;
-    }
+    private StrategyData strategy;
 
     public String getOperator() {
         return operator;
@@ -20,11 +15,11 @@ public class Complication {
         this.operator = operator;
     }
 
-    public String getStrategy() {
+    public StrategyData getStrategy() {
         return strategy;
     }
 
-    public void setStrategy(String strategy) {
+    public void setStrategy(StrategyData strategy) {
         this.strategy = strategy;
     }
 }

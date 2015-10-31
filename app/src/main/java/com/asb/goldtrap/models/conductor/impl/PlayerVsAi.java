@@ -1,10 +1,11 @@
 package com.asb.goldtrap.models.conductor.impl;
 
 import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
-import com.asb.goldtrap.models.complications.goodies.impl.DynamicGoodieValueModifier;
-import com.asb.goldtrap.models.complications.series.impl.AP;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
+import com.asb.goldtrap.models.conductor.factory.goodie.GoodieOperatorFactory;
+import com.asb.goldtrap.models.conductor.factory.goodie.impl.GenericGoodieOperator;
+import com.asb.goldtrap.models.eo.Complication;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
@@ -23,6 +24,7 @@ import com.asb.goldtrap.views.LineType;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -33,6 +35,7 @@ public class PlayerVsAi implements GameConductor {
     private static final String TAG = PlayerVsAi.class.getSimpleName();
     List<Line> combinations = new ArrayList<>();
     Set<Line> cSet = new HashSet<>();
+    private Random random = new Random();
     private GameSnapshotCreator gameSnapshotCreator = new GameSnapshotCreator();
     private AISolver aiSolver;
     private DotsGameSnapshot dotsGameSnapshot;
@@ -44,6 +47,7 @@ public class PlayerVsAi implements GameConductor {
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
     private List<GoodieOperator> goodieOperators;
+    private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
 
     public PlayerVsAi(GameStateObserver gameStateObserver, Level level) {
         dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
@@ -51,13 +55,45 @@ public class PlayerVsAi implements GameConductor {
         secondPlayerState = new AITurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
         gameExitedState = new GameExited(this);
-        state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
-        goodieOperators.add(new DynamicGoodieValueModifier(new AP(-2)));
+        addOperators(level);
         findAllLineCombinations();
         aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
+        setGameState(level);
     }
+
+    private void setGameState(Level level) {
+        switch (level.getFirstPlayer()) {
+            case "ANY":
+                if (random.nextBoolean()) {
+                    state = firstPlayerState;
+                }
+                else {
+                    state = secondPlayerState;
+                }
+                break;
+            case "ME":
+                state = firstPlayerState;
+                break;
+            case "THEY":
+                state = secondPlayerState;
+                break;
+            default:
+                state = firstPlayerState;
+        }
+        if (state == secondPlayerState) {
+            playTheirTurn();
+        }
+    }
+
+    private void addOperators(Level level) {
+        for (Complication complication : level.getComplications()) {
+            GoodieOperator operator = goodieOperatorFactory.getGoodieOperator(complication);
+            goodieOperators.add(operator);
+        }
+    }
+
 
     private void findAllLineCombinations() {
         CellState[][] cells = dotsGameSnapshot.getCells();
