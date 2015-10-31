@@ -11,6 +11,10 @@
     {
       "type": "ONE_K",
       "count": 3
+    },
+    {
+      "type": "DIAMOND",
+      "count": 3
     }
   ],
   "dynamicGoodies": [

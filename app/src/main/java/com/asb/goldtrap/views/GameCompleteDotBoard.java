@@ -85,6 +85,8 @@ public class GameCompleteDotBoard extends View {
         Bitmap coins = BitmapFactory.decodeResource(getResources(), R.drawable.coins);
         spark = BitmapFactory.decodeResource(getResources(), R.drawable.spark);
         goodiesCollection.put(GoodiesState.ONE_K, coins);
+        Bitmap diamond = BitmapFactory.decodeResource(getResources(), R.drawable.diamond);
+        goodiesCollection.put(GoodiesState.DIAMOND, diamond);
 
         // Drawers
         pointDrawer = new PointDrawer(dotsPaint);

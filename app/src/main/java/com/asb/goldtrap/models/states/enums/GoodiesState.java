@@ -5,5 +5,6 @@ public enum GoodiesState {
     ONE_K,
     TWO_K,
     FIVE_K,
+    DIAMOND,
     DYNAMIC_GOODIE;
 }
