@@ -5,12 +5,13 @@ import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.factory.goodie.GoodieOperatorFactory;
 import com.asb.goldtrap.models.conductor.factory.goodie.impl.GenericGoodieOperator;
+import com.asb.goldtrap.models.conductor.factory.solver.SolverFactory;
+import com.asb.goldtrap.models.conductor.factory.solver.impl.SolverFactoryImpl;
 import com.asb.goldtrap.models.eo.Complication;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
-import com.asb.goldtrap.models.solvers.impl.BasicGreedySolver;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.enums.LineState;
@@ -37,6 +38,7 @@ public class PlayerVsAi implements GameConductor {
     private Set<Line> cSet = new HashSet<>();
     private Random random = new Random();
     private GameSnapshotCreator gameSnapshotCreator = new GameSnapshotCreator();
+    private SolverFactory solverFactory = new SolverFactoryImpl();
     private AISolver aiSolver;
     private DotsGameSnapshot dotsGameSnapshot;
     private boolean extraChance;
@@ -59,9 +61,10 @@ public class PlayerVsAi implements GameConductor {
         goodieOperators = new ArrayList<>();
         addOperators(level);
         findAllLineCombinations();
-        aiSolver = new BasicGreedySolver(dotsGameSnapshot, combinations);
+        aiSolver = solverFactory.getAISolver(level, dotsGameSnapshot, combinations);
         setGameState(level);
     }
+
 
     private void setGameState(Level level) {
         switch (level.getFirstPlayer()) {

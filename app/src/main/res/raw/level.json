@@ -1,5 +1,5 @@
 {
-  "solver": "RANDOM",
+  "solver": "RANDOM_GREEDY",
   "rows": 7,
   "cols": 6,
   "blocked": 0,
