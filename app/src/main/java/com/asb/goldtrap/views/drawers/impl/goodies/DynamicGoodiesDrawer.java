@@ -1,6 +1,5 @@
 package com.asb.goldtrap.views.drawers.impl.goodies;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -9,7 +8,6 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -17,8 +15,8 @@ import java.util.Set;
  */
 public class DynamicGoodiesDrawer implements BoardComponentDrawer {
 
-    public static final float SCALING_FACTOR = 0.70f;
-    public static final float PADDING_FACTOR = (1 - SCALING_FACTOR) / 2;
+    public static final float SCALING_FACTOR = 0.85f;
+    public static final float PADDING_FACTOR = 0.15f;
     private Paint bitmapPaint;
 
     public DynamicGoodiesDrawer(Paint bitmapPaint) {
@@ -65,7 +63,7 @@ public class DynamicGoodiesDrawer implements BoardComponentDrawer {
         float textSize = widthScaled / noOfDigits;
         bitmapPaint.setTextSize(textSize);
         canvas.drawText(String.valueOf(goodie.getDisplayValue()),
-                left + paddingWidth, (top + bottom) / 2 + textSize / 2, bitmapPaint);
+                left + paddingWidth, (top + bottom) / 2 + textSize / 3, bitmapPaint);
     }
 
     private int getNumberOfDigits(int displayValue) {
