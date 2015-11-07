@@ -11,5 +11,5 @@
     <string name="points">Points: %d</string>
     <string name="extra_chance">+1</string>
     <string name="flip">Flip</string>
-
+    <string name="tasks">Tasks</string>
 </resources>

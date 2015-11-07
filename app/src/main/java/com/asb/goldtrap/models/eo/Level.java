@@ -1,7 +1,6 @@
 package com.asb.goldtrap.models.eo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by arjun on 25/10/15.
@@ -11,7 +10,7 @@ public class Level {
     private int rows;
     private int cols;
     private int blocked;
-    private Map<String, Integer> tasks;
+    private List<Task> tasks;
     private List<GoodieData> goodies;
     private List<DynamicGoodieData> dynamicGoodies;
     private String firstPlayer;
@@ -51,11 +50,11 @@ public class Level {
         this.blocked = blocked;
     }
 
-    public Map<String, Integer> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Map<String, Integer> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 

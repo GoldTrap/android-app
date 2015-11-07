@@ -3,10 +3,20 @@
   "rows": 7,
   "cols": 6,
   "blocked": 0,
-  "tasks": {
-    "LINES": 1,
-    "GOODIES": 2
-  },
+  "tasks": [
+    {
+      "taskType": "LINES",
+      "count": 1
+    },
+    {
+      "taskType": "GOODIES",
+      "count": 2
+    },
+    {
+      "taskType": "DIAMOND",
+      "count": 1
+    }
+  ],
   "goodies": [
     {
       "type": "ONE_K",

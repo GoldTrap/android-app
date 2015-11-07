@@ -39,6 +39,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private static final int ADDITIONAL_ROWS = 3;
     private static final int ADDITIONAL_COLS = 3;
     public static final String TAG = QuickPlayGameFragment.class.getSimpleName();
+    public static final String LEVEL_RESOURCE = "LEVEL_RESOURCE";
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
@@ -51,8 +52,18 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private Handler handler = new Handler();
     private Level level;
 
-    public static QuickPlayGameFragment newInstance() {
-        return new QuickPlayGameFragment();
+    /**
+     * Create an instance of QuickPlayGameFragment
+     *
+     * @param resourceId The resource Id of the Level
+     * @return QuickPlayGameFragment
+     */
+    public static QuickPlayGameFragment newInstance(int resourceId) {
+        QuickPlayGameFragment fragment = new QuickPlayGameFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(LEVEL_RESOURCE, resourceId);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     public QuickPlayGameFragment() {
@@ -138,13 +149,15 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        doGSONStuff();
+        Bundle args = getArguments();
+        int resourceId = args.getInt(LEVEL_RESOURCE);
+        doGSONStuff(resourceId);
         startGame();
     }
 
-    private void doGSONStuff() {
+    private void doGSONStuff(int resourceId) {
         Gson gson = new Gson();
-        InputStream inputStream = getResources().openRawResource(R.raw.level);
+        InputStream inputStream = getResources().openRawResource(resourceId);
         level = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
         Log.d(TAG, gson.toJson(level));
     }

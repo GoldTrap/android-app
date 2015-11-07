@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
 
 public class QuickPlayActivity extends AppCompatActivity
@@ -16,9 +17,13 @@ public class QuickPlayActivity extends AppCompatActivity
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, QuickPlayGameFragment.newInstance(),
+                    .replace(R.id.fragment_container,
+                            QuickPlayGameFragment.newInstance(R.raw.level),
                             QuickPlayGameFragment.TAG)
                     .commit();
+            TasksDisplayFragment tasksDisplayFragment =
+                    TasksDisplayFragment.newInstance(R.raw.level);
+            tasksDisplayFragment.show(getSupportFragmentManager(), TasksDisplayFragment.TAG);
         }
     }
 
