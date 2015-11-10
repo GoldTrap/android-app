@@ -78,7 +78,8 @@ public class DotBoard extends View implements View.OnTouchListener {
 
     public void setGameSnapShot(DotsGameSnapshot gameSnapshot) {
         this.dotsGameSnapshot = gameSnapshot;
-        requestRedraw();
+        this.startTime = System.currentTimeMillis();
+        this.invalidate();
     }
 
     public void requestRedraw() {
@@ -256,15 +257,17 @@ public class DotBoard extends View implements View.OnTouchListener {
             goodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             dynamicGoodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            if (animationRequested) {
-                if (elapsedTime < ANIMATION_DURATION) {
-                    this.postInvalidateDelayed(DELAY_MILLISECONDS);
-                }
-                else {
+
+            if (elapsedTime < ANIMATION_DURATION) {
+                this.postInvalidateDelayed(DELAY_MILLISECONDS);
+            }
+            else {
+                if (animationRequested) {
                     animationRequested = false;
                     mListener.animationComplete();
                 }
             }
+
         }
 
 
