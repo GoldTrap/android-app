@@ -16,13 +16,15 @@ public class QuickPlayActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_play);
-
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                .replace(R.id.fragment_container,
-                        TasksDisplayFragment.newInstance(R.raw.level),
-                        TasksDisplayFragment.TAG)
-                .commit();
+        if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.fragment_container,
+                            TasksDisplayFragment.newInstance(R.raw.level),
+                            TasksDisplayFragment.TAG)
+                    .commit();
+        }
 
     }
 
