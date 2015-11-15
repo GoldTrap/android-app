@@ -9,22 +9,21 @@ import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
 
 public class QuickPlayActivity extends AppCompatActivity
-        implements QuickPlayGameFragment.OnFragmentInteractionListener {
+        implements QuickPlayGameFragment.OnFragmentInteractionListener,
+        TasksDisplayFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_play);
-        if (null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container,
-                            QuickPlayGameFragment.newInstance(R.raw.level),
-                            QuickPlayGameFragment.TAG)
-                    .commit();
-            TasksDisplayFragment tasksDisplayFragment =
-                    TasksDisplayFragment.newInstance(R.raw.level);
-            tasksDisplayFragment.show(getSupportFragmentManager(), TasksDisplayFragment.TAG);
-        }
+
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        TasksDisplayFragment.newInstance(R.raw.level),
+                        TasksDisplayFragment.TAG)
+                .commit();
+
     }
 
     @Override
@@ -45,6 +44,18 @@ public class QuickPlayActivity extends AppCompatActivity
                 }
                 getWindow().getDecorView().setSystemUiVisibility(uiVisibilityCode);
             }
+        }
+    }
+
+    @Override
+    public void tasksShownAcknowledgement() {
+        if (null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.fragment_container,
+                            QuickPlayGameFragment.newInstance(R.raw.level),
+                            QuickPlayGameFragment.TAG)
+                    .commit();
         }
     }
 }

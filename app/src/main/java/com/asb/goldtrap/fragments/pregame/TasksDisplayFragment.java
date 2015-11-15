@@ -1,8 +1,9 @@
 package com.asb.goldtrap.fragments.pregame;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,9 +22,10 @@ import java.io.InputStreamReader;
 /**
  * Tasks To do
  */
-public class TasksDisplayFragment extends DialogFragment {
+public class TasksDisplayFragment extends Fragment {
     public static final String LEVEL_RESOURCE = "LEVEL_RESOURCE";
     public static final String TAG = TasksDisplayFragment.class.getSimpleName();
+    private OnFragmentInteractionListener mListener;
     private RecyclerView toDoRecyclerView;
     private FloatingActionButton play;
     private Level level;
@@ -67,7 +69,7 @@ public class TasksDisplayFragment extends DialogFragment {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TasksDisplayFragment.this.dismiss();
+                mListener.tasksShownAcknowledgement();
             }
         });
         return view;
@@ -77,5 +79,26 @@ public class TasksDisplayFragment extends DialogFragment {
         Gson gson = new Gson();
         InputStream inputStream = getResources().openRawResource(resourceId);
         level = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (OnFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void tasksShownAcknowledgement();
     }
 }
