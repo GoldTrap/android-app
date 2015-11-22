@@ -1,13 +1,13 @@
 package com.asb.goldtrap.models.conductor.impl;
 
 import com.asb.goldtrap.models.complications.goodies.GoodieOperator;
-import com.asb.goldtrap.models.complications.goodies.impl.DynamicGoodieValueModifier;
-import com.asb.goldtrap.models.complications.goodies.impl.GoodiePositionModifier;
-import com.asb.goldtrap.models.complications.mover.impl.HorizontalMover;
-import com.asb.goldtrap.models.complications.series.impl.AP;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
-import com.asb.goldtrap.models.factory.DotsGameFactory;
+import com.asb.goldtrap.models.conductor.factory.goodie.GoodieOperatorFactory;
+import com.asb.goldtrap.models.conductor.factory.goodie.impl.GenericGoodieOperator;
+import com.asb.goldtrap.models.eo.Complication;
+import com.asb.goldtrap.models.eo.Level;
+import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.factory.SolversFactory;
@@ -34,6 +34,7 @@ public class AiVsAi implements GameConductor {
     private static final String TAG = AiVsAi.class.getSimpleName();
     List<Line> combinations = new ArrayList<>();
     Set<Line> cSet = new HashSet<>();
+    private GameSnapshotCreator gameSnapshotCreator = new GameSnapshotCreator();
     private AISolver aiSolver;
     private AISolver otherAiSolver;
     private DotsGameSnapshot dotsGameSnapshot;
@@ -45,11 +46,10 @@ public class AiVsAi implements GameConductor {
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
     private List<GoodieOperator> goodieOperators;
+    private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
 
-    public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, int rows,
-                  int cols, int goodiesCount, int blockedCount) {
-        dotsGameSnapshot =
-                DotsGameFactory.createGameSnapshot(rows, cols, goodiesCount, blockedCount);
+    public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, Level level) {
+        dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
         firstPlayerState = new PlayerWhoIsAITurn(this, new Gamer());
         secondPlayerState = new AITurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
@@ -57,9 +57,17 @@ public class AiVsAi implements GameConductor {
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
+        addOperators(level);
         findAllLineCombinations();
         aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
         otherAiSolver = solversFactory.getOtherPlayerSolver(dotsGameSnapshot, combinations);
+    }
+
+    private void addOperators(Level level) {
+        for (Complication complication : level.getComplications()) {
+            GoodieOperator operator = goodieOperatorFactory.getGoodieOperator(complication);
+            goodieOperators.add(operator);
+        }
     }
 
     public void flipBoard() {

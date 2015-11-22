@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.AiVsAi;
+import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.services.DataInitializationService;
 import com.asb.goldtrap.models.solvers.factory.impl.BiasedTowardsMeSolversFactory;
 import com.asb.goldtrap.models.states.GameState;
@@ -39,10 +40,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         View.OnClickListener,
         DotBoard.Listener {
     public static final String TAG = LaunchFragment.class.getSimpleName();
-    public static final int MIN_ROWS = 4;
-    public static final int MIN_COLS = 4;
-    public static final int ADDITIONAL_ROWS = 3;
-    public static final int ADDITIONAL_COLS = 3;
     public static final int DELAY_BETWEEN_GAMES_IN_MILLIS = 5000;
     public static final int TIME_BETWEEN_LOADING_MESSAGE_UPDATES = 1500;
     private boolean migrationComplete = false;
@@ -204,10 +201,8 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         int[] gameTheme = themes[random.nextInt(themes.length)];
         gameCompleteDotBoard.setVisibility(View.INVISIBLE);
         dotBoard.setVisibility(View.VISIBLE);
-        int row = MIN_ROWS + random.nextInt(ADDITIONAL_ROWS);
-        int col = MIN_COLS + random.nextInt(ADDITIONAL_COLS);
         conductor =
-                new AiVsAi(new BiasedTowardsMeSolversFactory(), this, row, col, (row * col) / 3, 0);
+                new AiVsAi(new BiasedTowardsMeSolversFactory(), this, Level.generateRandomLevel());
         dotBoard.setGameSnapShot(conductor.getGameSnapshot());
         dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
         gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());

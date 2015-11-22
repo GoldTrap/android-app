@@ -1,11 +1,23 @@
 package com.asb.goldtrap.models.eo;
 
+import com.asb.goldtrap.models.conductor.factory.goodie.impl.GenericGoodieOperator;
+import com.asb.goldtrap.models.conductor.factory.goodie.impl.ValueModifierGoodieOperator;
+import com.asb.goldtrap.models.states.enums.GoodiesState;
+
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by arjun on 25/10/15.
  */
 public class Level {
+    public static final int MIN_ROWS = 4;
+    public static final int MIN_COLS = 4;
+    public static final int ADDITIONAL_ROWS = 1;
+    public static final int ADDITIONAL_COLS = 1;
+    public static final int BLOCKED_CELLS = 1;
     private String solver;
     private int rows;
     private int cols;
@@ -106,5 +118,21 @@ public class Level {
 
     public void setUnlocks(List<Unlocks> unlocks) {
         this.unlocks = unlocks;
+    }
+
+    public static Level generateRandomLevel() {
+        Random random = new Random();
+        Level level = new Level();
+        level.setCols(MIN_COLS + random.nextInt(ADDITIONAL_COLS));
+        level.setRows(MIN_ROWS + random.nextInt(ADDITIONAL_ROWS));
+        level.setBlocked(random.nextInt(BLOCKED_CELLS));
+        level.setGoodies(Arrays.asList(new GoodieData(GoodiesState.DIAMOND, random.nextInt(3)),
+                new GoodieData(GoodiesState.ONE_K, random.nextInt(3))));
+        level.setDynamicGoodies(
+                Collections.singletonList(new DynamicGoodieData(15, random.nextInt(3))));
+        level.setComplications(Collections.singletonList(
+                new Complication(GenericGoodieOperator.DYNAMIC_GOODIE_VALUE_MODIFIER,
+                        new StrategyData(ValueModifierGoodieOperator.AP, 5))));
+        return level;
     }
 }

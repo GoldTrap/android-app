@@ -7,6 +7,14 @@ public class Complication {
     private String operator;
     private StrategyData strategy;
 
+    public Complication() {
+    }
+
+    public Complication(String operator, StrategyData strategy) {
+        this.operator = operator;
+        this.strategy = strategy;
+    }
+
     public String getOperator() {
         return operator;
     }

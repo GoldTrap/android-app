@@ -7,6 +7,14 @@ public class StrategyData {
     private String type;
     private int value;
 
+    public StrategyData() {
+    }
+
+    public StrategyData(String type, int value) {
+        this.type = type;
+        this.value = value;
+    }
+
     public String getType() {
         return type;
     }
