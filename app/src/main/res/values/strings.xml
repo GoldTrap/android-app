@@ -12,4 +12,13 @@
     <string name="extra_chance">+1</string>
     <string name="flip">Flip</string>
     <string name="tasks">Tasks</string>
+
+    <!-- Menu Items -->
+    <string name="play_game">Play</string>
+    <string name="quick_play_game">Quick Play</string>
+    <string name="multi_player_game">Multi Player</string>
+    <string name="store">Shop \'o Rama</string>
+    <string name="rankings">Rankings</string>
+    <string name="score">Scores</string>
+    <string name="share">Share</string>
 </resources>

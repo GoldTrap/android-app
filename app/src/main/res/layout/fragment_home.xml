@@ -1,63 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:board="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.asb.goldtrap.fragments.launch.HomeFragment">
 
-    <FrameLayout
-        android:id="@+id/game_layout"
+    <TextView
+        android:id="@+id/header"
+        style="@android:style/TextAppearance.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/dot_board_padding">
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/app_name"/>
 
-        <com.asb.goldtrap.views.GameCompleteDotBoard
-            android:id="@+id/game_complete_dot_board"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            board:board_style="square"/>
-
-        <com.asb.goldtrap.views.DotBoard
-            android:id="@+id/dot_board"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            board:board_style="square"/>
-
-    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/menus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/header"
+        android:padding="16dp"
+        android:scrollbars="vertical"/>
 
     <RelativeLayout
-        android:id="@+id/game_selection"
+        android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/game_layout"
-        android:layout_centerHorizontal="true">
-
-
-        <Button
-            android:id="@+id/quick_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/play"
-            android:layout_centerInParent="true"
-            android:text="@string/quick_play"/>
-
-        <Button
-            android:id="@+id/play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/play"/>
+        android:layout_alignParentBottom="true">
 
         <FrameLayout
             android:id="@+id/sign_in_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/play"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_centerInParent="true">
 
             <Button

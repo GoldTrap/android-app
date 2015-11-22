@@ -1,0 +1,44 @@
+[
+  {
+    "name": "play_game",
+    "image": "play",
+    "type": "PLAY_GAME",
+    "spanSize": 6
+  },
+  {
+    "name": "quick_play_game",
+    "image": "quick_play_game",
+    "type": "QUICK_PLAY_GAME",
+    "spanSize": 3
+  },
+  {
+    "name": "multi_player_game",
+    "image": "multi_player_game",
+    "type": "MULTI_PLAYER_GAME",
+    "spanSize": 3
+  },
+  {
+    "name": "store",
+    "image": "store",
+    "type": "STORE",
+    "spanSize": 2
+  },
+  {
+    "name": "rankings",
+    "image": "rankings",
+    "type": "RANKINGS",
+    "spanSize": 2
+  },
+  {
+    "name": "score",
+    "image": "score",
+    "type": "SCORE",
+    "spanSize": 2
+  },
+  {
+    "name": "share",
+    "image": "share",
+    "type": "SHARE",
+    "spanSize": 2
+  }
+]
