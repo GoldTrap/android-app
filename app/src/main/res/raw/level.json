@@ -1,7 +1,7 @@
 {
   "solver": "RANDOM_GREEDY",
-  "rows": 7,
-  "cols": 6,
+  "rows": 5,
+  "cols": 4,
   "blocked": 0,
   "tasks": [
     {
@@ -33,7 +33,7 @@
       "count": 1
     },
     {
-      "value": 15,
+      "value": 150,
       "count": 3
     }
   ],
@@ -44,7 +44,7 @@
       "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
       "strategy": {
         "type": "AP",
-        "value": 15
+        "value": -2
       }
     },
     {
