@@ -1,6 +1,6 @@
 {
   "solver": "RANDOM_GREEDY",
-  "rows": 5,
+  "rows": 4,
   "cols": 4,
   "blocked": 0,
   "tasks": [
