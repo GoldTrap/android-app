@@ -4,28 +4,48 @@ import com.asb.goldtrap.models.components.Cell;
 import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.components.Line;
+import com.asb.goldtrap.models.eo.Task;
+import com.asb.goldtrap.models.states.enums.GoodiesState;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Score {
-    public static final int CELL_SCORE = 100;
-    private List<Line> lines = new ArrayList<>();
+    public static final int CELL_SCORE = 10;
+    private Result result;
+    private List<Task> completedTasks = new ArrayList<>();
+    private List<Task> incompleteTasks = new ArrayList<>();
+    private List<Line> horizontalLines = new ArrayList<>();
+    private List<Line> verticalLines = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
-    private Set<Goodie> goodies = new HashSet<>();
+    private Map<GoodiesState, List<Goodie>> goodies = new HashMap<>();
     private Set<DynamicGoodie> dynamicGoodies = new HashSet<>();
 
-    public List<Line> getLines() {
-        return lines;
+    public List<Task> getCompletedTasks() {
+        return completedTasks;
+    }
+
+    public List<Task> getIncompleteTasks() {
+        return incompleteTasks;
+    }
+
+    public List<Line> getHorizontalLines() {
+        return horizontalLines;
+    }
+
+    public List<Line> getVerticalLines() {
+        return verticalLines;
     }
 
     public List<Cell> getCells() {
         return cells;
     }
 
-    public Set<Goodie> getGoodies() {
+    public Map<GoodiesState, List<Goodie>> getGoodies() {
         return goodies;
     }
 
@@ -37,8 +57,17 @@ public class Score {
         return cells.size() * CELL_SCORE;
     }
 
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
     public void clearScore() {
-        lines.clear();
+        horizontalLines.clear();
+        verticalLines.clear();
         cells.clear();
         goodies.clear();
     }

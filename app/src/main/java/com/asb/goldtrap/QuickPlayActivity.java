@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
+import com.asb.goldtrap.models.results.Score;
 
 public class QuickPlayActivity extends AppCompatActivity
         implements QuickPlayGameFragment.OnFragmentInteractionListener,
@@ -29,7 +30,7 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void gameOver() {
+    public void gameOver(Score score) {
 
     }
 

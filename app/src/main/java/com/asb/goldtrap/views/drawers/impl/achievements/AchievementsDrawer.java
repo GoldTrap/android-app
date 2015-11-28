@@ -32,7 +32,7 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
     public void onDraw(Canvas canvas, int width, int height, DotsGameSnapshot brain,
                        long elapsedTime, long animationDuration) {
         Score score = brain.getScore();
-        if (!score.getLines().isEmpty()) {
+        if (!score.getHorizontalLines().isEmpty()) {
             int cols = brain.getHorizontalLines()[0].length + 1;
             int rows = brain.getHorizontalLines().length;
             float lineWidth = width / (cols);
@@ -41,7 +41,7 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
             if (percentage > 1.0f) {
                 percentage = 1.0f;
             }
-            float percentageForEachLine = 1.0f / score.getLines().size();
+            float percentageForEachLine = 1.0f / score.getHorizontalLines().size();
             int maxLinesToDrawCompletely = (int) (percentage / percentageForEachLine);
             float percentageOfLastLine =
                     (percentage - (maxLinesToDrawCompletely * percentageForEachLine)) /
@@ -49,7 +49,7 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
             int linesDrawn = 0;
             int scaled = (int) (Math.min(lineHeight, lineWidth) * SCALING_FACTOR);
 
-            for (Line line : score.getLines()) {
+            for (Line line : score.getHorizontalLines()) {
                 if (linesDrawn == maxLinesToDrawCompletely) {
                     drawSpark(canvas, width, height, line, lineWidth, lineHeight,
                             percentageOfLastLine, scaled);

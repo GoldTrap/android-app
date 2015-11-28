@@ -16,6 +16,7 @@ import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.PlayerVsAi;
 import com.asb.goldtrap.models.eo.Level;
+import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameOver;
@@ -133,7 +134,8 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
-                mListener.gameOver();
+                mListener
+                        .gameOver(conductor.getGameSnapshot().getScoreWithResult(level.getTasks()));
             }
         });
         updateScoreBoard();
@@ -192,7 +194,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     public interface OnFragmentInteractionListener {
-        void gameOver();
+        void gameOver(Score score);
     }
 
 }

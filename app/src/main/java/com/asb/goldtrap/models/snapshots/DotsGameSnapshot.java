@@ -3,14 +3,28 @@ package com.asb.goldtrap.models.snapshots;
 import com.asb.goldtrap.models.components.Cell;
 import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
-import com.asb.goldtrap.models.components.Line;
+import com.asb.goldtrap.models.eo.Task;
 import com.asb.goldtrap.models.results.Score;
+import com.asb.goldtrap.models.results.computers.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.impl.CellScoreComputer;
+import com.asb.goldtrap.models.results.computers.impl.DynamicGoodieScoreComputer;
+import com.asb.goldtrap.models.results.computers.impl.GoodieScoreComputer;
+import com.asb.goldtrap.models.results.computers.impl.HorizontalLinesScoreComputer;
+import com.asb.goldtrap.models.results.computers.impl.ResultComputer;
+import com.asb.goldtrap.models.results.computers.impl.VerticalLinesScoreComputer;
+import com.asb.goldtrap.models.results.examiners.TaskCompletionExaminer;
+import com.asb.goldtrap.models.results.examiners.impl.GoodiesTaskCompletionExaminer;
+import com.asb.goldtrap.models.results.examiners.impl.HorizontalLinesTaskCompletionExaminer;
+import com.asb.goldtrap.models.results.examiners.impl.LinesTaskCompletionExaminer;
+import com.asb.goldtrap.models.results.examiners.impl.VerticalLinesTaskCompletionExaminer;
+import com.asb.goldtrap.models.results.examiners.impl.goodies.DynamicGoodieTaskCompletionExaminer;
+import com.asb.goldtrap.models.results.examiners.impl.goodies.GoodieTaskCompletionExaminer;
 import com.asb.goldtrap.models.states.enums.CellState;
-import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.models.states.enums.LineState;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +45,20 @@ public class DotsGameSnapshot {
     private int lastClickedCol = -1;
 
     private List<Cell> lastScoredCells;
+    private TaskCompletionExaminer linesTaskCompletionExaminer =
+            new LinesTaskCompletionExaminer();
+    private TaskCompletionExaminer horizontalLinesTaskCompletionExaminer =
+            new HorizontalLinesTaskCompletionExaminer();
+    private TaskCompletionExaminer verticalLinesTaskCompletionExaminer =
+            new VerticalLinesTaskCompletionExaminer();
+    private TaskCompletionExaminer goodiesTaskCompletionExaminer =
+            new GoodiesTaskCompletionExaminer();
+    private TaskCompletionExaminer goodieTaskCompletionExaminer =
+            new GoodieTaskCompletionExaminer();
+    private TaskCompletionExaminer dynamicGoodieTaskCompletionExaminer =
+            new DynamicGoodieTaskCompletionExaminer();
+
+    private List<ScoreComputer> scoreComputers;
 
     public DotsGameSnapshot(CellState[][] cells, LineState[][] horizontalLines,
                             LineState[][] verticalLines, Set<Goodie> goodies,
@@ -41,6 +69,12 @@ public class DotsGameSnapshot {
         this.verticalLines = verticalLines;
         this.goodies = goodies;
         this.dynamicGoodies = dynamicGoodies;
+        scoreComputers =
+                Arrays.asList(new CellScoreComputer(cells), new HorizontalLinesScoreComputer(cells),
+                        new VerticalLinesScoreComputer(cells),
+                        new GoodieScoreComputer(goodies, cells),
+                        new DynamicGoodieScoreComputer(dynamicGoodies, cells),
+                        new ResultComputer(cells));
     }
 
     public LineState getLastClickedLineState() {
@@ -132,53 +166,44 @@ public class DotsGameSnapshot {
         return score;
     }
 
+    public Score getScoreWithResult(List<Task> tasks) {
+        computeScore();
+        computeResult(tasks);
+        return score;
+    }
+
+    private void computeResult(List<Task> tasks) {
+        for (Task task : tasks) {
+            switch (task.getTaskType()) {
+                case LINES:
+                    linesTaskCompletionExaminer.examine(score, task);
+                    break;
+                case HORIZONTAL_LINE:
+                    horizontalLinesTaskCompletionExaminer.examine(score, task);
+                    break;
+                case VERTICAL_LINE:
+                    verticalLinesTaskCompletionExaminer.examine(score, task);
+                    break;
+                case GOODIES:
+                    goodiesTaskCompletionExaminer.examine(score, task);
+                    break;
+                case ONE_K:
+                case TWO_K:
+                case FIVE_K:
+                case DIAMOND:
+                    goodieTaskCompletionExaminer.examine(score, task);
+                    break;
+                case DYNAMIC_GOODIE:
+                    dynamicGoodieTaskCompletionExaminer.examine(score, task);
+                    break;
+            }
+        }
+    }
+
     public void computeScore() {
         this.score.clearScore();
-        CellState[][] cells = this.getCells();
-        Set<Goodie> goodies = this.getGoodies();
-        int rows = cells.length;
-        int cols = cells[0].length;
-
-        for (int i = 0; i < rows; i += 1) {
-            int cellsOccupied = 0;
-            for (int j = 0; j < cols; j += 1) {
-                if (CellState.PLAYER == cells[i][j]) {
-                    cellsOccupied += 1;
-                    Cell cell = new Cell(cells[i][j], i, j);
-                    score.getCells().add(cell);
-                }
-            }
-            if (cellsOccupied == cols) {
-                score.getLines().add(new Line(LineType.HORIZONTAL, i, -1));
-            }
-        }
-
-        for (int i = 0; i < cols; i += 1) {
-            int cellsOccupied = 0;
-            for (int j = 0; j < rows; j += 1) {
-                if (CellState.PLAYER == cells[j][i]) {
-                    cellsOccupied += 1;
-                }
-            }
-            if (cellsOccupied == rows) {
-                score.getLines().add(new Line(LineType.VERTICAL, -1, i));
-            }
-        }
-
-        for (Goodie goodie : goodies) {
-            if (CellState.PLAYER == cells[goodie.getRow()][goodie.getCol()]) {
-                if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
-                    score.getGoodies().add(goodie);
-                }
-            }
-        }
-
-        for (DynamicGoodie goodie : dynamicGoodies) {
-            if (CellState.PLAYER == cells[goodie.getRow()][goodie.getCol()]) {
-                if (GoodiesState.NOTHING != goodie.getGoodiesState()) {
-                    score.getDynamicGoodies().add(goodie);
-                }
-            }
+        for (ScoreComputer scoreComputer : scoreComputers) {
+            scoreComputer.computeScore(score);
         }
     }
 }
