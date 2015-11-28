@@ -27,11 +27,13 @@ public class ResultComputer implements ScoreComputer {
                 }
             }
         }
-        if (totalCellsOccupied > (rows * cols) / 2) {
-            score.setResult(Result.WON);
-        }
-        else if ((totalCellsOccupied == (rows * cols) / 2)) {
-            score.setResult(Result.DRAW);
+        if (0 >= score.getIncompleteTasks().size()) {
+            if (totalCellsOccupied > (rows * cols) / 2) {
+                score.setResult(Result.WON);
+            }
+            else if ((totalCellsOccupied == (rows * cols) / 2)) {
+                score.setResult(Result.DRAW);
+            }
         }
         else {
             score.setResult(Result.LOST);
