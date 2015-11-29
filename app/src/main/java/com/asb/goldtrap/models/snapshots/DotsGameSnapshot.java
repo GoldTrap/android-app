@@ -59,6 +59,7 @@ public class DotsGameSnapshot {
             new DynamicGoodieTaskCompletionExaminer();
 
     private List<ScoreComputer> scoreComputers;
+    private ScoreComputer resultComputer;
 
     public DotsGameSnapshot(CellState[][] cells, LineState[][] horizontalLines,
                             LineState[][] verticalLines, Set<Goodie> goodies,
@@ -73,8 +74,8 @@ public class DotsGameSnapshot {
                 Arrays.asList(new CellScoreComputer(cells), new HorizontalLinesScoreComputer(cells),
                         new VerticalLinesScoreComputer(cells),
                         new GoodieScoreComputer(goodies, cells),
-                        new DynamicGoodieScoreComputer(dynamicGoodies, cells),
-                        new ResultComputer(cells));
+                        new DynamicGoodieScoreComputer(dynamicGoodies, cells));
+        resultComputer = new ResultComputer(cells);
     }
 
     public LineState getLastClickedLineState() {
@@ -198,6 +199,7 @@ public class DotsGameSnapshot {
                     break;
             }
         }
+        resultComputer.computeScore(score);
     }
 
     public void computeScore() {

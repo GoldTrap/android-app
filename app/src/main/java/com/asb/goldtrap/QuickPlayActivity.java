@@ -3,6 +3,7 @@ package com.asb.goldtrap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
@@ -12,6 +13,8 @@ import com.asb.goldtrap.models.results.Score;
 public class QuickPlayActivity extends AppCompatActivity
         implements QuickPlayGameFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener {
+
+    private static final String TAG = QuickPlayActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void gameOver(Score score) {
-
+        Log.d(TAG, "Game Over, Result: " + score.getResult());
     }
 
     @Override

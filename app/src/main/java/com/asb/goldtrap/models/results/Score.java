@@ -66,9 +66,12 @@ public class Score {
     }
 
     public void clearScore() {
+        completedTasks.clear();
+        incompleteTasks.clear();
         horizontalLines.clear();
         verticalLines.clear();
         cells.clear();
         goodies.clear();
+        dynamicGoodies.clear();
     }
 }
