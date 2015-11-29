@@ -22,7 +22,9 @@ import com.asb.goldtrap.views.drawers.impl.lines.HorizontalLineDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.VerticalLineDrawer;
 import com.asb.goldtrap.views.drawers.impl.points.PointDrawer;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,12 +44,7 @@ public class GameCompleteDotBoard extends View {
     private Listener mListener;
     private Map<GoodiesState, Bitmap> goodiesCollection = new HashMap<>();
     private Bitmap spark;
-    private BoardComponentDrawer pointDrawer;
-    private BoardComponentDrawer cellDrawer;
-    private BoardComponentDrawer horizontalLineDrawer;
-    private BoardComponentDrawer verticalLineDrawer;
-    private BoardComponentDrawer goodiesDrawer;
-    private BoardComponentDrawer dynamicGoodiesDrawer;
+    private List<BoardComponentDrawer> boardComponentDrawers;
     private AnimatedBoardComponentDrawer achievementsDrawer;
     private Paint bitmapPaint;
     private Paint dotsPaint;
@@ -89,17 +86,13 @@ public class GameCompleteDotBoard extends View {
         goodiesCollection.put(GoodiesState.DIAMOND, diamond);
 
         // Drawers
-        pointDrawer = new PointDrawer(dotsPaint);
-        cellDrawer =
-                new CellDrawer(secondPlayerCellPaint, firstPlayerCellPaint, blockedCellPaint);
-        horizontalLineDrawer =
+        boardComponentDrawers = Arrays.asList(new VerticalLineDrawer(secondPlayerLinePaint,
+                        firstPlayerLinePaint, blockedLinePaint),
                 new HorizontalLineDrawer(secondPlayerLinePaint,
-                        firstPlayerLinePaint, blockedLinePaint);
-        verticalLineDrawer = new VerticalLineDrawer(secondPlayerLinePaint,
-                firstPlayerLinePaint, blockedLinePaint);
-        goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
-        dynamicGoodiesDrawer = new DynamicGoodiesDrawer(bitmapPaint);
-
+                        firstPlayerLinePaint, blockedLinePaint),
+                new CellDrawer(secondPlayerCellPaint, firstPlayerCellPaint, blockedCellPaint),
+                new GoodiesDrawer(bitmapPaint, goodiesCollection),
+                new DynamicGoodiesDrawer(bitmapPaint), new PointDrawer(dotsPaint));
         achievementsDrawer = new AchievementsDrawer(achievementsPaint, bitmapPaint, spark);
         this.startTime = System.currentTimeMillis();
 
@@ -166,13 +159,9 @@ public class GameCompleteDotBoard extends View {
                     (dotsGameSnapshot.getScore().getHorizontalLines().size() +
                             dotsGameSnapshot.getScore().getVerticalLines().size()) *
                             ANIMATION_DURATION;
-
-            verticalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            horizontalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            cellDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            goodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            dynamicGoodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
+            for (BoardComponentDrawer boardComponentDrawer : boardComponentDrawers) {
+                boardComponentDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
+            }
             achievementsDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
                     animationDuration);
             if (elapsedTime < animationDuration) {
