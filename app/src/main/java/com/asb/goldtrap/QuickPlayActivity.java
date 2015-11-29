@@ -15,10 +15,12 @@ public class QuickPlayActivity extends AppCompatActivity
         TasksDisplayFragment.OnFragmentInteractionListener {
 
     private static final String TAG = QuickPlayActivity.class.getSimpleName();
+    private GoldTrapApplication goldTrapApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        goldTrapApplication = (GoldTrapApplication) getApplication();
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
@@ -35,6 +37,7 @@ public class QuickPlayActivity extends AppCompatActivity
     @Override
     public void gameOver(Score score) {
         Log.d(TAG, "Game Over, Result: " + score.getResult());
+        goldTrapApplication.setScore(score);
     }
 
     @Override
