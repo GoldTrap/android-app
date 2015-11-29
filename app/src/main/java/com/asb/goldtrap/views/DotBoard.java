@@ -25,7 +25,9 @@ import com.asb.goldtrap.views.drawers.impl.lines.LastSelectedLineDrawer;
 import com.asb.goldtrap.views.drawers.impl.lines.VerticalLineDrawerThatSkipsLastSelectedLine;
 import com.asb.goldtrap.views.drawers.impl.points.PointDrawer;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DotBoard extends View implements View.OnTouchListener {
@@ -38,14 +40,8 @@ public class DotBoard extends View implements View.OnTouchListener {
     private DotsGameSnapshot dotsGameSnapshot;
     private Listener mListener;
     private Map<GoodiesState, Bitmap> goodiesCollection = new HashMap<>();
-    private BoardComponentDrawer pointDrawer;
-    private BoardComponentDrawer cellDrawer;
-    private BoardComponentDrawer horizontalLineDrawer;
-    private BoardComponentDrawer verticalLineDrawer;
-    private BoardComponentDrawer goodiesDrawer;
-    private BoardComponentDrawer dynamicGoodiesDrawer;
-    private AnimatedBoardComponentDrawer lastFilledCellDrawer;
-    private AnimatedBoardComponentDrawer lastLineClickedDrawer;
+    private List<AnimatedBoardComponentDrawer> animatedBoardComponentDrawers;
+    private List<BoardComponentDrawer> boardComponentDrawers;
     private boolean animationRequested = false;
     private int dotBoardType;
     private Paint bitmapPaint;
@@ -107,22 +103,19 @@ public class DotBoard extends View implements View.OnTouchListener {
         goodiesCollection.put(GoodiesState.DIAMOND, diamond);
 
         // Drawers
-        pointDrawer = new PointDrawer(dotsPaint);
-        cellDrawer =
-                new CellDrawerThatSkipsLastScoredCells(secondPlayerCellPaint, firstPlayerCellPaint,
-                        blockedCellPaint);
-        horizontalLineDrawer =
-                new HorizontalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
-                        firstPlayerLinePaint, blockedLinePaint);
-        verticalLineDrawer = new VerticalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
-                firstPlayerLinePaint, blockedLinePaint);
-        goodiesDrawer = new GoodiesDrawer(bitmapPaint, goodiesCollection);
-        dynamicGoodiesDrawer = new DynamicGoodiesDrawer(bitmapPaint);
-        lastFilledCellDrawer =
-                new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint);
-        lastLineClickedDrawer =
-                new LastSelectedLineDrawer(secondPlayerLinePaint, firstPlayerLinePaint);
-
+        animatedBoardComponentDrawers =
+                Arrays.asList(new LastFilledCellDrawer(secondPlayerCellPaint, firstPlayerCellPaint),
+                        new LastSelectedLineDrawer(secondPlayerLinePaint, firstPlayerLinePaint));
+        boardComponentDrawers =
+                Arrays.asList(new VerticalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
+                                firstPlayerLinePaint, blockedLinePaint),
+                        new HorizontalLineDrawerThatSkipsLastSelectedLine(secondPlayerLinePaint,
+                                firstPlayerLinePaint, blockedLinePaint),
+                        new CellDrawerThatSkipsLastScoredCells(secondPlayerCellPaint,
+                                firstPlayerCellPaint,
+                                blockedCellPaint),
+                        new GoodiesDrawer(bitmapPaint, goodiesCollection),
+                        new DynamicGoodiesDrawer(bitmapPaint), new PointDrawer(dotsPaint));
         this.startTime = System.currentTimeMillis();
     }
 
@@ -247,16 +240,14 @@ public class DotBoard extends View implements View.OnTouchListener {
             int width = this.getMeasuredWidth();
             long elapsedTime = System.currentTimeMillis() - startTime;
 
-            verticalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            horizontalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            cellDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            lastFilledCellDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
-                    ANIMATION_DURATION);
-            lastLineClickedDrawer.onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
-                    ANIMATION_DURATION);
-            goodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            dynamicGoodiesDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
-            pointDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
+            for (AnimatedBoardComponentDrawer animatedBoardComponentDrawer : animatedBoardComponentDrawers) {
+                animatedBoardComponentDrawer
+                        .onDraw(canvas, width, height, dotsGameSnapshot, elapsedTime,
+                                ANIMATION_DURATION);
+            }
+            for (BoardComponentDrawer boardComponentDrawer : boardComponentDrawers) {
+                boardComponentDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
+            }
 
             if (elapsedTime < ANIMATION_DURATION) {
                 this.postInvalidateDelayed(DELAY_MILLISECONDS);
