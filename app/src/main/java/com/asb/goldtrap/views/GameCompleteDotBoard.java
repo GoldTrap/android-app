@@ -163,7 +163,9 @@ public class GameCompleteDotBoard extends View {
             int width = this.getMeasuredWidth();
             long elapsedTime = System.currentTimeMillis() - startTime;
             long animationDuration =
-                    dotsGameSnapshot.getScore().getHorizontalLines().size() * ANIMATION_DURATION;
+                    (dotsGameSnapshot.getScore().getHorizontalLines().size() +
+                            dotsGameSnapshot.getScore().getVerticalLines().size()) *
+                            ANIMATION_DURATION;
 
             verticalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);
             horizontalLineDrawer.onDraw(canvas, width, height, dotsGameSnapshot);

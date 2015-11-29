@@ -10,6 +10,8 @@ import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.views.drawers.AnimatedBoardComponentDrawer;
 
+import java.util.List;
+
 /**
  * Created by arjun on 26/09/15.
  */
@@ -32,16 +34,25 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
     public void onDraw(Canvas canvas, int width, int height, DotsGameSnapshot brain,
                        long elapsedTime, long animationDuration) {
         Score score = brain.getScore();
-        if (!score.getHorizontalLines().isEmpty()) {
+        drawAchievementLines(canvas, width, height, brain, elapsedTime, animationDuration,
+                score.getHorizontalLines());
+        drawAchievementLines(canvas, width, height, brain, elapsedTime, animationDuration,
+                score.getVerticalLines());
+    }
+
+    private void drawAchievementLines(Canvas canvas, int width, int height, DotsGameSnapshot brain,
+                                      float elapsedTime, float animationDuration,
+                                      List<Line> achievementLines) {
+        if (!achievementLines.isEmpty()) {
             int cols = brain.getHorizontalLines()[0].length + 1;
             int rows = brain.getHorizontalLines().length;
             float lineWidth = width / (cols);
             float lineHeight = height / (rows);
-            float percentage = (float) elapsedTime / (float) animationDuration;
+            float percentage = elapsedTime / animationDuration;
             if (percentage > 1.0f) {
                 percentage = 1.0f;
             }
-            float percentageForEachLine = 1.0f / score.getHorizontalLines().size();
+            float percentageForEachLine = 1.0f / achievementLines.size();
             int maxLinesToDrawCompletely = (int) (percentage / percentageForEachLine);
             float percentageOfLastLine =
                     (percentage - (maxLinesToDrawCompletely * percentageForEachLine)) /
@@ -49,7 +60,7 @@ public class AchievementsDrawer implements AnimatedBoardComponentDrawer {
             int linesDrawn = 0;
             int scaled = (int) (Math.min(lineHeight, lineWidth) * SCALING_FACTOR);
 
-            for (Line line : score.getHorizontalLines()) {
+            for (Line line : achievementLines) {
                 if (linesDrawn == maxLinesToDrawCompletely) {
                     drawSpark(canvas, width, height, line, lineWidth, lineHeight,
                             percentageOfLastLine, scaled);
