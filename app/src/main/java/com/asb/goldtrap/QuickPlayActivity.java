@@ -6,13 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
 import com.asb.goldtrap.models.results.Score;
 
 public class QuickPlayActivity extends AppCompatActivity
         implements QuickPlayGameFragment.OnFragmentInteractionListener,
-        TasksDisplayFragment.OnFragmentInteractionListener {
+        TasksDisplayFragment.OnFragmentInteractionListener,
+        ScoreFragment.OnFragmentInteractionListener {
 
     private static final String TAG = QuickPlayActivity.class.getSimpleName();
     private GoldTrapApplication goldTrapApplication;
@@ -38,6 +40,12 @@ public class QuickPlayActivity extends AppCompatActivity
     public void gameOver(Score score) {
         Log.d(TAG, "Game Over, Result: " + score.getResult());
         goldTrapApplication.setScore(score);
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        ScoreFragment.newInstance(),
+                        ScoreFragment.TAG)
+                .commit();
     }
 
     @Override
@@ -66,5 +74,10 @@ public class QuickPlayActivity extends AppCompatActivity
                             QuickPlayGameFragment.TAG)
                     .commit();
         }
+    }
+
+    @Override
+    public void onScoreViewed() {
+
     }
 }

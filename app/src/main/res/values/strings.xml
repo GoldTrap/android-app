@@ -13,6 +13,12 @@
     <string name="flip">Flip</string>
     <string name="tasks">Tasks</string>
 
+    <string name="won">You Won!</string>
+    <string name="lost">You Lost</string>
+    <string name="draw">It\'s a Draw!</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="incomplete_tasks">Incomplete Tasks</string>
+
     <!-- Menu Items -->
     <string name="play_game">Play</string>
     <string name="quick_play_game">Quick Play</string>
