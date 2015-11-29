@@ -27,4 +27,9 @@
     <string name="rankings">Rankings</string>
     <string name="score">Scores</string>
     <string name="share">Share</string>
+
+
+    <string name="replay">Replay</string>
+    <string name="invite">Invite</string>
+    <string name="next">Next</string>
 </resources>

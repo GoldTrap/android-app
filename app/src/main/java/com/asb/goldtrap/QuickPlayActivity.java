@@ -3,19 +3,19 @@ package com.asb.goldtrap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
+import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
-import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 
 public class QuickPlayActivity extends AppCompatActivity
         implements QuickPlayGameFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener,
-        ScoreFragment.OnFragmentInteractionListener {
+        ScoreFragment.OnFragmentInteractionListener,
+        SummaryFragment.OnFragmentInteractionListener {
 
     private static final String TAG = QuickPlayActivity.class.getSimpleName();
     private GoldTrapApplication goldTrapApplication;
@@ -39,9 +39,7 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void gameOver(DotsGameSnapshot snapshot) {
-        Score score = snapshot.getScoreWithResult();
-        Log.d(TAG, "Game Over, Result: " + score.getResult());
-        goldTrapApplication.setScore(score);
+        goldTrapApplication.setDotsGameSnapshot(snapshot);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
@@ -80,6 +78,32 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void onScoreViewed() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        SummaryFragment.newInstance(
+                                goldTrapApplication.getDotsGameSnapshot().getImageUri()),
+                        SummaryFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    public void replayGame() {
+
+    }
+
+    @Override
+    public void shareGame() {
+
+    }
+
+    @Override
+    public void invite() {
+
+    }
+
+    @Override
+    public void next() {
 
     }
 }

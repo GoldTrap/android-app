@@ -50,7 +50,8 @@ public class ScoreFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        score = ((GoldTrapApplication) getActivity().getApplication()).getScore();
+        score = ((GoldTrapApplication) getActivity().getApplication()).getDotsGameSnapshot()
+                .getScoreWithResult();
     }
 
     @Override

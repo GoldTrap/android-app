@@ -1,6 +1,7 @@
 package com.asb.goldtrap.fragments.quickplay;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -75,7 +76,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quick_play_game, container, false);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
@@ -137,7 +138,8 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
-                imageWriter.writeFileToDisk(gameCompleteDotBoard.getDrawingCache());
+                Uri uri = imageWriter.writeFileToDisk(gameCompleteDotBoard.getDrawingCache());
+                conductor.getGameSnapshot().setImageUri(uri);
                 mListener.gameOver(conductor.getGameSnapshot());
             }
         });
