@@ -16,7 +16,9 @@ import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.PlayerVsAi;
 import com.asb.goldtrap.models.eo.Level;
-import com.asb.goldtrap.models.results.Score;
+import com.asb.goldtrap.models.file.ImageWriter;
+import com.asb.goldtrap.models.file.impl.ImageWriterImpl;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameOver;
@@ -52,6 +54,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private GameConductor conductor;
     private Handler handler = new Handler();
     private Level level;
+    private ImageWriter imageWriter;
 
     /**
      * Create an instance of QuickPlayGameFragment
@@ -130,12 +133,12 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                 }
             }
         });
-
+        gameCompleteDotBoard.setDrawingCacheEnabled(true);
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
-                mListener
-                        .gameOver(conductor.getGameSnapshot().getScoreWithResult(level.getTasks()));
+                imageWriter.writeFileToDisk(gameCompleteDotBoard.getDrawingCache());
+                mListener.gameOver(conductor.getGameSnapshot());
             }
         });
         updateScoreBoard();
@@ -152,6 +155,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         Bundle args = getArguments();
+        imageWriter = new ImageWriterImpl();
         int resourceId = args.getInt(LEVEL_RESOURCE);
         doGSONStuff(resourceId);
         startGame();
@@ -194,7 +198,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     public interface OnFragmentInteractionListener {
-        void gameOver(Score score);
+        void gameOver(DotsGameSnapshot dotsGameSnapshot);
     }
 
 }

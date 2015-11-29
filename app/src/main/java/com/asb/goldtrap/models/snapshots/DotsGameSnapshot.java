@@ -1,5 +1,7 @@
 package com.asb.goldtrap.models.snapshots;
 
+import android.net.Uri;
+
 import com.asb.goldtrap.models.components.Cell;
 import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
@@ -38,7 +40,8 @@ public class DotsGameSnapshot {
     private Set<Goodie> goodies;
     private Set<DynamicGoodie> dynamicGoodies;
     private Score score = new Score();
-
+    private List<Task> tasks;
+    private Uri imageUri;
     private LineState lastClickedLineState = LineState.FREE;
     private LineType lastClickedLineType = LineType.NONE;
     private int lastClickedRow = -1;
@@ -63,7 +66,7 @@ public class DotsGameSnapshot {
 
     public DotsGameSnapshot(CellState[][] cells, LineState[][] horizontalLines,
                             LineState[][] verticalLines, Set<Goodie> goodies,
-                            Set<DynamicGoodie> dynamicGoodies) {
+                            Set<DynamicGoodie> dynamicGoodies, List<Task> tasks) {
         super();
         this.cells = cells;
         this.horizontalLines = horizontalLines;
@@ -76,6 +79,7 @@ public class DotsGameSnapshot {
                         new GoodieScoreComputer(goodies, cells),
                         new DynamicGoodieScoreComputer(dynamicGoodies, cells));
         resultComputer = new ResultComputer(cells);
+        this.tasks = tasks;
     }
 
     public LineState getLastClickedLineState() {
@@ -167,7 +171,7 @@ public class DotsGameSnapshot {
         return score;
     }
 
-    public Score getScoreWithResult(List<Task> tasks) {
+    public Score getScoreWithResult() {
         computeScore();
         computeResult(tasks);
         return score;
@@ -207,5 +211,13 @@ public class DotsGameSnapshot {
         for (ScoreComputer scoreComputer : scoreComputers) {
             scoreComputer.computeScore(score);
         }
+    }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
     }
 }

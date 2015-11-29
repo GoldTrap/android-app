@@ -9,6 +9,7 @@ import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.models.states.enums.LineState;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class DotsGameFactory {
         fillGoodies(cells, goodies, (rows * cols) / 3, rows, cols);
 
         gameSnapshot = new DotsGameSnapshot(cells, horizontalLines, verticalLines,
-                goodies, dynamicGoodies);
+                goodies, dynamicGoodies, Collections.EMPTY_LIST);
         return gameSnapshot;
     }
 
@@ -57,7 +58,7 @@ public class DotsGameFactory {
         fillDynamicGoodies(cells, dynamicGoodies, rows, cols, goodiesCount / 2);
 
         gameSnapshot = new DotsGameSnapshot(cells, horizontalLines, verticalLines,
-                goodies, dynamicGoodies);
+                goodies, dynamicGoodies, Collections.EMPTY_LIST);
         return gameSnapshot;
     }
 

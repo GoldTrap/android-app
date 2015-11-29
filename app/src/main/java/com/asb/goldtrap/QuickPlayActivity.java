@@ -10,6 +10,7 @@ import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
 import com.asb.goldtrap.models.results.Score;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 
 public class QuickPlayActivity extends AppCompatActivity
         implements QuickPlayGameFragment.OnFragmentInteractionListener,
@@ -37,7 +38,8 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void gameOver(Score score) {
+    public void gameOver(DotsGameSnapshot snapshot) {
+        Score score = snapshot.getScoreWithResult();
         Log.d(TAG, "Game Over, Result: " + score.getResult());
         goldTrapApplication.setScore(score);
         getSupportFragmentManager().beginTransaction()

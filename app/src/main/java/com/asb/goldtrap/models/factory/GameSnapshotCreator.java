@@ -41,7 +41,7 @@ public class GameSnapshotCreator {
         fillDynamicGoodies(dynamicGoodies, combinations, level);
 
         gameSnapshot = new DotsGameSnapshot(cells, horizontalLines, verticalLines,
-                goodies, dynamicGoodies);
+                goodies, dynamicGoodies, level.getTasks());
         return gameSnapshot;
     }
 

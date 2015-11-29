@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="@android:color/white"
             board:board_style="square"/>
 
         <com.asb.goldtrap.views.DotBoard
@@ -42,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="@android:color/white"
             board:board_style="square"/>
 
     </FrameLayout>
