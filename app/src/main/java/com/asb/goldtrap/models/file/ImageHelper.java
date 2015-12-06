@@ -7,6 +7,10 @@ import android.net.Uri;
 /**
  * Created by arjun on 29/11/15.
  */
-public interface ImageWriter {
+public interface ImageHelper {
+    String GOLD_TRAP_JPG = "gold_trap.jpg";
+
     Uri writeFileToDisk(Bitmap bitmap, Context context);
+
+    Uri getUriForExternalShare(Context context);
 }

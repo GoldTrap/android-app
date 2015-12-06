@@ -10,6 +10,8 @@ import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
+import com.asb.goldtrap.models.utils.sharer.Sharer;
+import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 
 public class QuickPlayActivity extends AppCompatActivity
         implements QuickPlayGameFragment.OnFragmentInteractionListener,
@@ -19,11 +21,13 @@ public class QuickPlayActivity extends AppCompatActivity
 
     private static final String TAG = QuickPlayActivity.class.getSimpleName();
     private GoldTrapApplication goldTrapApplication;
+    private Sharer sharer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goldTrapApplication = (GoldTrapApplication) getApplication();
+        sharer = new SharerImpl();
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG) &&
@@ -96,7 +100,7 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void shareGame() {
-
+        sharer.shareGameImage(this);
     }
 
     @Override

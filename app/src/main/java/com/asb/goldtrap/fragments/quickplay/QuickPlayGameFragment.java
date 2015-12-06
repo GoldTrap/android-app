@@ -17,8 +17,8 @@ import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.PlayerVsAi;
 import com.asb.goldtrap.models.eo.Level;
-import com.asb.goldtrap.models.file.ImageWriter;
-import com.asb.goldtrap.models.file.impl.ImageWriterImpl;
+import com.asb.goldtrap.models.file.ImageHelper;
+import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.AITurn;
@@ -55,7 +55,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private GameConductor conductor;
     private Handler handler = new Handler();
     private Level level;
-    private ImageWriter imageWriter;
+    private ImageHelper imageHelper;
 
     /**
      * Create an instance of QuickPlayGameFragment
@@ -138,7 +138,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
-                Uri uri = imageWriter
+                Uri uri = imageHelper
                         .writeFileToDisk(gameCompleteDotBoard.getDrawingCache(), getContext());
                 conductor.getGameSnapshot().setImageUri(uri);
                 mListener.gameOver(conductor.getGameSnapshot());
@@ -158,7 +158,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         Bundle args = getArguments();
-        imageWriter = new ImageWriterImpl();
+        imageHelper = new ImageHelperImpl();
         int resourceId = args.getInt(LEVEL_RESOURCE);
         doGSONStuff(resourceId);
         startGame();

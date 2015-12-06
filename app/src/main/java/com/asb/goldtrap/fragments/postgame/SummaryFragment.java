@@ -16,7 +16,7 @@ import com.asb.goldtrap.R;
  * Summary Fragment
  * Created on 29/11/2015
  */
-public class SummaryFragment extends Fragment {
+public class SummaryFragment extends Fragment implements View.OnClickListener {
     private static final String IMAGE_URI = "imageUri";
     public static final String TAG = SummaryFragment.class.getSimpleName();
 
@@ -63,6 +63,10 @@ public class SummaryFragment extends Fragment {
         replay = (Button) view.findViewById(R.id.replay);
         share = (Button) view.findViewById(R.id.share);
         invite = (Button) view.findViewById(R.id.invite);
+        next.setOnClickListener(this);
+        replay.setOnClickListener(this);
+        share.setOnClickListener(this);
+        invite.setOnClickListener(this);
         image = (ImageView) view.findViewById(R.id.image);
         image.setImageURI(uri);
         return view;
@@ -84,6 +88,15 @@ public class SummaryFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.share:
+                mListener.shareGame();
+                break;
+        }
     }
 
     public interface OnFragmentInteractionListener {
