@@ -26,7 +26,9 @@ public class QuickPlayActivity extends AppCompatActivity
         goldTrapApplication = (GoldTrapApplication) getApplication();
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
-                null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
+                null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(ScoreFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(SummaryFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
