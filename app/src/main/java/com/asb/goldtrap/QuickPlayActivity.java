@@ -1,9 +1,13 @@
 package com.asb.goldtrap;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
@@ -12,6 +16,7 @@ import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 
 public class QuickPlayActivity extends AppCompatActivity
         implements QuickPlayGameFragment.OnFragmentInteractionListener,
@@ -20,6 +25,7 @@ public class QuickPlayActivity extends AppCompatActivity
         SummaryFragment.OnFragmentInteractionListener {
 
     private static final String TAG = QuickPlayActivity.class.getSimpleName();
+    private static final int REQUEST_INVITE = 15001;
     private GoldTrapApplication goldTrapApplication;
     private Sharer sharer;
 
@@ -41,6 +47,28 @@ public class QuickPlayActivity extends AppCompatActivity
                     .commit();
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
+
+        if (requestCode == REQUEST_INVITE) {
+            if (resultCode == RESULT_OK) {
+                // Check how many invitations were sent and log a message
+                // The ids array contains the unique invitation ids for each invitation sent
+                // (one for each contact select by the user). You can use these for analytics
+                // as the ID will be consistent on the sending and receiving devices.
+                String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
+                showMessage(getString(R.string.sent_invitations_fmt, ids.length));
+                Log.d(TAG, getString(R.string.sent_invitations_fmt, ids.length));
+            }
+            else {
+                // Sending failed or it was canceled, show failure message to the user
+                showMessage(getString(R.string.send_failed));
+            }
+        }
     }
 
     @Override
@@ -105,11 +133,20 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void invite() {
-
+        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                .setMessage(getString(R.string.invitation_message))
+                .setCallToActionText(getString(R.string.invitation_cta))
+                .build();
+        startActivityForResult(intent, REQUEST_INVITE);
     }
 
     @Override
     public void next() {
 
+    }
+
+    private void showMessage(String msg) {
+        ViewGroup container = (ViewGroup) findViewById(R.id.snackbar_layout);
+        Snackbar.make(container, msg, Snackbar.LENGTH_SHORT).show();
     }
 }

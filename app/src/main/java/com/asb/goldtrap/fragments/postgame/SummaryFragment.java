@@ -96,6 +96,9 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
             case R.id.share:
                 mListener.shareGame();
                 break;
+            case R.id.invite:
+                mListener.invite();
+                break;
         }
     }
 

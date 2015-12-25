@@ -33,4 +33,10 @@
     <string name="replay">Replay</string>
     <string name="invite">Invite</string>
     <string name="next">Next</string>
+
+    <string name="invitation_title">Invite your friends</string>
+    <string name="invitation_message">You should try this cool app. It\'s super fun!</string>
+    <string name="invitation_cta">Install!</string>
+    <string name="sent_invitations_fmt" formatted="false">Sent %d invitations</string>
+    <string name="send_failed">Sending invitations failed</string>
 </resources>
