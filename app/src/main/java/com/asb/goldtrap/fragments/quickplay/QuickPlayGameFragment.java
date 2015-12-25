@@ -1,6 +1,7 @@
 package com.asb.goldtrap.fragments.quickplay;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -135,6 +136,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
             }
         });
         gameCompleteDotBoard.setDrawingCacheEnabled(true);
+        gameCompleteDotBoard.setDrawingCacheBackgroundColor(Color.LTGRAY);
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
