@@ -11,6 +11,7 @@ import android.view.View;
 import com.asb.goldtrap.fragments.launch.HomeFragment;
 import com.asb.goldtrap.fragments.launch.LaunchFragment;
 import com.asb.goldtrap.models.utils.NetworkUtils;
+import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .addApi(Games.API).addApi(AppInvite.API).addScope(Games.SCOPE_GAMES)
                 .build();
 
         if (!isHomeFragmentVisible()) {
