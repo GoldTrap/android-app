@@ -99,6 +99,12 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
             case R.id.invite:
                 mListener.invite();
                 break;
+            case R.id.replay:
+                mListener.replayGame();
+                break;
+            case R.id.next:
+                mListener.next();
+                break;
         }
     }
 
