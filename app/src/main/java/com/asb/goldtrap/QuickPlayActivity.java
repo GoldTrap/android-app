@@ -51,12 +51,7 @@ public class QuickPlayActivity extends AppCompatActivity
                 null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(ScoreFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(SummaryFragment.TAG)) {
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.fragment_container,
-                            TasksDisplayFragment.newInstance(R.raw.level),
-                            TasksDisplayFragment.TAG)
-                    .commit();
+            startANewGame();
         }
 
         boolean autoLaunchDeepLink = true;
@@ -71,6 +66,15 @@ public class QuickPlayActivity extends AppCompatActivity
                                 // an Activity to launch to handle the deep link here.
                             }
                         });
+    }
+
+    private void startANewGame() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        TasksDisplayFragment.newInstance(R.raw.level),
+                        TasksDisplayFragment.TAG)
+                .commit();
     }
 
     @Override
@@ -146,7 +150,8 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void replayGame() {
-
+        //TODO: Save the points and stuff
+        startANewGame();
     }
 
     @Override
@@ -167,7 +172,7 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void next() {
-
+        finish();
     }
 
     private void showMessage(String msg) {
