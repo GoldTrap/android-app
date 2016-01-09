@@ -143,10 +143,16 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
-                Uri uri = imageHelper
+                final Uri uri = imageHelper
                         .writeFileToDisk(gameCompleteDotBoard.getDrawingCache(), getContext());
-                conductor.getGameSnapshot().setImageUri(uri);
-                mListener.gameOver(conductor.getGameSnapshot());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        conductor.getGameSnapshot().setImageUri(uri);
+                        mListener.gameOver(conductor.getGameSnapshot());
+                    }
+                }, 1000);
+
             }
         });
         updateScoreBoard();

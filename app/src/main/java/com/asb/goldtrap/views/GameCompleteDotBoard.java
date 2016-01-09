@@ -33,7 +33,7 @@ import java.util.Map;
 public class GameCompleteDotBoard extends View {
 
     private static final int ONE_SECOND_IN_MILLIS = 1000;
-    private static final int FRAMES_PER_SECOND = 30;
+    private static final int FRAMES_PER_SECOND = 60;
     private static final int DELAY_MILLISECONDS = ONE_SECOND_IN_MILLIS / FRAMES_PER_SECOND;
     private static final long ANIMATION_DURATION = 500; // 0.5 seconds
     private static final int WIDTH = 400;
@@ -55,6 +55,7 @@ public class GameCompleteDotBoard extends View {
     private Paint secondPlayerLinePaint;
     private Paint blockedLinePaint;
     private Paint achievementsPaint;
+    private boolean animationRequested = false;
 
     public GameCompleteDotBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -120,6 +121,7 @@ public class GameCompleteDotBoard extends View {
     }
 
     public void requestRedraw() {
+        animationRequested = true;
         this.startTime = System.currentTimeMillis();
         this.invalidate();
     }
@@ -168,12 +170,14 @@ public class GameCompleteDotBoard extends View {
                 this.postInvalidateDelayed(DELAY_MILLISECONDS);
             }
             else {
-                mListener.animationComplete();
+                if (animationRequested) {
+                    animationRequested = false;
+                    mListener.animationComplete();
+                }
             }
         }
-
-
     }
+
 
     public interface Listener {
         void animationComplete();
