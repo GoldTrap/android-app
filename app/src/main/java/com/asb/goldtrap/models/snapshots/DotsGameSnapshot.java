@@ -12,6 +12,7 @@ import com.asb.goldtrap.models.states.enums.LineState;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -144,6 +145,9 @@ public class DotsGameSnapshot {
     }
 
     public List<Task> getTasks() {
+        if (null == tasks) {
+            tasks = Collections.emptyList();
+        }
         return tasks;
     }
 }
