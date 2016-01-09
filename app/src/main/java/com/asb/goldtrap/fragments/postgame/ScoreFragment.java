@@ -16,6 +16,9 @@ import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.TasksRecyclerAdapter;
 import com.asb.goldtrap.models.eo.Task;
 import com.asb.goldtrap.models.results.Score;
+import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class ScoreFragment extends Fragment {
     private RecyclerView taskList;
     private FloatingActionButton action;
     private OnFragmentInteractionListener mListener;
+    private ScoreComputer scoreComputer;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -50,8 +54,11 @@ public class ScoreFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        score = ((GoldTrapApplication) getActivity().getApplication()).getDotsGameSnapshot()
-                .getScoreWithResult();
+        DotsGameSnapshot snapshot =
+                ((GoldTrapApplication) getActivity().getApplication()).getDotsGameSnapshot();
+        scoreComputer = new ScoreComputerImpl(snapshot);
+        scoreComputer.computeScoreWithResults();
+        score = snapshot.getScore();
     }
 
     @Override

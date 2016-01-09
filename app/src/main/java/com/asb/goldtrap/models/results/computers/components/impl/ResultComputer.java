@@ -1,14 +1,15 @@
-package com.asb.goldtrap.models.results.computers.impl;
+package com.asb.goldtrap.models.results.computers.components.impl;
 
 import com.asb.goldtrap.models.results.Result;
 import com.asb.goldtrap.models.results.Score;
-import com.asb.goldtrap.models.results.computers.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.components.ScoreComponentsComputer;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.CellState;
 
 /**
  * Created by arjun on 28/11/15.
  */
-public class ResultComputer implements ScoreComputer {
+public class ResultComputer implements ScoreComponentsComputer {
     private CellState[][] cells;
 
     public ResultComputer(CellState[][] cells) {
@@ -16,7 +17,8 @@ public class ResultComputer implements ScoreComputer {
     }
 
     @Override
-    public void computeScore(Score score) {
+    public void computeScore(DotsGameSnapshot dotsGameSnapshot) {
+        Score score = dotsGameSnapshot.getScore();
         int totalCellsOccupied = 0;
         int rows = cells.length;
         int cols = cells[0].length;

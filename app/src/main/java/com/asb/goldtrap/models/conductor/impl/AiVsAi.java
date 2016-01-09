@@ -8,6 +8,8 @@ import com.asb.goldtrap.models.conductor.factory.goodie.impl.GenericGoodieOperat
 import com.asb.goldtrap.models.eo.Complication;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
+import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.factory.SolversFactory;
@@ -46,6 +48,7 @@ public class AiVsAi implements GameConductor {
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
     private List<GoodieOperator> goodieOperators;
+    private ScoreComputer scoreComputer;
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
 
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, Level level) {
@@ -61,6 +64,7 @@ public class AiVsAi implements GameConductor {
         findAllLineCombinations();
         aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
         otherAiSolver = solversFactory.getOtherPlayerSolver(dotsGameSnapshot, combinations);
+        scoreComputer = new ScoreComputerImpl(dotsGameSnapshot);
     }
 
     private void addOperators(Level level) {
@@ -155,7 +159,7 @@ public class AiVsAi implements GameConductor {
     public void setState(GameState state) {
         this.state = state;
         if (state instanceof GameOver) {
-            this.dotsGameSnapshot.computeScore();
+            scoreComputer.computeScoreWithResults();
         }
         this.mGameStateObserver.stateChanged(state);
     }

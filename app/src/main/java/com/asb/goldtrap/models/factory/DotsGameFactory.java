@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+@Deprecated
 public class DotsGameFactory {
 
     public static DotsGameSnapshot createEmptyGameSnapshot() {

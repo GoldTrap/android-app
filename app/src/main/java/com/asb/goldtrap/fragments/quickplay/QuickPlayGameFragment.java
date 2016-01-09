@@ -20,6 +20,8 @@ import com.asb.goldtrap.models.conductor.impl.PlayerVsAi;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.file.ImageHelper;
 import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
+import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.AITurn;
@@ -57,6 +59,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private Handler handler = new Handler();
     private Level level;
     private ImageHelper imageHelper;
+    private ScoreComputer scoreComputer;
 
     /**
      * Create an instance of QuickPlayGameFragment
@@ -151,6 +154,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     private void updateScoreBoard() {
+        scoreComputer.computeScore();
         scoreBoard.setText(
                 getString(R.string.points, conductor.getGameSnapshot().getScore().basicScore()));
     }
@@ -193,6 +197,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private void startGame() {
         conductor = new PlayerVsAi(this, level);
         conductor.setState(conductor.getFirstPlayerState());
+        scoreComputer = new ScoreComputerImpl(conductor.getGameSnapshot());
     }
 
     @Override

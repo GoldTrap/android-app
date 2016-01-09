@@ -1,8 +1,9 @@
-package com.asb.goldtrap.models.results.computers.impl;
+package com.asb.goldtrap.models.results.computers.components.impl;
 
 import com.asb.goldtrap.models.components.Goodie;
 import com.asb.goldtrap.models.results.Score;
-import com.asb.goldtrap.models.results.computers.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.components.ScoreComponentsComputer;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 /**
  * Created by arjun on 28/11/15.
  */
-public class GoodieScoreComputer implements ScoreComputer {
+public class GoodieScoreComputer implements ScoreComponentsComputer {
     private Set<Goodie> goodies;
     private CellState[][] cells;
 
@@ -24,7 +25,8 @@ public class GoodieScoreComputer implements ScoreComputer {
     }
 
     @Override
-    public void computeScore(Score score) {
+    public void computeScore(DotsGameSnapshot dotsGameSnapshot) {
+        Score score = dotsGameSnapshot.getScore();
         for (Goodie goodie : goodies) {
             if (CellState.PLAYER == cells[goodie.getRow()][goodie.getCol()]) {
                 if (GoodiesState.NOTHING != goodie.getGoodiesState()) {

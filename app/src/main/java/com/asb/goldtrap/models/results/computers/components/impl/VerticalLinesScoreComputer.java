@@ -1,15 +1,16 @@
-package com.asb.goldtrap.models.results.computers.impl;
+package com.asb.goldtrap.models.results.computers.components.impl;
 
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.results.Score;
-import com.asb.goldtrap.models.results.computers.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.components.ScoreComponentsComputer;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.views.LineType;
 
 /**
  * Created by arjun on 28/11/15.
  */
-public class VerticalLinesScoreComputer implements ScoreComputer {
+public class VerticalLinesScoreComputer implements ScoreComponentsComputer {
     private CellState[][] cells;
 
     public VerticalLinesScoreComputer(CellState[][] cells) {
@@ -17,7 +18,8 @@ public class VerticalLinesScoreComputer implements ScoreComputer {
     }
 
     @Override
-    public void computeScore(Score score) {
+    public void computeScore(DotsGameSnapshot dotsGameSnapshot) {
+        Score score = dotsGameSnapshot.getScore();
         int rows = cells.length;
         int cols = cells[0].length;
         for (int i = 0; i < cols; i += 1) {
