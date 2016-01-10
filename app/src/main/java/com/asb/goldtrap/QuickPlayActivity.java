@@ -14,7 +14,6 @@ import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
-import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.appinvite.AppInvite;
@@ -99,13 +98,12 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void gameOver(DotsGameSnapshot snapshot, Uri gamePreviewUri) {
-        goldTrapApplication.setDotsGameSnapshot(snapshot);
+    public void gameOver(String snapshot, Uri gamePreviewUri) {
         goldTrapApplication.setGamePreviewUri(gamePreviewUri);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
-                        ScoreFragment.newInstance(),
+                        ScoreFragment.newInstance(snapshot),
                         ScoreFragment.TAG)
                 .commit();
     }

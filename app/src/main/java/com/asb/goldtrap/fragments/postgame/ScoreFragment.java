@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.TasksRecyclerAdapter;
 import com.asb.goldtrap.models.eo.Task;
@@ -19,6 +18,7 @@ import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
 import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -29,6 +29,7 @@ import java.util.List;
 public class ScoreFragment extends Fragment {
 
     public static final String TAG = ScoreFragment.class.getSimpleName();
+    public static final String SNAPSHOT = "snapshot";
     private Score score;
     private TextView result;
     private TextView points;
@@ -45,20 +46,28 @@ public class ScoreFragment extends Fragment {
     /**
      * Create new instance of Score Fragment
      *
+     * @param snapshot snapshot
      * @return A new instance of fragment ScoreFragment.
      */
-    public static ScoreFragment newInstance() {
-        return new ScoreFragment();
+    public static ScoreFragment newInstance(String snapshot) {
+        ScoreFragment fragment = new ScoreFragment();
+        Bundle args = new Bundle();
+        args.putString(SNAPSHOT, snapshot);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DotsGameSnapshot snapshot =
-                ((GoldTrapApplication) getActivity().getApplication()).getDotsGameSnapshot();
-        scoreComputer = new ScoreComputerImpl(snapshot);
-        scoreComputer.computeScoreWithResults();
-        score = snapshot.getScore();
+        if (null != getArguments()) {
+            Gson gson = new Gson();
+            DotsGameSnapshot snapshot =
+                    gson.fromJson(getArguments().getString(SNAPSHOT), DotsGameSnapshot.class);
+            scoreComputer = new ScoreComputerImpl(snapshot);
+            scoreComputer.computeScoreWithResults();
+            score = snapshot.getScore();
+        }
     }
 
     @Override

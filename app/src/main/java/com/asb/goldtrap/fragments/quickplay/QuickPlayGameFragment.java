@@ -22,7 +22,6 @@ import com.asb.goldtrap.models.file.ImageHelper;
 import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
 import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
-import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameOver;
@@ -60,6 +59,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private Level level;
     private ImageHelper imageHelper;
     private ScoreComputer scoreComputer;
+    private Gson gson;
 
     /**
      * Create an instance of QuickPlayGameFragment
@@ -148,7 +148,8 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mListener.gameOver(conductor.getGameSnapshot(), gamePreviewUri);
+                        mListener
+                                .gameOver(gson.toJson(conductor.getGameSnapshot()), gamePreviewUri);
                     }
                 }, 1000);
 
@@ -171,12 +172,12 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         Bundle args = getArguments();
         imageHelper = new ImageHelperImpl();
         int resourceId = args.getInt(LEVEL_RESOURCE);
+        gson = new Gson();
         doGSONStuff(resourceId);
         startGame();
     }
 
     private void doGSONStuff(int resourceId) {
-        Gson gson = new Gson();
         InputStream inputStream = getResources().openRawResource(resourceId);
         level = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
         Log.d(TAG, gson.toJson(level));
@@ -213,7 +214,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     public interface OnFragmentInteractionListener {
-        void gameOver(DotsGameSnapshot dotsGameSnapshot, Uri gamePreviewUri);
+        void gameOver(String snapshot, Uri gamePreviewUri);
     }
 
 }

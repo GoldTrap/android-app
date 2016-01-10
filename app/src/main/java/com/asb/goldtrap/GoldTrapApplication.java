@@ -3,14 +3,11 @@ package com.asb.goldtrap;
 import android.app.Application;
 import android.net.Uri;
 
-import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
-
 /**
  * Created by arjun on 29/11/15.
  */
 public class GoldTrapApplication extends Application {
     private static GoldTrapApplication singleton;
-    private DotsGameSnapshot dotsGameSnapshot;
     private Uri gamePreviewUri;
 
     public GoldTrapApplication getInstance() {
@@ -31,12 +28,4 @@ public class GoldTrapApplication extends Application {
         this.gamePreviewUri = gamePreviewUri;
     }
 
-    public DotsGameSnapshot getDotsGameSnapshot() {
-        return dotsGameSnapshot;
-    }
-
-    public void setDotsGameSnapshot(
-            DotsGameSnapshot dotsGameSnapshot) {
-        this.dotsGameSnapshot = dotsGameSnapshot;
-    }
 }
