@@ -1,6 +1,7 @@
 package com.asb.goldtrap;
 
 import android.app.Application;
+import android.net.Uri;
 
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 
@@ -10,6 +11,7 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 public class GoldTrapApplication extends Application {
     private static GoldTrapApplication singleton;
     private DotsGameSnapshot dotsGameSnapshot;
+    private Uri gamePreviewUri;
 
     public GoldTrapApplication getInstance() {
         return singleton;
@@ -19,6 +21,14 @@ public class GoldTrapApplication extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
+    }
+
+    public Uri getGamePreviewUri() {
+        return gamePreviewUri;
+    }
+
+    public void setGamePreviewUri(Uri gamePreviewUri) {
+        this.gamePreviewUri = gamePreviewUri;
     }
 
     public DotsGameSnapshot getDotsGameSnapshot() {

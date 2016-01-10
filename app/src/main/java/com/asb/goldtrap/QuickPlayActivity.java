@@ -99,8 +99,9 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void gameOver(DotsGameSnapshot snapshot) {
+    public void gameOver(DotsGameSnapshot snapshot, Uri gamePreviewUri) {
         goldTrapApplication.setDotsGameSnapshot(snapshot);
+        goldTrapApplication.setGamePreviewUri(gamePreviewUri);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
@@ -142,8 +143,7 @@ public class QuickPlayActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
-                        SummaryFragment.newInstance(
-                                goldTrapApplication.getDotsGameSnapshot().getImageUri()),
+                        SummaryFragment.newInstance(goldTrapApplication.getGamePreviewUri()),
                         SummaryFragment.TAG)
                 .commit();
     }
@@ -164,7 +164,7 @@ public class QuickPlayActivity extends AppCompatActivity
         Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
                 .setMessage(getString(R.string.invitation_message))
                 .setCallToActionText(getString(R.string.invitation_cta))
-                .setCustomImage(goldTrapApplication.getDotsGameSnapshot().getImageUri())
+                .setCustomImage(goldTrapApplication.getGamePreviewUri())
                 .setDeepLink(Uri.parse(getString(R.string.quick_play_deeplink)))
                 .build();
         startActivityForResult(intent, REQUEST_INVITE);

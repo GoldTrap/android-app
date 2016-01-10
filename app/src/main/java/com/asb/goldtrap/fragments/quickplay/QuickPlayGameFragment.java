@@ -143,13 +143,12 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
-                final Uri uri = imageHelper
+                final Uri gamePreviewUri = imageHelper
                         .writeFileToDisk(gameCompleteDotBoard.getDrawingCache(), getContext());
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        conductor.getGameSnapshot().setImageUri(uri);
-                        mListener.gameOver(conductor.getGameSnapshot());
+                        mListener.gameOver(conductor.getGameSnapshot(), gamePreviewUri);
                     }
                 }, 1000);
 
@@ -214,7 +213,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     }
 
     public interface OnFragmentInteractionListener {
-        void gameOver(DotsGameSnapshot dotsGameSnapshot);
+        void gameOver(DotsGameSnapshot dotsGameSnapshot, Uri gamePreviewUri);
     }
 
 }

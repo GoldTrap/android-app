@@ -1,7 +1,5 @@
 package com.asb.goldtrap.models.snapshots;
 
-import android.net.Uri;
-
 import com.asb.goldtrap.models.components.Cell;
 import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.components.Goodie;
@@ -27,7 +25,6 @@ public class DotsGameSnapshot {
     private Set<DynamicGoodie> dynamicGoodies;
     private Score score;
     private List<Task> tasks;
-    private Uri imageUri;
     private LineState lastClickedLineState = LineState.FREE;
     private LineType lastClickedLineType = LineType.NONE;
     private int lastClickedRow = -1;
@@ -134,14 +131,6 @@ public class DotsGameSnapshot {
 
     public Score getScore() {
         return score;
-    }
-
-    public Uri getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
     }
 
     public List<Task> getTasks() {
