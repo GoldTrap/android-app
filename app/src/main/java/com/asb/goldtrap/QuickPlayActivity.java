@@ -174,8 +174,8 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     private void showMessage(String msg) {
-        ViewGroup container = (ViewGroup) findViewById(R.id.snackbar_layout);
-        Snackbar.make(container, msg, Snackbar.LENGTH_SHORT).show();
+        ViewGroup coordinateLayout = (ViewGroup) findViewById(R.id.quickplayCoordinateLayout);
+        Snackbar.make(coordinateLayout, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
