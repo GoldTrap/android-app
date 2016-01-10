@@ -34,16 +34,11 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Random;
 
 /**
  * QuickPlayGameFragment
  */
 public class QuickPlayGameFragment extends Fragment implements GameConductor.GameStateObserver {
-    private static final int MIN_ROWS = 4;
-    private static final int MIN_COLS = 4;
-    private static final int ADDITIONAL_ROWS = 3;
-    private static final int ADDITIONAL_COLS = 3;
     public static final String TAG = QuickPlayGameFragment.class.getSimpleName();
     public static final String LEVEL_RESOURCE = "LEVEL_RESOURCE";
     private FrameLayout gameLayout;
@@ -53,7 +48,6 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private Button flip;
     private Button extraChance;
     private OnFragmentInteractionListener mListener;
-    private Random random = new Random();
     private GameConductor conductor;
     private Handler handler = new Handler();
     private Level level;
