@@ -172,6 +172,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void multiPlayerGame() {
+
+    }
+
+    @Override
     public void launch() {
         loadHomeScreen();
     }

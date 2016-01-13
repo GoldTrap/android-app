@@ -161,6 +161,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         void signIn();
 
         void quickPlay();
+
+        void multiPlayerGame();
     }
 
 }
