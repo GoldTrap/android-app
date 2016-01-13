@@ -23,7 +23,7 @@ public class DotsGameSnapshot {
     private LineState verticalLines[][];
     private Set<Goodie> goodies;
     private Set<DynamicGoodie> dynamicGoodies;
-    private Score score;
+    private transient Score score;
     private List<Task> tasks;
     private LineState lastClickedLineState = LineState.FREE;
     private LineType lastClickedLineType = LineType.NONE;
@@ -42,7 +42,6 @@ public class DotsGameSnapshot {
         this.goodies = goodies;
         this.dynamicGoodies = dynamicGoodies;
         this.tasks = tasks;
-        score = new Score();
     }
 
     public LineState getLastClickedLineState() {
@@ -130,6 +129,9 @@ public class DotsGameSnapshot {
     }
 
     public Score getScore() {
+        if (null == score) {
+            score = new Score();
+        }
         return score;
     }
 
