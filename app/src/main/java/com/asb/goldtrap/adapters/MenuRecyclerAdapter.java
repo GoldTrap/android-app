@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asb.goldtrap.R;
-import com.asb.goldtrap.models.menu.HomePageMenu;
+import com.asb.goldtrap.models.menu.CardGridMenu;
 
 import java.util.List;
 
@@ -19,11 +19,11 @@ import java.util.List;
 public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapter.ViewHolder> {
 
     private Context context;
-    private List<HomePageMenu> homePageMenus;
+    private List<? extends CardGridMenu> homePageMenus;
     private ViewHolder.ViewHolderClicks listener;
 
     public MenuRecyclerAdapter(Context context,
-                               List<HomePageMenu> homePageMenus,
+                               List<? extends CardGridMenu> homePageMenus,
                                ViewHolder.ViewHolderClicks listener) {
         this.context = context;
         this.homePageMenus = homePageMenus;
@@ -60,7 +60,7 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
             imageView = (ImageView) itemView.findViewById(R.id.menu_image);
         }
 
-        public void bindMenu(HomePageMenu homePageMenu, Context context) {
+        public void bindMenu(CardGridMenu homePageMenu, Context context) {
             int imageId = context.getResources()
                     .getIdentifier(homePageMenu.getImage(), "mipmap", context.getPackageName());
             if (0 == imageId) {

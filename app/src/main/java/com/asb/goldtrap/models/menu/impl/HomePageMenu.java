@@ -1,9 +1,12 @@
-package com.asb.goldtrap.models.menu;
+package com.asb.goldtrap.models.menu.impl;
+
+import com.asb.goldtrap.models.menu.CardGridMenu;
+import com.asb.goldtrap.models.menu.types.HomePageMenuType;
 
 /**
  * Created by arjun on 22/11/15.
  */
-public class HomePageMenu {
+public class HomePageMenu implements CardGridMenu {
     private String name;
     private String image;
     private HomePageMenuType type;

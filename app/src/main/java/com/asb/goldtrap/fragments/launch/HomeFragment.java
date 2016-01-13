@@ -13,7 +13,7 @@ import android.widget.Button;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.MenuRecyclerAdapter;
 import com.asb.goldtrap.models.conductor.GameConductor;
-import com.asb.goldtrap.models.menu.HomePageMenu;
+import com.asb.goldtrap.models.menu.impl.HomePageMenu;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.spansize.MenuSpanSizeLookup;
 import com.google.android.gms.common.SignInButton;

@@ -1,4 +1,4 @@
-package com.asb.goldtrap.models.menu;
+package com.asb.goldtrap.models.menu.types;
 
 /**
  * Created by arjun on 22/11/15.
