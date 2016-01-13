@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         Gson gson = new Gson();
-        InputStream inputStream = getResources().openRawResource(R.raw.menu);
+        InputStream inputStream = getResources().openRawResource(R.raw.home_page_menu);
         homePageMenus = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)),
                 new TypeToken<List<HomePageMenu>>() {
                 }.getType());
@@ -119,6 +119,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
                 mListener.quickPlay();
                 break;
             case MULTI_PLAYER_GAME:
+                mListener.multiPlayerGame();
                 break;
             case STORE:
                 break;

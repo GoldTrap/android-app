@@ -54,14 +54,40 @@
                     android:host="asb-apps.blogspot.in"
                     android:pathPrefix="/goldtrap/quickplay"
                     android:scheme="http"/>
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos”
+                <!-- note that the leading "/" is required for pathPrefix -->
+                <!--
+                Accepts URIs that begin with "example://gizmos”
                 <data android:scheme="example"
                       android:host="gizmos" />
                 -->
                 <data
                     android:host="goldtrap"
                     android:pathPrefix="/quickplay"
+                    android:scheme="asb-apps"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MultiPlayerActivity"
+            android:label="@string/title_activity_multi_player"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asb.goldtrap.MainActivity"/>
+            <intent-filter android:label="@string/title_activity_multi_player">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="asb-apps.blogspot.in"
+                    android:pathPrefix="/goldtrap/multiplayer"
+                    android:scheme="http"/>
+                <data
+                    android:host="goldtrap"
+                    android:pathPrefix="/multiplayer"
                     android:scheme="asb-apps"/>
             </intent-filter>
         </activity>

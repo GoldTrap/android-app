@@ -1,0 +1,20 @@
+[
+  {
+    "name": "start_match",
+    "image": "start_match",
+    "type": "START_MATCH",
+    "spanSize": 6
+  },
+  {
+    "name": "auto_match",
+    "image": "auto_match",
+    "type": "AUTO_MATCH",
+    "spanSize": 6
+  },
+  {
+    "name": "in_progress_matches",
+    "image": "in_progress_matches",
+    "type": "IN_PROGRESS_MATCHES",
+    "spanSize": 6
+  }
+]

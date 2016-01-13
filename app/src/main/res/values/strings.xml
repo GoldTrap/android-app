@@ -5,7 +5,7 @@
     <string name="play">Play</string>
     <string name="quick_play">Quick Play</string>
     <string name="heart">Heart</string>
-    <string name="multiplayer">Multiplayer</string>
+    <string name="multi_player">Multi Player</string>
     <string name="sign_out">Sign Out</string>
     <string name="title_activity_quick_play">QuickPlayActivity</string>
     <string name="points">Points: %d</string>
@@ -30,6 +30,11 @@
     <string name="score">Scores</string>
     <string name="share">Share</string>
 
+    <!-- Multi Player Menu Items -->
+    <string name="start_match">Start Match</string>
+    <string name="auto_match">Auto Match</string>
+    <string name="in_progress_matches">In Progress Matches</string>
+
 
     <string name="replay">Replay</string>
     <string name="invite">Invite</string>
@@ -40,4 +45,6 @@
     <string name="invitation_cta">Install!</string>
     <string name="sent_invitations_fmt" formatted="false">Sent %d invitations</string>
     <string name="send_failed">Sending invitations failed</string>
+    <string name="title_activity_multi_player">Multi Player</string>
+    <string name="action_settings">Settings</string>
 </resources>

@@ -173,7 +173,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void multiPlayerGame() {
-
+        Intent multiPlayer = new Intent(this, MultiPlayerActivity.class);
+        startActivity(multiPlayer);
     }
 
     @Override
