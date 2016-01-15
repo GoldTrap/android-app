@@ -1,6 +1,7 @@
 package com.asb.goldtrap.models.states.impl;
 
 import com.asb.goldtrap.models.conductor.GameConductor;
+import com.asb.goldtrap.models.conductor.helper.Gamer;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.views.LineType;
 

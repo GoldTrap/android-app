@@ -7,7 +7,9 @@ import com.asb.goldtrap.models.conductor.factory.goodie.GoodieOperatorFactory;
 import com.asb.goldtrap.models.conductor.factory.goodie.impl.GenericGoodieOperator;
 import com.asb.goldtrap.models.conductor.factory.solver.SolverFactory;
 import com.asb.goldtrap.models.conductor.factory.solver.impl.SolverFactoryImpl;
+import com.asb.goldtrap.models.conductor.helper.Gamer;
 import com.asb.goldtrap.models.conductor.helper.LineCombinationFinder;
+import com.asb.goldtrap.models.conductor.helper.impl.GamerImpl;
 import com.asb.goldtrap.models.conductor.helper.impl.LineCombinationFinderImpl;
 import com.asb.goldtrap.models.eo.Complication;
 import com.asb.goldtrap.models.eo.Level;
@@ -17,7 +19,6 @@ import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameExited;
 import com.asb.goldtrap.models.states.impl.GameOver;
-import com.asb.goldtrap.models.states.impl.Gamer;
 import com.asb.goldtrap.models.states.impl.PlayerTurn;
 import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.LineType;
@@ -53,7 +54,7 @@ public class PlayerVsAi implements GameConductor {
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
 
     public PlayerVsAi(GameStateObserver gameStateObserver, Level level) {
-        Gamer gamer = new Gamer();
+        Gamer gamer = new GamerImpl();
         dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
         firstPlayerState = new PlayerTurn(this, gamer);
         secondPlayerState = new SecondaryPlayerTurn(this, gamer);

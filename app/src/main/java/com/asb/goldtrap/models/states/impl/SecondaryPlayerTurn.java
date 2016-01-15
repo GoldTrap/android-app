@@ -3,6 +3,7 @@ package com.asb.goldtrap.models.states.impl;
 import com.asb.goldtrap.models.components.Cell;
 import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
+import com.asb.goldtrap.models.conductor.helper.Gamer;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
