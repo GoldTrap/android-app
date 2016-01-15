@@ -18,6 +18,8 @@ public class LineCombinationFinderImpl implements LineCombinationFinder {
     @Override
     public void findAllLineCombinations(DotsGameSnapshot dotsGameSnapshot, List<Line> combinations,
                                         Set<Line> cSet) {
+        combinations.clear();
+        cSet.clear();
         CellState[][] cells = dotsGameSnapshot.getCells();
         LineState[][] horizontalLines = dotsGameSnapshot.getHorizontalLines();
 

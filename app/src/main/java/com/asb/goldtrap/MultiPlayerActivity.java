@@ -1,19 +1,28 @@
 package com.asb.goldtrap;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asb.goldtrap.fragments.multiplayer.MultiPlayerGameFragment;
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerMenuFragment;
+import com.asb.goldtrap.models.eo.Level;
+import com.asb.goldtrap.models.factory.GameSnapshotCreator;
+import com.asb.goldtrap.models.snapshots.GameAndLevelSnapshot;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesStatusCodes;
 import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.Multiplayer;
 import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
@@ -24,9 +33,18 @@ import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
 import com.google.android.gms.plus.Plus;
 import com.google.example.games.basegameutils.BaseGameUtils;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class MultiPlayerActivity extends AppCompatActivity
         implements MultiPlayerMenuFragment.OnFragmentInteractionListener,
+        MultiPlayerGameFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         OnInvitationReceivedListener, OnTurnBasedMatchUpdateReceivedListener {
 
@@ -50,12 +68,15 @@ public class MultiPlayerActivity extends AppCompatActivity
     public boolean isDoingTurn = false;
 
     public TurnBasedMatch mMatch;
+    private Gson gson;
+    private GameAndLevelSnapshot gameAndLevelSnapshot;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_player);
+        gson = new Gson();
         // Create the Google API Client with access to Plus and Games
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -102,22 +123,215 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     @Override
+    public void onActivityResult(int request, int response, Intent data) {
+        super.onActivityResult(request, response, data);
+        if (request == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (response == Activity.RESULT_OK) {
+                mGoogleApiClient.connect();
+            }
+            else {
+                BaseGameUtils.showActivityResultError(this, request, response,
+                        R.string.signin_other_error);
+            }
+        }
+        else if (request == RC_LOOK_AT_MATCHES) {
+            if (response == Activity.RESULT_OK) {
+                TurnBasedMatch match = data
+                        .getParcelableExtra(Multiplayer.EXTRA_TURN_BASED_MATCH);
+                if (match != null) {
+                    updateMatch(match);
+                }
+
+                Log.d(TAG, "Match = " + match);
+            }
+        }
+        else if (request == RC_SELECT_PLAYERS) {
+            if (response == Activity.RESULT_OK) {
+                final ArrayList<String> invitees = data
+                        .getStringArrayListExtra(Games.EXTRA_PLAYER_IDS);
+
+                Bundle matchCriteria = null;
+
+                int minAutoMatchPlayers = data.getIntExtra(
+                        Multiplayer.EXTRA_MIN_AUTOMATCH_PLAYERS, 0);
+                int maxAutoMatchPlayers = data.getIntExtra(
+                        Multiplayer.EXTRA_MAX_AUTOMATCH_PLAYERS, 0);
+
+                if (minAutoMatchPlayers > 0) {
+                    matchCriteria = RoomConfig.createAutoMatchCriteria(
+                            minAutoMatchPlayers, maxAutoMatchPlayers, 0);
+                }
+                else {
+                    matchCriteria = null;
+                }
+
+                // Start the match
+                startMatch(TurnBasedMatchConfig.builder()
+                        .addInvitedPlayers(invitees)
+                        .setAutoMatchCriteria(matchCriteria).build());
+                showSpinner();
+            }
+        }
+    }
+    // Helpful dialogs
+
+    public void showSpinner() {
+        findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
+    }
+
+    public void dismissSpinner() {
+        findViewById(R.id.progressLayout).setVisibility(View.GONE);
+    }
+
+    public void askForRematch() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setMessage("Do you want a rematch?");
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Sure, rematch!",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                rematch();
+                            }
+                        })
+                .setNegativeButton("No.",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+
+        alertDialogBuilder.show();
+    }
+
+    @Override
     public void onAutoMatch() {
-        Bundle autoMatchCriteria = RoomConfig.createAutoMatchCriteria(
-                1, 1, 0);
+        startMatch(TurnBasedMatchConfig.builder()
+                .setAutoMatchCriteria(RoomConfig.createAutoMatchCriteria(
+                        1, 1, 0)).build());
+    }
 
-        TurnBasedMatchConfig tbmc = TurnBasedMatchConfig.builder()
-                .setAutoMatchCriteria(autoMatchCriteria).build();
+    private void startMatch(TurnBasedMatchConfig tbmc) {
+        Games.TurnBasedMultiplayer.createMatch(mGoogleApiClient, tbmc)
+                .setResultCallback(new ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>() {
+                    @Override
+                    public void onResult(TurnBasedMultiplayer.InitiateMatchResult result) {
+                        processResult(result);
+                    }
+                });
+    }
 
-        // Start the match
-        ResultCallback<TurnBasedMultiplayer.InitiateMatchResult> cb =
+    @Override
+    public void onMyTurnComplete(GameAndLevelSnapshot gameAndLevelSnapshot) {
+        showSpinner();
+        takeTurn(gameAndLevelSnapshot, getNextParticipantId());
+    }
+
+    private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId) {
+        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
+                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName("UTF-8")), participantId)
+                .setResultCallback(
+                        new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                            @Override
+                            public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                                processResult(result);
+                            }
+                        });
+    }
+
+    @Override
+    public void gameOver(GameAndLevelSnapshot gameAndLevel, Uri gamePreviewUri) {
+
+    }
+
+    public void rematch() {
+        showSpinner();
+        Games.TurnBasedMultiplayer.rematch(mGoogleApiClient, mMatch.getMatchId()).setResultCallback(
                 new ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>() {
                     @Override
                     public void onResult(TurnBasedMultiplayer.InitiateMatchResult result) {
-
+                        processResult(result);
                     }
-                };
-        Games.TurnBasedMultiplayer.createMatch(mGoogleApiClient, tbmc).setResultCallback(cb);
+                });
+        mMatch = null;
+        isDoingTurn = false;
+    }
+
+    private void processResult(TurnBasedMultiplayer.CancelMatchResult result) {
+        dismissSpinner();
+
+        if (!checkStatusCode(null, result.getStatus().getStatusCode())) {
+            return;
+        }
+
+        isDoingTurn = false;
+
+        showMessage("This match is canceled.  All other players will have their game ended.");
+    }
+
+    private void processResult(TurnBasedMultiplayer.InitiateMatchResult result) {
+        TurnBasedMatch match = result.getMatch();
+        dismissSpinner();
+        if (checkStatusCode(match, result.getStatus().getStatusCode())) {
+            if (match.getData() != null) {
+                // This is a game that has already started, so I'll just start
+                updateMatch(match);
+            }
+            else {
+                startMatch(match);
+            }
+        }
+    }
+
+    public void processResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+        TurnBasedMatch match = result.getMatch();
+        dismissSpinner();
+        if (checkStatusCode(match, result.getStatus().getStatusCode())) {
+            if (match.canRematch()) {
+                askForRematch();
+            }
+            isDoingTurn = (match.getTurnStatus() == TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN);
+            if (isDoingTurn) {
+                updateMatch(match);
+            }
+        }
+    }
+
+    private Level getMyLevel(int resourceId) {
+        InputStream inputStream = getResources().openRawResource(resourceId);
+        return gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
+    }
+
+    public void startMatch(TurnBasedMatch match) {
+        Level level = getMyLevel(R.raw.level);
+        gameAndLevelSnapshot =
+                new GameAndLevelSnapshot(new GameSnapshotCreator().createGameSnapshot(level),
+                        level);
+        mMatch = match;
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String myParticipantId = mMatch.getParticipantId(playerId);
+        takeTurn(gameAndLevelSnapshot, myParticipantId);
+    }
+
+    private void startGamePlay(GameAndLevelSnapshot gameAndLevelSnapshot) {
+        MultiPlayerGameFragment fragment =
+                (MultiPlayerGameFragment) getSupportFragmentManager().findFragmentByTag(
+                        MultiPlayerGameFragment.TAG);
+        if (null == fragment) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container,
+                            MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot)),
+                            MultiPlayerMenuFragment.TAG)
+                    .commit();
+        }
+        else {
+            fragment.updateSnapshot(gameAndLevelSnapshot);
+        }
     }
 
     @Override
@@ -177,6 +391,24 @@ public class MultiPlayerActivity extends AppCompatActivity
                     break;
                 }
         }
+        // OK, it's active. Check on turn status.
+        switch (turnStatus) {
+            case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
+                try {
+                    gameAndLevelSnapshot =
+                            gson.fromJson(new String(match.getData(), "UTF-8"),
+                                    GameAndLevelSnapshot.class);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                startGamePlay(gameAndLevelSnapshot);
+                break;
+            case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
+                showMessage("It's not your turn.");
+                break;
+            case TurnBasedMatch.MATCH_TURN_STATUS_INVITED:
+                showMessage("Still waiting for invitations.\n\nBe patient!");
+        }
     }
 
     private void showMessage(String msg) {
@@ -211,6 +443,48 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     }
 
+    private boolean checkStatusCode(TurnBasedMatch match, int statusCode) {
+        switch (statusCode) {
+            case GamesStatusCodes.STATUS_OK:
+                return true;
+            case GamesStatusCodes.STATUS_NETWORK_ERROR_OPERATION_DEFERRED:
+                return true;
+            case GamesStatusCodes.STATUS_MULTIPLAYER_ERROR_NOT_TRUSTED_TESTER:
+                showMessage(getResources().getString(
+                        R.string.status_multiplayer_error_not_trusted_tester));
+                break;
+            case GamesStatusCodes.STATUS_MATCH_ERROR_ALREADY_REMATCHED:
+                showMessage(getResources().getString(
+                        R.string.match_error_already_rematched));
+                break;
+            case GamesStatusCodes.STATUS_NETWORK_ERROR_OPERATION_FAILED:
+                showMessage(getResources().getString(
+                        R.string.network_error_operation_failed));
+                break;
+            case GamesStatusCodes.STATUS_CLIENT_RECONNECT_REQUIRED:
+                showMessage(getResources().getString(
+                        R.string.client_reconnect_required));
+                break;
+            case GamesStatusCodes.STATUS_INTERNAL_ERROR:
+                showMessage(getResources().getString(R.string.internal_error));
+                break;
+            case GamesStatusCodes.STATUS_MATCH_ERROR_INACTIVE_MATCH:
+                showMessage(getResources().getString(
+                        R.string.match_error_inactive_match));
+                break;
+            case GamesStatusCodes.STATUS_MATCH_ERROR_LOCALLY_MODIFIED:
+                showMessage(getResources().getString(
+                        R.string.match_error_locally_modified));
+                break;
+            default:
+                showMessage(getResources().getString(R.string.unexpected_status));
+                Log.d(TAG, "Did not have warning or string to deal with: "
+                        + statusCode);
+        }
+
+        return false;
+    }
+
     @Override
     public void onInvitationReceived(Invitation invitation) {
 
@@ -223,11 +497,41 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void onTurnBasedMatchReceived(TurnBasedMatch turnBasedMatch) {
-
+        updateMatch(turnBasedMatch);
     }
 
     @Override
     public void onTurnBasedMatchRemoved(String s) {
 
+    }
+
+    public String getNextParticipantId() {
+
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String myParticipantId = mMatch.getParticipantId(playerId);
+
+        ArrayList<String> participantIds = mMatch.getParticipantIds();
+
+        int desiredIndex = -1;
+
+        for (int i = 0; i < participantIds.size(); i++) {
+            if (participantIds.get(i).equals(myParticipantId)) {
+                desiredIndex = i + 1;
+            }
+        }
+
+        if (desiredIndex < participantIds.size()) {
+            return participantIds.get(desiredIndex);
+        }
+
+        if (mMatch.getAvailableAutoMatchSlots() <= 0) {
+            // You've run out of automatch slots, so we start over.
+            return participantIds.get(0);
+        }
+        else {
+            // You have not yet fully automatched, so null will find a new
+            // person to play against.
+            return null;
+        }
     }
 }
