@@ -6,6 +6,7 @@ import com.asb.goldtrap.models.eo.Level;
  * Created by arjun on 15/01/16.
  */
 public class GameAndLevelSnapshot {
+    private String winnerId;
     private DotsGameSnapshot dotsGameSnapshot;
     private Level level;
 
@@ -16,6 +17,14 @@ public class GameAndLevelSnapshot {
                                 Level level) {
         this.dotsGameSnapshot = dotsGameSnapshot;
         this.level = level;
+    }
+
+    public String getWinnerId() {
+        return winnerId;
+    }
+
+    public void setWinnerId(String winnerId) {
+        this.winnerId = winnerId;
     }
 
     public DotsGameSnapshot getDotsGameSnapshot() {

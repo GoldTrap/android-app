@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerGameFragment;
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerMenuFragment;
+import com.asb.goldtrap.models.conductor.helper.Flipper;
+import com.asb.goldtrap.models.conductor.helper.impl.FlipperImpl;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.snapshots.GameAndLevelSnapshot;
@@ -70,13 +72,14 @@ public class MultiPlayerActivity extends AppCompatActivity
     public TurnBasedMatch mMatch;
     private Gson gson;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
-
+    private Flipper flipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_player);
         gson = new Gson();
+        flipper = new FlipperImpl();
         // Create the Google API Client with access to Plus and Games
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -229,7 +232,10 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     public void onMyTurnComplete(GameAndLevelSnapshot gameAndLevelSnapshot) {
         showSpinner();
-        takeTurn(gameAndLevelSnapshot, getNextParticipantId());
+        String temp = gson.toJson(gameAndLevelSnapshot);
+        GameAndLevelSnapshot snapshot = gson.fromJson(temp, GameAndLevelSnapshot.class);
+        flipper.flipBoard(snapshot.getDotsGameSnapshot());
+        takeTurn(snapshot, getNextParticipantId());
     }
 
     private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId) {
@@ -246,7 +252,17 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void gameOver(GameAndLevelSnapshot gameAndLevel, Uri gamePreviewUri) {
-
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String myParticipantId = mMatch.getParticipantId(playerId);
+        gameAndLevel.setWinnerId(myParticipantId);
+        takeTurn(gameAndLevel, myParticipantId);
+        Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId())
+                .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                    @Override
+                    public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                        processResult(result);
+                    }
+                });
     }
 
     public void rematch() {
@@ -292,11 +308,11 @@ public class MultiPlayerActivity extends AppCompatActivity
         TurnBasedMatch match = result.getMatch();
         dismissSpinner();
         if (checkStatusCode(match, result.getStatus().getStatusCode())) {
-            if (match.canRematch()) {
-                askForRematch();
-            }
             isDoingTurn = (match.getTurnStatus() == TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN);
             if (isDoingTurn) {
+                updateMatch(match);
+            }
+            else if (match.getStatus() == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
                 updateMatch(match);
             }
         }
@@ -386,6 +402,21 @@ public class MultiPlayerActivity extends AppCompatActivity
                 break;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
                 if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
+                    String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+                    String myParticipantId = mMatch.getParticipantId(playerId);
+                    try {
+                        GameAndLevelSnapshot snapshot =
+                                gson.fromJson(new String(match.getData(), "UTF-8"),
+                                        GameAndLevelSnapshot.class);
+                        if (null != snapshot.getWinnerId() &&
+                                !snapshot.getWinnerId().equals(myParticipantId)) {
+                            flipper.flipBoard(snapshot.getDotsGameSnapshot());
+                            gameAndLevelSnapshot = snapshot;
+                            startGamePlay(gameAndLevelSnapshot);
+                        }
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     showMessage(
                             "This game is over; someone finished it, and so did you!  There is nothing to be done.");
                     break;
