@@ -5,6 +5,8 @@ import com.asb.goldtrap.models.components.Line;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.factory.goodie.GoodieOperatorFactory;
 import com.asb.goldtrap.models.conductor.factory.goodie.impl.GenericGoodieOperator;
+import com.asb.goldtrap.models.conductor.helper.LineCombinationFinder;
+import com.asb.goldtrap.models.conductor.helper.impl.LineCombinationFinderImpl;
 import com.asb.goldtrap.models.eo.Complication;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
@@ -15,7 +17,6 @@ import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.factory.SolversFactory;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
-import com.asb.goldtrap.models.states.enums.LineState;
 import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameExited;
 import com.asb.goldtrap.models.states.impl.GameOver;
@@ -37,6 +38,7 @@ public class AiVsAi implements GameConductor {
     List<Line> combinations = new ArrayList<>();
     Set<Line> cSet = new HashSet<>();
     private GameSnapshotCreator gameSnapshotCreator = new GameSnapshotCreator();
+    private LineCombinationFinder lineCombinationFinder = new LineCombinationFinderImpl();
     private AISolver aiSolver;
     private AISolver otherAiSolver;
     private DotsGameSnapshot dotsGameSnapshot;
@@ -61,7 +63,7 @@ public class AiVsAi implements GameConductor {
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
         addOperators(level);
-        findAllLineCombinations();
+        lineCombinationFinder.findAllLineCombinations(dotsGameSnapshot, combinations, cSet);
         aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
         otherAiSolver = solversFactory.getOtherPlayerSolver(dotsGameSnapshot, combinations);
         scoreComputer = new ScoreComputerImpl(dotsGameSnapshot);
@@ -76,46 +78,6 @@ public class AiVsAi implements GameConductor {
 
     public void flipBoard() {
         state.flipBoard();
-    }
-
-    private void findAllLineCombinations() {
-        CellState[][] cells = dotsGameSnapshot.getCells();
-        LineState[][] horizontalLines = dotsGameSnapshot.getHorizontalLines();
-
-        int horiRow = cells.length + 1;
-        int horiCol = cells[0].length;
-
-        for (int row = 0; row < horiRow; row += 1) {
-            for (int col = 0; col < horiCol; col += 1) {
-                if (horizontalLines[row][col] == LineState.FREE) {
-                    Line line = new Line(LineType.HORIZONTAL, row, col);
-                    combinations.add(line);
-                    cSet.add(line);
-                }
-            }
-        }
-
-        int vertiRow = cells.length;
-        int vertiCol = cells[0].length + 1;
-        LineState[][] verticalLines = dotsGameSnapshot.getVerticalLines();
-        for (int row = 0; row < vertiRow; row += 1) {
-            for (int col = 0; col < vertiCol; col += 1) {
-                if (verticalLines[row][col] == LineState.FREE) {
-                    Line line = new Line(LineType.VERTICAL, row, col);
-                    combinations.add(line);
-                    cSet.add(line);
-                }
-            }
-        }
-
-    }
-
-    public List<Line> getCombinations() {
-        return combinations;
-    }
-
-    public Set<Line> getcSet() {
-        return cSet;
     }
 
     public boolean playMyTurn() {
@@ -201,5 +163,16 @@ public class AiVsAi implements GameConductor {
         for (GoodieOperator goodieOperator : goodieOperators) {
             goodieOperator.operateOnGoodie(dotsGameSnapshot);
         }
+    }
+
+    @Override
+    public boolean isLineFree(Line line) {
+        return cSet.contains(line);
+    }
+
+    @Override
+    public void occupyLine(Line line) {
+        combinations.remove(line);
+        cSet.remove(line);
     }
 }

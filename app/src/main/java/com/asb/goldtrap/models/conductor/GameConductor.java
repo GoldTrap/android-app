@@ -5,23 +5,20 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.views.LineType;
 
-import java.util.List;
-import java.util.Set;
-
 /**
  * Created by arjun on 19/09/15.
  */
 public interface GameConductor {
+
+    boolean isLineFree(Line line);
+
+    void occupyLine(Line line);
 
     interface GameStateObserver {
         void stateChanged(GameState state);
     }
 
     void flipBoard();
-
-    List<Line> getCombinations();
-
-    Set<Line> getcSet();
 
     boolean playMyTurn();
 

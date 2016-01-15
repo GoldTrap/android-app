@@ -10,7 +10,6 @@ import com.asb.goldtrap.models.states.enums.LineState;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.List;
-import java.util.Set;
 
 public class AITurn implements GameState {
 
@@ -26,12 +25,9 @@ public class AITurn implements GameState {
     public boolean playTurn(LineType lineType, int row, int col) {
         boolean played = true;
         DotsGameSnapshot dotsGameSnapshot = gameConductor.getGameSnapshot();
-        Set<Line> cSet = gameConductor.getcSet();
-        List<Line> combinations = gameConductor.getCombinations();
         Line line = new Line(lineType, row, col);
 
-        combinations.remove(line);
-        cSet.remove(line);
+        gameConductor.occupyLine(line);
         LineState lineState = getLineState();
         CellState cellState = getCellState();
         LineState[][] horizontalLines = dotsGameSnapshot.getHorizontalLines();

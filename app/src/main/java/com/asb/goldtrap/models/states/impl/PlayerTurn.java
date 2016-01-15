@@ -11,7 +11,6 @@ import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class PlayerTurn implements GameState {
 
@@ -27,11 +26,8 @@ public class PlayerTurn implements GameState {
     public boolean playTurn(LineType lineType, int row, int col) {
         boolean played = false;
         DotsGameSnapshot dotsGameSnapshot = gameConductor.getGameSnapshot();
-        Set<Line> cSet = gameConductor.getcSet();
-        List<Line> combinations = gameConductor.getCombinations();
-
         Line line = new Line(lineType, row, col);
-        if (cSet.contains(line)) {
+        if (gameConductor.isLineFree(line)) {
             LineState lineState = LineState.PLAYER;
             CellState cellState = CellState.PLAYER;
             LineState[][] horizontalLines = dotsGameSnapshot.getHorizontalLines();
@@ -56,8 +52,7 @@ public class PlayerTurn implements GameState {
 
             }
 
-            combinations.remove(line);
-            cSet.remove(line);
+            gameConductor.occupyLine(line);
             dotsGameSnapshot.setLastScoredCells(lastScoredCells);
             dotsGameSnapshot.setLastClickedLineState(lineState);
             dotsGameSnapshot.setLastClickedCol(col);
