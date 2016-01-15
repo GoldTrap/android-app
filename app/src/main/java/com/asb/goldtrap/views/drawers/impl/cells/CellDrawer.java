@@ -79,7 +79,7 @@ public class CellDrawer implements BoardComponentDrawer {
     private Paint resolvePaint(CellState cellState) {
         Paint paint = null;
         switch (cellState) {
-            case AI:
+            case SECONDARY_PLAYER:
                 paint = aiPaint;
                 break;
             case FREE:

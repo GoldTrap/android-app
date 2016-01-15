@@ -17,11 +17,11 @@ import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.solvers.factory.SolversFactory;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.enums.CellState;
-import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameExited;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.models.states.impl.Gamer;
-import com.asb.goldtrap.models.states.impl.PlayerWhoIsAITurn;
+import com.asb.goldtrap.models.states.impl.PlayerWhoIsSecondaryPlayerTurn;
+import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
@@ -55,8 +55,8 @@ public class AiVsAi implements GameConductor {
 
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, Level level) {
         dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
-        firstPlayerState = new PlayerWhoIsAITurn(this, new Gamer());
-        secondPlayerState = new AITurn(this, new Gamer());
+        firstPlayerState = new PlayerWhoIsSecondaryPlayerTurn(this, new Gamer());
+        secondPlayerState = new SecondaryPlayerTurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
@@ -82,7 +82,7 @@ public class AiVsAi implements GameConductor {
 
     public boolean playMyTurn() {
         boolean played = false;
-        if (state instanceof AITurn && state == firstPlayerState) {
+        if (state instanceof SecondaryPlayerTurn && state == firstPlayerState) {
             Line line = aiSolver.getNextLine();
             played = state.playTurn(line.lineType, line.row, line.col);
         }
@@ -96,7 +96,7 @@ public class AiVsAi implements GameConductor {
 
     public boolean playTheirTurn() {
         boolean played = false;
-        if (state instanceof AITurn && state == secondPlayerState) {
+        if (state instanceof SecondaryPlayerTurn && state == secondPlayerState) {
             Line line = otherAiSolver.getNextLine();
             played = state.playTurn(line.lineType, line.row, line.col);
         }

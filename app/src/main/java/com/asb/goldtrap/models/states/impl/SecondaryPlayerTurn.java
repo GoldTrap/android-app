@@ -11,12 +11,12 @@ import com.asb.goldtrap.views.LineType;
 
 import java.util.List;
 
-public class AITurn implements GameState {
+public class SecondaryPlayerTurn implements GameState {
 
     private GameConductor gameConductor;
     private Gamer gamer;
 
-    public AITurn(GameConductor gameConductor, Gamer gamer) {
+    public SecondaryPlayerTurn(GameConductor gameConductor, Gamer gamer) {
         this.gameConductor = gameConductor;
         this.gamer = gamer;
     }
@@ -63,11 +63,11 @@ public class AITurn implements GameState {
     }
 
     protected CellState getCellState() {
-        return CellState.AI;
+        return CellState.SECONDARY_PLAYER;
     }
 
     protected LineState getLineState() {
-        return LineState.AI;
+        return LineState.SECONDARY_PLAYER;
     }
 
     @Override

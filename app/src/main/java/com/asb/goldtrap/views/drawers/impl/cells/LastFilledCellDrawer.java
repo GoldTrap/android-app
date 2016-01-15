@@ -73,7 +73,7 @@ public class LastFilledCellDrawer implements AnimatedBoardComponentDrawer {
     private Paint resolvePaint(CellState cell) {
         Paint paint = null;
         switch (cell) {
-            case AI:
+            case SECONDARY_PLAYER:
                 paint = aiPaint;
                 break;
             case FREE:

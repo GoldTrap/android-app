@@ -23,9 +23,9 @@ import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
 import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
 import com.asb.goldtrap.models.states.GameState;
-import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.models.states.impl.PlayerTurn;
+import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
@@ -124,7 +124,7 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                 }
                 conductor.doPostProcess();
                 dotBoard.postInvalidate();
-                if (conductor.getState() instanceof AITurn) {
+                if (conductor.getState() instanceof SecondaryPlayerTurn) {
                     if (conductor.playTheirTurn()) {
                         dotBoard.requestRedraw();
                         updateScoreBoard();

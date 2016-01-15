@@ -15,11 +15,11 @@ import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.solvers.AISolver;
 import com.asb.goldtrap.models.states.GameState;
-import com.asb.goldtrap.models.states.impl.AITurn;
 import com.asb.goldtrap.models.states.impl.GameExited;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.models.states.impl.Gamer;
 import com.asb.goldtrap.models.states.impl.PlayerTurn;
+import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class PlayerVsAi implements GameConductor {
     public PlayerVsAi(GameStateObserver gameStateObserver, Level level) {
         dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
         firstPlayerState = new PlayerTurn(this, new Gamer());
-        secondPlayerState = new AITurn(this, new Gamer());
+        secondPlayerState = new SecondaryPlayerTurn(this, new Gamer());
         gameOverState = new GameOver(this, new Gamer());
         gameExitedState = new GameExited(this);
         mGameStateObserver = gameStateObserver;
@@ -121,7 +121,7 @@ public class PlayerVsAi implements GameConductor {
     @Override
     public boolean playTheirTurn() {
         boolean played = false;
-        if (state instanceof AITurn) {
+        if (state instanceof SecondaryPlayerTurn) {
             Line line = aiSolver.getNextLine();
             played = state.playTurn(line.lineType, line.row, line.col);
         }

@@ -66,7 +66,7 @@ public class LastSelectedLineDrawer implements AnimatedBoardComponentDrawer {
     private Paint resolvePaint(LineState lineState) {
         Paint paint = null;
         switch (lineState) {
-            case AI:
+            case SECONDARY_PLAYER:
                 paint = aiPaint;
                 break;
             case PLAYER:

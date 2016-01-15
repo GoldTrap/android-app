@@ -139,13 +139,13 @@ public class Gamer {
             CellState cell[] = cells[i];
             for (int j = 0; j < cell.length; j += 1) {
                 switch (cells[i][j]) {
-                    case AI:
+                    case SECONDARY_PLAYER:
                         cells[i][j] = CellState.PLAYER;
                         break;
                     case FREE:
                         break;
                     case PLAYER:
-                        cells[i][j] = CellState.AI;
+                        cells[i][j] = CellState.SECONDARY_PLAYER;
                         break;
                     default:
                         break;
@@ -156,13 +156,13 @@ public class Gamer {
             LineState horizontalLine[] = horizontalLines[i];
             for (int j = 0; j < horizontalLine.length; j += 1) {
                 switch (horizontalLine[j]) {
-                    case AI:
+                    case SECONDARY_PLAYER:
                         horizontalLine[j] = LineState.PLAYER;
                         break;
                     case FREE:
                         break;
                     case PLAYER:
-                        horizontalLine[j] = LineState.AI;
+                        horizontalLine[j] = LineState.SECONDARY_PLAYER;
                         break;
                     default:
                         break;
@@ -174,13 +174,13 @@ public class Gamer {
             LineState verticalLine[] = verticalLines[i];
             for (int j = 0; j < verticalLine.length; j += 1) {
                 switch (verticalLine[j]) {
-                    case AI:
+                    case SECONDARY_PLAYER:
                         verticalLine[j] = LineState.PLAYER;
                         break;
                     case FREE:
                         break;
                     case PLAYER:
-                        verticalLine[j] = LineState.AI;
+                        verticalLine[j] = LineState.SECONDARY_PLAYER;
                         break;
                     default:
                         break;
@@ -190,13 +190,13 @@ public class Gamer {
         }
 
         switch (dotsGameSnapshot.getLastClickedLineState()) {
-            case AI:
+            case SECONDARY_PLAYER:
                 dotsGameSnapshot.setLastClickedLineState(LineState.PLAYER);
                 break;
             case FREE:
                 break;
             case PLAYER:
-                dotsGameSnapshot.setLastClickedLineState(LineState.AI);
+                dotsGameSnapshot.setLastClickedLineState(LineState.SECONDARY_PLAYER);
                 break;
             default:
                 break;
@@ -205,13 +205,13 @@ public class Gamer {
         List<Cell> scoredCells = dotsGameSnapshot.getLastScoredCells();
         for (Cell cell : scoredCells) {
             switch (cell.getCellState()) {
-                case AI:
+                case SECONDARY_PLAYER:
                     cell.setCellState(CellState.PLAYER);
                     break;
                 case FREE:
                     break;
                 case PLAYER:
-                    cell.setCellState(CellState.AI);
+                    cell.setCellState(CellState.SECONDARY_PLAYER);
                     break;
                 default:
                     break;

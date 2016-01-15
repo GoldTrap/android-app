@@ -7,9 +7,9 @@ import com.asb.goldtrap.models.states.enums.LineState;
 /**
  * Created by arjun on 19/09/15.
  */
-public class PlayerWhoIsAITurn extends AITurn {
-    public PlayerWhoIsAITurn(GameConductor gameConductor,
-                             Gamer gamer) {
+public class PlayerWhoIsSecondaryPlayerTurn extends SecondaryPlayerTurn {
+    public PlayerWhoIsSecondaryPlayerTurn(GameConductor gameConductor,
+                                          Gamer gamer) {
         super(gameConductor, gamer);
     }
 

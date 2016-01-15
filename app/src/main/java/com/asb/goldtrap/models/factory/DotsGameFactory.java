@@ -127,7 +127,7 @@ public class DotsGameFactory {
                         cells[i][j] = CellState.PLAYER;
                         break;
                     case 2:
-                        cells[i][j] = CellState.AI;
+                        cells[i][j] = CellState.SECONDARY_PLAYER;
                         break;
                 }
             }
@@ -158,7 +158,7 @@ public class DotsGameFactory {
                         verticalLines[i][j] = LineState.PLAYER;
                         break;
                     case 2:
-                        verticalLines[i][j] = LineState.AI;
+                        verticalLines[i][j] = LineState.SECONDARY_PLAYER;
                         break;
                 }
             }
@@ -189,7 +189,7 @@ public class DotsGameFactory {
                         horizontalLines[i][j] = LineState.PLAYER;
                         break;
                     case 2:
-                        horizontalLines[i][j] = LineState.AI;
+                        horizontalLines[i][j] = LineState.SECONDARY_PLAYER;
                         break;
                 }
             }

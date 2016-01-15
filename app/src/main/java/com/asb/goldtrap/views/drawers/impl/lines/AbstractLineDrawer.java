@@ -56,7 +56,7 @@ public abstract class AbstractLineDrawer implements BoardComponentDrawer {
     private Paint resolvePaint(LineState line) {
         Paint paint = null;
         switch (line) {
-            case AI:
+            case SECONDARY_PLAYER:
                 paint = aiPaint;
                 break;
             case FREE:
