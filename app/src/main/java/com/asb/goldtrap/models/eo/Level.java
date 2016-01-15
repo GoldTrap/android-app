@@ -25,7 +25,7 @@ public class Level {
     private List<Task> tasks;
     private List<GoodieData> goodies;
     private List<DynamicGoodieData> dynamicGoodies;
-    private String firstPlayer;
+    private PlayerType firstPlayer;
     private String adType;
     private List<Complication> complications;
     private List<Unlocks> unlocks;
@@ -87,11 +87,11 @@ public class Level {
         this.dynamicGoodies = dynamicGoodies;
     }
 
-    public String getFirstPlayer() {
+    public PlayerType getFirstPlayer() {
         return firstPlayer;
     }
 
-    public void setFirstPlayer(String firstPlayer) {
+    public void setFirstPlayer(PlayerType firstPlayer) {
         this.firstPlayer = firstPlayer;
     }
 

@@ -54,10 +54,11 @@ public class AiVsAi implements GameConductor {
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
 
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, Level level) {
+        Gamer gamer = new Gamer();
         dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
-        firstPlayerState = new PlayerWhoIsSecondaryPlayerTurn(this, new Gamer());
-        secondPlayerState = new SecondaryPlayerTurn(this, new Gamer());
-        gameOverState = new GameOver(this, new Gamer());
+        firstPlayerState = new PlayerWhoIsSecondaryPlayerTurn(this, gamer);
+        secondPlayerState = new SecondaryPlayerTurn(this, gamer);
+        gameOverState = new GameOver(this, gamer);
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;

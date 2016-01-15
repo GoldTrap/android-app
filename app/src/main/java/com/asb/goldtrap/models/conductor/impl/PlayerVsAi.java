@@ -53,10 +53,11 @@ public class PlayerVsAi implements GameConductor {
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
 
     public PlayerVsAi(GameStateObserver gameStateObserver, Level level) {
+        Gamer gamer = new Gamer();
         dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
-        firstPlayerState = new PlayerTurn(this, new Gamer());
-        secondPlayerState = new SecondaryPlayerTurn(this, new Gamer());
-        gameOverState = new GameOver(this, new Gamer());
+        firstPlayerState = new PlayerTurn(this, gamer);
+        secondPlayerState = new SecondaryPlayerTurn(this, gamer);
+        gameOverState = new GameOver(this, gamer);
         gameExitedState = new GameExited(this);
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
@@ -70,7 +71,7 @@ public class PlayerVsAi implements GameConductor {
 
     private void setGameState(Level level) {
         switch (level.getFirstPlayer()) {
-            case "ANY":
+            case ANY:
                 if (random.nextBoolean()) {
                     state = firstPlayerState;
                 }
@@ -78,10 +79,10 @@ public class PlayerVsAi implements GameConductor {
                     state = secondPlayerState;
                 }
                 break;
-            case "ME":
+            case ME:
                 state = firstPlayerState;
                 break;
-            case "THEY":
+            case THEY:
                 state = secondPlayerState;
                 break;
             default:
