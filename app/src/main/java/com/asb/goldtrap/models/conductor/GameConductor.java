@@ -5,6 +5,8 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.views.LineType;
 
+import java.util.Map;
+
 /**
  * Created by arjun on 19/09/15.
  */
@@ -28,7 +30,7 @@ public interface GameConductor {
 
     void doPostProcess();
 
-    DotsGameSnapshot getGameSnapshot();
+    Map<String, DotsGameSnapshot> getGameSnapshotMap();
 
     void setState(GameState state);
 

@@ -2,6 +2,7 @@ package com.asb.goldtrap.models.states.impl;
 
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.helper.Gamer;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.views.LineType;
 
@@ -35,7 +36,9 @@ public class GameOver implements GameState {
 
     @Override
     public void flipBoard() {
-        gamer.flipBoard(gameConductor.getGameSnapshot());
+        for (DotsGameSnapshot snapshot : gameConductor.getGameSnapshotMap().values()) {
+            gamer.flipBoard(snapshot);
+        }
     }
 
 }

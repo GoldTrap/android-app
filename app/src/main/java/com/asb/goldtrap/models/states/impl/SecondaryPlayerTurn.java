@@ -16,16 +16,18 @@ public class SecondaryPlayerTurn implements GameState {
 
     private GameConductor gameConductor;
     private Gamer gamer;
+    private String playerId;
 
-    public SecondaryPlayerTurn(GameConductor gameConductor, Gamer gamer) {
+    public SecondaryPlayerTurn(GameConductor gameConductor, Gamer gamer, String playerId) {
         this.gameConductor = gameConductor;
         this.gamer = gamer;
+        this.playerId = playerId;
     }
 
     @Override
     public boolean playTurn(LineType lineType, int row, int col) {
         boolean played = true;
-        DotsGameSnapshot dotsGameSnapshot = gameConductor.getGameSnapshot();
+        DotsGameSnapshot dotsGameSnapshot = gameConductor.getGameSnapshotMap().get(playerId);
         Line line = new Line(lineType, row, col);
 
         gameConductor.occupyLine(line);
@@ -85,7 +87,7 @@ public class SecondaryPlayerTurn implements GameState {
 
     @Override
     public void flipBoard() {
-        gamer.flipBoard(gameConductor.getGameSnapshot());
+        gamer.flipBoard(gameConductor.getGameSnapshotMap().get(playerId));
         gameConductor.setState(gameConductor.getOtherPlayerState());
     }
 

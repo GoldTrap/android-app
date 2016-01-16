@@ -36,10 +36,12 @@ import com.google.gson.Gson;
 public class MultiPlayerGameFragment extends Fragment implements GameConductor.GameStateObserver {
     public static final String TAG = MultiPlayerGameFragment.class.getSimpleName();
     private static final String GAME_AND_LEVEL = "gameAndLevelSnapshot";
+    public static final String MY_PLAYER_ID = "MY_PLAYER_ID";
     private GameConductor conductor;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
     private OnFragmentInteractionListener mListener;
     private Gson gson;
+    private String myPlayerId;
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
@@ -61,10 +63,11 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
      * @param gameAndLevel game and level.
      * @return A new instance of fragment MultiPlayerGameFragment.
      */
-    public static MultiPlayerGameFragment newInstance(String gameAndLevel) {
+    public static MultiPlayerGameFragment newInstance(String gameAndLevel, String myPlayerId) {
         MultiPlayerGameFragment fragment = new MultiPlayerGameFragment();
         Bundle args = new Bundle();
         args.putString(GAME_AND_LEVEL, gameAndLevel);
+        args.putString(MY_PLAYER_ID, myPlayerId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,11 +78,12 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         setRetainInstance(true);
         imageHelper = new ImageHelperImpl();
         gson = new Gson();
+        myPlayerId = getArguments().getString(MY_PLAYER_ID);
         gameAndLevelSnapshot = gson.fromJson(getArguments().getString(GAME_AND_LEVEL),
                 GameAndLevelSnapshot.class);
-        conductor = new PlayerVsPlayer(this, gameAndLevelSnapshot);
+        conductor = new PlayerVsPlayer(this, gameAndLevelSnapshot, myPlayerId);
         conductor.setState(conductor.getFirstPlayerState());
-        scoreComputer = new ScoreComputerImpl(conductor.getGameSnapshot());
+        scoreComputer = new ScoreComputerImpl(conductor.getGameSnapshotMap().get(myPlayerId));
     }
 
     @Override
@@ -91,8 +95,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                 (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
         dotBoard.setVisibility(View.VISIBLE);
         gameCompleteDotBoard.setVisibility(View.INVISIBLE);
-        dotBoard.setGameSnapShot(conductor.getGameSnapshot());
-        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        dotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(myPlayerId));
+        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(myPlayerId));
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
         flip = (Button) view.findViewById(R.id.flip);
         flip.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +166,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private void updateScoreBoard() {
         scoreComputer.computeScore();
         scoreBoard.setText(
-                getString(R.string.points, conductor.getGameSnapshot().getScore().basicScore()));
+                getString(R.string.points,
+                        conductor.getGameSnapshotMap().get(myPlayerId).getScore().basicScore()));
     }
 
     @Override

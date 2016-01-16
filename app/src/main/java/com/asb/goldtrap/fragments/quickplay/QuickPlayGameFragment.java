@@ -82,8 +82,9 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                 (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
         dotBoard.setVisibility(View.VISIBLE);
         gameCompleteDotBoard.setVisibility(View.INVISIBLE);
-        dotBoard.setGameSnapShot(conductor.getGameSnapshot());
-        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        dotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT));
+        gameCompleteDotBoard
+                .setGameSnapShot(conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT));
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
         flip = (Button) view.findViewById(R.id.flip);
         flip.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +144,10 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
                     @Override
                     public void run() {
                         mListener
-                                .gameOver(gson.toJson(conductor.getGameSnapshot()), gamePreviewUri);
+                                .gameOver(gson.toJson(
+                                                conductor.getGameSnapshotMap()
+                                                        .get(PlayerVsAi.DEFAULT)),
+                                        gamePreviewUri);
                     }
                 }, 1000);
 
@@ -156,7 +160,9 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private void updateScoreBoard() {
         scoreComputer.computeScore();
         scoreBoard.setText(
-                getString(R.string.points, conductor.getGameSnapshot().getScore().basicScore()));
+                getString(R.string.points,
+                        conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT).getScore()
+                                .basicScore()));
     }
 
     @Override
@@ -197,7 +203,8 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private void startGame() {
         conductor = new PlayerVsAi(this, level);
         conductor.setState(conductor.getFirstPlayerState());
-        scoreComputer = new ScoreComputerImpl(conductor.getGameSnapshot());
+        scoreComputer =
+                new ScoreComputerImpl(conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT));
     }
 
     @Override

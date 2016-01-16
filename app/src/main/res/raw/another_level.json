@@ -1,0 +1,45 @@
+{
+  "solver": "RANDOM_GREEDY",
+  "rows": 3,
+  "cols": 3,
+  "blocked": 0,
+  "tasks": [
+  ],
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 2
+    },
+    {
+      "type": "DIAMOND",
+      "count": 1
+    }
+  ],
+  "dynamicGoodies": [
+    {
+      "value": 150,
+      "count": 2
+    }
+  ],
+  "firstPlayer": "ME",
+  "adType": "NONE",
+  "complications": [
+    {
+      "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
+      "strategy": {
+        "type": "AP",
+        "value": -2
+      }
+    }
+  ],
+  "unlocks": [
+    {
+      "unlockType": "EXPLORER",
+      "points": 1000
+    },
+    {
+      "unlockType": "BRAVE_HEART",
+      "points": 1000
+    }
+  ]
+}

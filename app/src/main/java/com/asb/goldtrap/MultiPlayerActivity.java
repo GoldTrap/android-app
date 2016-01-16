@@ -15,10 +15,9 @@ import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerGameFragment;
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerMenuFragment;
-import com.asb.goldtrap.models.conductor.helper.Flipper;
-import com.asb.goldtrap.models.conductor.helper.impl.FlipperImpl;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
+import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.snapshots.GameAndLevelSnapshot;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,6 +42,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MultiPlayerActivity extends AppCompatActivity
         implements MultiPlayerMenuFragment.OnFragmentInteractionListener,
@@ -72,14 +73,12 @@ public class MultiPlayerActivity extends AppCompatActivity
     public TurnBasedMatch mMatch;
     private Gson gson;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
-    private Flipper flipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_player);
         gson = new Gson();
-        flipper = new FlipperImpl();
         // Create the Google API Client with access to Plus and Games
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -114,11 +113,13 @@ public class MultiPlayerActivity extends AppCompatActivity
         super.onStart();
         Log.d(TAG, "onStart(): Connecting to Google APIs");
         mGoogleApiClient.connect();
+        showSpinner();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        dismissSpinner();
         Log.d(TAG, "onStop(): Disconnecting from Google APIs");
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -234,7 +235,6 @@ public class MultiPlayerActivity extends AppCompatActivity
         showSpinner();
         String temp = gson.toJson(gameAndLevelSnapshot);
         GameAndLevelSnapshot snapshot = gson.fromJson(temp, GameAndLevelSnapshot.class);
-        flipper.flipBoard(snapshot.getDotsGameSnapshot());
         takeTurn(snapshot, getNextParticipantId());
     }
 
@@ -254,7 +254,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     public void gameOver(GameAndLevelSnapshot gameAndLevel, Uri gamePreviewUri) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
-        gameAndLevel.setWinnerId(myParticipantId);
+        gameAndLevel.setLastPlayerId(myParticipantId);
         takeTurn(gameAndLevel, myParticipantId);
         Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId())
                 .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
@@ -324,25 +324,35 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     public void startMatch(TurnBasedMatch match) {
-        Level level = getMyLevel(R.raw.level);
-        gameAndLevelSnapshot =
-                new GameAndLevelSnapshot(new GameSnapshotCreator().createGameSnapshot(level),
-                        level);
         mMatch = match;
+        Level level = getMyLevel(R.raw.another_level);
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
+        Map<String, DotsGameSnapshot> snapshotMap = new HashMap<>();
+        DotsGameSnapshot original = new GameSnapshotCreator().createGameSnapshot(level);
+        snapshotMap.put(myParticipantId, original);
+        for (String participantId : mMatch.getParticipantIds()) {
+            if (!participantId.equals(myParticipantId)) {
+                DotsGameSnapshot copy =
+                        gson.fromJson(gson.toJson(original), DotsGameSnapshot.class);
+                snapshotMap.put(participantId, copy);
+            }
+        }
+        gameAndLevelSnapshot = new GameAndLevelSnapshot(snapshotMap, level);
         takeTurn(gameAndLevelSnapshot, myParticipantId);
     }
 
-    private void startGamePlay(GameAndLevelSnapshot gameAndLevelSnapshot) {
+    private void updateFragment(GameAndLevelSnapshot gameAndLevelSnapshot) {
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String myParticipantId = mMatch.getParticipantId(playerId);
         MultiPlayerGameFragment fragment =
                 (MultiPlayerGameFragment) getSupportFragmentManager().findFragmentByTag(
                         MultiPlayerGameFragment.TAG);
         if (null == fragment) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container,
-                            MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot)),
-                            MultiPlayerMenuFragment.TAG)
+                            MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
+                                    myParticipantId), MultiPlayerMenuFragment.TAG)
                     .commit();
         }
         else {
@@ -365,6 +375,7 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void onConnected(Bundle connectionHint) {
+        dismissSpinner();
         Log.d(TAG, "onConnected(): Connection successful");
 
         // Retrieve the TurnBasedMatch from the connectionHint
@@ -375,9 +386,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                 if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
                     Log.d(TAG, "Warning: accessing TurnBasedMatch when not connected");
                 }
-
                 updateMatch(mTurnBasedMatch);
-
             }
         }
         Games.Invitations.registerInvitationListener(mGoogleApiClient, this);
@@ -402,24 +411,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                 break;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
                 if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
-                    String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-                    String myParticipantId = mMatch.getParticipantId(playerId);
-                    try {
-                        GameAndLevelSnapshot snapshot =
-                                gson.fromJson(new String(match.getData(), "UTF-8"),
-                                        GameAndLevelSnapshot.class);
-                        if (null != snapshot.getWinnerId() &&
-                                !snapshot.getWinnerId().equals(myParticipantId)) {
-                            flipper.flipBoard(snapshot.getDotsGameSnapshot());
-                            gameAndLevelSnapshot = snapshot;
-                            startGamePlay(gameAndLevelSnapshot);
-                        }
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    showMessage(
-                            "This game is over; someone finished it, and so did you!  There is nothing to be done.");
-                    break;
+
                 }
         }
         // OK, it's active. Check on turn status.
@@ -432,7 +424,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                startGamePlay(gameAndLevelSnapshot);
+                updateFragment(gameAndLevelSnapshot);
                 break;
             case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
                 showMessage("It's not your turn.");
@@ -455,21 +447,22 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        dismissSpinner();
         Log.d(TAG, "onConnectionFailed(): attempting to resolve");
         if (mResolvingConnectionFailure) {
             // Already resolving
             Log.d(TAG, "onConnectionFailed(): ignoring connection failure, already resolving.");
-            return;
         }
+        else {
+            // Launch the sign-in flow if the button was clicked or if auto sign-in is enabled
+            if (mSignInClicked || mAutoStartSignInFlow) {
+                mAutoStartSignInFlow = false;
+                mSignInClicked = false;
 
-        // Launch the sign-in flow if the button was clicked or if auto sign-in is enabled
-        if (mSignInClicked || mAutoStartSignInFlow) {
-            mAutoStartSignInFlow = false;
-            mSignInClicked = false;
-
-            mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
-                    mGoogleApiClient, connectionResult, RC_SIGN_IN,
-                    getString(R.string.signin_other_error));
+                mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
+                        mGoogleApiClient, connectionResult, RC_SIGN_IN,
+                        getString(R.string.signin_other_error));
+            }
         }
 
     }

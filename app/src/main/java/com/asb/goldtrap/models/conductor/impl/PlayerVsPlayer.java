@@ -21,8 +21,10 @@ import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -34,7 +36,7 @@ public class PlayerVsPlayer implements GameConductor {
     private List<Line> combinations = new ArrayList<>();
     private Set<Line> cSet = new HashSet<>();
     private LineCombinationFinder lineCombinationFinder = new LineCombinationFinderImpl();
-    private DotsGameSnapshot dotsGameSnapshot;
+    private Map<String, DotsGameSnapshot> snapshotMap = new HashMap<>();
     private boolean extraChance;
     private GameState state;
     private GameState firstPlayerState;
@@ -43,15 +45,18 @@ public class PlayerVsPlayer implements GameConductor {
     private GameState gameExitedState;
     private GameStateObserver mGameStateObserver;
     private List<GoodieOperator> goodieOperators;
+    private String myPlayerId;
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
 
     public PlayerVsPlayer(GameStateObserver gameStateObserver,
-                          GameAndLevelSnapshot gameAndLevelSnapshot) {
+                          GameAndLevelSnapshot gameAndLevelSnapshot, String myPlayerId) {
+        this.myPlayerId = myPlayerId;
         init(gameAndLevelSnapshot);
         Gamer gamer = new GamerImpl();
         Level level = gameAndLevelSnapshot.getLevel();
-        firstPlayerState = new PlayerTurn(this, gamer);
-        secondPlayerState = new SecondaryPlayerTurn(this, gamer);
+        firstPlayerState = new PlayerTurn(this, gamer, myPlayerId);
+        secondPlayerState =
+                new SecondaryPlayerTurn(this, gamer, getSecondPlayerId(gameAndLevelSnapshot));
         gameOverState = new GameOver(this, gamer);
         gameExitedState = new GameExited(this);
         mGameStateObserver = gameStateObserver;
@@ -60,9 +65,18 @@ public class PlayerVsPlayer implements GameConductor {
         state = firstPlayerState;
     }
 
+    private String getSecondPlayerId(GameAndLevelSnapshot gameAndLevelSnapshot) {
+        for (String playerId : gameAndLevelSnapshot.getSnapshotMap().keySet()) {
+            if (!myPlayerId.equals(playerId)) {
+                return playerId;
+            }
+        }
+        return null;
+    }
+
     public void init(GameAndLevelSnapshot gameAndLevelSnapshot) {
-        dotsGameSnapshot = gameAndLevelSnapshot.getDotsGameSnapshot();
-        lineCombinationFinder.findAllLineCombinations(dotsGameSnapshot, combinations,
+        snapshotMap = gameAndLevelSnapshot.getSnapshotMap();
+        lineCombinationFinder.findAllLineCombinations(snapshotMap.get(myPlayerId), combinations,
                 cSet);
     }
 
@@ -98,8 +112,8 @@ public class PlayerVsPlayer implements GameConductor {
     }
 
     @Override
-    public DotsGameSnapshot getGameSnapshot() {
-        return dotsGameSnapshot;
+    public Map<String, DotsGameSnapshot> getGameSnapshotMap() {
+        return snapshotMap;
     }
 
     @Override
@@ -155,7 +169,7 @@ public class PlayerVsPlayer implements GameConductor {
     @Override
     public void doPostProcess() {
         for (GoodieOperator goodieOperator : goodieOperators) {
-            goodieOperator.operateOnGoodie(dotsGameSnapshot);
+            goodieOperator.operateOnGoodie(snapshotMap.get(myPlayerId));
         }
     }
 

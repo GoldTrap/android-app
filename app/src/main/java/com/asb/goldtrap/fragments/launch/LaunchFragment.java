@@ -203,9 +203,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         dotBoard.setVisibility(View.VISIBLE);
         conductor =
                 new AiVsAi(new BiasedTowardsMeSolversFactory(), this, Level.generateRandomLevel());
-        dotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        dotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(AiVsAi.DEFAULT));
         dotBoard.setColors(getResources().getIntArray(gameTheme[0]));
-        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshot());
+        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(AiVsAi.DEFAULT));
         gameCompleteDotBoard.setColors(getResources().getIntArray(gameTheme[1]));
 
         if (random.nextBoolean()) {

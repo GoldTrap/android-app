@@ -26,8 +26,10 @@ import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.LineType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,13 +38,14 @@ import java.util.Set;
 public class AiVsAi implements GameConductor {
 
     private static final String TAG = AiVsAi.class.getSimpleName();
+    public static final String DEFAULT = "DEFAULT";
     List<Line> combinations = new ArrayList<>();
     Set<Line> cSet = new HashSet<>();
     private GameSnapshotCreator gameSnapshotCreator = new GameSnapshotCreator();
     private LineCombinationFinder lineCombinationFinder = new LineCombinationFinderImpl();
     private AISolver aiSolver;
     private AISolver otherAiSolver;
-    private DotsGameSnapshot dotsGameSnapshot;
+    private Map<String, DotsGameSnapshot> snapshotMap = new HashMap<>();
     private boolean extraChance;
     private GameState state;
     private GameState firstPlayerState;
@@ -56,19 +59,19 @@ public class AiVsAi implements GameConductor {
 
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, Level level) {
         Gamer gamer = new GamerImpl();
-        dotsGameSnapshot = gameSnapshotCreator.createGameSnapshot(level);
-        firstPlayerState = new PlayerWhoIsSecondaryPlayerTurn(this, gamer);
-        secondPlayerState = new SecondaryPlayerTurn(this, gamer);
+        snapshotMap.put(DEFAULT, gameSnapshotCreator.createGameSnapshot(level));
+        firstPlayerState = new PlayerWhoIsSecondaryPlayerTurn(this, gamer, DEFAULT);
+        secondPlayerState = new SecondaryPlayerTurn(this, gamer, DEFAULT);
         gameOverState = new GameOver(this, gamer);
         gameExitedState = new GameExited(this);
         state = firstPlayerState;
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
         addOperators(level);
-        lineCombinationFinder.findAllLineCombinations(dotsGameSnapshot, combinations, cSet);
-        aiSolver = solversFactory.getPlayerSolver(dotsGameSnapshot, combinations);
-        otherAiSolver = solversFactory.getOtherPlayerSolver(dotsGameSnapshot, combinations);
-        scoreComputer = new ScoreComputerImpl(dotsGameSnapshot);
+        lineCombinationFinder.findAllLineCombinations(snapshotMap.get(DEFAULT), combinations, cSet);
+        aiSolver = solversFactory.getPlayerSolver(snapshotMap.get(DEFAULT), combinations);
+        otherAiSolver = solversFactory.getOtherPlayerSolver(snapshotMap.get(DEFAULT), combinations);
+        scoreComputer = new ScoreComputerImpl(snapshotMap.get(DEFAULT));
     }
 
     private void addOperators(Level level) {
@@ -105,12 +108,12 @@ public class AiVsAi implements GameConductor {
         return played;
     }
 
-    public DotsGameSnapshot getGameSnapshot() {
-        return dotsGameSnapshot;
+    public Map<String, DotsGameSnapshot> getGameSnapshotMap() {
+        return snapshotMap;
     }
 
     private int getCells() {
-        CellState[][] cells = dotsGameSnapshot.getCells();
+        CellState[][] cells = snapshotMap.get(DEFAULT).getCells();
         int rows = cells.length;
         int cols = cells[0].length;
         return rows * cols;
@@ -163,7 +166,7 @@ public class AiVsAi implements GameConductor {
     @Override
     public void doPostProcess() {
         for (GoodieOperator goodieOperator : goodieOperators) {
-            goodieOperator.operateOnGoodie(dotsGameSnapshot);
+            goodieOperator.operateOnGoodie(snapshotMap.get(DEFAULT));
         }
     }
 

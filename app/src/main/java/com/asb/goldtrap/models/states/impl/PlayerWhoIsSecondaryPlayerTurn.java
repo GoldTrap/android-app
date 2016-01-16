@@ -10,8 +10,8 @@ import com.asb.goldtrap.models.states.enums.LineState;
  */
 public class PlayerWhoIsSecondaryPlayerTurn extends SecondaryPlayerTurn {
     public PlayerWhoIsSecondaryPlayerTurn(GameConductor gameConductor,
-                                          Gamer gamer) {
-        super(gameConductor, gamer);
+                                          Gamer gamer, String playerId) {
+        super(gameConductor, gamer, playerId);
     }
 
     protected CellState getCellState() {

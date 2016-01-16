@@ -2,38 +2,40 @@ package com.asb.goldtrap.models.snapshots;
 
 import com.asb.goldtrap.models.eo.Level;
 
+import java.util.Map;
+
 /**
  * Created by arjun on 15/01/16.
  */
 public class GameAndLevelSnapshot {
-    private String winnerId;
-    private DotsGameSnapshot dotsGameSnapshot;
+    private String lastPlayerId;
+    private Map<String, DotsGameSnapshot> snapshotMap;
     private Level level;
 
     public GameAndLevelSnapshot() {
     }
 
-    public GameAndLevelSnapshot(DotsGameSnapshot dotsGameSnapshot,
+    public GameAndLevelSnapshot(Map<String, DotsGameSnapshot> snapshotMap,
                                 Level level) {
-        this.dotsGameSnapshot = dotsGameSnapshot;
+        this.snapshotMap = snapshotMap;
         this.level = level;
     }
 
-    public String getWinnerId() {
-        return winnerId;
+    public String getLastPlayerId() {
+        return lastPlayerId;
     }
 
-    public void setWinnerId(String winnerId) {
-        this.winnerId = winnerId;
+    public void setLastPlayerId(String lastPlayerId) {
+        this.lastPlayerId = lastPlayerId;
     }
 
-    public DotsGameSnapshot getDotsGameSnapshot() {
-        return dotsGameSnapshot;
+    public Map<String, DotsGameSnapshot> getSnapshotMap() {
+        return snapshotMap;
     }
 
-    public void setDotsGameSnapshot(
-            DotsGameSnapshot dotsGameSnapshot) {
-        this.dotsGameSnapshot = dotsGameSnapshot;
+    public void setSnapshotMap(
+            Map<String, DotsGameSnapshot> snapshotMap) {
+        this.snapshotMap = snapshotMap;
     }
 
     public Level getLevel() {
