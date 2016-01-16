@@ -47,12 +47,13 @@ public class PlayerVsPlayer implements GameConductor {
     private List<GoodieOperator> goodieOperators;
     private String myPlayerId;
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
+    private final Gamer gamer;
 
     public PlayerVsPlayer(GameStateObserver gameStateObserver,
                           GameAndLevelSnapshot gameAndLevelSnapshot, String myPlayerId) {
         this.myPlayerId = myPlayerId;
         init(gameAndLevelSnapshot);
-        Gamer gamer = new GamerImpl();
+        gamer = new GamerImpl();
         Level level = gameAndLevelSnapshot.getLevel();
         firstPlayerState = new PlayerTurn(this, gamer, myPlayerId);
         secondPlayerState =
@@ -62,7 +63,6 @@ public class PlayerVsPlayer implements GameConductor {
         mGameStateObserver = gameStateObserver;
         goodieOperators = new ArrayList<>();
         addOperators(level);
-        state = firstPlayerState;
     }
 
     private String getSecondPlayerId(GameAndLevelSnapshot gameAndLevelSnapshot) {
@@ -182,5 +182,10 @@ public class PlayerVsPlayer implements GameConductor {
     public void occupyLine(Line line) {
         combinations.remove(line);
         cSet.remove(line);
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return gamer.allCellsFilled(snapshotMap.get(myPlayerId).getCells());
     }
 }

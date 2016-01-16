@@ -233,30 +233,16 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     public void onMyTurnComplete(GameAndLevelSnapshot gameAndLevelSnapshot) {
         showSpinner();
-        String temp = gson.toJson(gameAndLevelSnapshot);
-        GameAndLevelSnapshot snapshot = gson.fromJson(temp, GameAndLevelSnapshot.class);
-        takeTurn(snapshot, getNextParticipantId());
-    }
-
-    private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId) {
-        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
-                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName("UTF-8")), participantId)
-                .setResultCallback(
-                        new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
-                            @Override
-                            public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
-                                processResult(result);
-                            }
-                        });
+        takeTurn(gameAndLevelSnapshot, getNextParticipantId());
     }
 
     @Override
     public void gameOver(GameAndLevelSnapshot gameAndLevel, Uri gamePreviewUri) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
-        gameAndLevel.setLastPlayerId(myParticipantId);
-        takeTurn(gameAndLevel, myParticipantId);
-        Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId())
+        gameAndLevelSnapshot.setLastPlayerId(myParticipantId);
+        Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId(),
+                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName("UTF-8")))
                 .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                     @Override
                     public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
@@ -308,13 +294,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         TurnBasedMatch match = result.getMatch();
         dismissSpinner();
         if (checkStatusCode(match, result.getStatus().getStatusCode())) {
-            isDoingTurn = (match.getTurnStatus() == TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN);
-            if (isDoingTurn) {
-                updateMatch(match);
-            }
-            else if (match.getStatus() == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
-                updateMatch(match);
-            }
+            updateMatch(match);
         }
     }
 
@@ -342,6 +322,20 @@ public class MultiPlayerActivity extends AppCompatActivity
         takeTurn(gameAndLevelSnapshot, myParticipantId);
     }
 
+    private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId) {
+        gameAndLevelSnapshot.setLastPlayerId(participantId);
+        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
+                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName("UTF-8")),
+                participantId)
+                .setResultCallback(
+                        new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                            @Override
+                            public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                                processResult(result);
+                            }
+                        });
+    }
+
     private void updateFragment(GameAndLevelSnapshot gameAndLevelSnapshot) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
@@ -352,7 +346,8 @@ public class MultiPlayerActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container,
                             MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
-                                    myParticipantId), MultiPlayerMenuFragment.TAG)
+                                    myParticipantId, mMatch.getTurnStatus()),
+                            MultiPlayerMenuFragment.TAG)
                     .commit();
         }
         else {
@@ -395,7 +390,8 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     private void updateMatch(TurnBasedMatch match) {
         mMatch = match;
-
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String myParticipantId = mMatch.getParticipantId(playerId);
         int status = match.getStatus();
         int turnStatus = match.getTurnStatus();
 
@@ -411,26 +407,35 @@ public class MultiPlayerActivity extends AppCompatActivity
                 break;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
                 if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
-
+                    fetchGameData(match);
+                    if (!gameAndLevelSnapshot.getLastPlayerId().equals(myParticipantId)) {
+                        updateFragment(gameAndLevelSnapshot);
+                    }
                 }
         }
-        // OK, it's active. Check on turn status.
-        switch (turnStatus) {
-            case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
-                try {
-                    gameAndLevelSnapshot =
-                            gson.fromJson(new String(match.getData(), "UTF-8"),
-                                    GameAndLevelSnapshot.class);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                updateFragment(gameAndLevelSnapshot);
-                break;
-            case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
-                showMessage("It's not your turn.");
-                break;
-            case TurnBasedMatch.MATCH_TURN_STATUS_INVITED:
-                showMessage("Still waiting for invitations.\n\nBe patient!");
+        if (TurnBasedMatch.MATCH_STATUS_ACTIVE == status) {
+            fetchGameData(match);
+            switch (turnStatus) {
+                case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
+                    updateFragment(gameAndLevelSnapshot);
+                    break;
+                case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
+                    updateFragment(gameAndLevelSnapshot);
+                    showMessage("It's not your turn.");
+                    break;
+                case TurnBasedMatch.MATCH_TURN_STATUS_INVITED:
+                    showMessage("Still waiting for invitations.\n\nBe patient!");
+            }
+        }
+    }
+
+    private void fetchGameData(TurnBasedMatch match) {
+        try {
+            gameAndLevelSnapshot =
+                    gson.fromJson(new String(match.getData(), "UTF-8"),
+                            GameAndLevelSnapshot.class);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 

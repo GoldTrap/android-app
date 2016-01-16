@@ -55,9 +55,10 @@ public class PlayerVsAi implements GameConductor {
     private GameStateObserver mGameStateObserver;
     private List<GoodieOperator> goodieOperators;
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
+    private final Gamer gamer;
 
     public PlayerVsAi(GameStateObserver gameStateObserver, Level level) {
-        Gamer gamer = new GamerImpl();
+        gamer = new GamerImpl();
         snapshotMap.put(DEFAULT, gameSnapshotCreator.createGameSnapshot(level));
         firstPlayerState = new PlayerTurn(this, gamer, DEFAULT);
         secondPlayerState = new SecondaryPlayerTurn(this, gamer, DEFAULT);
@@ -204,5 +205,10 @@ public class PlayerVsAi implements GameConductor {
     public void occupyLine(Line line) {
         combinations.remove(line);
         cSet.remove(line);
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return gamer.allCellsFilled(snapshotMap.get(DEFAULT).getCells());
     }
 }

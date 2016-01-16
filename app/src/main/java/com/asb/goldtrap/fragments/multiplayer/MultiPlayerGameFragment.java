@@ -28,6 +28,7 @@ import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
+import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.gson.Gson;
 
 /**
@@ -37,6 +38,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     public static final String TAG = MultiPlayerGameFragment.class.getSimpleName();
     private static final String GAME_AND_LEVEL = "gameAndLevelSnapshot";
     public static final String MY_PLAYER_ID = "MY_PLAYER_ID";
+    public static final String TURN_STATUS = "TURN_STATUS";
     private GameConductor conductor;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
     private OnFragmentInteractionListener mListener;
@@ -61,13 +63,16 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
      * MultiPlayerGameFragment factory method
      *
      * @param gameAndLevel game and level.
+     * @param turnStatus
      * @return A new instance of fragment MultiPlayerGameFragment.
      */
-    public static MultiPlayerGameFragment newInstance(String gameAndLevel, String myPlayerId) {
+    public static MultiPlayerGameFragment newInstance(String gameAndLevel, String myPlayerId,
+                                                      int turnStatus) {
         MultiPlayerGameFragment fragment = new MultiPlayerGameFragment();
         Bundle args = new Bundle();
         args.putString(GAME_AND_LEVEL, gameAndLevel);
         args.putString(MY_PLAYER_ID, myPlayerId);
+        args.putInt(TURN_STATUS, turnStatus);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +87,12 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         gameAndLevelSnapshot = gson.fromJson(getArguments().getString(GAME_AND_LEVEL),
                 GameAndLevelSnapshot.class);
         conductor = new PlayerVsPlayer(this, gameAndLevelSnapshot, myPlayerId);
-        conductor.setState(conductor.getFirstPlayerState());
+        if (TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN == getArguments().getInt(TURN_STATUS)) {
+            conductor.setState(conductor.getFirstPlayerState());
+        }
+        else {
+            conductor.setState(conductor.getSecondPlayerState());
+        }
         scoreComputer = new ScoreComputerImpl(conductor.getGameSnapshotMap().get(myPlayerId));
     }
 

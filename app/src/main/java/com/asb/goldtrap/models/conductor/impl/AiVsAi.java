@@ -56,9 +56,10 @@ public class AiVsAi implements GameConductor {
     private List<GoodieOperator> goodieOperators;
     private ScoreComputer scoreComputer;
     private GoodieOperatorFactory goodieOperatorFactory = new GenericGoodieOperator();
+    private final Gamer gamer;
 
     public AiVsAi(SolversFactory solversFactory, GameStateObserver gameStateObserver, Level level) {
-        Gamer gamer = new GamerImpl();
+        gamer = new GamerImpl();
         snapshotMap.put(DEFAULT, gameSnapshotCreator.createGameSnapshot(level));
         firstPlayerState = new PlayerWhoIsSecondaryPlayerTurn(this, gamer, DEFAULT);
         secondPlayerState = new SecondaryPlayerTurn(this, gamer, DEFAULT);
@@ -179,5 +180,11 @@ public class AiVsAi implements GameConductor {
     public void occupyLine(Line line) {
         combinations.remove(line);
         cSet.remove(line);
+    }
+
+
+    @Override
+    public boolean isGameOver() {
+        return gamer.allCellsFilled(snapshotMap.get(DEFAULT).getCells());
     }
 }

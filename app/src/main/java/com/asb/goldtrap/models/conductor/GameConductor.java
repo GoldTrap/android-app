@@ -49,4 +49,6 @@ public interface GameConductor {
     boolean isExtraChance();
 
     void setExtraChance(boolean extraChance);
+
+    boolean isGameOver();
 }
