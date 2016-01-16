@@ -55,6 +55,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private ImageHelper imageHelper;
     private ScoreComputer scoreComputer;
     private int status;
+    private int turnStatus;
 
 
     public MultiPlayerGameFragment() {
@@ -92,11 +93,12 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                 GameAndLevelSnapshot.class);
         conductor = new PlayerVsPlayer(this, gameAndLevelSnapshot, myPlayerId);
         status = getArguments().getInt(STATUS);
+        turnStatus = getArguments().getInt(TURN_STATUS);
         if (TurnBasedMatch.MATCH_STATUS_COMPLETE == status) {
             conductor.setState(conductor.getGameOverState());
         }
         else {
-            if (TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN == getArguments().getInt(TURN_STATUS)) {
+            if (TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN == turnStatus) {
                 conductor.setState(conductor.getFirstPlayerState());
             }
             else {
@@ -151,9 +153,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
             @Override
             public void animationComplete() {
                 if (conductor.getState() instanceof GameOver) {
-                    dotBoard.setVisibility(View.INVISIBLE);
-                    gameCompleteDotBoard.setVisibility(View.VISIBLE);
-                    gameCompleteDotBoard.requestRedraw();
+                    mListener.gameOver(gameAndLevelSnapshot, null);
                 }
                 conductor.doPostProcess();
                 dotBoard.postInvalidate();
@@ -213,17 +213,6 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public void updateSnapshot(GameAndLevelSnapshot gameAndLevelSnapshot, int status) {
-        this.gameAndLevelSnapshot = gameAndLevelSnapshot;
-        this.status = status;
-        ((PlayerVsPlayer) this.conductor).reInit(gameAndLevelSnapshot);
-        if (status == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
-            dotBoard.setVisibility(View.INVISIBLE);
-            gameCompleteDotBoard.setVisibility(View.VISIBLE);
-            gameCompleteDotBoard.requestRedraw();
-        }
     }
 
     @Override

@@ -87,10 +87,15 @@ public class MultiPlayerActivity extends AppCompatActivity
                 .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, MultiPlayerMenuFragment.newInstance(),
-                        MultiPlayerMenuFragment.TAG)
-                .commit();
+        if (null == getSupportFragmentManager().findFragmentByTag(
+                MultiPlayerMenuFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(
+                        MultiPlayerGameFragment.TAG)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, MultiPlayerMenuFragment.newInstance(),
+                            MultiPlayerMenuFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override
@@ -216,6 +221,7 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void onAutoMatch() {
+        showSpinner();
         startMatch(TurnBasedMatchConfig.builder()
                 .setAutoMatchCriteria(RoomConfig.createAutoMatchCriteria(
                         1, 1, 0)).build());
@@ -234,7 +240,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     public void onMyTurnComplete(GameAndLevelSnapshot gameAndLevelSnapshot) {
         showSpinner();
-        takeTurn(gameAndLevelSnapshot, getNextParticipantId());
+        takeTurn(gameAndLevelSnapshot, getNextParticipantId(), false);
     }
 
     @Override
@@ -248,7 +254,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                 .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                     @Override
                     public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
-                        processResult(result);
+                        processResult(result, true);
                     }
                 });
     }
@@ -286,11 +292,14 @@ public class MultiPlayerActivity extends AppCompatActivity
         }
     }
 
-    public void processResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+    public void processResult(TurnBasedMultiplayer.UpdateMatchResult result,
+                              boolean updateFragment) {
         TurnBasedMatch match = result.getMatch();
         dismissSpinner();
         if (checkStatusCode(match, result.getStatus().getStatusCode())) {
-            updateMatch(match);
+            if (updateFragment) {
+                updateMatch(match);
+            }
         }
     }
 
@@ -334,10 +343,11 @@ public class MultiPlayerActivity extends AppCompatActivity
             }
             gameAndLevelSnapshot = new GameAndLevelSnapshot(snapshotMap, level);
         }
-        takeTurn(gameAndLevelSnapshot, myParticipantId);
+        takeTurn(gameAndLevelSnapshot, myParticipantId, true);
     }
 
-    private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId) {
+    private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId,
+                          final boolean updateFragment) {
         gameAndLevelSnapshot.setLastPlayerId(participantId);
         Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
                 gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName(CHARSET_NAME)),
@@ -346,7 +356,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                         new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                             @Override
                             public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
-                                processResult(result);
+                                processResult(result, updateFragment);
                             }
                         });
     }
@@ -354,20 +364,13 @@ public class MultiPlayerActivity extends AppCompatActivity
     private void updateFragment(GameAndLevelSnapshot gameAndLevelSnapshot) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
-        MultiPlayerGameFragment fragment =
-                (MultiPlayerGameFragment) getSupportFragmentManager().findFragmentByTag(
-                        MultiPlayerGameFragment.TAG);
-        if (null == fragment) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container,
-                            MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
-                                    myParticipantId, mMatch.getTurnStatus(), mMatch.getStatus()),
-                            MultiPlayerMenuFragment.TAG)
-                    .commit();
-        }
-        else {
-            fragment.updateSnapshot(gameAndLevelSnapshot, mMatch.getStatus());
-        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container,
+                        MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
+                                myParticipantId, mMatch.getTurnStatus(), mMatch.getStatus()),
+                        MultiPlayerGameFragment.TAG)
+                .commit();
+
     }
 
     @Override
@@ -422,9 +425,8 @@ public class MultiPlayerActivity extends AppCompatActivity
                 break;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
                 fetchGameData(match);
-                if (!gameAndLevelSnapshot.getLastPlayerId().equals(myParticipantId)) {
-                    updateFragment(gameAndLevelSnapshot);
-                }
+                updateFragment(gameAndLevelSnapshot);
+
         }
         if (TurnBasedMatch.MATCH_STATUS_ACTIVE == status) {
             fetchGameData(match);
