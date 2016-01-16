@@ -52,6 +52,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         OnInvitationReceivedListener, OnTurnBasedMatchUpdateReceivedListener {
 
     public static final String TAG = MultiPlayerActivity.class.getSimpleName();
+    public static final String CHARSET_NAME = "UTF-8";
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -240,9 +241,10 @@ public class MultiPlayerActivity extends AppCompatActivity
     public void gameOver(GameAndLevelSnapshot gameAndLevel, Uri gamePreviewUri) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
-        gameAndLevelSnapshot.setLastPlayerId(myParticipantId);
+        gameAndLevelSnapshot = gameAndLevel;
+        gameAndLevel.setLastPlayerId(myParticipantId);
         Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId(),
-                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName("UTF-8")))
+                gson.toJson(gameAndLevel).getBytes(Charset.forName(CHARSET_NAME)))
                 .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                     @Override
                     public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
@@ -280,13 +282,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         TurnBasedMatch match = result.getMatch();
         dismissSpinner();
         if (checkStatusCode(match, result.getStatus().getStatusCode())) {
-            if (match.getData() != null) {
-                // This is a game that has already started, so I'll just start
-                updateMatch(match);
-            }
-            else {
-                startMatch(match);
-            }
+            startMatch(match);
         }
     }
 
@@ -308,24 +304,43 @@ public class MultiPlayerActivity extends AppCompatActivity
         Level level = getMyLevel(R.raw.another_level);
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
-        Map<String, DotsGameSnapshot> snapshotMap = new HashMap<>();
-        DotsGameSnapshot original = new GameSnapshotCreator().createGameSnapshot(level);
-        snapshotMap.put(myParticipantId, original);
-        for (String participantId : mMatch.getParticipantIds()) {
-            if (!participantId.equals(myParticipantId)) {
-                DotsGameSnapshot copy =
-                        gson.fromJson(gson.toJson(original), DotsGameSnapshot.class);
-                snapshotMap.put(participantId, copy);
+        if (null != match.getData()) {
+            try {
+                gameAndLevelSnapshot =
+                        gson.fromJson(new String(match.getData(), CHARSET_NAME),
+                                GameAndLevelSnapshot.class);
+            } catch (UnsupportedEncodingException e) {
+                Log.e(TAG, "UnsupportedEncodingException", e);
             }
         }
-        gameAndLevelSnapshot = new GameAndLevelSnapshot(snapshotMap, level);
+        if (null != gameAndLevelSnapshot) {
+            Map<String, DotsGameSnapshot> snapshotMap = gameAndLevelSnapshot.getSnapshotMap();
+            for (DotsGameSnapshot snapshot : snapshotMap.values()) {
+                DotsGameSnapshot copy =
+                        gson.fromJson(gson.toJson(snapshot), DotsGameSnapshot.class);
+                snapshotMap.put(myParticipantId, copy);
+            }
+        }
+        else {
+            Map<String, DotsGameSnapshot> snapshotMap = new HashMap<>();
+            DotsGameSnapshot original = new GameSnapshotCreator().createGameSnapshot(level);
+            snapshotMap.put(myParticipantId, original);
+            for (String participantId : mMatch.getParticipantIds()) {
+                if (!participantId.equals(myParticipantId)) {
+                    DotsGameSnapshot copy =
+                            gson.fromJson(gson.toJson(original), DotsGameSnapshot.class);
+                    snapshotMap.put(participantId, copy);
+                }
+            }
+            gameAndLevelSnapshot = new GameAndLevelSnapshot(snapshotMap, level);
+        }
         takeTurn(gameAndLevelSnapshot, myParticipantId);
     }
 
     private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId) {
         gameAndLevelSnapshot.setLastPlayerId(participantId);
         Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
-                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName("UTF-8")),
+                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName(CHARSET_NAME)),
                 participantId)
                 .setResultCallback(
                         new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
@@ -406,11 +421,9 @@ public class MultiPlayerActivity extends AppCompatActivity
                 showMessage("We're still waiting for an automatch partner.");
                 break;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
-                if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
-                    fetchGameData(match);
-                    if (!gameAndLevelSnapshot.getLastPlayerId().equals(myParticipantId)) {
-                        updateFragment(gameAndLevelSnapshot);
-                    }
+                fetchGameData(match);
+                if (!gameAndLevelSnapshot.getLastPlayerId().equals(myParticipantId)) {
+                    updateFragment(gameAndLevelSnapshot);
                 }
         }
         if (TurnBasedMatch.MATCH_STATUS_ACTIVE == status) {
@@ -432,7 +445,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private void fetchGameData(TurnBasedMatch match) {
         try {
             gameAndLevelSnapshot =
-                    gson.fromJson(new String(match.getData(), "UTF-8"),
+                    gson.fromJson(new String(match.getData(), CHARSET_NAME),
                             GameAndLevelSnapshot.class);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
