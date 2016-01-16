@@ -1,14 +1,14 @@
 {
   "solver": "RANDOM_GREEDY",
-  "rows": 2,
-  "cols": 2,
+  "rows": 3,
+  "cols": 3,
   "blocked": 0,
   "tasks": [
   ],
   "goodies": [
     {
       "type": "ONE_K",
-      "count": 1
+      "count": 2
     },
     {
       "type": "DIAMOND",
@@ -18,7 +18,7 @@
   "dynamicGoodies": [
     {
       "value": 150,
-      "count": 1
+      "count": 3
     }
   ],
   "firstPlayer": "ME",
