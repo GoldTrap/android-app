@@ -361,12 +361,12 @@ public class MultiPlayerActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container,
                             MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
-                                    myParticipantId, mMatch.getTurnStatus()),
+                                    myParticipantId, mMatch.getTurnStatus(), mMatch.getStatus()),
                             MultiPlayerMenuFragment.TAG)
                     .commit();
         }
         else {
-            fragment.updateSnapshot(gameAndLevelSnapshot);
+            fragment.updateSnapshot(gameAndLevelSnapshot, mMatch.getStatus());
         }
     }
 

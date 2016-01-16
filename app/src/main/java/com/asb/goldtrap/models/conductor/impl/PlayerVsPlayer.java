@@ -80,6 +80,13 @@ public class PlayerVsPlayer implements GameConductor {
                 cSet);
     }
 
+    public void reInit(GameAndLevelSnapshot gameAndLevelSnapshot) {
+        init(gameAndLevelSnapshot);
+        if (isGameOver()) {
+            state = gameOverState;
+        }
+    }
+
     private void addOperators(Level level) {
         for (Complication complication : level.getComplications()) {
             GoodieOperator operator = goodieOperatorFactory.getGoodieOperator(complication);

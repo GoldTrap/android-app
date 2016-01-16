@@ -39,6 +39,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private static final String GAME_AND_LEVEL = "gameAndLevelSnapshot";
     public static final String MY_PLAYER_ID = "MY_PLAYER_ID";
     public static final String TURN_STATUS = "TURN_STATUS";
+    public static final String STATUS = "STATUS";
     private GameConductor conductor;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
     private OnFragmentInteractionListener mListener;
@@ -53,6 +54,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private Handler handler = new Handler();
     private ImageHelper imageHelper;
     private ScoreComputer scoreComputer;
+    private int status;
 
 
     public MultiPlayerGameFragment() {
@@ -64,15 +66,17 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
      *
      * @param gameAndLevel game and level.
      * @param turnStatus
+     * @param status
      * @return A new instance of fragment MultiPlayerGameFragment.
      */
     public static MultiPlayerGameFragment newInstance(String gameAndLevel, String myPlayerId,
-                                                      int turnStatus) {
+                                                      int turnStatus, int status) {
         MultiPlayerGameFragment fragment = new MultiPlayerGameFragment();
         Bundle args = new Bundle();
         args.putString(GAME_AND_LEVEL, gameAndLevel);
         args.putString(MY_PLAYER_ID, myPlayerId);
         args.putInt(TURN_STATUS, turnStatus);
+        args.putInt(STATUS, status);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,11 +91,17 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         gameAndLevelSnapshot = gson.fromJson(getArguments().getString(GAME_AND_LEVEL),
                 GameAndLevelSnapshot.class);
         conductor = new PlayerVsPlayer(this, gameAndLevelSnapshot, myPlayerId);
-        if (TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN == getArguments().getInt(TURN_STATUS)) {
-            conductor.setState(conductor.getFirstPlayerState());
+        status = getArguments().getInt(STATUS);
+        if (TurnBasedMatch.MATCH_STATUS_COMPLETE == status) {
+            conductor.setState(conductor.getGameOverState());
         }
         else {
-            conductor.setState(conductor.getSecondPlayerState());
+            if (TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN == getArguments().getInt(TURN_STATUS)) {
+                conductor.setState(conductor.getFirstPlayerState());
+            }
+            else {
+                conductor.setState(conductor.getSecondPlayerState());
+            }
         }
         scoreComputer = new ScoreComputerImpl(conductor.getGameSnapshotMap().get(myPlayerId));
     }
@@ -162,13 +172,20 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mListener
-                                .gameOver(gameAndLevelSnapshot, gamePreviewUri);
+                        if (status != TurnBasedMatch.MATCH_STATUS_COMPLETE) {
+                            mListener
+                                    .gameOver(gameAndLevelSnapshot, gamePreviewUri);
+                        }
                     }
                 }, 1000);
 
             }
         });
+        if (status == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
+            dotBoard.setVisibility(View.INVISIBLE);
+            gameCompleteDotBoard.setVisibility(View.VISIBLE);
+            gameCompleteDotBoard.requestRedraw();
+        }
         updateScoreBoard();
         return view;
     }
@@ -198,9 +215,15 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         mListener = null;
     }
 
-    public void updateSnapshot(GameAndLevelSnapshot gameAndLevelSnapshot) {
+    public void updateSnapshot(GameAndLevelSnapshot gameAndLevelSnapshot, int status) {
         this.gameAndLevelSnapshot = gameAndLevelSnapshot;
-        ((PlayerVsPlayer) this.conductor).init(gameAndLevelSnapshot);
+        this.status = status;
+        ((PlayerVsPlayer) this.conductor).reInit(gameAndLevelSnapshot);
+        if (status == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
+            dotBoard.setVisibility(View.INVISIBLE);
+            gameCompleteDotBoard.setVisibility(View.VISIBLE);
+            gameCompleteDotBoard.requestRedraw();
+        }
     }
 
     @Override
