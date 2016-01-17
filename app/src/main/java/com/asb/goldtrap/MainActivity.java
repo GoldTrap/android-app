@@ -1,10 +1,13 @@
 package com.asb.goldtrap;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.launch.HomeFragment;
 import com.asb.goldtrap.fragments.launch.LaunchFragment;
+import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -173,8 +177,13 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void multiPlayerGame() {
-        Intent multiPlayer = new Intent(this, MultiPlayerActivity.class);
-        startActivity(multiPlayer);
+        if (NetworkUtils.isConnected(getApplicationContext())) {
+            Intent multiPlayer = new Intent(this, MultiPlayerActivity.class);
+            startActivity(multiPlayer);
+        }
+        else {
+            openWifiSettings();
+        }
     }
 
     @Override
@@ -198,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        if (!isConnected()) {
+        if (!isConnected() && NetworkUtils.isConnected(getApplicationContext())) {
             Log.d(TAG, "onStart(): Connecting to Google APIs");
             mGoogleApiClient.connect();
             showSpinner();
@@ -226,6 +235,16 @@ public class MainActivity extends AppCompatActivity implements
 
     public void dismissSpinner() {
         findViewById(R.id.progressLayout).setVisibility(View.GONE);
+    }
+
+    private void openWifiSettings() {
+        new AlertDialog.Builder(this).setMessage(R.string.no_internet).setPositiveButton(
+                R.string.settings, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                }).create().show();
     }
 
     @Override
