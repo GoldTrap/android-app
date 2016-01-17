@@ -28,7 +28,6 @@ import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
-import com.google.android.gms.common.SignInButton;
 
 import java.util.Random;
 
@@ -44,7 +43,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public static final int TIME_BETWEEN_LOADING_MESSAGE_UPDATES = 1500;
     private boolean migrationComplete = false;
     private OnFragmentInteractionListener mListener;
-    private SignInButton signInButton;
     private FloatingActionButton launchButton;
     private Random random = new Random();
     private FrameLayout gameLayout;
@@ -119,8 +117,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         View view = inflater.inflate(R.layout.fragment_launch, container, false);
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
-        signInButton = (SignInButton) view.findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(this);
         launchButton = (FloatingActionButton) view.findViewById(R.id.launch_button);
         launchButton.setOnClickListener(this);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
@@ -144,9 +140,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         loadingMessages = getResources().getStringArray(R.array.loading);
         handler.post(mUpdateLoading);
 
-        if (mListener.isConnected()) {
-            signInButton.setVisibility(View.GONE);
-        }
         launchButton.setVisibility(View.GONE);
         DataInitializationService.startMigration(getContext());
         showLaunchButton();
@@ -249,9 +242,6 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sign_in_button:
-                handleSignIn();
-                break;
             case R.id.launch_button:
                 handleLaunch();
                 break;
@@ -262,19 +252,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
         mListener.launch();
     }
 
-    private void handleSignIn() {
-        mListener.signIn();
-        loading.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        launchButton.setVisibility(View.GONE);
-    }
-
     public interface OnFragmentInteractionListener {
-        void signIn();
 
         boolean isSignInInProgress();
-
-        boolean isConnected();
 
         void launch();
 

@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.MenuRecyclerAdapter;
@@ -16,7 +15,6 @@ import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.menu.impl.HomePageMenu;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.spansize.MenuSpanSizeLookup;
-import com.google.android.gms.common.SignInButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -33,8 +31,6 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     public static final String TAG = HomeFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
-    private SignInButton signInButton;
-    private Button signOutButton;
     private List<HomePageMenu> homePageMenus;
 
     /**
@@ -82,32 +78,6 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
                         handleMenuClick(position);
                     }
                 }));
-        signInButton = (SignInButton) view.findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInButton.setVisibility(View.GONE);
-                signOutButton.setVisibility(View.VISIBLE);
-                mListener.signIn();
-            }
-        });
-        signOutButton = (Button) view.findViewById(R.id.sign_out);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInButton.setVisibility(View.VISIBLE);
-                signOutButton.setVisibility(View.GONE);
-                mListener.signOut();
-            }
-        });
-        if (mListener.isConnected()) {
-            signInButton.setVisibility(View.GONE);
-            signOutButton.setVisibility(View.VISIBLE);
-        }
-        else {
-            signInButton.setVisibility(View.VISIBLE);
-            signOutButton.setVisibility(View.GONE);
-        }
         return view;
     }
 
@@ -158,8 +128,6 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         boolean isConnected();
 
         void signOut();
-
-        void signIn();
 
         void quickPlay();
 

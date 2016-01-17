@@ -62,8 +62,6 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     private boolean mAutoStartSignInFlow = true;
 
-    private TurnBasedMatch mTurnBasedMatch;
-
     // For our intents
     private static final int RC_SIGN_IN = 9001;
     final static int RC_SELECT_PLAYERS = 10000;
@@ -96,6 +94,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                             MultiPlayerMenuFragment.TAG)
                     .commit();
         }
+        retrieveMatchFromHint(getIntent().getExtras());
     }
 
     @Override
@@ -392,18 +391,27 @@ public class MultiPlayerActivity extends AppCompatActivity
         Log.d(TAG, "onConnected(): Connection successful");
 
         // Retrieve the TurnBasedMatch from the connectionHint
-        if (connectionHint != null) {
-            mTurnBasedMatch = connectionHint.getParcelable(Multiplayer.EXTRA_TURN_BASED_MATCH);
-
-            if (mTurnBasedMatch != null) {
-                if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
-                    Log.d(TAG, "Warning: accessing TurnBasedMatch when not connected");
-                }
-                updateMatch(mTurnBasedMatch);
-            }
+        retrieveMatchFromHint(connectionHint);
+        if (null != mMatch) {
+            updateMatch(mMatch);
         }
         Games.Invitations.registerInvitationListener(mGoogleApiClient, this);
         Games.TurnBasedMultiplayer.registerMatchUpdateListener(mGoogleApiClient, this);
+    }
+
+    private void retrieveMatchFromHint(Bundle connectionHint) {
+        if (connectionHint != null) {
+            TurnBasedMatch match = connectionHint.getParcelable(Multiplayer.EXTRA_TURN_BASED_MATCH);
+            if (null != match) {
+                mMatch = match;
+                if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+                    Log.d(TAG, "Warning: accessing TurnBasedMatch when not connected");
+                }
+                else {
+                    updateMatch(mMatch);
+                }
+            }
+        }
     }
 
     private void updateMatch(TurnBasedMatch match) {
