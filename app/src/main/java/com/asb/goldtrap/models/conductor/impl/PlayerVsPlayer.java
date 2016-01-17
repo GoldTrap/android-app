@@ -175,8 +175,10 @@ public class PlayerVsPlayer implements GameConductor {
 
     @Override
     public void doPostProcess() {
-        for (GoodieOperator goodieOperator : goodieOperators) {
-            goodieOperator.operateOnGoodie(snapshotMap.get(myPlayerId));
+        for (DotsGameSnapshot snapshot : snapshotMap.values()) {
+            for (GoodieOperator goodieOperator : goodieOperators) {
+                goodieOperator.operateOnGoodie(snapshot);
+            }
         }
     }
 
