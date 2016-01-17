@@ -153,7 +153,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
             @Override
             public void animationComplete() {
                 if (conductor.getState() instanceof GameOver) {
-                    mListener.gameOver(gameAndLevelSnapshot, null);
+                    mListener.gameOver(gameAndLevelSnapshot);
                 }
                 conductor.doPostProcess();
                 dotBoard.postInvalidate();
@@ -172,9 +172,9 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (status != TurnBasedMatch.MATCH_STATUS_COMPLETE) {
-                            mListener
-                                    .gameOver(gameAndLevelSnapshot, gamePreviewUri);
+                        if (status == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
+                            mListener.showPostGameOverOptions(
+                                    gamePreviewUri);
                         }
                     }
                 }, 1000);
@@ -223,6 +223,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     public interface OnFragmentInteractionListener {
         void onMyTurnComplete(GameAndLevelSnapshot gameAndLevelSnapshot);
 
-        void gameOver(GameAndLevelSnapshot gameAndLevel, Uri gamePreviewUri);
+        void gameOver(GameAndLevelSnapshot gameAndLevel);
+
+        void showPostGameOverOptions(Uri gamePreviewUri);
     }
 }

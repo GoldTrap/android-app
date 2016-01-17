@@ -2,4 +2,5 @@
 <resources>
     <string name="goldtrap_deeplink">asb-apps://goldtrap</string>
     <string name="quick_play_deeplink">asb-apps://goldtrap/quickplay</string>
+    <string name="multiplayer_deeplink">asb-apps://goldtrap/multiplayer</string>
 </resources>

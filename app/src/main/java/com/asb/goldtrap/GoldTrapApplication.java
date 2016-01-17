@@ -10,7 +10,7 @@ public class GoldTrapApplication extends Application {
     private static GoldTrapApplication singleton;
     private Uri gamePreviewUri;
 
-    public GoldTrapApplication getInstance() {
+    public static GoldTrapApplication getInstance() {
         return singleton;
     }
 

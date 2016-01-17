@@ -13,10 +13,14 @@ import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerGameFragment;
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerMenuFragment;
+import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.snapshots.GameAndLevelSnapshot;
+import com.asb.goldtrap.models.utils.sharer.Sharer;
+import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -44,6 +48,7 @@ import java.util.Map;
 public class MultiPlayerActivity extends AppCompatActivity
         implements MultiPlayerMenuFragment.OnFragmentInteractionListener,
         MultiPlayerGameFragment.OnFragmentInteractionListener,
+        SummaryFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         OnTurnBasedMatchUpdateReceivedListener {
 
@@ -60,20 +65,23 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     // For our intents
     private static final int RC_SIGN_IN = 9001;
-    final static int RC_SELECT_PLAYERS = 10000;
-    final static int RC_LOOK_AT_MATCHES = 10001;
+    private final static int RC_SELECT_PLAYERS = 10000;
+    private final static int RC_LOOK_AT_MATCHES = 10001;
+    private static final int REQUEST_INVITE = 15001;
 
     public boolean isDoingTurn = false;
 
     public TurnBasedMatch mMatch;
     private Gson gson;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
+    private Sharer sharer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_player);
         gson = new Gson();
+        sharer = new SharerImpl();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -165,7 +173,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     @Override
-    public void gameOver(GameAndLevelSnapshot gameAndLevel, Uri gamePreviewUri) {
+    public void gameOver(GameAndLevelSnapshot gameAndLevel) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = mMatch.getParticipantId(playerId);
         gameAndLevelSnapshot = gameAndLevel;
@@ -178,6 +186,17 @@ public class MultiPlayerActivity extends AppCompatActivity
                         processResult(result, true);
                     }
                 });
+    }
+
+    @Override
+    public void showPostGameOverOptions(Uri gamePreviewUri) {
+        GoldTrapApplication.getInstance().setGamePreviewUri(gamePreviewUri);
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        SummaryFragment.newInstance(gamePreviewUri),
+                        SummaryFragment.TAG)
+                .commit();
     }
 
     @Override
@@ -242,17 +261,30 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     }
 
-    public void rematch() {
-        showSpinner();
-        Games.TurnBasedMultiplayer.rematch(mGoogleApiClient, mMatch.getMatchId()).setResultCallback(
-                new ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>() {
-                    @Override
-                    public void onResult(TurnBasedMultiplayer.InitiateMatchResult result) {
-                        processResult(result);
-                    }
-                });
-        mMatch = null;
-        isDoingTurn = false;
+    @Override
+    public void replayGame() {
+        onGamesInProgress();
+    }
+
+    @Override
+    public void shareGame() {
+        sharer.shareGameImage(this);
+    }
+
+    @Override
+    public void invite() {
+        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                .setMessage(getString(R.string.invitation_message))
+                .setCallToActionText(getString(R.string.invitation_cta))
+                .setCustomImage(GoldTrapApplication.getInstance().getGamePreviewUri())
+                .setDeepLink(Uri.parse(getString(R.string.multiplayer_deeplink)))
+                .build();
+        startActivityForResult(intent, REQUEST_INVITE);
+    }
+
+    @Override
+    public void next() {
+        finish();
     }
 
     private void processResult(TurnBasedMultiplayer.CancelMatchResult result) {
@@ -419,12 +451,18 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     private void fetchGameData(TurnBasedMatch match) {
-        try {
-            gameAndLevelSnapshot =
-                    gson.fromJson(new String(match.getData(), CHARSET_NAME),
-                            GameAndLevelSnapshot.class);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if (null != match.getData()) {
+            try {
+                gameAndLevelSnapshot =
+                        gson.fromJson(new String(match.getData(), CHARSET_NAME),
+                                GameAndLevelSnapshot.class);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            gameAndLevelSnapshot = null;
+            startMatch(match);
         }
     }
 
