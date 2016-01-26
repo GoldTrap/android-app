@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -71,7 +72,7 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     public boolean isDoingTurn = false;
 
-    public TurnBasedMatch mMatch;
+    private TurnBasedMatch tbm;
     private Gson gson;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
     private Sharer sharer;
@@ -137,14 +138,16 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     public void onActivityResult(int request, int response, Intent data) {
         super.onActivityResult(request, response, data);
-        if (request == RC_SIGN_IN) {
-            handleSignin(request, response);
-        }
-        else if (request == RC_LOOK_AT_MATCHES) {
-            handleBrowseMatches(response, data);
-        }
-        else if (request == RC_SELECT_PLAYERS) {
-            handleCreateMatch(response, data);
+        switch (request) {
+            case RC_SIGN_IN:
+                handleSignin(request, response);
+                break;
+            case RC_LOOK_AT_MATCHES:
+                handleBrowseMatches(response, data);
+                break;
+            case RC_SELECT_PLAYERS:
+                handleCreateMatch(response, data);
+                break;
         }
     }
 
@@ -175,10 +178,10 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     public void gameOver(GameAndLevelSnapshot gameAndLevel) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = mMatch.getParticipantId(playerId);
+        String myParticipantId = tbm.getParticipantId(playerId);
         gameAndLevelSnapshot = gameAndLevel;
         gameAndLevel.setLastPlayerId(myParticipantId);
-        Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, mMatch.getMatchId(),
+        Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, tbm.getMatchId(),
                 gson.toJson(gameAndLevel).getBytes(Charset.forName(CHARSET_NAME)))
                 .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                     @Override
@@ -219,8 +222,8 @@ public class MultiPlayerActivity extends AppCompatActivity
 
         // Retrieve the TurnBasedMatch from the connectionHint
         retrieveMatchFromHint(connectionHint);
-        if (null != mMatch) {
-            updateMatch(mMatch);
+        if (null != tbm) {
+            updateMatch(tbm);
         }
         Games.TurnBasedMultiplayer.registerMatchUpdateListener(mGoogleApiClient, this);
     }
@@ -290,7 +293,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private void processResult(TurnBasedMultiplayer.CancelMatchResult result) {
         dismissSpinner();
 
-        if (!checkStatusCode(null, result.getStatus().getStatusCode())) {
+        if (!checkStatusCode(result.getStatus().getStatusCode())) {
             return;
         }
 
@@ -302,7 +305,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private void processResult(TurnBasedMultiplayer.InitiateMatchResult result) {
         TurnBasedMatch match = result.getMatch();
         dismissSpinner();
-        if (checkStatusCode(match, result.getStatus().getStatusCode())) {
+        if (checkStatusCode(result.getStatus().getStatusCode())) {
             startMatch(match);
         }
     }
@@ -311,7 +314,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                               boolean updateFragment) {
         TurnBasedMatch match = result.getMatch();
         dismissSpinner();
-        if (checkStatusCode(match, result.getStatus().getStatusCode())) {
+        if (checkStatusCode(result.getStatus().getStatusCode())) {
             if (updateFragment) {
                 updateMatch(match);
             }
@@ -324,10 +327,10 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     public void startMatch(TurnBasedMatch match) {
-        mMatch = match;
+        tbm = match;
         Level level = getMyLevel(R.raw.another_level);
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = mMatch.getParticipantId(playerId);
+        String myParticipantId = tbm.getParticipantId(playerId);
         if (null != match.getData()) {
             loadGame(match);
         }
@@ -344,7 +347,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         Map<String, DotsGameSnapshot> snapshotMap = new HashMap<>();
         DotsGameSnapshot original = new GameSnapshotCreator().createGameSnapshot(level);
         snapshotMap.put(myParticipantId, original);
-        for (String participantId : mMatch.getParticipantIds()) {
+        for (String participantId : tbm.getParticipantIds()) {
             if (!participantId.equals(myParticipantId)) {
                 DotsGameSnapshot copy =
                         gson.fromJson(gson.toJson(original), DotsGameSnapshot.class);
@@ -376,51 +379,60 @@ public class MultiPlayerActivity extends AppCompatActivity
     private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId,
                           final boolean updateFragment) {
         gameAndLevelSnapshot.setLastPlayerId(participantId);
-        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, mMatch.getMatchId(),
+        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, tbm.getMatchId(),
                 gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName(CHARSET_NAME)),
                 participantId)
                 .setResultCallback(
                         new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
                             @Override
-                            public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                            public void onResult(
+                                    @NonNull TurnBasedMultiplayer.UpdateMatchResult result) {
                                 processResult(result, updateFragment);
                             }
                         });
     }
 
-    private void updateFragment(GameAndLevelSnapshot gameAndLevelSnapshot) {
+    private void updateFragment() {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = mMatch.getParticipantId(playerId);
+        String myParticipantId = tbm.getParticipantId(playerId);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container,
                         MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
-                                myParticipantId, mMatch.getTurnStatus(), mMatch.getStatus()),
+                                myParticipantId, tbm.getTurnStatus(), tbm.getStatus()),
                         MultiPlayerGameFragment.TAG)
                 .commit();
-
     }
 
     private void retrieveMatchFromHint(Bundle connectionHint) {
         if (connectionHint != null) {
             TurnBasedMatch match = connectionHint.getParcelable(Multiplayer.EXTRA_TURN_BASED_MATCH);
             if (null != match) {
-                mMatch = match;
+                tbm = match;
                 if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
                     Log.d(TAG, "Warning: accessing TurnBasedMatch when not connected");
                 }
                 else {
-                    updateMatch(mMatch);
+                    updateMatch(tbm);
                 }
             }
         }
     }
 
     private void updateMatch(TurnBasedMatch match) {
-        mMatch = match;
-        int status = match.getStatus();
-        int turnStatus = match.getTurnStatus();
+        tbm = match;
+        switch (match.getStatus()) {
+            case TurnBasedMatch.MATCH_STATUS_COMPLETE:
+            case TurnBasedMatch.MATCH_STATUS_ACTIVE:
+                fetchGameData(match);
+                updateFragment();
+                break;
+            default:
+                handleInactiveStates(match);
+        }
+    }
 
-        switch (status) {
+    private void handleInactiveStates(TurnBasedMatch match) {
+        switch (match.getStatus()) {
             case TurnBasedMatch.MATCH_STATUS_CANCELED:
                 showMessage("This game was canceled!");
                 break;
@@ -430,23 +442,6 @@ public class MultiPlayerActivity extends AppCompatActivity
             case TurnBasedMatch.MATCH_STATUS_AUTO_MATCHING:
                 showMessage("We're still waiting for an automatch partner.");
                 break;
-            case TurnBasedMatch.MATCH_STATUS_COMPLETE:
-                fetchGameData(match);
-                updateFragment(gameAndLevelSnapshot);
-
-        }
-        if (TurnBasedMatch.MATCH_STATUS_ACTIVE == status) {
-            fetchGameData(match);
-            switch (turnStatus) {
-                case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
-                    updateFragment(gameAndLevelSnapshot);
-                    break;
-                case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
-                    updateFragment(gameAndLevelSnapshot);
-                    break;
-                case TurnBasedMatch.MATCH_TURN_STATUS_INVITED:
-                    showMessage("Still waiting for invitations.\n\nBe patient!");
-            }
         }
     }
 
@@ -471,7 +466,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         Snackbar.make(coordinateLayout, msg, Snackbar.LENGTH_SHORT).show();
     }
 
-    private boolean checkStatusCode(TurnBasedMatch match, int statusCode) {
+    private boolean checkStatusCode(int statusCode) {
         switch (statusCode) {
             case GamesStatusCodes.STATUS_OK:
                 return true;
@@ -516,9 +511,9 @@ public class MultiPlayerActivity extends AppCompatActivity
     public String getNextParticipantId() {
 
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = mMatch.getParticipantId(playerId);
+        String myParticipantId = tbm.getParticipantId(playerId);
 
-        ArrayList<String> participantIds = mMatch.getParticipantIds();
+        ArrayList<String> participantIds = tbm.getParticipantIds();
 
         int desiredIndex = -1;
 
@@ -532,7 +527,7 @@ public class MultiPlayerActivity extends AppCompatActivity
             return participantIds.get(desiredIndex);
         }
 
-        if (mMatch.getAvailableAutoMatchSlots() <= 0) {
+        if (tbm.getAvailableAutoMatchSlots() <= 0) {
             // You've run out of automatch slots, so we start over.
             return participantIds.get(0);
         }
