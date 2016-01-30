@@ -91,9 +91,13 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         myPlayerId = getArguments().getString(MY_PLAYER_ID);
         gameAndLevelSnapshot = gson.fromJson(getArguments().getString(GAME_AND_LEVEL),
                 GameAndLevelSnapshot.class);
-        conductor = new PlayerVsPlayer(this, gameAndLevelSnapshot, myPlayerId);
         status = getArguments().getInt(STATUS);
         turnStatus = getArguments().getInt(TURN_STATUS);
+        initGame();
+    }
+
+    private void initGame() {
+        conductor = new PlayerVsPlayer(this, gameAndLevelSnapshot, myPlayerId);
         if (TurnBasedMatch.MATCH_STATUS_COMPLETE == status) {
             conductor.setState(conductor.getGameOverState());
         }
@@ -117,8 +121,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                 (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
         dotBoard.setVisibility(View.VISIBLE);
         gameCompleteDotBoard.setVisibility(View.INVISIBLE);
-        dotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(myPlayerId));
-        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(myPlayerId));
+        updateGameBoard();
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
         flip = (Button) view.findViewById(R.id.flip);
         flip.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +221,22 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     @Override
     public void stateChanged(GameState state) {
 
+    }
+
+    public void updateGame(GameAndLevelSnapshot snapshot, String myPlayerId, int turnStatus,
+                           int status) {
+        this.gameAndLevelSnapshot = snapshot;
+        this.myPlayerId = myPlayerId;
+        this.turnStatus = turnStatus;
+        this.status = status;
+        initGame();
+        updateGameBoard();
+        dotBoard.postInvalidate();
+    }
+
+    private void updateGameBoard() {
+        dotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(myPlayerId));
+        gameCompleteDotBoard.setGameSnapShot(conductor.getGameSnapshotMap().get(myPlayerId));
     }
 
     public interface OnFragmentInteractionListener {

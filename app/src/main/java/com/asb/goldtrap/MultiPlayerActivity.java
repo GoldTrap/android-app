@@ -55,6 +55,7 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     public static final String TAG = MultiPlayerActivity.class.getSimpleName();
     public static final String CHARSET_NAME = "UTF-8";
+    public static final String TBM = "tbm";
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -80,6 +81,9 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (null != savedInstanceState) {
+            tbm = savedInstanceState.getParcelable(TBM);
+        }
         setContentView(R.layout.activity_multi_player);
         gson = new Gson();
         sharer = new SharerImpl();
@@ -99,6 +103,12 @@ public class MultiPlayerActivity extends AppCompatActivity
                     .commit();
         }
         retrieveMatchFromHint(getIntent().getExtras());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(TBM, tbm);
     }
 
     @Override
@@ -318,6 +328,9 @@ public class MultiPlayerActivity extends AppCompatActivity
             if (updateFragment) {
                 updateMatch(match);
             }
+            else {
+                tbm = match;
+            }
         }
     }
 
@@ -395,20 +408,29 @@ public class MultiPlayerActivity extends AppCompatActivity
     private void updateFragment() {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String myParticipantId = tbm.getParticipantId(playerId);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container,
-                        MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
-                                myParticipantId, tbm.getTurnStatus(), tbm.getStatus()),
-                        MultiPlayerGameFragment.TAG)
-                .commit();
+        MultiPlayerGameFragment fragment =
+                (MultiPlayerGameFragment) getSupportFragmentManager().findFragmentByTag(
+                        MultiPlayerGameFragment.TAG);
+        if (null != fragment) {
+            fragment.updateGame(gameAndLevelSnapshot, myParticipantId,
+                    tbm.getTurnStatus(), tbm.getStatus());
+        }
+        else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container,
+                            MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
+                                    myParticipantId, tbm.getTurnStatus(), tbm.getStatus()),
+                            MultiPlayerGameFragment.TAG)
+                    .commit();
+        }
     }
 
     private void retrieveMatchFromHint(Bundle connectionHint) {
-        if (connectionHint != null) {
+        if (null == tbm && null != connectionHint) {
             TurnBasedMatch match = connectionHint.getParcelable(Multiplayer.EXTRA_TURN_BASED_MATCH);
             if (null != match) {
-                tbm = match;
                 if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+                    tbm = match;
                     Log.d(TAG, "Warning: accessing TurnBasedMatch when not connected");
                 }
                 else {
