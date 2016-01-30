@@ -184,13 +184,18 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
 
             }
         });
+        updateScoreBoard();
+        selectBoardToDisplay();
+        return view;
+    }
+
+    private void selectBoardToDisplay() {
+        dotBoard.postInvalidate();
         if (status == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
             dotBoard.setVisibility(View.INVISIBLE);
             gameCompleteDotBoard.setVisibility(View.VISIBLE);
             gameCompleteDotBoard.requestRedraw();
         }
-        updateScoreBoard();
-        return view;
     }
 
     private void updateScoreBoard() {
@@ -231,7 +236,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         this.status = status;
         initGame();
         updateGameBoard();
-        dotBoard.postInvalidate();
+        updateScoreBoard();
+        selectBoardToDisplay();
     }
 
     private void updateGameBoard() {
