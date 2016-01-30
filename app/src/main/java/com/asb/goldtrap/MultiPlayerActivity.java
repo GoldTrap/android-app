@@ -209,6 +209,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                 .replace(R.id.fragment_container,
                         SummaryFragment.newInstance(gamePreviewUri),
                         SummaryFragment.TAG)
+                .addToBackStack(SummaryFragment.TAG)
                 .commit();
     }
 
@@ -265,6 +266,19 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            this.finish();
+        }
+        else {
+            if (null != getSupportFragmentManager().findFragmentByTag(SummaryFragment.TAG)) {
+                getSupportFragmentManager().popBackStack();
+            }
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
     public void onTurnBasedMatchReceived(TurnBasedMatch turnBasedMatch) {
         updateMatch(turnBasedMatch);
     }
@@ -297,7 +311,7 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void next() {
-        finish();
+        onBackPressed();
     }
 
     private void processResult(TurnBasedMultiplayer.CancelMatchResult result) {
@@ -417,10 +431,12 @@ public class MultiPlayerActivity extends AppCompatActivity
         }
         else {
             getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
                             MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
                                     myParticipantId, tbm.getTurnStatus(), tbm.getStatus()),
                             MultiPlayerGameFragment.TAG)
+                    .addToBackStack(MultiPlayerGameFragment.TAG)
                     .commit();
         }
     }
