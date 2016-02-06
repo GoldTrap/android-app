@@ -1,19 +1,20 @@
 package com.asb.goldtrap.fragments.play;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.asb.goldtrap.R;
-import com.asb.goldtrap.adapters.CursorRecyclerAdapter;
+import com.asb.goldtrap.adapters.EpisodeRecyclerAdapter;
+import com.asb.goldtrap.models.eo.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
-import com.asb.goldtrap.models.episodes.impl.EpisodeModelImpl;
+import com.asb.goldtrap.models.episodes.impl.CursorEpisodeModel;
 
 /**
  * Browse Episodes Fragment
@@ -23,7 +24,6 @@ public class BrowseEpisodesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private EpisodeModel episodeModel;
     private RecyclerView recyclerView;
-    private Cursor cursor;
 
     public BrowseEpisodesFragment() {
         // Required empty public constructor
@@ -44,8 +44,8 @@ public class BrowseEpisodesFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.episodes);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setAdapter(new CursorRecyclerAdapter(getContext(), cursor,
-                new CursorRecyclerAdapter.ViewHolder.ViewHolderClicks() {
+        recyclerView.setAdapter(new EpisodeRecyclerAdapter(getContext(), episodeModel,
+                new EpisodeRecyclerAdapter.ViewHolder.ViewHolderClicks() {
                     @Override
                     public void onClick(int position) {
                         handleEpisodeClick(position);
@@ -57,12 +57,12 @@ public class BrowseEpisodesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        episodeModel = new EpisodeModelImpl(getContext());
-        this.cursor = episodeModel.getAllEpisodes();
+        episodeModel = new CursorEpisodeModel(getContext());
     }
 
     private void handleEpisodeClick(int position) {
-
+        Episode episode = episodeModel.getEpisode(position);
+        Log.d(TAG, "Clicked the episode: " + episode.getNumber());
     }
 
     @Override
@@ -86,9 +86,7 @@ public class BrowseEpisodesFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (null != cursor) {
-            cursor.close();
-        }
+        episodeModel.close();
     }
 
     public interface OnFragmentInteractionListener {
