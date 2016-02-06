@@ -1,5 +1,7 @@
 package com.asb.goldtrap.models.dao;
 
+import android.database.Cursor;
+
 import com.asb.goldtrap.models.eo.migration.Episode;
 
 /**
@@ -29,5 +31,9 @@ public interface EpisodeDao {
             + CODE
             + ");";
 
+    String EPISODES_ORDER_BY = EpisodeDao.NUMBER + " ASC";
+
     long save(Episode episode);
+
+    Cursor getAllEpisodes();
 }

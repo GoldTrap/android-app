@@ -84,6 +84,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     private void handleMenuClick(int position) {
         switch (homePageMenus.get(position).getType()) {
             case PLAY_GAME:
+                mListener.play();
                 break;
             case QUICK_PLAY_GAME:
                 mListener.quickPlay();
@@ -128,6 +129,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         boolean isConnected();
 
         void signOut();
+
+        void play();
 
         void quickPlay();
 

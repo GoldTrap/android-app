@@ -170,6 +170,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void play() {
+        Intent play = new Intent(this, PlayActivity.class);
+        startActivity(play);
+    }
+
+    @Override
     public void quickPlay() {
         Intent quickPlay = new Intent(this, QuickPlayActivity.class);
         startActivity(quickPlay);

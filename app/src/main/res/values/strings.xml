@@ -6,6 +6,7 @@
     <string name="quick_play">Quick Play</string>
     <string name="heart">Heart</string>
     <string name="multi_player">Multi Player</string>
+    <string name="episodes">Episodes</string>
     <string name="sign_out">Sign Out</string>
     <string name="title_activity_quick_play">QuickPlayActivity</string>
     <string name="points">Points: %d</string>

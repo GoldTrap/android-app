@@ -1,6 +1,7 @@
 package com.asb.goldtrap.models.dao.impl;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.asb.goldtrap.models.dao.EpisodeDao;
@@ -18,6 +19,11 @@ public class EpisodeDaoImpl extends AbstractDao implements EpisodeDao {
     @Override
     public long save(Episode episode) {
         return this.database.insert(TABLE, null, getContentValues(episode));
+    }
+
+    @Override
+    public Cursor getAllEpisodes() {
+        return this.database.query(TABLE, null, null, null, null, null, EPISODES_ORDER_BY);
     }
 
     private ContentValues getContentValues(Episode episode) {
