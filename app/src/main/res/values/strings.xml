@@ -51,6 +51,8 @@
 
     <string name="sign_in_successful">Sign in successful</string>
 
+    <string name="title_activity_play">Play</string>
+
     <string name="no_internet">Please enable your internet</string>
     <string name="settings">Settings</string>
 </resources>

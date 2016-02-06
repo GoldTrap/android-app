@@ -92,6 +92,32 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".PlayActivity"
+            android:label="@string/title_activity_play"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asb.goldtrap.MainActivity"/>
+
+            <intent-filter android:label="@string/title_activity_play">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="asb-apps.blogspot.in"
+                    android:pathPrefix="/goldtrap/play"
+                    android:scheme="http"/>
+                <data
+                    android:host="goldtrap"
+                    android:pathPrefix="/play"
+                    android:scheme="asb-apps"/>
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".models.services.DataInitializationService"
             android:exported="false">
@@ -107,8 +133,6 @@
                 android:resource="@xml/filepaths"/>
         </provider>
 
-        <activity android:name=".PlayActivity">
-        </activity>
     </application>
 
 </manifest>
