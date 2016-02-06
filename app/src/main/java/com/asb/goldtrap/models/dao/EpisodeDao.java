@@ -12,12 +12,14 @@ public interface EpisodeDao {
     String NUMBER = "NUMBER";
     String CODE = "CODE";
     String NAME = "NAME";
+    String IMAGE = "IMAGE";
     String COMPLETED = "COMPLETED";
     String TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE
             + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + CODE + " VARCHAR UNIQUE, "
             + NAME + " VARCHAR NOT NULL, "
+            + IMAGE + " VARCHAR NOT NULL, "
             + NUMBER + " INT NOT NULL, "
             + COMPLETED + " INT DEFAULT 0"
             + ");";

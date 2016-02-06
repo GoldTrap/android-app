@@ -24,6 +24,7 @@ public class EpisodeDaoImpl extends AbstractDao implements EpisodeDao {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NUMBER, episode.getNumber());
         contentValues.put(NAME, episode.getName());
+        contentValues.put(IMAGE, episode.getImage());
         contentValues.put(CODE, episode.getCode());
         return contentValues;
     }

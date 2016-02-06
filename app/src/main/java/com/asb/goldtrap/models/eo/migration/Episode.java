@@ -6,6 +6,7 @@ package com.asb.goldtrap.models.eo.migration;
 public class Episode {
     private int number;
     private String name;
+    private String image;
     private String code;
     private Level level;
 
@@ -23,6 +24,14 @@ public class Episode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getCode() {
