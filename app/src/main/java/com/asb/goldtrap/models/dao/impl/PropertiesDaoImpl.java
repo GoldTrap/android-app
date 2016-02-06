@@ -1,5 +1,6 @@
 package com.asb.goldtrap.models.dao.impl;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -8,12 +9,10 @@ import com.asb.goldtrap.models.dao.PropertiesDao;
 /**
  * Created by arjun on 18/10/15.
  */
-public class PropertiesDaoImpl implements PropertiesDao {
-
-    private SQLiteDatabase database;
+public class PropertiesDaoImpl extends AbstractDao implements PropertiesDao {
 
     public PropertiesDaoImpl(SQLiteDatabase database) {
-        this.database = database;
+        super(database);
     }
 
     @Override
@@ -32,5 +31,13 @@ public class PropertiesDaoImpl implements PropertiesDao {
             }
         }
         return value;
+    }
+
+    @Override
+    public long setValue(String key, String value) {
+        ContentValues values = new ContentValues(1);
+        values.put(KEY, key);
+        values.put(VALUE, value);
+        return database.insert(TABLE, null, values);
     }
 }

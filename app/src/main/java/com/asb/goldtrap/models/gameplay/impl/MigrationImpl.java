@@ -1,5 +1,7 @@
 package com.asb.goldtrap.models.gameplay.impl;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
 import com.asb.goldtrap.models.dao.PropertiesDao;
@@ -12,14 +14,21 @@ import com.asb.goldtrap.models.gameplay.Migration;
  */
 public class MigrationImpl implements Migration {
     private PropertiesDao propertiesDao;
+    private Migration dataMigration;
+    private Migration fileMigration;
 
-    public MigrationImpl(DBHelper dbHelper) {
+    public MigrationImpl(Context context) {
+        SQLiteOpenHelper dbHelper = new DBHelper(context);
         propertiesDao = new PropertiesDaoImpl(dbHelper.getWritableDatabase());
+        fileMigration = new FileToDBMigrationImpl(context, dbHelper, propertiesDao);
+        dataMigration = new InitDataMigrationImpl(context, dbHelper, propertiesDao);
     }
 
     @Override
     public void doMigrationOfData() {
-
+        fileMigration.doMigrationOfData();
+        dataMigration.doMigrationOfData();
+        propertiesDao.setValue(MIGRATION_COMPLETE, "YES");
     }
 
     @Override

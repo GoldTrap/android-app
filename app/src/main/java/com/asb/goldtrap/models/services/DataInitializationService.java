@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.asb.goldtrap.models.dao.helper.DBHelper;
 import com.asb.goldtrap.models.gameplay.Migration;
 import com.asb.goldtrap.models.gameplay.impl.MigrationImpl;
 
@@ -33,7 +32,7 @@ public class DataInitializationService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        migration = new MigrationImpl(new DBHelper(getApplicationContext()));
+        migration = new MigrationImpl(getApplicationContext());
     }
 
     @Override

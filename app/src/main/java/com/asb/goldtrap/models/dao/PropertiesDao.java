@@ -20,4 +20,6 @@ public interface PropertiesDao {
             + ");";
 
     String getValue(String key);
+
+    long setValue(String key, String value);
 }

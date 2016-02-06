@@ -1,0 +1,9 @@
+<resources>
+    <string name="episode_1">Hopeful</string>
+    <string name="episode_2">Apprentice</string>
+    <string name="episode_3">Knight</string>
+    <string name="episode_4">Master</string>
+    <string name="episode_5">Guardian</string>
+    <string name="episode_6">Consular</string>
+    <string name="episode_7">Sentinel</string>
+</resources>

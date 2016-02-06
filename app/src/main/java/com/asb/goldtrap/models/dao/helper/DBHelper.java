@@ -5,7 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.asb.goldtrap.models.dao.ChapterDao;
+import com.asb.goldtrap.models.dao.EpisodeDao;
+import com.asb.goldtrap.models.dao.LevelDao;
 import com.asb.goldtrap.models.dao.PropertiesDao;
 
 /**
@@ -23,10 +24,25 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "Starting the Database creation");
-        db.execSQL(PropertiesDao.TABLE_CREATE);
-        db.execSQL(PropertiesDao.INDEX_CREATE);
-        db.execSQL(ChapterDao.TABLE_CREATE);
+        createTables(db);
+        createIndexes(db);
         Log.d(TAG, "Ending the Database creation");
+    }
+
+    private void createTables(SQLiteDatabase db) {
+        Log.d(TAG, "Starting the Tables creation");
+        db.execSQL(PropertiesDao.TABLE_CREATE);
+        db.execSQL(EpisodeDao.TABLE_CREATE);
+        db.execSQL(LevelDao.TABLE_CREATE);
+        Log.d(TAG, "Ending the Tables creation");
+    }
+
+    private void createIndexes(SQLiteDatabase db) {
+        Log.d(TAG, "Starting the Indexes creation");
+        db.execSQL(PropertiesDao.INDEX_CREATE);
+        db.execSQL(EpisodeDao.INDEX_CREATE);
+        db.execSQL(LevelDao.INDEX_CREATE);
+        Log.d(TAG, "Ending the Indexes creation");
     }
 
     @Override
