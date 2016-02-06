@@ -6,11 +6,14 @@ import com.asb.goldtrap.models.eo.Episode;
  * Created by arjun on 06/02/16.
  */
 public interface EpisodeModel {
-    void loadAllEpisodes();
+
+    interface Listener {
+        void dataChanged();
+    }
+
+    void loadEpisodes();
 
     Episode getEpisode(int position);
 
     int getEpisodeCount();
-
-    void close();
 }

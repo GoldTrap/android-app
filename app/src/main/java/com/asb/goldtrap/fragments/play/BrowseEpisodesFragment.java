@@ -19,11 +19,11 @@ import com.asb.goldtrap.models.episodes.impl.CursorEpisodeModel;
 /**
  * Browse Episodes Fragment
  */
-public class BrowseEpisodesFragment extends Fragment {
+public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Listener {
     public static String TAG = BrowseEpisodesFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private EpisodeModel episodeModel;
-    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
     public BrowseEpisodesFragment() {
         // Required empty public constructor
@@ -41,23 +41,26 @@ public class BrowseEpisodesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_browse_episodes, container, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView = (RecyclerView) view.findViewById(R.id.episodes);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.episodes);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setAdapter(new EpisodeRecyclerAdapter(getContext(), episodeModel,
+        adapter = new EpisodeRecyclerAdapter(getContext(), episodeModel,
                 new EpisodeRecyclerAdapter.ViewHolder.ViewHolderClicks() {
                     @Override
                     public void onClick(int position) {
                         handleEpisodeClick(position);
                     }
-                }));
+                });
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        episodeModel = new CursorEpisodeModel(getContext());
+        setRetainInstance(true);
+        episodeModel =
+                new CursorEpisodeModel(getContext(), getActivity().getSupportLoaderManager(), this);
     }
 
     private void handleEpisodeClick(int position) {
@@ -83,10 +86,16 @@ public class BrowseEpisodesFragment extends Fragment {
         mListener = null;
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        episodeModel.close();
+    public void onResume() {
+        super.onResume();
+        episodeModel.loadEpisodes();
+    }
+
+    @Override
+    public void dataChanged() {
+        adapter.notifyDataSetChanged();
     }
 
     public interface OnFragmentInteractionListener {
