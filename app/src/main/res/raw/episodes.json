@@ -5,7 +5,7 @@
     "image": "episode_1",
     "code": "e01",
     "level": {
-      "numberOfLevels": 6,
+      "numberOfLevels": 10,
       "code": "c"
     }
   },
@@ -15,7 +15,7 @@
     "image": "episode_2",
     "code": "e02",
     "level": {
-      "numberOfLevels": 6,
+      "numberOfLevels": 10,
       "code": "c"
     }
   },
@@ -25,7 +25,7 @@
     "image": "episode_3",
     "code": "e03",
     "level": {
-      "numberOfLevels": 8,
+      "numberOfLevels": 10,
       "code": "c"
     }
   },
@@ -35,7 +35,7 @@
     "image": "episode_4",
     "code": "e04",
     "level": {
-      "numberOfLevels": 6,
+      "numberOfLevels": 9,
       "code": "c"
     }
   },
@@ -45,7 +45,7 @@
     "image": "episode_5",
     "code": "e05",
     "level": {
-      "numberOfLevels": 4,
+      "numberOfLevels": 9,
       "code": "c"
     }
   },
@@ -55,7 +55,7 @@
     "image": "episode_6",
     "code": "e06",
     "level": {
-      "numberOfLevels": 7,
+      "numberOfLevels": 10,
       "code": "c"
     }
   },
@@ -65,7 +65,7 @@
     "image": "episode_7",
     "code": "e07",
     "level": {
-      "numberOfLevels": 10,
+      "numberOfLevels": 12,
       "code": "c"
     }
   }
