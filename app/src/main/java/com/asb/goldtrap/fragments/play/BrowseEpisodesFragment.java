@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.EpisodeRecyclerAdapter;
-import com.asb.goldtrap.models.eo.Episode;
+import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
 import com.asb.goldtrap.models.episodes.impl.CursorEpisodeModel;
 

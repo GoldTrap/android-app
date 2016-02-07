@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asb.goldtrap.R;
-import com.asb.goldtrap.models.eo.Episode;
+import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
 
 /**
@@ -56,8 +56,8 @@ public class EpisodeRecyclerAdapter
             super(itemView);
             this.mListener = mListener;
             itemView.setOnClickListener(this);
-            textView = (TextView) itemView.findViewById(R.id.menu_name);
-            imageView = (ImageView) itemView.findViewById(R.id.menu_image);
+            textView = (TextView) itemView.findViewById(R.id.episode_name);
+            imageView = (ImageView) itemView.findViewById(R.id.episode_image);
         }
 
         public void bindMenu(Episode episode, Context context) {

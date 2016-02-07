@@ -11,11 +11,12 @@ import com.asb.goldtrap.models.dao.EpisodeDao;
 import com.asb.goldtrap.models.dao.helper.DBHelper;
 import com.asb.goldtrap.models.dao.impl.EpisodeDaoImpl;
 import com.asb.goldtrap.models.dao.loaders.EpisodesLoader;
-import com.asb.goldtrap.models.eo.Episode;
+import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
 
 import static com.asb.goldtrap.models.dao.EpisodeDao.CODE;
 import static com.asb.goldtrap.models.dao.EpisodeDao.COMPLETED;
+import static com.asb.goldtrap.models.dao.EpisodeDao.ID;
 import static com.asb.goldtrap.models.dao.EpisodeDao.IMAGE;
 import static com.asb.goldtrap.models.dao.EpisodeDao.NAME;
 import static com.asb.goldtrap.models.dao.EpisodeDao.NUMBER;
@@ -45,6 +46,7 @@ public class CursorEpisodeModel implements EpisodeModel, LoaderManager.LoaderCal
         if (null != cursor && !cursor.isClosed()) {
             cursor.moveToPosition(position);
             episode = Episode.builder()
+                    .withId(cursor.getLong(cursor.getColumnIndex(ID)))
                     .withNumber(cursor.getInt(cursor.getColumnIndex(NUMBER)))
                     .withImage(cursor.getString(cursor.getColumnIndex(NAME)))
                     .withName(cursor.getString(cursor.getColumnIndex(IMAGE)))

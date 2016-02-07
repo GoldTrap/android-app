@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/menu_image"
+            android:id="@+id/episode_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -21,11 +21,11 @@
             android:scaleType="centerCrop"/>
 
         <TextView
-            android:id="@+id/menu_name"
+            android:id="@+id/episode_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/menu_image"
+            android:layout_below="@+id/episode_image"
             android:gravity="center_horizontal"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"

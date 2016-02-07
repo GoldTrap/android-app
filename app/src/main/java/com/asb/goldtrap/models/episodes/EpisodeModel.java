@@ -1,6 +1,6 @@
 package com.asb.goldtrap.models.episodes;
 
-import com.asb.goldtrap.models.eo.Episode;
+import com.asb.goldtrap.models.eo.migration.Episode;
 
 /**
  * Created by arjun on 06/02/16.
