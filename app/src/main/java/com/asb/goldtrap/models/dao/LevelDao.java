@@ -1,5 +1,7 @@
 package com.asb.goldtrap.models.dao;
 
+import android.database.Cursor;
+
 import com.asb.goldtrap.models.eo.migration.Level;
 
 /**
@@ -29,5 +31,10 @@ public interface LevelDao {
             + CODE
             + ");";
 
+    String LEVELS_FILTER_BY_EPISODE_CODE = EPISODE_CODE + " = ? ";
+    String LEVELS_ORDER_BY = NUMBER + " ASC";
+
     long save(long episodeId, String episodeCode, long levelNumber, Level level);
+
+    Cursor getLevels(String episodeCode);
 }

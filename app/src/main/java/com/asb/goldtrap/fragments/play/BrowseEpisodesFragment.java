@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +63,7 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     }
 
     private void handleEpisodeClick(int position) {
-        Episode episode = episodeModel.getEpisode(position);
-        Log.d(TAG, "Clicked the episode: " + episode.getNumber());
+        mListener.onEpisodeClicked(episodeModel.getEpisode(position));
     }
 
     @Override
@@ -99,6 +97,6 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     }
 
     public interface OnFragmentInteractionListener {
-
+        void onEpisodeClicked(Episode episode);
     }
 }

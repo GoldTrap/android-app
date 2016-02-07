@@ -1,6 +1,7 @@
 package com.asb.goldtrap.models.dao.impl;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.asb.goldtrap.models.dao.LevelDao;
@@ -30,5 +31,13 @@ public class LevelDaoImpl extends AbstractDao implements LevelDao {
         contentValues.put(CODE,
                 String.format(Locale.US, "%s%s%02d", episodeCode, level.getCode(), levelNumber));
         return contentValues;
+    }
+
+    @Override
+    public Cursor getLevels(String episodeCode) {
+        String[] args = {episodeCode};
+        return this.database
+                .query(TABLE, null, LEVELS_FILTER_BY_EPISODE_CODE, args, null, null,
+                        LEVELS_ORDER_BY);
     }
 }
