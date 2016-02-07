@@ -59,7 +59,7 @@ public class CursorEpisodeModel implements EpisodeModel, LoaderManager.LoaderCal
 
     @Override
     public void loadEpisodes() {
-        loaderManager.initLoader(LOADER_ID, null, this)
+        loaderManager.restartLoader(LOADER_ID, null, this)
                 .forceLoad();
     }
 
