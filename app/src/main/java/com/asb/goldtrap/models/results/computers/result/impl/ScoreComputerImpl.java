@@ -14,6 +14,7 @@ import com.asb.goldtrap.models.results.examiners.TaskCompletionExaminer;
 import com.asb.goldtrap.models.results.examiners.impl.GoodiesTaskCompletionExaminer;
 import com.asb.goldtrap.models.results.examiners.impl.HorizontalLinesTaskCompletionExaminer;
 import com.asb.goldtrap.models.results.examiners.impl.LinesTaskCompletionExaminer;
+import com.asb.goldtrap.models.results.examiners.impl.PointsTaskCompletionExaminer;
 import com.asb.goldtrap.models.results.examiners.impl.VerticalLinesTaskCompletionExaminer;
 import com.asb.goldtrap.models.results.examiners.impl.goodies.DynamicGoodieTaskCompletionExaminer;
 import com.asb.goldtrap.models.results.examiners.impl.goodies.GoodieTaskCompletionExaminer;
@@ -42,6 +43,8 @@ public class ScoreComputerImpl implements ScoreComputer {
             new GoodieTaskCompletionExaminer();
     private TaskCompletionExaminer dynamicGoodieTaskCompletionExaminer =
             new DynamicGoodieTaskCompletionExaminer();
+    private TaskCompletionExaminer pointsTaskCompletionExaminer =
+            new PointsTaskCompletionExaminer();
 
     public ScoreComputerImpl(DotsGameSnapshot dotsGameSnapshot) {
         this.dotsGameSnapshot = dotsGameSnapshot;
@@ -94,6 +97,9 @@ public class ScoreComputerImpl implements ScoreComputer {
                     break;
                 case DYNAMIC_GOODIE:
                     dynamicGoodieTaskCompletionExaminer.examine(score, task);
+                    break;
+                case POINTS:
+                    pointsTaskCompletionExaminer.examine(score, task);
                     break;
             }
         }

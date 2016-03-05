@@ -1,5 +1,7 @@
 package com.asb.goldtrap;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,28 +9,50 @@ import android.view.View;
 
 import com.asb.goldtrap.fragments.play.BrowseEpisodesFragment;
 import com.asb.goldtrap.fragments.play.BrowseLessonsFragment;
+import com.asb.goldtrap.fragments.postgame.ScoreFragment;
+import com.asb.goldtrap.fragments.postgame.SummaryFragment;
+import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
+import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
+import com.asb.goldtrap.models.utils.sharer.Sharer;
+import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 
 public class PlayActivity extends AppCompatActivity
         implements BrowseEpisodesFragment.OnFragmentInteractionListener,
-        BrowseLessonsFragment.OnFragmentInteractionListener {
+        BrowseLessonsFragment.OnFragmentInteractionListener,
+        TasksDisplayFragment.OnFragmentInteractionListener,
+        QuickPlayGameFragment.OnFragmentInteractionListener,
+        ScoreFragment.OnFragmentInteractionListener,
+        SummaryFragment.OnFragmentInteractionListener {
+
+    private static final int REQUEST_INVITE = 16001;
+    private int levelCode;
+    private Sharer sharer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        sharer = new SharerImpl();
         if (null == getSupportFragmentManager().findFragmentByTag(
                 BrowseEpisodesFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(
-                        BrowseLessonsFragment.TAG)) {
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.fragment_container,
-                            BrowseEpisodesFragment.newInstance(),
-                            BrowseEpisodesFragment.TAG)
-                    .commit();
+                        BrowseLessonsFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(
+                        TasksDisplayFragment.TAG)) {
+            browseGames();
         }
+    }
+
+    private void browseGames() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        BrowseEpisodesFragment.newInstance(),
+                        BrowseEpisodesFragment.TAG)
+                .commit();
     }
 
     @Override
@@ -70,6 +94,77 @@ public class PlayActivity extends AppCompatActivity
 
     @Override
     public void onLevelClicked(Level level) {
+        levelCode = getResources()
+                .getIdentifier(level.getCode(), "raw", getPackageName());
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        TasksDisplayFragment.newInstance(levelCode),
+                        TasksDisplayFragment.TAG)
+                .commit();
+    }
 
+    @Override
+    public void tasksShownAcknowledgement() {
+        if (null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.fragment_container,
+                            QuickPlayGameFragment.newInstance(levelCode),
+                            QuickPlayGameFragment.TAG)
+                    .commit();
+        }
+    }
+
+    @Override
+    public void gameOver(String snapshot, Uri gamePreviewUri) {
+        GoldTrapApplication.getInstance().setGamePreviewUri(gamePreviewUri);
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        ScoreFragment.newInstance(snapshot),
+                        ScoreFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    public void onScoreViewed() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        SummaryFragment
+                                .newInstance(GoldTrapApplication.getInstance().getGamePreviewUri()),
+                        SummaryFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    public void replayGame() {
+        for (int count = 0; count < getSupportFragmentManager().getBackStackEntryCount();
+             count += 1) {
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+        browseGames();
+    }
+
+    @Override
+    public void shareGame() {
+        sharer.shareGameImage(this);
+    }
+
+    @Override
+    public void invite() {
+        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                .setMessage(getString(R.string.invitation_message))
+                .setCallToActionText(getString(R.string.invitation_cta))
+                .setCustomImage(GoldTrapApplication.getInstance().getGamePreviewUri())
+                .setDeepLink(Uri.parse(getString(R.string.player_deeplink)))
+                .build();
+        startActivityForResult(intent, REQUEST_INVITE);
+    }
+
+    @Override
+    public void next() {
+        finish();
     }
 }

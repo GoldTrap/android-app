@@ -6,6 +6,7 @@ import com.asb.goldtrap.R;
  * Created by arjun on 07/11/15.
  */
 public enum TaskType {
+    POINTS(R.drawable.coins, R.plurals.get_points),
     LINES(R.drawable.spark, R.plurals.get_lines),
     HORIZONTAL_LINE(R.drawable.spark, R.plurals.get_horizontal_lines),
     VERTICAL_LINE(R.drawable.spark, R.plurals.get_vertical_lines),

@@ -78,6 +78,11 @@ public class TasksRecyclerAdapter extends RecyclerView.Adapter<TasksRecyclerAdap
                             .getQuantityString(task.getTaskType().getText(), task.getCount(),
                                     task.getCount(), task.getPoints()));
                     break;
+                case POINTS:
+                    mTextView.setText(context.getResources()
+                            .getQuantityString(task.getTaskType().getText(), task.getPoints(),
+                                    task.getPoints()));
+                    break;
                 default:
                     mTextView.setText(context.getResources()
                             .getQuantityString(task.getTaskType().getText(), task.getCount(),

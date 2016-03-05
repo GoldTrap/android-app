@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="get_points">
+        <item quantity="one">Score %d Point</item>
+        <item quantity="other">Score %d Points</item>
+    </plurals>
     <plurals name="get_lines">
         <item quantity="one">Score at least %d Horizontal or Vertical line</item>
         <item quantity="other">Score at least %d Horizontal or Vertical lines</item>

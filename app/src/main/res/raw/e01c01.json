@@ -1,9 +1,13 @@
 {
-  "solver": "RANDOM_GREEDY",
-  "rows": 3,
+  "solver": "RANDOM",
+  "rows": 2,
   "cols": 3,
   "blocked": 0,
   "tasks": [
+    {
+      "taskType": "POINTS",
+      "points": 30
+    }
   ],
   "goodies": [
     {
@@ -16,29 +20,14 @@
     }
   ],
   "dynamicGoodies": [
-    {
-      "value": 150,
-      "count": 3
-    }
   ],
   "firstPlayer": "ME",
   "adType": "NONE",
   "complications": [
-    {
-      "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
-      "strategy": {
-        "type": "AP",
-        "value": 2
-      }
-    }
   ],
   "unlocks": [
     {
       "unlockType": "EXPLORER",
-      "points": 1000
-    },
-    {
-      "unlockType": "BRAVE_HEART",
       "points": 1000
     }
   ]
