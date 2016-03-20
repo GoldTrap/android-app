@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
-import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
+import com.asb.goldtrap.fragments.quickplay.GameFragment;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.appinvite.AppInvite;
@@ -24,7 +24,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 
 public class QuickPlayActivity extends AppCompatActivity
-        implements QuickPlayGameFragment.OnFragmentInteractionListener,
+        implements GameFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener,
         ScoreFragment.OnFragmentInteractionListener,
         SummaryFragment.OnFragmentInteractionListener,
@@ -47,7 +47,7 @@ public class QuickPlayActivity extends AppCompatActivity
         sharer = new SharerImpl();
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
-                null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(ScoreFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(SummaryFragment.TAG)) {
             startANewGame();
@@ -126,12 +126,12 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void tasksShownAcknowledgement() {
-        if (null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
+        if (null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
-                            QuickPlayGameFragment.newInstance(R.raw.level),
-                            QuickPlayGameFragment.TAG)
+                            GameFragment.newInstance(R.raw.level),
+                            GameFragment.TAG)
                     .commit();
         }
     }

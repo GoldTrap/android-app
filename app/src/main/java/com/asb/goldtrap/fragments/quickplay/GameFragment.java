@@ -36,10 +36,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * QuickPlayGameFragment
+ * GameFragment
  */
-public class QuickPlayGameFragment extends Fragment implements GameConductor.GameStateObserver {
-    public static final String TAG = QuickPlayGameFragment.class.getSimpleName();
+public class GameFragment extends Fragment implements GameConductor.GameStateObserver {
+    public static final String TAG = GameFragment.class.getSimpleName();
     public static final String LEVEL_RESOURCE = "LEVEL_RESOURCE";
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
@@ -56,20 +56,20 @@ public class QuickPlayGameFragment extends Fragment implements GameConductor.Gam
     private Gson gson;
 
     /**
-     * Create an instance of QuickPlayGameFragment
+     * Create an instance of GameFragment
      *
      * @param resourceId The resource Id of the Level
-     * @return QuickPlayGameFragment
+     * @return GameFragment
      */
-    public static QuickPlayGameFragment newInstance(int resourceId) {
-        QuickPlayGameFragment fragment = new QuickPlayGameFragment();
+    public static GameFragment newInstance(int resourceId) {
+        GameFragment fragment = new GameFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(LEVEL_RESOURCE, resourceId);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public QuickPlayGameFragment() {
+    public GameFragment() {
         // Required empty public constructor
     }
 

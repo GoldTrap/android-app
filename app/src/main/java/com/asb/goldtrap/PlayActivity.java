@@ -12,7 +12,7 @@ import com.asb.goldtrap.fragments.play.BrowseLessonsFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
-import com.asb.goldtrap.fragments.quickplay.QuickPlayGameFragment;
+import com.asb.goldtrap.fragments.quickplay.GameFragment;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
@@ -23,7 +23,7 @@ public class PlayActivity extends AppCompatActivity
         implements BrowseEpisodesFragment.OnFragmentInteractionListener,
         BrowseLessonsFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener,
-        QuickPlayGameFragment.OnFragmentInteractionListener,
+        GameFragment.OnFragmentInteractionListener,
         ScoreFragment.OnFragmentInteractionListener,
         SummaryFragment.OnFragmentInteractionListener {
 
@@ -111,12 +111,12 @@ public class PlayActivity extends AppCompatActivity
 
     @Override
     public void tasksShownAcknowledgement() {
-        if (null == getSupportFragmentManager().findFragmentByTag(QuickPlayGameFragment.TAG)) {
+        if (null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
-                            QuickPlayGameFragment.newInstance(levelCode),
-                            QuickPlayGameFragment.TAG)
+                            GameFragment.newInstance(levelCode),
+                            GameFragment.TAG)
                     .commit();
         }
     }
