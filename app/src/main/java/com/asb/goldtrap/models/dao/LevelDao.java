@@ -18,6 +18,7 @@ public interface LevelDao {
     String COMPLETED = "COMPLETED";
     String BEST_SCORE = "BEST_SCORE";
     String BEST_STAR = "BEST_STAR";
+    String LOCKED = "LOCKED";
     String TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE
             + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -27,6 +28,7 @@ public interface LevelDao {
             + NUMBER + " INT NOT NULL, "
             + BEST_SCORE + " INT DEFAULT 0, "
             + BEST_STAR + " INT DEFAULT 0, "
+            + LOCKED + " INT DEFAULT 1, "
             + COMPLETED + " INT DEFAULT 0"
             + ");";
     String INDEX_CREATE = "CREATE UNIQUE INDEX " + INDEX
@@ -40,5 +42,11 @@ public interface LevelDao {
 
     long save(long episodeId, String episodeCode, long levelNumber, Level level);
 
+    int update(Level level);
+
     Cursor getLevels(String episodeCode);
+
+    Level getLevelFromCursor(Cursor cursor);
+
+    Level getLevel(String code);
 }

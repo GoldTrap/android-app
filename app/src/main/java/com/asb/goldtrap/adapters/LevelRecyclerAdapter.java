@@ -61,8 +61,8 @@ public class LevelRecyclerAdapter
 
         public void bindMenu(Level level, Context context) {
             int imageIdentifier = R.drawable.coins;
-            if (level.isCompleted()) {
-                imageIdentifier = R.drawable.diamond;
+            if (level.isLocked()) {
+                imageIdentifier = R.drawable.golden_lock;
             }
             imageView.setImageResource(imageIdentifier);
             textView.setText(context.getString(R.string.level, level.getNumber()));

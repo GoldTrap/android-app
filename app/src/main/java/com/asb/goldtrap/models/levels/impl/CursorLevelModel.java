@@ -14,12 +14,6 @@ import com.asb.goldtrap.models.dao.loaders.LevelsLoader;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.levels.LevelModel;
 
-import static com.asb.goldtrap.models.dao.LevelDao.CODE;
-import static com.asb.goldtrap.models.dao.LevelDao.COMPLETED;
-import static com.asb.goldtrap.models.dao.LevelDao.EPISODE_CODE;
-import static com.asb.goldtrap.models.dao.LevelDao.ID;
-import static com.asb.goldtrap.models.dao.LevelDao.NUMBER;
-
 /**
  * Created by arjun on 07/02/16.
  */
@@ -53,13 +47,7 @@ public class CursorLevelModel implements LevelModel, LoaderManager.LoaderCallbac
         Level level = null;
         if (null != cursor && !cursor.isClosed()) {
             cursor.moveToPosition(position);
-            level = Level.builder()
-                    .withId(cursor.getLong(cursor.getColumnIndex(ID)))
-                    .withNumber(cursor.getInt(cursor.getColumnIndex(NUMBER)))
-                    .withCode(cursor.getString(cursor.getColumnIndex(CODE)))
-                    .withEpisodeCode(cursor.getString(cursor.getColumnIndex(EPISODE_CODE)))
-                    .withCompleted(cursor.getInt(cursor.getColumnIndex(COMPLETED)))
-                    .build();
+            level = levelDao.getLevelFromCursor(cursor);
         }
         return level;
     }

@@ -10,6 +10,9 @@ public class Level {
     private String name;
     private String image;
     private String episodeCode;
+    private long bestScore;
+    private long bestStar;
+    private boolean locked;
     private boolean completed;
     private long numberOfLevels;
 
@@ -17,14 +20,19 @@ public class Level {
     }
 
     public Level(long id, int number, String code, String name, String image,
-                 String episodeCode, boolean completed, long numberOfLevels) {
+                 String episodeCode, long bestScore, long bestStar, boolean completed,
+                 boolean locked,
+                 long numberOfLevels) {
         this.id = id;
         this.number = number;
         this.code = code;
         this.name = name;
         this.image = image;
         this.episodeCode = episodeCode;
+        this.bestScore = bestScore;
+        this.bestStar = bestStar;
         this.completed = completed;
+        this.locked = locked;
         this.numberOfLevels = numberOfLevels;
     }
 
@@ -88,8 +96,32 @@ public class Level {
         return completed;
     }
 
+    public boolean isLocked() {
+        return locked;
+    }
+
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public long getBestScore() {
+        return bestScore;
+    }
+
+    public void setBestScore(long bestScore) {
+        this.bestScore = bestScore;
+    }
+
+    public long getBestStar() {
+        return bestStar;
+    }
+
+    public void setBestStar(long bestStar) {
+        this.bestStar = bestStar;
     }
 
     public static Builder builder() {
@@ -105,6 +137,9 @@ public class Level {
         private String image;
         private String episodeCode;
         private boolean completed;
+        private boolean locked;
+        private long bestScore;
+        private long bestStar;
         private long numberOfLevels;
 
         public Builder withId(long id) {
@@ -137,8 +172,23 @@ public class Level {
             return this;
         }
 
+        public Builder withBestScore(long bestScore) {
+            this.bestScore = bestScore;
+            return this;
+        }
+
+        public Builder withBestStar(long bestStar) {
+            this.bestStar = bestStar;
+            return this;
+        }
+
         public Builder withCompleted(int completed) {
             this.completed = completed == 1;
+            return this;
+        }
+
+        public Builder withLocked(int locked) {
+            this.locked = locked == 1;
             return this;
         }
 
@@ -148,7 +198,9 @@ public class Level {
         }
 
         public Level build() {
-            return new Level(id, number, code, name, image, episodeCode, completed, numberOfLevels);
+            return new Level(id, number, code, name, image, episodeCode, bestScore, bestStar,
+                    completed,
+                    locked, numberOfLevels);
         }
     }
 }

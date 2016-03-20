@@ -94,14 +94,19 @@ public class PlayActivity extends AppCompatActivity
 
     @Override
     public void onLevelClicked(Level level) {
-        levelCode = getResources()
-                .getIdentifier(level.getCode(), "raw", getPackageName());
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                .replace(R.id.fragment_container,
-                        TasksDisplayFragment.newInstance(levelCode),
-                        TasksDisplayFragment.TAG)
-                .commit();
+        if (!level.isLocked()) {
+            levelCode = getResources()
+                    .getIdentifier(level.getCode(), "raw", getPackageName());
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.fragment_container,
+                            TasksDisplayFragment.newInstance(levelCode),
+                            TasksDisplayFragment.TAG)
+                    .commit();
+        }
+        else {
+            // TODO: Take him to the store
+        }
     }
 
     @Override
