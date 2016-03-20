@@ -16,7 +16,7 @@ public interface PropertiesDao {
     String INDEX_CREATE = "CREATE UNIQUE INDEX " + INDEX
             + " ON " + TABLE
             + " ("
-            + KEY + " ," + VALUE
+            + KEY
             + ");";
 
     String getValue(String key);
