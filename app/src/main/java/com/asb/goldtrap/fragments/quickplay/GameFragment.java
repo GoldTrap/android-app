@@ -137,7 +137,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
             }
         });
         gameCompleteDotBoard.setDrawingCacheEnabled(true);
-        gameCompleteDotBoard.setDrawingCacheBackgroundColor(Color.LTGRAY);
+        gameCompleteDotBoard.setDrawingCacheBackgroundColor(Color.parseColor("#3F51B5"));
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
