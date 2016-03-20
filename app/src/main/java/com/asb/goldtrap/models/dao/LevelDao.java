@@ -16,6 +16,8 @@ public interface LevelDao {
     String EPISODE_CODE = "EPISODE_CODE";
     String CODE = "CODE";
     String COMPLETED = "COMPLETED";
+    String BEST_SCORE = "BEST_SCORE";
+    String BEST_STAR = "BEST_STAR";
     String TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE
             + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -23,6 +25,8 @@ public interface LevelDao {
             + EPISODE_CODE + " VARCHAR NOT NULL, "
             + CODE + " VARCHAR UNIQUE, "
             + NUMBER + " INT NOT NULL, "
+            + BEST_SCORE + " INT DEFAULT 0, "
+            + BEST_STAR + " INT DEFAULT 0, "
             + COMPLETED + " INT DEFAULT 0"
             + ");";
     String INDEX_CREATE = "CREATE UNIQUE INDEX " + INDEX

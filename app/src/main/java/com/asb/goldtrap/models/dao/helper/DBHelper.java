@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.asb.goldtrap.models.dao.AttemptDao;
 import com.asb.goldtrap.models.dao.EpisodeDao;
 import com.asb.goldtrap.models.dao.LevelDao;
 import com.asb.goldtrap.models.dao.PropertiesDao;
@@ -34,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(PropertiesDao.TABLE_CREATE);
         db.execSQL(EpisodeDao.TABLE_CREATE);
         db.execSQL(LevelDao.TABLE_CREATE);
+        db.execSQL(AttemptDao.TABLE_CREATE);
         Log.d(TAG, "Ending the Tables creation");
     }
 
@@ -42,6 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(PropertiesDao.INDEX_CREATE);
         db.execSQL(EpisodeDao.INDEX_CREATE);
         db.execSQL(LevelDao.INDEX_CREATE);
+        db.execSQL(AttemptDao.INDEX_CREATE);
         Log.d(TAG, "Ending the Indexes creation");
     }
 
