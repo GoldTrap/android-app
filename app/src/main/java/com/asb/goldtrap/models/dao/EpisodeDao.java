@@ -36,4 +36,8 @@ public interface EpisodeDao {
     long save(Episode episode);
 
     Cursor getAllEpisodes();
+
+    Episode getEpisode(String code);
+
+    int update(Episode episode);
 }

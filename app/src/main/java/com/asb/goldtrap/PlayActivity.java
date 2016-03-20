@@ -15,6 +15,9 @@ import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.GameFragment;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
+import com.asb.goldtrap.models.results.Score;
+import com.asb.goldtrap.models.scores.ScoreModel;
+import com.asb.goldtrap.models.scores.impl.ScoreModelImpl;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.appinvite.AppInviteInvitation;
@@ -28,14 +31,15 @@ public class PlayActivity extends AppCompatActivity
         SummaryFragment.OnFragmentInteractionListener {
 
     private static final int REQUEST_INVITE = 16001;
-    private int levelCode;
     private Sharer sharer;
+    private ScoreModel scoreModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         sharer = new SharerImpl();
+        scoreModel = new ScoreModelImpl(getApplicationContext());
         if (null == getSupportFragmentManager().findFragmentByTag(
                 BrowseEpisodesFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(
@@ -95,12 +99,12 @@ public class PlayActivity extends AppCompatActivity
     @Override
     public void onLevelClicked(Level level) {
         if (!level.isLocked()) {
-            levelCode = getResources()
+            int levelResourceCode = getResources()
                     .getIdentifier(level.getCode(), "raw", getPackageName());
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
-                            TasksDisplayFragment.newInstance(levelCode),
+                            TasksDisplayFragment.newInstance(levelResourceCode, level.getCode()),
                             TasksDisplayFragment.TAG)
                     .commit();
         }
@@ -110,30 +114,31 @@ public class PlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void tasksShownAcknowledgement() {
+    public void tasksShownAcknowledgement(int levelResourceCode, String levelCode) {
         if (null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
-                            GameFragment.newInstance(levelCode),
+                            GameFragment.newInstance(levelResourceCode, levelCode),
                             GameFragment.TAG)
                     .commit();
         }
     }
 
     @Override
-    public void gameOver(String snapshot, Uri gamePreviewUri) {
+    public void gameOver(String levelCode, String snapshot, Uri gamePreviewUri) {
         GoldTrapApplication.getInstance().setGamePreviewUri(gamePreviewUri);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
-                        ScoreFragment.newInstance(snapshot),
+                        ScoreFragment.newInstance(snapshot, levelCode),
                         ScoreFragment.TAG)
                 .commit();
     }
 
     @Override
-    public void onScoreViewed() {
+    public void onScoreViewed(Score score, String levelCode) {
+        scoreModel.updateLevelAndScore(levelCode, score);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,

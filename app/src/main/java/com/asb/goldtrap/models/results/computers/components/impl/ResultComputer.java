@@ -29,6 +29,11 @@ public class ResultComputer implements ScoreComponentsComputer {
                 }
             }
         }
+        computeResult(score, totalCellsOccupied, rows, cols);
+        computeStars(score, totalCellsOccupied, rows, cols);
+    }
+
+    private void computeResult(Score score, int totalCellsOccupied, int rows, int cols) {
         if (0 >= score.getIncompleteTasks().size()) {
             if (totalCellsOccupied > (rows * cols) / 2) {
                 score.setResult(Result.WON);
@@ -39,6 +44,24 @@ public class ResultComputer implements ScoreComponentsComputer {
         }
         else {
             score.setResult(Result.LOST);
+        }
+    }
+
+    private void computeStars(Score score, int totalCellsOccupied, int rows, int cols) {
+        int totalCells = rows * cols;
+        if (0 >= score.getIncompleteTasks().size()) {
+            if (totalCellsOccupied >= (2f / 3f) * totalCells) {
+                score.setStar(3);
+            }
+            else if (totalCellsOccupied >= (1f / 3f) * totalCells) {
+                score.setStar(2);
+            }
+            else {
+                score.setStar(1);
+            }
+        }
+        else {
+            score.setStar(1);
         }
     }
 }

@@ -24,22 +24,25 @@ import java.io.InputStreamReader;
  */
 public class TasksDisplayFragment extends Fragment {
     public static final String LEVEL_RESOURCE = "LEVEL_RESOURCE";
+    public static final String LEVEL_CODE = "LEVEL_CODE";
     public static final String TAG = TasksDisplayFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private RecyclerView toDoRecyclerView;
     private FloatingActionButton play;
     private Level level;
-
+    private int levelResourceCode;
+    private String levelCode;
     /**
      * Get new Instance of TasksDisplayFragment
      *
      * @param resourceId The resource Id of the Level
      * @return A new instance of fragment TasksDisplayFragment.
      */
-    public static TasksDisplayFragment newInstance(int resourceId) {
+    public static TasksDisplayFragment newInstance(int resourceId, String levelCode) {
         TasksDisplayFragment fragment = new TasksDisplayFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(LEVEL_RESOURCE, resourceId);
+        bundle.putString(LEVEL_CODE, levelCode);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -53,8 +56,9 @@ public class TasksDisplayFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         Bundle args = getArguments();
-        int resourceId = args.getInt(LEVEL_RESOURCE);
-        doGSONStuff(resourceId);
+        levelResourceCode = args.getInt(LEVEL_RESOURCE);
+        levelCode = args.getString(LEVEL_CODE);
+        doGSONStuff();
     }
 
     @Override
@@ -69,15 +73,15 @@ public class TasksDisplayFragment extends Fragment {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.tasksShownAcknowledgement();
+                mListener.tasksShownAcknowledgement(levelResourceCode, levelCode);
             }
         });
         return view;
     }
 
-    private void doGSONStuff(int resourceId) {
+    private void doGSONStuff() {
         Gson gson = new Gson();
-        InputStream inputStream = getResources().openRawResource(resourceId);
+        InputStream inputStream = getResources().openRawResource(levelResourceCode);
         level = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), Level.class);
     }
 
@@ -99,6 +103,6 @@ public class TasksDisplayFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void tasksShownAcknowledgement();
+        void tasksShownAcknowledgement(int levelResourceCode, String levelCode);
     }
 }

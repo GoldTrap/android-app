@@ -27,7 +27,7 @@ public class CursorLevelModel implements LevelModel, LoaderManager.LoaderCallbac
 
     public CursorLevelModel(Context context, LoaderManager loaderManager,
                             LevelModel.Listener listener) {
-        SQLiteOpenHelper dbHelper = new DBHelper(context);
+        SQLiteOpenHelper dbHelper = DBHelper.getInstance(context);
         this.context = context;
         this.loaderManager = loaderManager;
         this.listener = listener;

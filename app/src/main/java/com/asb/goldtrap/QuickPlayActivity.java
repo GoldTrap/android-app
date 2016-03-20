@@ -14,6 +14,7 @@ import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.GameFragment;
+import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.appinvite.AppInvite;
@@ -71,7 +72,7 @@ public class QuickPlayActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
-                        TasksDisplayFragment.newInstance(R.raw.level),
+                        TasksDisplayFragment.newInstance(R.raw.level, ""),
                         TasksDisplayFragment.TAG)
                 .commit();
     }
@@ -98,12 +99,12 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void gameOver(String snapshot, Uri gamePreviewUri) {
+    public void gameOver(String levelCode, String snapshot, Uri gamePreviewUri) {
         goldTrapApplication.setGamePreviewUri(gamePreviewUri);
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
-                        ScoreFragment.newInstance(snapshot),
+                        ScoreFragment.newInstance(snapshot, levelCode),
                         ScoreFragment.TAG)
                 .commit();
     }
@@ -125,19 +126,19 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void tasksShownAcknowledgement() {
+    public void tasksShownAcknowledgement(int levelResourceCode, String levelCode) {
         if (null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
-                            GameFragment.newInstance(R.raw.level),
+                            GameFragment.newInstance(levelResourceCode, levelCode),
                             GameFragment.TAG)
                     .commit();
         }
     }
 
     @Override
-    public void onScoreViewed() {
+    public void onScoreViewed(Score score, String levelCode) {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
@@ -148,7 +149,6 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void replayGame() {
-        //TODO: Save the points and stuff
         startANewGame();
     }
 

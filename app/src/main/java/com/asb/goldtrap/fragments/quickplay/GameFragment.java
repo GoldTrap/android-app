@@ -41,6 +41,7 @@ import java.io.InputStreamReader;
 public class GameFragment extends Fragment implements GameConductor.GameStateObserver {
     public static final String TAG = GameFragment.class.getSimpleName();
     public static final String LEVEL_RESOURCE = "LEVEL_RESOURCE";
+    public static final String LEVEL_CODE = "LEVEL_CODE";
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
@@ -54,6 +55,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private ImageHelper imageHelper;
     private ScoreComputer scoreComputer;
     private Gson gson;
+    private String levelCode;
 
     /**
      * Create an instance of GameFragment
@@ -61,10 +63,11 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
      * @param resourceId The resource Id of the Level
      * @return GameFragment
      */
-    public static GameFragment newInstance(int resourceId) {
+    public static GameFragment newInstance(int resourceId, String levelCode) {
         GameFragment fragment = new GameFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(LEVEL_RESOURCE, resourceId);
+        bundle.putString(LEVEL_CODE, levelCode);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -144,7 +147,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                     @Override
                     public void run() {
                         mListener
-                                .gameOver(gson.toJson(
+                                .gameOver(levelCode, gson.toJson(
                                                 conductor.getGameSnapshotMap()
                                                         .get(PlayerVsAi.DEFAULT)),
                                         gamePreviewUri);
@@ -172,6 +175,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         Bundle args = getArguments();
         imageHelper = new ImageHelperImpl();
         int resourceId = args.getInt(LEVEL_RESOURCE);
+        levelCode = args.getString(LEVEL_CODE);
         gson = new Gson();
         doGSONStuff(resourceId);
         startGame();
@@ -215,7 +219,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     }
 
     public interface OnFragmentInteractionListener {
-        void gameOver(String snapshot, Uri gamePreviewUri);
+        void gameOver(String levelCode, String snapshot, Uri gamePreviewUri);
     }
 
 }

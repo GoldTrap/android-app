@@ -16,6 +16,7 @@ import java.util.Set;
 
 public class Score {
     public static final int CELL_SCORE = 10;
+    private long star;
     private Result result;
     private List<Task> completedTasks = new ArrayList<>();
     private List<Task> incompleteTasks = new ArrayList<>();
@@ -63,6 +64,14 @@ public class Score {
 
     public void setResult(Result result) {
         this.result = result;
+    }
+
+    public long getStar() {
+        return star;
+    }
+
+    public void setStar(long star) {
+        this.star = star;
     }
 
     public void clearScore() {

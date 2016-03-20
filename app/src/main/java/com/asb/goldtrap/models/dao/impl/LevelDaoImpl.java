@@ -46,8 +46,7 @@ public class LevelDaoImpl extends AbstractDao implements LevelDao {
         Level level = null;
         String[] args = {code};
         Cursor cursor = this.database
-                .query(TABLE, null, CODE + " = ? ", args, null, null,
-                        LEVELS_ORDER_BY);
+                .query(TABLE, null, CODE + " = ? ", args, null, null, null);
         if (cursor.moveToNext()) {
             level = this.getLevelFromCursor(cursor);
         }

@@ -18,7 +18,20 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "GoldTrap.sqlite";
     public static final int DATABASE_VERSION = 1;
 
-    public DBHelper(Context context) {
+    public static DBHelper instance;
+
+    public static SQLiteOpenHelper getInstance(Context context) {
+        if (null == instance) {
+            synchronized (DBHelper.class) {
+                if (null == instance) {
+                    instance = new DBHelper(context.getApplicationContext());
+                }
+            }
+        }
+        return instance;
+    }
+
+    private DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

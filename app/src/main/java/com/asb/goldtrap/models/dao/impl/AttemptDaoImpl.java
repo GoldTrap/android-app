@@ -25,7 +25,8 @@ public class AttemptDaoImpl extends AbstractDao implements AttemptDao {
     @Override
     public Attempt getBestAttempt(String levelCode) {
         Attempt attempt = null;
-        String[] cols = {ID, LEVEL_ID, LEVEL_CODE, TIME, "MAX(" + SCORE + ")", STAR, RESULT};
+        String[] cols =
+                {ID, LEVEL_ID, LEVEL_CODE, TIME, "MAX(" + SCORE + ") AS " + SCORE, STAR, RESULT};
         String[] args = {levelCode};
         Cursor cursor = database.query(TABLE, cols, LEVEL_CODE + " = ?", args, null, null, null);
         if (cursor.moveToNext()) {

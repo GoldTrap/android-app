@@ -16,9 +16,10 @@ public class MigrationImpl implements Migration {
     private PropertiesDao propertiesDao;
     private Migration dataMigration;
     private Migration fileMigration;
+    private SQLiteOpenHelper dbHelper;
 
     public MigrationImpl(Context context) {
-        SQLiteOpenHelper dbHelper = new DBHelper(context);
+        SQLiteOpenHelper dbHelper = DBHelper.getInstance(context);
         propertiesDao = new PropertiesDaoImpl(dbHelper.getWritableDatabase());
         fileMigration = new FileToDBMigrationImpl(context, dbHelper, propertiesDao);
         dataMigration = new InitDataMigrationImpl(context, dbHelper, propertiesDao);

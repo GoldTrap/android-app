@@ -30,6 +30,7 @@ public class ScoreFragment extends Fragment {
 
     public static final String TAG = ScoreFragment.class.getSimpleName();
     public static final String SNAPSHOT = "snapshot";
+    public static final String LEVEL_CODE = "levelCode";
     private Score score;
     private TextView result;
     private TextView points;
@@ -38,6 +39,7 @@ public class ScoreFragment extends Fragment {
     private FloatingActionButton action;
     private OnFragmentInteractionListener mListener;
     private ScoreComputer scoreComputer;
+    private String levelCode;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -47,12 +49,14 @@ public class ScoreFragment extends Fragment {
      * Create new instance of Score Fragment
      *
      * @param snapshot snapshot
+     * @param levelCode levelCode
      * @return A new instance of fragment ScoreFragment.
      */
-    public static ScoreFragment newInstance(String snapshot) {
+    public static ScoreFragment newInstance(String snapshot, String levelCode) {
         ScoreFragment fragment = new ScoreFragment();
         Bundle args = new Bundle();
         args.putString(SNAPSHOT, snapshot);
+        args.putString(LEVEL_CODE, levelCode);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,6 +71,7 @@ public class ScoreFragment extends Fragment {
             scoreComputer = new ScoreComputerImpl(snapshot);
             scoreComputer.computeScoreWithResults();
             score = snapshot.getScore();
+            levelCode = getArguments().getString(LEVEL_CODE);
         }
     }
 
@@ -103,7 +108,7 @@ public class ScoreFragment extends Fragment {
         action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onScoreViewed();
+                mListener.onScoreViewed(score, levelCode);
             }
         });
         points.setText(getString(R.string.points, score.basicScore()));
@@ -129,6 +134,6 @@ public class ScoreFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onScoreViewed();
+        void onScoreViewed(Score score, String levelCode);
     }
 }

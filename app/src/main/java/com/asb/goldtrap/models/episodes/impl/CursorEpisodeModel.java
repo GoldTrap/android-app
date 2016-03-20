@@ -33,7 +33,7 @@ public class CursorEpisodeModel implements EpisodeModel, LoaderManager.LoaderCal
     private Cursor cursor;
 
     public CursorEpisodeModel(Context context, LoaderManager loaderManager, Listener listener) {
-        SQLiteOpenHelper dbHelper = new DBHelper(context);
+        SQLiteOpenHelper dbHelper = DBHelper.getInstance(context);
         this.context = context;
         this.loaderManager = loaderManager;
         this.listener = listener;
