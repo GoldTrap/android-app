@@ -55,7 +55,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     private int msgIndex = 0;
     private int[][] themes = {
             {R.array.default_theme, R.array.default_game_complete_theme},
-            {R.array.experimental_theme, R.array.experimental_game_complete_theme}
+            {R.array.default_theme_old, R.array.default_game_complete_theme_old}
     };
     private Handler handler = new Handler();
 
