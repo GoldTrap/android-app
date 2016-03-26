@@ -6,6 +6,7 @@ import com.asb.goldtrap.models.states.enums.GoodiesState;
  * Created by arjun on 26/10/15.
  */
 public class DynamicGoodie extends Goodie {
+    public static final int MULTIPLIER = 100;
     private int displayValue = 0;
 
 

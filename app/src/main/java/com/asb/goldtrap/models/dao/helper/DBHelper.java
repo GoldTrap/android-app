@@ -7,10 +7,13 @@ import android.util.Log;
 
 import com.asb.goldtrap.models.dao.AttemptDao;
 import com.asb.goldtrap.models.dao.EpisodeDao;
+import com.asb.goldtrap.models.dao.GoodieDao;
 import com.asb.goldtrap.models.dao.LevelDao;
 import com.asb.goldtrap.models.dao.PropertiesDao;
+import com.asb.goldtrap.models.dao.ScoreDao;
 
 /**
+ * DBHelper.
  * Created by arjun on 18/10/15.
  */
 public class DBHelper extends SQLiteOpenHelper {
@@ -49,6 +52,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(EpisodeDao.TABLE_CREATE);
         db.execSQL(LevelDao.TABLE_CREATE);
         db.execSQL(AttemptDao.TABLE_CREATE);
+        db.execSQL(ScoreDao.TABLE_CREATE);
+        db.execSQL(GoodieDao.TABLE_CREATE);
         Log.d(TAG, "Ending the Tables creation");
     }
 
@@ -58,6 +63,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(EpisodeDao.INDEX_CREATE);
         db.execSQL(LevelDao.INDEX_CREATE);
         db.execSQL(AttemptDao.INDEX_CREATE);
+        db.execSQL(ScoreDao.INDEX_CREATE);
+        db.execSQL(GoodieDao.INDEX_CREATE);
         Log.d(TAG, "Ending the Indexes creation");
     }
 
