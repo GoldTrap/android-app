@@ -2,6 +2,7 @@ package com.asb.goldtrap;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.scores.ScoreModel;
-import com.asb.goldtrap.models.scores.impl.ScoreModelImpl;
+import com.asb.goldtrap.models.scores.impl.PlayScoreModelImpl;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.appinvite.AppInviteInvitation;
@@ -39,7 +40,7 @@ public class PlayActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         sharer = new SharerImpl();
-        scoreModel = new ScoreModelImpl(getApplicationContext());
+        scoreModel = new PlayScoreModelImpl(getApplicationContext());
         if (null == getSupportFragmentManager().findFragmentByTag(
                 BrowseEpisodesFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(
@@ -137,8 +138,14 @@ public class PlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void onScoreViewed(Score score, String levelCode) {
-        scoreModel.updateLevelAndScore(levelCode, score);
+    public void onScoreViewed(final Score score, final String levelCode) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                scoreModel.updateScore(levelCode, score);
+                return null;
+            }
+        }.execute();
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,

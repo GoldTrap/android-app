@@ -2,6 +2,7 @@ package com.asb.goldtrap;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,8 @@ import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.fragments.quickplay.GameFragment;
 import com.asb.goldtrap.models.results.Score;
+import com.asb.goldtrap.models.scores.ScoreModel;
+import com.asb.goldtrap.models.scores.impl.QuickPlayScoreModelImpl;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.appinvite.AppInvite;
@@ -36,6 +39,7 @@ public class QuickPlayActivity extends AppCompatActivity
     private GoldTrapApplication goldTrapApplication;
     private Sharer sharer;
     private GoogleApiClient mGoogleApiClient;
+    private ScoreModel scoreModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class QuickPlayActivity extends AppCompatActivity
                 .enableAutoManage(this, this)
                 .build();
         sharer = new SharerImpl();
+        scoreModel = new QuickPlayScoreModelImpl(getApplicationContext());
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
@@ -138,7 +143,14 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     @Override
-    public void onScoreViewed(Score score, String levelCode) {
+    public void onScoreViewed(final Score score, final String levelCode) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                scoreModel.updateScore(levelCode, score);
+                return null;
+            }
+        }.execute();
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,

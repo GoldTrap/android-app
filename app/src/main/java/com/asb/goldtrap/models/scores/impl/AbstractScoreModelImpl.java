@@ -34,11 +34,11 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * ScoreModelImpl.
- * Created by arjun on 20/03/16.
+ * AbstractScoreModelImpl.
+ * Created by arjun on 26/03/16.
  */
-public class ScoreModelImpl implements ScoreModel {
-    private static final String TAG = ScoreModelImpl.class.getSimpleName();
+public abstract class AbstractScoreModelImpl implements ScoreModel {
+    private static final String TAG = PlayScoreModelImpl.class.getSimpleName();
     private EpisodeDao episodeDao;
     private LevelDao levelDao;
     private PropertiesDao propertiesDao;
@@ -47,7 +47,7 @@ public class ScoreModelImpl implements ScoreModel {
     private GoodieDao goodieDao;
     private SQLiteOpenHelper dbHelper;
 
-    public ScoreModelImpl(Context context) {
+    public AbstractScoreModelImpl(Context context) {
         dbHelper = DBHelper.getInstance(context);
         episodeDao = new EpisodeDaoImpl(dbHelper.getWritableDatabase());
         levelDao = new LevelDaoImpl(dbHelper.getWritableDatabase());
@@ -58,13 +58,13 @@ public class ScoreModelImpl implements ScoreModel {
     }
 
     @Override
-    public void updateLevelAndScore(String levelCode, Score score) {
+    public void updateScore(String levelCode, Score score) {
         this.doTheLevelUpdate(levelCode, score);
         this.doTheScoreUpdate(score);
         this.doTheGoodieUpdate(score);
     }
 
-    private void doTheGoodieUpdate(Score score) {
+    protected void doTheGoodieUpdate(Score score) {
         List<Goodie> goodies = new ArrayList<>();
         for (Map.Entry<GoodiesState, List<com.asb.goldtrap.models.components.Goodie>> goodieEntry :
                 score.getGoodies().entrySet()) {
@@ -74,12 +74,16 @@ public class ScoreModelImpl implements ScoreModel {
             totalGoodie.setCount(totalGoodie.getCount() + goodieEntry.getValue().size());
             goodies.add(currentGoodie);
             goodies.add(totalGoodie);
+            Log.d(TAG, "Current GoodiesState: " + currentGoodie.getGoodiesState().name() +
+                    ", Count: " + currentGoodie.getCount());
+            Log.d(TAG, "Total GoodiesState: " + totalGoodie.getGoodiesState().name() + ", Count: " +
+                    totalGoodie.getCount());
         }
         goodieDao.updateGoodies(goodies);
         Log.d(TAG, "Updated the goodies");
     }
 
-    private void doTheScoreUpdate(Score score) {
+    protected void doTheScoreUpdate(Score score) {
         com.asb.goldtrap.models.eo.Score current = scoreDao.getScore(ScoreDao.CURRENT);
         com.asb.goldtrap.models.eo.Score total = scoreDao.getScore(ScoreDao.TOTAL);
         long scoreValue = current.getValue() + score.basicScore();
@@ -91,10 +95,12 @@ public class ScoreModelImpl implements ScoreModel {
         total.setValue(scoreValue + dynamicValue);
         scoreDao.updateScore(current);
         scoreDao.updateScore(total);
+        Log.d(TAG, "Current Score: " + current.getValue());
+        Log.d(TAG, "Total Score: " + total.getValue());
         Log.d(TAG, "Updated the Score");
     }
 
-    private void doTheLevelUpdate(String levelCode, Score score) {
+    protected void doTheLevelUpdate(String levelCode, Score score) {
         Level level = levelDao.getLevel(levelCode);
         attemptDao.save(Attempt.builder()
                 .setLevelId(level.getId())
