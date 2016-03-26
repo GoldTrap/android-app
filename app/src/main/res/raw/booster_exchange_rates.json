@@ -1,0 +1,16 @@
+{
+  "FLIP": {
+    "POINTS": 75000,
+    "ONE_K": 16,
+    "TWO_K": 7,
+    "FIVE_K": 3,
+    "DIAMOND": 2
+  },
+  "PLUS_ONE": {
+    "POINTS": 20000,
+    "ONE_K": 12,
+    "TWO_K": 5,
+    "FIVE_K": 2,
+    "DIAMOND": 1
+  }
+}
