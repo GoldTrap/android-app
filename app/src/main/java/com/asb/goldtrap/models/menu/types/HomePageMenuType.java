@@ -8,7 +8,7 @@ public enum HomePageMenuType {
     QUICK_PLAY_GAME,
     MULTI_PLAYER_GAME,
     STORE,
-    RANKINGS,
-    SCORE,
+    LEADERBOARDS,
+    ACHIEVEMENTS,
     SHARE
 }

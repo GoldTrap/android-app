@@ -15,9 +15,12 @@ import com.asb.goldtrap.fragments.game.GameFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
+import com.asb.goldtrap.models.achievements.AchievementsModel;
+import com.asb.goldtrap.models.achievements.impl.AchievementsModelImpl;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.QuickPlayScoreModelImpl;
+import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.appinvite.AppInvite;
@@ -26,31 +29,40 @@ import com.google.android.gms.appinvite.AppInviteInvitationResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameUtils;
 
 public class QuickPlayActivity extends AppCompatActivity
-        implements GameFragment.OnFragmentInteractionListener,
+        implements GoogleApiClient.ConnectionCallbacks,
+        GameFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener,
         ScoreFragment.OnFragmentInteractionListener,
         SummaryFragment.OnFragmentInteractionListener,
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = QuickPlayActivity.class.getSimpleName();
+    private static int RC_SIGN_IN = 11001;
+    private boolean mResolvingConnectionFailure = false;
+    private boolean mAutoStartSignInFlow = true;
     private static final int REQUEST_INVITE = 15001;
     private GoldTrapApplication goldTrapApplication;
     private Sharer sharer;
     private GoogleApiClient mGoogleApiClient;
     private ScoreModel scoreModel;
+    private AchievementsModel achievementsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goldTrapApplication = (GoldTrapApplication) getApplication();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(AppInvite.API)
-                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API).addApi(AppInvite.API).addScope(Games.SCOPE_GAMES)
                 .build();
         sharer = new SharerImpl();
         scoreModel = new QuickPlayScoreModelImpl(getApplicationContext());
+        achievementsModel = new AchievementsModelImpl(getApplicationContext());
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
@@ -87,6 +99,12 @@ public class QuickPlayActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
 
+        if (requestCode == RC_SIGN_IN) {
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            }
+        }
         if (requestCode == REQUEST_INVITE) {
             if (resultCode == RESULT_OK) {
                 // Check how many invitations were sent and log a message
@@ -148,6 +166,7 @@ public class QuickPlayActivity extends AppCompatActivity
             @Override
             protected Void doInBackground(Void... params) {
                 scoreModel.updateScore(levelCode, score, null);
+                achievementsModel.updateAchievements(mGoogleApiClient, score);
                 return null;
             }
         }.execute();
@@ -190,9 +209,68 @@ public class QuickPlayActivity extends AppCompatActivity
         Snackbar.make(coordinateLayout, msg, Snackbar.LENGTH_SHORT).show();
     }
 
+    public boolean isConnected() {
+        return null != mGoogleApiClient && mGoogleApiClient.isConnected();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isConnected() && NetworkUtils.isConnected(getApplicationContext())) {
+            Log.d(TAG, "onStart(): Connecting to Google APIs");
+            mGoogleApiClient.connect();
+            showSpinner();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dismissSpinner();
+        Log.d(TAG, "onStop(): Disconnecting from Google APIs");
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        dismissSpinner();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d(TAG, "onConnectionSuspended():  Trying to reconnect.");
+        mGoogleApiClient.connect();
+    }
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: " + connectionResult);
-        showMessage(getString(R.string.google_play_services_error));
+        dismissSpinner();
+        Log.d(TAG, "onConnectionFailed(): attempting to resolve");
+        if (mResolvingConnectionFailure) {
+            // Already resolving
+            Log.d(TAG, "onConnectionFailed(): ignoring connection failure, already resolving.");
+        }
+        else {
+            // Launch the sign-in flow if the button was clicked or if auto sign-in is enabled
+            if (mAutoStartSignInFlow) {
+                mAutoStartSignInFlow = false;
+
+                mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
+                        mGoogleApiClient, connectionResult, RC_SIGN_IN,
+                        getString(R.string.signin_other_error));
+            }
+        }
+
     }
+
+    public void showSpinner() {
+        findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
+    }
+
+    public void dismissSpinner() {
+        findViewById(R.id.progressLayout).setVisibility(View.GONE);
+    }
+
 }

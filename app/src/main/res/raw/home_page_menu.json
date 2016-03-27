@@ -24,15 +24,15 @@
     "spanSize": 2
   },
   {
-    "name": "rankings",
-    "image": "rankings",
-    "type": "RANKINGS",
+    "name": "leaderboards",
+    "image": "leaderboards",
+    "type": "LEADERBOARDS",
     "spanSize": 2
   },
   {
-    "name": "score",
-    "image": "score",
-    "type": "SCORE",
+    "name": "achievements",
+    "image": "achievements",
+    "type": "ACHIEVEMENTS",
     "spanSize": 2
   },
   {

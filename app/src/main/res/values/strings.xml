@@ -28,8 +28,8 @@
     <string name="quick_play_game">Quick Play</string>
     <string name="multi_player_game">Multi Player</string>
     <string name="store">Shop \'o Rama</string>
-    <string name="rankings">Rankings</string>
-    <string name="score">Scores</string>
+    <string name="leaderboards">LeaderBoards</string>
+    <string name="achievements">Achievements</string>
     <string name="share">Share</string>
 
     <!-- Multi Player Menu Items -->

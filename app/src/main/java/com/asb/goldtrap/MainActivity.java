@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements
         HomeFragment.OnFragmentInteractionListener, OnTurnBasedMatchUpdateReceivedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final int LEADERBOARD_REQUEST_CODE = 15151;
 
     private static int RC_SIGN_IN = 9001;
     private boolean mResolvingConnectionFailure = false;
@@ -190,6 +191,12 @@ public class MainActivity extends AppCompatActivity implements
         else {
             openWifiSettings();
         }
+    }
+
+    @Override
+    public void leaderboards() {
+        startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
+                LEADERBOARD_REQUEST_CODE);
     }
 
     @Override

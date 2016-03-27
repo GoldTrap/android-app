@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="package_name">com.asb.goldtrap</string>
+    <string name="leaderboard_points">CgkIqfLF9oYfEAIQBg</string>
+    <string name="leaderboard_gold_coins">CgkIqfLF9oYfEAIQAQ</string>
+    <string name="leaderboard_gold_nuggets">CgkIqfLF9oYfEAIQAw</string>
+    <string name="leaderboard_gold_bars">CgkIqfLF9oYfEAIQBA</string>
+    <string name="leaderboard_diamonds">CgkIqfLF9oYfEAIQBQ</string>
+</resources>

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.asb.goldtrap.fragments.game.GameFragment;
@@ -14,26 +15,42 @@ import com.asb.goldtrap.fragments.play.BrowseLessonsFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
+import com.asb.goldtrap.models.achievements.AchievementsModel;
+import com.asb.goldtrap.models.achievements.impl.AchievementsModelImpl;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.PlayScoreModelImpl;
+import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
+import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameUtils;
 
 public class PlayActivity extends AppCompatActivity
-        implements BrowseEpisodesFragment.OnFragmentInteractionListener,
+        implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        BrowseEpisodesFragment.OnFragmentInteractionListener,
         BrowseLessonsFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener,
         GameFragment.OnFragmentInteractionListener,
         ScoreFragment.OnFragmentInteractionListener,
         SummaryFragment.OnFragmentInteractionListener {
 
+    private static final String TAG = PlayActivity.class.getSimpleName();
+    private static int RC_SIGN_IN = 10001;
+    private boolean mResolvingConnectionFailure = false;
+    private boolean mAutoStartSignInFlow = true;
+    private GoogleApiClient mGoogleApiClient;
     private static final int REQUEST_INVITE = 16001;
     private Sharer sharer;
     private ScoreModel scoreModel;
+    private AchievementsModel achievementsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +58,12 @@ public class PlayActivity extends AppCompatActivity
         setContentView(R.layout.activity_play);
         sharer = new SharerImpl();
         scoreModel = new PlayScoreModelImpl(getApplicationContext());
+        achievementsModel = new AchievementsModelImpl(getApplicationContext());
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API).addApi(AppInvite.API).addScope(Games.SCOPE_GAMES)
+                .build();
         if (null == getSupportFragmentManager().findFragmentByTag(
                 BrowseEpisodesFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(
@@ -143,6 +166,7 @@ public class PlayActivity extends AppCompatActivity
             @Override
             protected Void doInBackground(Void... params) {
                 scoreModel.updateScore(levelCode, score, null);
+                achievementsModel.updateAchievements(mGoogleApiClient, score);
                 return null;
             }
         }.execute();
@@ -184,4 +208,80 @@ public class PlayActivity extends AppCompatActivity
     public void next() {
         finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == RC_SIGN_IN) {
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            }
+        }
+    }
+
+    public boolean isConnected() {
+        return null != mGoogleApiClient && mGoogleApiClient.isConnected();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isConnected() && NetworkUtils.isConnected(getApplicationContext())) {
+            Log.d(TAG, "onStart(): Connecting to Google APIs");
+            mGoogleApiClient.connect();
+            showSpinner();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dismissSpinner();
+        Log.d(TAG, "onStop(): Disconnecting from Google APIs");
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        dismissSpinner();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d(TAG, "onConnectionSuspended():  Trying to reconnect.");
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        dismissSpinner();
+        Log.d(TAG, "onConnectionFailed(): attempting to resolve");
+        if (mResolvingConnectionFailure) {
+            // Already resolving
+            Log.d(TAG, "onConnectionFailed(): ignoring connection failure, already resolving.");
+        }
+        else {
+            // Launch the sign-in flow if the button was clicked or if auto sign-in is enabled
+            if (mAutoStartSignInFlow) {
+                mAutoStartSignInFlow = false;
+
+                mResolvingConnectionFailure = BaseGameUtils.resolveConnectionFailure(this,
+                        mGoogleApiClient, connectionResult, RC_SIGN_IN,
+                        getString(R.string.signin_other_error));
+            }
+        }
+
+    }
+
+    public void showSpinner() {
+        findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
+    }
+
+    public void dismissSpinner() {
+        findViewById(R.id.progressLayout).setVisibility(View.GONE);
+    }
+
 }
