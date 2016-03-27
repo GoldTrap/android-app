@@ -11,10 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asb.goldtrap.fragments.game.GameFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
-import com.asb.goldtrap.fragments.quickplay.GameFragment;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.QuickPlayScoreModelImpl;

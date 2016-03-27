@@ -1,4 +1,4 @@
-package com.asb.goldtrap.fragments.quickplay;
+package com.asb.goldtrap.fragments.game;
 
 import android.content.Context;
 import android.graphics.Color;

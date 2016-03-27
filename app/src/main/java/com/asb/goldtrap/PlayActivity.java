@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.asb.goldtrap.fragments.game.GameFragment;
 import com.asb.goldtrap.fragments.play.BrowseEpisodesFragment;
 import com.asb.goldtrap.fragments.play.BrowseLessonsFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
-import com.asb.goldtrap.fragments.quickplay.GameFragment;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.results.Score;
