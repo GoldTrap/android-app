@@ -9,6 +9,7 @@ import com.asb.goldtrap.models.dao.AttemptDao;
 import com.asb.goldtrap.models.dao.EpisodeDao;
 import com.asb.goldtrap.models.dao.GoodieDao;
 import com.asb.goldtrap.models.dao.LevelDao;
+import com.asb.goldtrap.models.dao.MultiplayerGameDao;
 import com.asb.goldtrap.models.dao.PropertiesDao;
 import com.asb.goldtrap.models.dao.ScoreDao;
 
@@ -54,6 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(AttemptDao.TABLE_CREATE);
         db.execSQL(ScoreDao.TABLE_CREATE);
         db.execSQL(GoodieDao.TABLE_CREATE);
+        db.execSQL(MultiplayerGameDao.TABLE_CREATE);
         Log.d(TAG, "Ending the Tables creation");
     }
 
@@ -65,6 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(AttemptDao.INDEX_CREATE);
         db.execSQL(ScoreDao.INDEX_CREATE);
         db.execSQL(GoodieDao.INDEX_CREATE);
+        db.execSQL(MultiplayerGameDao.INDEX_CREATE);
         Log.d(TAG, "Ending the Indexes creation");
     }
 

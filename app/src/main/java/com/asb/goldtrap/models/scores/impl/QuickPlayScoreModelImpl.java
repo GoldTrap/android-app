@@ -14,7 +14,7 @@ public class QuickPlayScoreModelImpl extends AbstractScoreModelImpl {
     }
 
     @Override
-    public void updateScore(String levelCode, Score score) {
+    public void updateScore(String levelCode, Score score, String matchId) {
         this.doTheScoreUpdate(score);
         this.doTheGoodieUpdate(score);
     }

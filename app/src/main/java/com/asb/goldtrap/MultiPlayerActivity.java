@@ -3,6 +3,7 @@ package com.asb.goldtrap;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,10 @@ import com.asb.goldtrap.fragments.multiplayer.MultiPlayerMenuFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
+import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
+import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
+import com.asb.goldtrap.models.scores.ScoreModel;
+import com.asb.goldtrap.models.scores.impl.MultiplayerScoreModelImpl;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.snapshots.GameAndLevelSnapshot;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
@@ -77,6 +82,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private Gson gson;
     private GameAndLevelSnapshot gameAndLevelSnapshot;
     private Sharer sharer;
+    private ScoreModel scoreModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +93,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         setContentView(R.layout.activity_multi_player);
         gson = new Gson();
         sharer = new SharerImpl();
+        scoreModel = new MultiplayerScoreModelImpl(getApplicationContext());
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -186,9 +193,9 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     @Override
-    public void gameOver(GameAndLevelSnapshot gameAndLevel) {
+    public void gameOver(final GameAndLevelSnapshot gameAndLevel) {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = tbm.getParticipantId(playerId);
+        final String myParticipantId = tbm.getParticipantId(playerId);
         gameAndLevelSnapshot = gameAndLevel;
         gameAndLevel.setLastPlayerId(myParticipantId);
         Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, tbm.getMatchId(),
@@ -421,10 +428,11 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     private void updateFragment() {
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = tbm.getParticipantId(playerId);
+        final String myParticipantId = tbm.getParticipantId(playerId);
         MultiPlayerGameFragment fragment =
                 (MultiPlayerGameFragment) getSupportFragmentManager().findFragmentByTag(
                         MultiPlayerGameFragment.TAG);
+        updateScore(myParticipantId);
         if (null != fragment) {
             fragment.updateGame(gameAndLevelSnapshot, myParticipantId,
                     tbm.getTurnStatus(), tbm.getStatus());
@@ -438,6 +446,23 @@ public class MultiPlayerActivity extends AppCompatActivity
                             MultiPlayerGameFragment.TAG)
                     .addToBackStack(MultiPlayerGameFragment.TAG)
                     .commit();
+        }
+    }
+
+    private void updateScore(final String myParticipantId) {
+        if (tbm.getStatus() == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    Log.d(TAG, "Game over. Let's update the score");
+                    DotsGameSnapshot snapshot =
+                            gameAndLevelSnapshot.getSnapshotMap().get(myParticipantId);
+                    ScoreComputer scoreComputer = new ScoreComputerImpl(snapshot);
+                    scoreComputer.computeScoreWithResults();
+                    scoreModel.updateScore(null, snapshot.getScore(), tbm.getMatchId());
+                    return null;
+                }
+            }.execute();
         }
     }
 

@@ -58,7 +58,7 @@ public abstract class AbstractScoreModelImpl implements ScoreModel {
     }
 
     @Override
-    public void updateScore(String levelCode, Score score) {
+    public void updateScore(String levelCode, Score score, String matchId) {
         this.doTheLevelUpdate(levelCode, score);
         this.doTheScoreUpdate(score);
         this.doTheGoodieUpdate(score);

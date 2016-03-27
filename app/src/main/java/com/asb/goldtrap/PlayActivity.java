@@ -142,7 +142,7 @@ public class PlayActivity extends AppCompatActivity
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                scoreModel.updateScore(levelCode, score);
+                scoreModel.updateScore(levelCode, score, null);
                 return null;
             }
         }.execute();

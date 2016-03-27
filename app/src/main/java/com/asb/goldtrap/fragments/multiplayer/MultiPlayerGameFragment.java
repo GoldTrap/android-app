@@ -166,7 +166,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
             }
         });
         gameCompleteDotBoard.setDrawingCacheEnabled(true);
-        gameCompleteDotBoard.setDrawingCacheBackgroundColor(Color.LTGRAY);
+        gameCompleteDotBoard.setDrawingCacheBackgroundColor(Color.parseColor("#FEFEFE"));
         gameCompleteDotBoard.setmListener(new GameCompleteDotBoard.Listener() {
             @Override
             public void animationComplete() {
