@@ -41,6 +41,9 @@ public class ResultComputer implements ScoreComponentsComputer {
             else if ((totalCellsOccupied == (rows * cols) / 2)) {
                 score.setResult(Result.DRAW);
             }
+            else {
+                score.setResult(Result.LOST);
+            }
         }
         else {
             score.setResult(Result.LOST);

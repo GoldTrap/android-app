@@ -22,6 +22,8 @@ import com.asb.goldtrap.models.file.ImageHelper;
 import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
 import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
+import com.asb.goldtrap.models.sound.SoundHelper;
+import com.asb.goldtrap.models.sound.impl.SoundHelperImpl;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.models.states.impl.PlayerTurn;
@@ -57,6 +59,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private ScoreComputer scoreComputer;
     private Gson gson;
     private String levelCode;
+    private SoundHelper soundHelper;
 
     /**
      * Create an instance of GameFragment
@@ -123,6 +126,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
             public void onLineClick(int row, int col, LineType lineType) {
                 if (conductor.getState() instanceof PlayerTurn) {
                     if (conductor.playMyTurn(lineType, row, col)) {
+                        soundHelper
+                                .playSound(conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT));
                         dotBoard.requestRedraw();
                         updateScoreBoard();
                     }
@@ -182,6 +187,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        soundHelper = SoundHelperImpl.instance(getContext());
         Bundle args = getArguments();
         imageHelper = new ImageHelperImpl();
         int resourceId = args.getInt(LEVEL_RESOURCE);
