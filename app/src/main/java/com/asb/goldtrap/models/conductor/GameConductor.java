@@ -22,6 +22,8 @@ public interface GameConductor {
 
     void flipBoard();
 
+    void skipTurn();
+
     boolean playMyTurn();
 
     boolean playMyTurn(LineType lineType, int row, int col);

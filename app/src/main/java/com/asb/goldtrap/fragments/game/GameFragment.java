@@ -48,6 +48,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private TextView scoreBoard;
     private Button flip;
     private Button extraChance;
+    private Button skip;
     private OnFragmentInteractionListener mListener;
     private GameConductor conductor;
     private Handler handler = new Handler();
@@ -79,7 +80,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_quick_play_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_play_game, container, false);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
         gameCompleteDotBoard =
                 (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
@@ -103,6 +104,15 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
             @Override
             public void onClick(View v) {
                 conductor.setExtraChance(true);
+            }
+        });
+
+        skip = (Button) view.findViewById(R.id.skip);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                conductor.skipTurn();
+                dotBoard.requestRedraw();
             }
         });
 

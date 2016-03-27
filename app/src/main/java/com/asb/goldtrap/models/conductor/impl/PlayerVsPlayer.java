@@ -100,6 +100,11 @@ public class PlayerVsPlayer implements GameConductor {
     }
 
     @Override
+    public void skipTurn() {
+        this.setState(this.getOtherPlayerState());
+    }
+
+    @Override
     public boolean playMyTurn() {
         return false;
     }

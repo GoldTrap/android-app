@@ -51,6 +51,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private TextView scoreBoard;
     private Button flip;
     private Button extraChance;
+    private Button skip;
     private Handler handler = new Handler();
     private ImageHelper imageHelper;
     private ScoreComputer scoreComputer;
@@ -137,6 +138,15 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
             @Override
             public void onClick(View v) {
                 conductor.setExtraChance(true);
+            }
+        });
+
+        skip = (Button) view.findViewById(R.id.skip);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                conductor.skipTurn();
+                dotBoard.requestRedraw();
             }
         });
 

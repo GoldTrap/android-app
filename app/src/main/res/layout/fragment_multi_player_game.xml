@@ -4,12 +4,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:background="@drawable/fragment_bg"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/fragment_bg"
                 tools:context="com.asb.games.goldrush.fragment.GameFragment">
 
     <TextView
@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/cheat_options"
         android:layout_below="@+id/score_board"
-        android:elevation="2dp"
         android:layout_centerHorizontal="true"
+        android:elevation="2dp"
         android:padding="@dimen/dot_board_padding">
 
         <com.asb.goldtrap.views.GameCompleteDotBoard
@@ -67,6 +67,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/flip"/>
+
+        <Button
+            android:id="@+id/skip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/skip"/>
     </LinearLayout>
 
 </RelativeLayout>

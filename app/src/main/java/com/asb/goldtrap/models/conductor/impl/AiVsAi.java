@@ -86,6 +86,11 @@ public class AiVsAi implements GameConductor {
         state.flipBoard();
     }
 
+    @Override
+    public void skipTurn() {
+        this.setState(this.getOtherPlayerState());
+    }
+
     public boolean playMyTurn() {
         boolean played = false;
         if (state instanceof SecondaryPlayerTurn && state == firstPlayerState) {
