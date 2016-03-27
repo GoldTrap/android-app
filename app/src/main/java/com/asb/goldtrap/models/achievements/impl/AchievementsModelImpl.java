@@ -40,14 +40,14 @@ public class AchievementsModelImpl implements AchievementsModel {
 
     @Override
     public void updateAchievements(GoogleApiClient client, Score score) {
-        com.asb.goldtrap.models.eo.Score updatedScore = scoreDao.getScore(ScoreDao.TOTAL);
+        com.asb.goldtrap.models.eo.Score updatedScore = scoreDao.getScore(ScoreDao.CURRENT);
         Games.Leaderboards.submitScore(client, context.getString(R.string.leaderboard_points),
                 updatedScore.getValue());
         Log.d(TAG, "Submitted the score");
         for (Map.Entry<GoodiesState, List<Goodie>> goodieEntry :
                 score.getGoodies().entrySet()) {
             com.asb.goldtrap.models.eo.Goodie totalGoodie =
-                    goodieDao.getGoodie(GoodieDao.TOTAL, goodieEntry.getKey());
+                    goodieDao.getGoodie(GoodieDao.CURRENT, goodieEntry.getKey());
             Games.Leaderboards.submitScore(client, getLeaderboard(goodieEntry.getKey()),
                     totalGoodie.getCount());
             Log.d(TAG, "Submitted the achievement: " + goodieEntry.getKey());
