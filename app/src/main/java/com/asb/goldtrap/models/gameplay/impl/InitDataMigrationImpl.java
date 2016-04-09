@@ -5,13 +5,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.asb.goldtrap.models.dao.BoosterDao;
 import com.asb.goldtrap.models.dao.GoodieDao;
 import com.asb.goldtrap.models.dao.LevelDao;
 import com.asb.goldtrap.models.dao.PropertiesDao;
 import com.asb.goldtrap.models.dao.ScoreDao;
+import com.asb.goldtrap.models.dao.impl.BoosterDaoImpl;
 import com.asb.goldtrap.models.dao.impl.GoodieDaoImpl;
 import com.asb.goldtrap.models.dao.impl.LevelDaoImpl;
 import com.asb.goldtrap.models.dao.impl.ScoreDaoImpl;
+import com.asb.goldtrap.models.eo.Booster;
+import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Goodie;
 import com.asb.goldtrap.models.eo.Score;
 import com.asb.goldtrap.models.eo.migration.Level;
@@ -31,6 +35,7 @@ public class InitDataMigrationImpl implements Migration {
     private final LevelDao levelDao;
     private final ScoreDao scoreDao;
     private final GoodieDao goodieDao;
+    private final BoosterDao boosterDao;
 
     public InitDataMigrationImpl(Context context, SQLiteOpenHelper dbHelper,
                                  PropertiesDao propertiesDao) {
@@ -38,6 +43,7 @@ public class InitDataMigrationImpl implements Migration {
         this.levelDao = new LevelDaoImpl(dbHelper.getWritableDatabase());
         this.scoreDao = new ScoreDaoImpl(dbHelper.getWritableDatabase());
         this.goodieDao = new GoodieDaoImpl(dbHelper.getWritableDatabase());
+        this.boosterDao = new BoosterDaoImpl(dbHelper.getWritableDatabase());
     }
 
     @Override
@@ -50,6 +56,7 @@ public class InitDataMigrationImpl implements Migration {
         unlockFirstLevelOfFirstEpisode();
         setUpScores();
         setUpGoodies();
+        setUpBoosters();
         propertiesDao.setValue(DATA_MIGRATION_COMPLETE, "YES");
     }
 
@@ -75,19 +82,25 @@ public class InitDataMigrationImpl implements Migration {
 
     private void setUpGoodies() {
         List<Goodie> goodies = new ArrayList<>();
+        Goodie.Builder goodieBuilder = Goodie.builder().setCount(0L);
         for (GoodiesState goodiesState : GoodiesState.values()) {
-            goodies.add(Goodie.builder()
-                    .setGoodiesState(goodiesState)
-                    .setCount(0L)
-                    .setType(GoodieDao.CURRENT)
-                    .build());
-            goodies.add(Goodie.builder()
-                    .setGoodiesState(goodiesState)
-                    .setCount(0L)
-                    .setType(GoodieDao.TOTAL)
-                    .build());
+            goodieBuilder.setGoodiesState(goodiesState);
+            goodies.add(goodieBuilder.setType(GoodieDao.CURRENT).build());
+            goodies.add(goodieBuilder.setType(GoodieDao.TOTAL).build());
         }
         goodieDao.saveGoodies(goodies);
         Log.d(TAG, "Set up the goodies");
+    }
+
+    private void setUpBoosters() {
+        Booster.Builder boosterBuilder = Booster.builder().setCount(1L);
+        List<Booster> boosters = new ArrayList<>();
+        for (BoosterType boosterType : BoosterType.values()) {
+            boosterBuilder.setBoosterType(boosterType);
+            boosters.add(boosterBuilder.setType(BoosterDao.CURRENT).build());
+            boosters.add(boosterBuilder.setType(BoosterDao.TOTAL).build());
+        }
+        boosterDao.saveBoosters(boosters);
+        Log.d(TAG, "Set up the boosters");
     }
 }
