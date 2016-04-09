@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final int LEADERBOARD_REQUEST_CODE = 15151;
+    public static final int ACHIEVEMENTS_REQUEST_CODE = 16161;
 
     private static int RC_SIGN_IN = 9001;
     private boolean mResolvingConnectionFailure = false;
@@ -197,6 +198,12 @@ public class MainActivity extends AppCompatActivity implements
     public void leaderboards() {
         startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
                 LEADERBOARD_REQUEST_CODE);
+    }
+
+    @Override
+    public void achievements() {
+        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                ACHIEVEMENTS_REQUEST_CODE);
     }
 
     @Override

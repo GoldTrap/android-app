@@ -101,7 +101,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         sharer = new SharerImpl();
         scoreModel = new MultiplayerScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
-        achievementsModel = new MultiplayerAchievementsModel();
+        achievementsModel = new MultiplayerAchievementsModel(getApplicationContext());
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)

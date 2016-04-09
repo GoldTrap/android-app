@@ -62,7 +62,7 @@ public class PlayActivity extends AppCompatActivity
         sharer = new SharerImpl();
         scoreModel = new PlayScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
-        achievementsModel = new PlayAchievementsModel();
+        achievementsModel = new PlayAchievementsModel(getApplicationContext());
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)

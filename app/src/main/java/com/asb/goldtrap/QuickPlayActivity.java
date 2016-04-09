@@ -66,7 +66,7 @@ public class QuickPlayActivity extends AppCompatActivity
         sharer = new SharerImpl();
         scoreModel = new QuickPlayScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
-        achievementsModel = new QuickPlayAchievementsModel();
+        achievementsModel = new QuickPlayAchievementsModel(getApplicationContext());
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
