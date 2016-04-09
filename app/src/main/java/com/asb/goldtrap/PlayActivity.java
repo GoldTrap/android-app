@@ -15,6 +15,8 @@ import com.asb.goldtrap.fragments.play.BrowseLessonsFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
+import com.asb.goldtrap.models.achievements.AchievementsModel;
+import com.asb.goldtrap.models.achievements.impl.PlayAchievementsModel;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
@@ -51,6 +53,7 @@ public class PlayActivity extends AppCompatActivity
     private Sharer sharer;
     private ScoreModel scoreModel;
     private LeaderboardsModel leaderboardsModel;
+    private AchievementsModel achievementsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class PlayActivity extends AppCompatActivity
         sharer = new SharerImpl();
         scoreModel = new PlayScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
+        achievementsModel = new PlayAchievementsModel();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -167,6 +171,7 @@ public class PlayActivity extends AppCompatActivity
             protected Void doInBackground(Void... params) {
                 scoreModel.updateScore(levelCode, score, null);
                 leaderboardsModel.updateLeaderboards(mGoogleApiClient, score);
+                achievementsModel.updateAchievements(mGoogleApiClient, score);
                 return null;
             }
         }.execute();

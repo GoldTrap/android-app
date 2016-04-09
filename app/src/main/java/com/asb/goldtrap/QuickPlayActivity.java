@@ -15,6 +15,8 @@ import com.asb.goldtrap.fragments.game.GameFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
+import com.asb.goldtrap.models.achievements.AchievementsModel;
+import com.asb.goldtrap.models.achievements.impl.QuickPlayAchievementsModel;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
 import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.Score;
@@ -50,6 +52,7 @@ public class QuickPlayActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
     private ScoreModel scoreModel;
     private LeaderboardsModel leaderboardsModel;
+    private AchievementsModel achievementsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class QuickPlayActivity extends AppCompatActivity
         sharer = new SharerImpl();
         scoreModel = new QuickPlayScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
+        achievementsModel = new QuickPlayAchievementsModel();
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
@@ -167,6 +171,7 @@ public class QuickPlayActivity extends AppCompatActivity
             protected Void doInBackground(Void... params) {
                 scoreModel.updateScore(levelCode, score, null);
                 leaderboardsModel.updateLeaderboards(mGoogleApiClient, score);
+                achievementsModel.updateAchievements(mGoogleApiClient, score);
                 return null;
             }
         }.execute();
