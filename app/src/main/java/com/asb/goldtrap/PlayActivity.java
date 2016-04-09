@@ -15,10 +15,10 @@ import com.asb.goldtrap.fragments.play.BrowseLessonsFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
-import com.asb.goldtrap.models.achievements.AchievementsModel;
-import com.asb.goldtrap.models.achievements.impl.AchievementsModelImpl;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
+import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
+import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.PlayScoreModelImpl;
@@ -50,7 +50,7 @@ public class PlayActivity extends AppCompatActivity
     private static final int REQUEST_INVITE = 16001;
     private Sharer sharer;
     private ScoreModel scoreModel;
-    private AchievementsModel achievementsModel;
+    private LeaderboardsModel leaderboardsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class PlayActivity extends AppCompatActivity
         setContentView(R.layout.activity_play);
         sharer = new SharerImpl();
         scoreModel = new PlayScoreModelImpl(getApplicationContext());
-        achievementsModel = new AchievementsModelImpl(getApplicationContext());
+        leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -166,7 +166,7 @@ public class PlayActivity extends AppCompatActivity
             @Override
             protected Void doInBackground(Void... params) {
                 scoreModel.updateScore(levelCode, score, null);
-                achievementsModel.updateAchievements(mGoogleApiClient, score);
+                leaderboardsModel.updateLeaderboards(mGoogleApiClient, score);
                 return null;
             }
         }.execute();

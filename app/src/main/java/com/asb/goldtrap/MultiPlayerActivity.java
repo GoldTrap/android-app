@@ -16,10 +16,10 @@ import android.view.ViewGroup;
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerGameFragment;
 import com.asb.goldtrap.fragments.multiplayer.MultiPlayerMenuFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
-import com.asb.goldtrap.models.achievements.AchievementsModel;
-import com.asb.goldtrap.models.achievements.impl.AchievementsModelImpl;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
+import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
+import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
 import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
 import com.asb.goldtrap.models.scores.ScoreModel;
@@ -85,7 +85,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private GameAndLevelSnapshot gameAndLevelSnapshot;
     private Sharer sharer;
     private ScoreModel scoreModel;
-    private AchievementsModel achievementsModel;
+    private LeaderboardsModel leaderboardsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         gson = new Gson();
         sharer = new SharerImpl();
         scoreModel = new MultiplayerScoreModelImpl(getApplicationContext());
-        achievementsModel = new AchievementsModelImpl(getApplicationContext());
+        leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -464,7 +464,7 @@ public class MultiPlayerActivity extends AppCompatActivity
                     ScoreComputer scoreComputer = new ScoreComputerImpl(snapshot);
                     scoreComputer.computeScoreWithResults();
                     scoreModel.updateScore(null, snapshot.getScore(), tbm.getMatchId());
-                    achievementsModel.updateAchievements(mGoogleApiClient, snapshot.getScore());
+                    leaderboardsModel.updateLeaderboards(mGoogleApiClient, snapshot.getScore());
                     return null;
                 }
             }.execute();

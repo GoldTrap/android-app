@@ -15,8 +15,8 @@ import com.asb.goldtrap.fragments.game.GameFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
-import com.asb.goldtrap.models.achievements.AchievementsModel;
-import com.asb.goldtrap.models.achievements.impl.AchievementsModelImpl;
+import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
+import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.QuickPlayScoreModelImpl;
@@ -49,7 +49,7 @@ public class QuickPlayActivity extends AppCompatActivity
     private Sharer sharer;
     private GoogleApiClient mGoogleApiClient;
     private ScoreModel scoreModel;
-    private AchievementsModel achievementsModel;
+    private LeaderboardsModel leaderboardsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class QuickPlayActivity extends AppCompatActivity
                 .build();
         sharer = new SharerImpl();
         scoreModel = new QuickPlayScoreModelImpl(getApplicationContext());
-        achievementsModel = new AchievementsModelImpl(getApplicationContext());
+        leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         setContentView(R.layout.activity_quick_play);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
@@ -166,7 +166,7 @@ public class QuickPlayActivity extends AppCompatActivity
             @Override
             protected Void doInBackground(Void... params) {
                 scoreModel.updateScore(levelCode, score, null);
-                achievementsModel.updateAchievements(mGoogleApiClient, score);
+                leaderboardsModel.updateLeaderboards(mGoogleApiClient, score);
                 return null;
             }
         }.execute();
