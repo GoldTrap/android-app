@@ -663,6 +663,11 @@ public class MultiPlayerActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public GoogleApiClient getGoogleApiClient() {
+        return mGoogleApiClient;
+    }
+
     public void showSpinner() {
         findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
     }

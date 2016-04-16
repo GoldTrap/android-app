@@ -14,8 +14,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.asb.goldtrap.R;
+import com.asb.goldtrap.models.boosters.BoosterModel;
+import com.asb.goldtrap.models.boosters.impl.BoosterModelImpl;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.PlayerVsPlayer;
+import com.asb.goldtrap.models.eo.Booster;
+import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.file.ImageHelper;
 import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
@@ -30,8 +34,11 @@ import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.gson.Gson;
+
+import java.util.Map;
 
 /**
  * A MultiPlayerGame {@link Fragment} subclass.
@@ -60,6 +67,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private int status;
     private int turnStatus;
     private SoundHelper soundHelper;
+    private BoosterModel boosterModel;
+    private Map<BoosterType, Booster> boosterMap;
 
 
     public MultiPlayerGameFragment() {
@@ -91,6 +100,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         soundHelper = SoundHelperImpl.instance(getContext());
+        boosterModel = new BoosterModelImpl(getContext());
+        boosterMap = boosterModel.getBoostersState();
         imageHelper = new ImageHelperImpl();
         gson = new Gson();
         myPlayerId = getArguments().getString(MY_PLAYER_ID);
@@ -128,31 +139,10 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         gameCompleteDotBoard.setVisibility(View.INVISIBLE);
         updateGameBoard();
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
-        flip = (Button) view.findViewById(R.id.flip);
-        flip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conductor.flipBoard();
-                dotBoard.requestRedraw();
-            }
-        });
 
-        extraChance = (Button) view.findViewById(R.id.extra_chance);
-        extraChance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conductor.setExtraChance(true);
-            }
-        });
-
-        skip = (Button) view.findViewById(R.id.skip);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conductor.skipTurn();
-                dotBoard.requestRedraw();
-            }
-        });
+        handleFlip(view);
+        handleExtraChance(view);
+        handleSkip(view);
 
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
 
@@ -202,6 +192,52 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         updateScoreBoard();
         selectBoardToDisplay();
         return view;
+    }
+
+    private void handleSkip(View view) {
+        skip = (Button) view.findViewById(R.id.skip);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (boosterMap.get(BoosterType.SKIP).getCount() > 0) {
+                    conductor.skipTurn();
+                    dotBoard.requestRedraw();
+                    boosterMap.put(BoosterType.SKIP,
+                            boosterModel.consumeBooster(mListener.getGoogleApiClient(),
+                                    BoosterType.SKIP));
+                }
+            }
+        });
+    }
+
+    private void handleExtraChance(View view) {
+        extraChance = (Button) view.findViewById(R.id.extra_chance);
+        extraChance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (boosterMap.get(BoosterType.PLUS_ONE).getCount() > 0) {
+                    conductor.setExtraChance(true);
+                    boosterMap.put(BoosterType.PLUS_ONE,
+                            boosterModel.consumeBooster(mListener.getGoogleApiClient(),
+                                    BoosterType.PLUS_ONE));
+                }
+            }
+        });
+    }
+
+    private void handleFlip(View view) {
+        flip = (Button) view.findViewById(R.id.flip);
+        flip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (boosterMap.get(BoosterType.FLIP).getCount() > 0) {
+                    conductor.flipBoard();
+                    dotBoard.requestRedraw();
+                    boosterMap.put(BoosterType.FLIP, boosterModel
+                            .consumeBooster(mListener.getGoogleApiClient(), BoosterType.FLIP));
+                }
+            }
+        });
     }
 
     private void selectBoardToDisplay() {
@@ -261,6 +297,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     }
 
     public interface OnFragmentInteractionListener {
+        GoogleApiClient getGoogleApiClient();
+
         void onMyTurnComplete(GameAndLevelSnapshot gameAndLevelSnapshot);
 
         void gameOver(GameAndLevelSnapshot gameAndLevel);

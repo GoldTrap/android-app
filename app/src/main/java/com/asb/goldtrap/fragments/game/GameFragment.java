@@ -35,6 +35,7 @@ import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -170,7 +171,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                     conductor.skipTurn();
                     dotBoard.requestRedraw();
                     boosterMap.put(BoosterType.SKIP,
-                            boosterModel.consumeBooster(BoosterType.SKIP));
+                            boosterModel.consumeBooster(mListener.getGoogleApiClient(),
+                                    BoosterType.SKIP));
                 }
             }
         });
@@ -184,7 +186,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                 if (boosterMap.get(BoosterType.PLUS_ONE).getCount() > 0) {
                     conductor.setExtraChance(true);
                     boosterMap.put(BoosterType.PLUS_ONE,
-                            boosterModel.consumeBooster(BoosterType.PLUS_ONE));
+                            boosterModel.consumeBooster(mListener.getGoogleApiClient(),
+                                    BoosterType.PLUS_ONE));
                 }
             }
         });
@@ -198,7 +201,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                 if (boosterMap.get(BoosterType.FLIP).getCount() > 0) {
                     conductor.flipBoard();
                     dotBoard.requestRedraw();
-                    boosterMap.put(BoosterType.FLIP, boosterModel.consumeBooster(BoosterType.FLIP));
+                    boosterMap.put(BoosterType.FLIP, boosterModel
+                            .consumeBooster(mListener.getGoogleApiClient(), BoosterType.FLIP));
                 }
             }
         });
@@ -266,6 +270,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     }
 
     public interface OnFragmentInteractionListener {
+        GoogleApiClient getGoogleApiClient();
+
         void gameOver(String levelCode, String snapshot, Uri gamePreviewUri);
     }
 

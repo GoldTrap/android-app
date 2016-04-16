@@ -2,6 +2,7 @@ package com.asb.goldtrap.models.boosters.impl;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.boosters.BoosterModel;
@@ -14,6 +15,8 @@ import com.asb.goldtrap.models.eo.Booster;
 import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Goodie;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -30,6 +33,7 @@ import java.util.Map;
  */
 public class BoosterModelImpl implements BoosterModel {
 
+    private static final String TAG = BoosterModelImpl.class.getSimpleName();
     private Context context;
     private BoosterDao boosterDao;
     private GoodieDao goodieDao;
@@ -59,13 +63,34 @@ public class BoosterModelImpl implements BoosterModel {
     }
 
     @Override
-    public Booster consumeBooster(BoosterType boosterType) {
+    public Booster consumeBooster(GoogleApiClient client, BoosterType boosterType) {
         Booster booster = boosterDao.getBooster(BoosterDao.CURRENT, boosterType);
         if (booster.getCount() > 0) {
             booster.setCount(booster.getCount() - 1);
             boosterDao.saveBooster(booster);
+            handleAchievements(client, boosterType);
         }
         return booster;
+    }
+
+    private void handleAchievements(GoogleApiClient client, BoosterType boosterType) {
+        switch (boosterType) {
+            case FLIP:
+                Games.Achievements
+                        .unlock(client, context.getString(R.string.achievement_table_turner));
+                Log.d(TAG, "Table Turner");
+                break;
+            case PLUS_ONE:
+                Games.Achievements
+                        .unlock(client, context.getString(R.string.achievement_plus_oner));
+                Log.d(TAG, "Table Turner");
+                break;
+            case SKIP:
+                Games.Achievements
+                        .unlock(client, context.getString(R.string.achievement_skipper));
+                Log.d(TAG, "Table Turner");
+                break;
+        }
     }
 
     @Override
