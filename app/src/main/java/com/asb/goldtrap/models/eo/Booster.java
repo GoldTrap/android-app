@@ -33,6 +33,10 @@ public class Booster {
         return count;
     }
 
+    public void setCount(long count) {
+        this.count = count;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
