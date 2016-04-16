@@ -15,8 +15,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.asb.goldtrap.R;
+import com.asb.goldtrap.models.boosters.BoosterModel;
+import com.asb.goldtrap.models.boosters.impl.BoosterModelImpl;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.PlayerVsAi;
+import com.asb.goldtrap.models.eo.Booster;
+import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.file.ImageHelper;
 import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
@@ -36,6 +40,7 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 /**
  * GameFragment
@@ -59,6 +64,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private ScoreComputer scoreComputer;
     private Gson gson;
     private String levelCode;
+    private BoosterModel boosterModel;
+    private Map<BoosterType, Booster> boosterMap;
     private SoundHelper soundHelper;
 
     /**
@@ -93,31 +100,10 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         gameCompleteDotBoard
                 .setGameSnapShot(conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT));
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
-        flip = (Button) view.findViewById(R.id.flip);
-        flip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conductor.flipBoard();
-                dotBoard.requestRedraw();
-            }
-        });
 
-        extraChance = (Button) view.findViewById(R.id.extra_chance);
-        extraChance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conductor.setExtraChance(true);
-            }
-        });
-
-        skip = (Button) view.findViewById(R.id.skip);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conductor.skipTurn();
-                dotBoard.requestRedraw();
-            }
-        });
+        handleFlip(view);
+        handleExtraChance(view);
+        handleSkip(view);
 
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
 
@@ -163,8 +149,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                     public void run() {
                         mListener
                                 .gameOver(levelCode, gson.toJson(
-                                                conductor.getGameSnapshotMap()
-                                                        .get(PlayerVsAi.DEFAULT)),
+                                        conductor.getGameSnapshotMap()
+                                                .get(PlayerVsAi.DEFAULT)),
                                         gamePreviewUri);
                     }
                 }, 1000);
@@ -173,6 +159,49 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         });
         updateScoreBoard();
         return view;
+    }
+
+    private void handleSkip(View view) {
+        skip = (Button) view.findViewById(R.id.skip);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (boosterMap.get(BoosterType.SKIP).getCount() > 0) {
+                    conductor.skipTurn();
+                    dotBoard.requestRedraw();
+                    boosterMap.put(BoosterType.SKIP,
+                            boosterModel.consumeBooster(BoosterType.SKIP));
+                }
+            }
+        });
+    }
+
+    private void handleExtraChance(View view) {
+        extraChance = (Button) view.findViewById(R.id.extra_chance);
+        extraChance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (boosterMap.get(BoosterType.PLUS_ONE).getCount() > 0) {
+                    conductor.setExtraChance(true);
+                    boosterMap.put(BoosterType.PLUS_ONE,
+                            boosterModel.consumeBooster(BoosterType.PLUS_ONE));
+                }
+            }
+        });
+    }
+
+    private void handleFlip(View view) {
+        flip = (Button) view.findViewById(R.id.flip);
+        flip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (boosterMap.get(BoosterType.FLIP).getCount() > 0) {
+                    conductor.flipBoard();
+                    dotBoard.requestRedraw();
+                    boosterMap.put(BoosterType.FLIP, boosterModel.consumeBooster(BoosterType.FLIP));
+                }
+            }
+        });
     }
 
     private void updateScoreBoard() {
@@ -190,6 +219,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         soundHelper = SoundHelperImpl.instance(getContext());
         Bundle args = getArguments();
         imageHelper = new ImageHelperImpl();
+        boosterModel = new BoosterModelImpl(getContext());
+        boosterMap = boosterModel.getBoostersState();
         int resourceId = args.getInt(LEVEL_RESOURCE);
         levelCode = args.getString(LEVEL_CODE);
         gson = new Gson();
