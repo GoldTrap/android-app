@@ -114,7 +114,8 @@ class GameHelperUtils {
         Log.w("GameHelper", "**** your project is not yet published).");
         Log.w("GameHelper", "****");
         Log.w("GameHelper", "**** For more information, refer to the troubleshooting guide:");
-        Log.w("GameHelper", "****   http://developers.google.com/games/services/android/troubleshooting");
+        Log.w("GameHelper",
+                "****   http://developers.google.com/games/services/android/troubleshooting");
     }
 
     static String getAppIdFromResource(Context ctx) {
@@ -135,7 +136,8 @@ class GameHelperUtils {
                     ctx.getPackageName(), PackageManager.GET_SIGNATURES).signatures;
             if (sigs.length == 0) {
                 return "ERROR: NO SIGNATURE.";
-            } else if (sigs.length > 1) {
+            }
+            else if (sigs.length > 1) {
                 return "ERROR: MULTIPLE SIGNATURES";
             }
             byte[] digest = MessageDigest.getInstance("SHA1").digest(sigs[0].toByteArray());
@@ -173,9 +175,9 @@ class GameHelperUtils {
         } catch (Exception ex) {
             ex.printStackTrace();
             Log.w(GameHelper.TAG, "*** GameHelper could not found resource id #" + resId + ". " +
-                "This probably happened because you included it as a stand-alone JAR. " +
-                "BaseGameUtils should be compiled as a LIBRARY PROJECT, so that it can access " +
-                "its resources. Using a fallback string.");
+                    "This probably happened because you included it as a stand-alone JAR. " +
+                    "BaseGameUtils should be compiled as a LIBRARY PROJECT, so that it can access " +
+                    "its resources. Using a fallback string.");
             return FALLBACK_STRINGS[whichString];
         }
     }
