@@ -1,20 +1,32 @@
 package com.asb.goldtrap;
 
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.asb.goldtrap.fragments.shoporama.ShopORamaFragment;
+import com.asb.goldtrap.iap.util.IabBroadcastReceiver;
+import com.asb.goldtrap.iap.util.IabHelper;
+import com.asb.goldtrap.iap.util.IabResult;
+import com.asb.goldtrap.iap.util.Key;
 import com.asb.goldtrap.models.eo.Buyable;
 
 public class ShopORamaActivity extends AppCompatActivity
-        implements ShopORamaFragment.OnFragmentInteractionListener {
+        implements IabBroadcastReceiver.IabBroadcastListener,
+        ShopORamaFragment.OnFragmentInteractionListener {
+
+    private static final String TAG = ShopORamaActivity.class.getSimpleName();
+    private IabHelper iabHelper;
+    private IabBroadcastReceiver mBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_orama);
+        setupIAP();
         if (null == getSupportFragmentManager().findFragmentByTag(ShopORamaFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -23,6 +35,33 @@ public class ShopORamaActivity extends AppCompatActivity
                             ShopORamaFragment.TAG)
                     .commit();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBroadcastReceiver != null) {
+            unregisterReceiver(mBroadcastReceiver);
+        }
+        Log.d(TAG, "Destroying helper.");
+        if (iabHelper != null) {
+            iabHelper.disposeWhenFinished();
+            iabHelper = null;
+        }
+    }
+
+    private void setupIAP() {
+        iabHelper = new IabHelper(this, Key.value());
+        iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                Log.d(TAG, "Setup finished.");
+                if (null != iabHelper && result.isSuccess()) {
+                    mBroadcastReceiver = new IabBroadcastReceiver(ShopORamaActivity.this);
+                    IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
+                    registerReceiver(mBroadcastReceiver, broadcastFilter);
+                }
+            }
+        });
     }
 
     @Override
@@ -54,5 +93,10 @@ public class ShopORamaActivity extends AppCompatActivity
                 getWindow().getDecorView().setSystemUiVisibility(uiVisibilityCode);
             }
         }
+    }
+
+    @Override
+    public void receivedBroadcast() {
+
     }
 }
