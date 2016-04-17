@@ -17,4 +17,6 @@ public interface BoosterModel {
     Booster consumeBooster(GoogleApiClient client, BoosterType boosterType);
 
     Booster buyBooster(BoosterType boosterType, GoodiesState goodiesState);
+
+    Booster buyBoosterWithPoints(BoosterType boosterType);
 }

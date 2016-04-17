@@ -2,18 +2,23 @@ package com.asb.goldtrap.models.boosters.impl;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.boosters.BoosterModel;
 import com.asb.goldtrap.models.dao.BoosterDao;
 import com.asb.goldtrap.models.dao.GoodieDao;
+import com.asb.goldtrap.models.dao.ScoreDao;
 import com.asb.goldtrap.models.dao.helper.DBHelper;
 import com.asb.goldtrap.models.dao.impl.BoosterDaoImpl;
 import com.asb.goldtrap.models.dao.impl.GoodieDaoImpl;
+import com.asb.goldtrap.models.dao.impl.ScoreDaoImpl;
 import com.asb.goldtrap.models.eo.Booster;
+import com.asb.goldtrap.models.eo.BoosterExchangeRate;
 import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Goodie;
+import com.asb.goldtrap.models.eo.Score;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -37,17 +42,19 @@ public class BoosterModelImpl implements BoosterModel {
     private Context context;
     private BoosterDao boosterDao;
     private GoodieDao goodieDao;
-    private Map<BoosterType, Map<GoodiesState, Long>> boosterExchangeRates;
+    private ScoreDao scoreDao;
+    private Map<BoosterType, BoosterExchangeRate> boosterExchangeRates;
 
     public BoosterModelImpl(Context context) {
         this.context = context;
         SQLiteOpenHelper dbHelper = DBHelper.getInstance(context);
         boosterDao = new BoosterDaoImpl(dbHelper.getWritableDatabase());
         goodieDao = new GoodieDaoImpl(dbHelper.getWritableDatabase());
+        scoreDao = new ScoreDaoImpl(dbHelper.getWritableDatabase());
         Gson gson = new Gson();
         InputStream inputStream =
                 context.getResources().openRawResource(R.raw.booster_exchange_rates);
-        Type type = new TypeToken<Map<BoosterType, Map<GoodiesState, Long>>>() {
+        Type type = new TypeToken<Map<BoosterType, BoosterExchangeRate>>() {
         }.getType();
         boosterExchangeRates =
                 gson.fromJson(new JsonReader(new InputStreamReader(inputStream)), type);
@@ -96,18 +103,39 @@ public class BoosterModelImpl implements BoosterModel {
     @Override
     public Booster buyBooster(BoosterType boosterType, GoodiesState goodiesState) {
         Booster booster = null;
-        Map<GoodiesState, Long> exchangeRate = this.boosterExchangeRates.get(boosterType);
+        Map<GoodiesState, Long> exchangeRate =
+                this.boosterExchangeRates.get(boosterType).getGoodies();
         Goodie goodie = goodieDao.getGoodie(GoodieDao.CURRENT, goodiesState);
         if (goodie.getCount() >= exchangeRate.get(goodiesState)) {
-            booster = boosterDao.getBooster(BoosterDao.CURRENT, boosterType);
-            booster.setCount(booster.getCount() + 1);
-            boosterDao.saveBooster(booster);
-            Booster totalbooster = boosterDao.getBooster(BoosterDao.TOTAL, boosterType);
-            totalbooster.setCount(booster.getCount() + 1);
-            boosterDao.saveBooster(totalbooster);
+            booster = buyBooster(boosterType);
             goodie.setCount(goodie.getCount() - exchangeRate.get(goodiesState));
             goodieDao.updateGoodie(goodie);
         }
+        return booster;
+    }
+
+    @Override
+    public Booster buyBoosterWithPoints(BoosterType boosterType) {
+        Booster booster = null;
+        long pointsExchangeRate = this.boosterExchangeRates.get(boosterType).getPoints();
+        Score score = scoreDao.getScore(ScoreDao.CURRENT);
+        if (score.getValue() >= pointsExchangeRate) {
+            booster = buyBooster(boosterType);
+            score.setValue(score.getValue() - pointsExchangeRate);
+            scoreDao.updateScore(score);
+        }
+        return booster;
+    }
+
+    @NonNull
+    private Booster buyBooster(BoosterType boosterType) {
+        Booster booster;
+        booster = boosterDao.getBooster(BoosterDao.CURRENT, boosterType);
+        booster.setCount(booster.getCount() + 1);
+        boosterDao.saveBooster(booster);
+        Booster totalbooster = boosterDao.getBooster(BoosterDao.TOTAL, boosterType);
+        totalbooster.setCount(booster.getCount() + 1);
+        boosterDao.saveBooster(totalbooster);
         return booster;
     }
 }
