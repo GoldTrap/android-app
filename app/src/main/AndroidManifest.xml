@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.asb.goldtrap"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest package="com.asb.goldtrap"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk tools:overrideLibrary="com.google.android.gms.all"/>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-    <uses-sdk tools:overrideLibrary="com.google.android.gms.all"/>
 
     <application
         android:name=".GoldTrapApplication"
@@ -94,7 +93,6 @@
                     android:scheme="asb-apps"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".PlayActivity"
             android:label="@string/title_activity_play"
@@ -136,6 +134,8 @@
                 android:resource="@xml/filepaths"/>
         </provider>
 
+        <activity android:name=".ShopORamaActivity">
+        </activity>
     </application>
 
 </manifest>

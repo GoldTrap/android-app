@@ -195,6 +195,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onStore() {
+        Intent shopORama = new Intent(this, ShopORamaActivity.class);
+        startActivity(shopORama);
+    }
+
+    @Override
     public void leaderboards() {
         startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
                 LEADERBOARD_REQUEST_CODE);

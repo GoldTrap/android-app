@@ -1,0 +1,26 @@
+[
+  {
+    "type": "FLIP",
+    "name": "flip_name",
+    "description": "flip_desc",
+    "image": "flip"
+  },
+  {
+    "type": "PLUS_ONE",
+    "name": "plus_one_name",
+    "description": "plus_one_desc",
+    "image": "plus_one"
+  },
+  {
+    "type": "SKIP",
+    "name": "skip_name",
+    "description": "skip_desc",
+    "image": "skip"
+  },
+  {
+    "type": "DONATE",
+    "name": "donate_name",
+    "description": "donate_desc",
+    "image": "donate"
+  }
+]

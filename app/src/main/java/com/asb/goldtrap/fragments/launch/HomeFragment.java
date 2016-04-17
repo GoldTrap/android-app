@@ -102,6 +102,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
                 mListener.multiPlayerGame();
                 break;
             case STORE:
+                mListener.onStore();
                 break;
             case LEADERBOARDS:
                 mListener.leaderboards();
@@ -146,6 +147,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         void quickPlay();
 
         void multiPlayerGame();
+
+        void onStore();
 
         void leaderboards();
 

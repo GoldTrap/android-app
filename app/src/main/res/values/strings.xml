@@ -57,4 +57,18 @@
     <string name="no_internet">Please enable your internet</string>
     <string name="settings">Settings</string>
     <string name="level">Level %d</string>
+
+    <!-- Buyables -->
+    <string name="flip_name">Get Flips</string>
+    <string name="flip_desc">Flips will help you to interchange the cells occupied by you and the opponent.</string>
+
+    <string name="plus_one_name">Get +1</string>
+    <string name="plus_one_desc">+1s will help you to get an extra chance.</string>
+
+    <string name="skip_name">Get Skips</string>
+    <string name="skip_desc">Skips will help you to skip a turn.</string>
+
+    <string name="donate_name">Donate</string>
+    <string name="donate_desc">If you like this game, please donate to help me maintain this game :).</string>
+
 </resources>
