@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.asb.goldtrap.fragments.game.GameFragment;
 import com.asb.goldtrap.fragments.play.BrowseEpisodesFragment;
-import com.asb.goldtrap.fragments.play.BrowseLessonsFragment;
+import com.asb.goldtrap.fragments.play.BrowseLevelsFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
@@ -38,7 +38,7 @@ public class PlayActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         BrowseEpisodesFragment.OnFragmentInteractionListener,
-        BrowseLessonsFragment.OnFragmentInteractionListener,
+        BrowseLevelsFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener,
         GameFragment.OnFragmentInteractionListener,
         ScoreFragment.OnFragmentInteractionListener,
@@ -71,7 +71,7 @@ public class PlayActivity extends AppCompatActivity
         if (null == getSupportFragmentManager().findFragmentByTag(
                 BrowseEpisodesFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(
-                        BrowseLessonsFragment.TAG) &&
+                        BrowseLevelsFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(
                         TasksDisplayFragment.TAG)) {
             browseGames();
@@ -118,9 +118,9 @@ public class PlayActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
-                        BrowseLessonsFragment.newInstance(episode.getCode(), episode.getName()),
-                        BrowseLessonsFragment.TAG)
-                .addToBackStack(BrowseLessonsFragment.TAG)
+                        BrowseLevelsFragment.newInstance(episode.getCode(), episode.getName()),
+                        BrowseLevelsFragment.TAG)
+                .addToBackStack(BrowseLevelsFragment.TAG)
                 .commit();
     }
 

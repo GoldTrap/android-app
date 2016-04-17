@@ -9,6 +9,12 @@
     <dimen name="loading_app_name">20dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="level_size">64dp</dimen>
+    <dimen name="home_menu_image_margin">16dp</dimen>
+    <dimen name="episodes_image_margin">16dp</dimen>
+    <dimen name="levels_image_margin">16dp</dimen>
     <dimen name="buyables_image_margin">16dp</dimen>
     <dimen name="buyables_text_left_margin">16dp</dimen>
+    <dimen name="home_menu_card_margin">8dp</dimen>
+    <dimen name="level_card_margin">8dp</dimen>
+    <dimen name="episodes_card_margin">8dp</dimen>
 </resources>

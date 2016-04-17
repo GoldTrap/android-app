@@ -20,17 +20,17 @@ import com.asb.goldtrap.spansize.LevelSpanSizeLoopkup;
 /**
  * Browse Lessons Fragment
  */
-public class BrowseLessonsFragment extends Fragment implements LevelModel.Listener {
+public class BrowseLevelsFragment extends Fragment implements LevelModel.Listener {
     private static final String EPISODE_CODE = "episodeCode";
     public static final String NAME = "NAME";
     private String episodeCode;
     private String name;
-    public static String TAG = BrowseLessonsFragment.class.getSimpleName();
+    public static String TAG = BrowseLevelsFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private LevelModel levelModel;
     private RecyclerView.Adapter adapter;
 
-    public BrowseLessonsFragment() {
+    public BrowseLevelsFragment() {
     }
 
     /**
@@ -38,10 +38,10 @@ public class BrowseLessonsFragment extends Fragment implements LevelModel.Listen
      *
      * @param episodeCode Episode Code.
      * @param name
-     * @return A new instance of fragment BrowseLessonsFragment.
+     * @return A new instance of fragment BrowseLevelsFragment.
      */
-    public static BrowseLessonsFragment newInstance(String episodeCode, String name) {
-        BrowseLessonsFragment fragment = new BrowseLessonsFragment();
+    public static BrowseLevelsFragment newInstance(String episodeCode, String name) {
+        BrowseLevelsFragment fragment = new BrowseLevelsFragment();
         Bundle args = new Bundle();
         args.putString(EPISODE_CODE, episodeCode);
         args.putString(NAME, name);
@@ -64,7 +64,7 @@ public class BrowseLessonsFragment extends Fragment implements LevelModel.Listen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_browse_lessons, container, false);
+        View view = inflater.inflate(R.layout.fragment_browse_levels, container, false);
         TextView header = (TextView) view.findViewById(R.id.header);
         header.setText(getResources().getIdentifier(name, "string", getContext().getPackageName()));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 9);
