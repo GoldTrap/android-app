@@ -9,4 +9,6 @@
     <dimen name="loading_app_name">20dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="level_size">64dp</dimen>
+    <dimen name="buyables_image_margin">16dp</dimen>
+    <dimen name="buyables_text_left_margin">16dp</dimen>
 </resources>
