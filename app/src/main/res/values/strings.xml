@@ -73,10 +73,13 @@
     <string name="donate_desc">If you like this game, please donate to help me maintain this game :).</string>
 
     <string name="buy_item">Buy %s</string>
+    <string name="buy_item_desc">Buy %s in Google Play</string>
     <string name="buy_button">Buy</string>
-    <string name="trade_points">Trade with points</string>
+    <string name="trade_points">Trade</string>
+    <string name="trade_points_desc">Trade for %d points</string>
     <string name="trade_button">Trade</string>
     <string name="exchange_goodie">Exchange with %s</string>
+    <string name="exchange_goodie_desc">Exchange for %s</string>
     <string name="exchange_button">Exchange</string>
 
 </resources>

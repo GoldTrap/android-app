@@ -23,4 +23,5 @@
     <dimen name="home_menu_card_margin">8dp</dimen>
     <dimen name="level_card_margin">8dp</dimen>
     <dimen name="episodes_card_margin">8dp</dimen>
+    <dimen name="checkout_padding">8dp</dimen>
 </resources>

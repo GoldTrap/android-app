@@ -22,51 +22,87 @@
 
     <LinearLayout
         android:id="@+id/exchange"
-        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
         android:orientation="vertical">
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/checkout_padding"
+            android:paddingTop="@dimen/checkout_padding">
 
-            <TextView
-                android:id="@+id/buy_item"
+            <LinearLayout
+                android:id="@+id/buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="@string/buy_item"
-                app:layout_widthPercent="70%"/>
+                android:orientation="vertical"
+                app:layout_widthPercent="70%">
+
+                <TextView
+                    android:id="@+id/buy_item"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buy_item"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/buy_item_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buy_item_desc"
+                    android:textSize="13sp"/>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/buy_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/buy_item"
-                android:layout_toRightOf="@+id/buy_item"
+                android:layout_toEndOf="@+id/buy"
+                android:layout_toRightOf="@+id/buy"
                 android:text="@string/buy_button"
                 app:layout_widthPercent="30%"/>
         </android.support.percent.PercentRelativeLayout>
 
         <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/checkout_padding"
+            android:paddingTop="@dimen/checkout_padding">
 
-            <TextView
-                android:id="@+id/trade_points"
+            <LinearLayout
+                android:id="@+id/trade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="@string/trade_points"
-                app:layout_widthPercent="70%"/>
+                android:orientation="vertical"
+                app:layout_widthPercent="70%">
+
+                <TextView
+                    android:id="@+id/trade_points"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trade_points"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/trade_points_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trade_points_desc"
+                    android:textSize="13sp"/>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/trade_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/trade_points"
-                android:layout_toRightOf="@+id/trade_points"
+                android:layout_toEndOf="@+id/trade"
+                android:layout_toRightOf="@+id/trade"
                 android:text="@string/trade_button"
                 app:layout_widthPercent="30%"/>
         </android.support.percent.PercentRelativeLayout>

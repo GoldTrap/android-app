@@ -61,6 +61,11 @@ public class BoosterModelImpl implements BoosterModel {
     }
 
     @Override
+    public Map<BoosterType, BoosterExchangeRate> getBoosterExchangeRates() {
+        return boosterExchangeRates;
+    }
+
+    @Override
     public Map<BoosterType, Booster> getBoostersState() {
         Map<BoosterType, Booster> boosters = new HashMap<>();
         for (BoosterType boosterType : BoosterType.values()) {
