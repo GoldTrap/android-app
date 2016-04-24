@@ -7,16 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.asb.goldtrap.fragments.shoporama.CheckoutFragment;
 import com.asb.goldtrap.fragments.shoporama.ShopORamaFragment;
 import com.asb.goldtrap.iap.util.IabBroadcastReceiver;
 import com.asb.goldtrap.iap.util.IabHelper;
 import com.asb.goldtrap.iap.util.IabResult;
 import com.asb.goldtrap.iap.util.Key;
+import com.asb.goldtrap.models.buyables.BuyableType;
 import com.asb.goldtrap.models.eo.Buyable;
+import com.asb.goldtrap.models.states.enums.GoodiesState;
 
 public class ShopORamaActivity extends AppCompatActivity
         implements IabBroadcastReceiver.IabBroadcastListener,
-        ShopORamaFragment.OnFragmentInteractionListener {
+        ShopORamaFragment.OnFragmentInteractionListener,
+        CheckoutFragment.OnFragmentInteractionListener {
 
     private static final String TAG = ShopORamaActivity.class.getSimpleName();
     private IabHelper iabHelper;
@@ -69,14 +73,23 @@ public class ShopORamaActivity extends AppCompatActivity
         switch (buyable.getType()) {
 
             case FLIP:
-                break;
             case PLUS_ONE:
-                break;
             case SKIP:
+                showCheckoutFragment(buyable.getType());
                 break;
             case DONATE:
                 break;
         }
+    }
+
+    private void showCheckoutFragment(BuyableType buyableType) {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.fragment_container,
+                        CheckoutFragment.newInstance(buyableType.name()),
+                        CheckoutFragment.TAG)
+                .addToBackStack(CheckoutFragment.TAG)
+                .commit();
     }
 
     @Override
@@ -99,4 +112,20 @@ public class ShopORamaActivity extends AppCompatActivity
     public void receivedBroadcast() {
 
     }
+
+    @Override
+    public void buyItem(BuyableType buyableType) {
+
+    }
+
+    @Override
+    public void tradePoints(BuyableType buyableType) {
+
+    }
+
+    @Override
+    public void exchangeGoodie(BuyableType buyableType, GoodiesState goodiesState) {
+
+    }
+
 }

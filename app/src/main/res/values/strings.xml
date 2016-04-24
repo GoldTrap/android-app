@@ -28,6 +28,7 @@
     <string name="quick_play_game">Quick Play</string>
     <string name="multi_player_game">Multi Player</string>
     <string name="store">Shop \'o Rama</string>
+    <string name="checkout">Checkout</string>
     <string name="leaderboards">LeaderBoards</string>
     <string name="achievements">Achievements</string>
     <string name="share">Share</string>
@@ -70,5 +71,12 @@
 
     <string name="donate_name">Donate</string>
     <string name="donate_desc">If you like this game, please donate to help me maintain this game :).</string>
+
+    <string name="buy_item">Buy %s</string>
+    <string name="buy_button">Buy</string>
+    <string name="trade_points">Trade with points</string>
+    <string name="trade_button">Trade</string>
+    <string name="exchange_goodie">Exchange with %s</string>
+    <string name="exchange_button">Exchange</string>
 
 </resources>
