@@ -114,7 +114,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/exchange"
         android:layout_centerHorizontal="true"
-        android:padding="16dp"
+        android:padding="@dimen/checkout_goodie_card_padding"
         android:scrollbars="vertical"/>
 
 </RelativeLayout>

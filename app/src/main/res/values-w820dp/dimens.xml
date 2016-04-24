@@ -24,4 +24,5 @@
     <dimen name="level_card_margin">8dp</dimen>
     <dimen name="episodes_card_margin">8dp</dimen>
     <dimen name="checkout_padding">8dp</dimen>
+    <dimen name="checkout_goodie_card_padding">16dp</dimen>
 </resources>
