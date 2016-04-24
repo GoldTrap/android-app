@@ -15,6 +15,7 @@ import java.util.List;
  * Created by arjun on 26/03/16.
  */
 public class GoodieDaoImpl extends AbstractDao implements GoodieDao {
+
     public GoodieDaoImpl(SQLiteDatabase database) {
         super(database);
     }
@@ -76,16 +77,8 @@ public class GoodieDaoImpl extends AbstractDao implements GoodieDao {
         }
     }
 
-    private ContentValues getContentValues(Goodie goodie) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(GOODIE_STATE, goodie.getGoodiesState().name());
-        contentValues.put(TYPE, goodie.getType());
-        contentValues.put(COUNT, goodie.getCount());
-        return contentValues;
-    }
-
-
-    private Goodie buildGoodieFromCursor(Cursor cursor) {
+    @Override
+    public Goodie buildGoodieFromCursor(Cursor cursor) {
         return Goodie.builder()
                 .setId(cursor.getLong(cursor.getColumnIndex(ID)))
                 .setType(cursor.getString(cursor.getColumnIndex(TYPE)))
@@ -94,8 +87,22 @@ public class GoodieDaoImpl extends AbstractDao implements GoodieDao {
                 .build();
     }
 
+    @Override
+    public Cursor getAllGoodies(String type) {
+        String[] args = {type};
+        return this.database.query(TABLE, null, TYPE + " =  ?", args, null, null, GOODIES_ORDER_BY);
+    }
+
     private ContentValues getContentValuesForUpdate(Goodie goodie) {
         ContentValues contentValues = new ContentValues();
+        contentValues.put(COUNT, goodie.getCount());
+        return contentValues;
+    }
+
+    private ContentValues getContentValues(Goodie goodie) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GOODIE_STATE, goodie.getGoodiesState().name());
+        contentValues.put(TYPE, goodie.getType());
         contentValues.put(COUNT, goodie.getCount());
         return contentValues;
     }

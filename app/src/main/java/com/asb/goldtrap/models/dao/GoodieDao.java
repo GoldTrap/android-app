@@ -1,5 +1,7 @@
 package com.asb.goldtrap.models.dao;
 
+import android.database.Cursor;
+
 import com.asb.goldtrap.models.eo.Goodie;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 
@@ -31,6 +33,7 @@ public interface GoodieDao {
             + TYPE + ","
             + GOODIE_STATE
             + ");";
+    String GOODIES_ORDER_BY = GOODIE_STATE + " ASC";
 
     Goodie getGoodie(String type, GoodiesState goodiesState);
 
@@ -41,4 +44,8 @@ public interface GoodieDao {
     long updateGoodie(Goodie goodie);
 
     void updateGoodies(List<Goodie> goodies);
+
+    Goodie buildGoodieFromCursor(Cursor cursor);
+
+    Cursor getAllGoodies(String type);
 }

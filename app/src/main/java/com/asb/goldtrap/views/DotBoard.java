@@ -97,10 +97,13 @@ public class DotBoard extends View implements View.OnTouchListener {
         int[] colors = getResources().getIntArray(R.array.default_theme);
         setColors(colors);
 
-        Bitmap coins = BitmapFactory.decodeResource(getResources(), R.drawable.coins);
-        goodiesCollection.put(GoodiesState.ONE_K, coins);
-        Bitmap diamond = BitmapFactory.decodeResource(getResources(), R.drawable.diamond);
-        goodiesCollection.put(GoodiesState.DIAMOND, diamond);
+        for (GoodiesState goodie : GoodiesState.values()) {
+            if (-1 != goodie.getDrawableRes()) {
+                Bitmap bitmap =
+                        BitmapFactory.decodeResource(getResources(), goodie.getDrawableRes());
+                goodiesCollection.put(goodie, bitmap);
+            }
+        }
 
         // Drawers
         animatedBoardComponentDrawers =

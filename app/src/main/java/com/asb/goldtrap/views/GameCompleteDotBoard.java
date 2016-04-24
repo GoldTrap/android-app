@@ -80,11 +80,14 @@ public class GameCompleteDotBoard extends View {
         int[] colors = getResources().getIntArray(R.array.default_game_complete_theme);
         setColors(colors);
 
-        Bitmap coins = BitmapFactory.decodeResource(getResources(), R.drawable.coins);
         spark = BitmapFactory.decodeResource(getResources(), R.drawable.spark);
-        goodiesCollection.put(GoodiesState.ONE_K, coins);
-        Bitmap diamond = BitmapFactory.decodeResource(getResources(), R.drawable.diamond);
-        goodiesCollection.put(GoodiesState.DIAMOND, diamond);
+        for (GoodiesState goodie : GoodiesState.values()) {
+            if (-1 != goodie.getDrawableRes()) {
+                Bitmap bitmap =
+                        BitmapFactory.decodeResource(getResources(), goodie.getDrawableRes());
+                goodiesCollection.put(goodie, bitmap);
+            }
+        }
 
         // Drawers
         boardComponentDrawers = Arrays.asList(new VerticalLineDrawer(secondPlayerLinePaint,

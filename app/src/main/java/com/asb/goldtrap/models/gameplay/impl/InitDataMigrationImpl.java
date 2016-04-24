@@ -84,9 +84,11 @@ public class InitDataMigrationImpl implements Migration {
         List<Goodie> goodies = new ArrayList<>();
         Goodie.Builder goodieBuilder = Goodie.builder().setCount(0L);
         for (GoodiesState goodiesState : GoodiesState.values()) {
-            goodieBuilder.setGoodiesState(goodiesState);
-            goodies.add(goodieBuilder.setType(GoodieDao.CURRENT).build());
-            goodies.add(goodieBuilder.setType(GoodieDao.TOTAL).build());
+            if (-1 != goodiesState.getNameRes()) {
+                goodieBuilder.setGoodiesState(goodiesState);
+                goodies.add(goodieBuilder.setType(GoodieDao.CURRENT).build());
+                goodies.add(goodieBuilder.setType(GoodieDao.TOTAL).build());
+            }
         }
         goodieDao.saveGoodies(goodies);
         Log.d(TAG, "Set up the goodies");

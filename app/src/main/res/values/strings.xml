@@ -78,8 +78,14 @@
     <string name="trade_points">Trade</string>
     <string name="trade_points_desc">Trade for %d points</string>
     <string name="trade_button">Trade</string>
-    <string name="exchange_goodie">Exchange with %s</string>
-    <string name="exchange_goodie_desc">Exchange for %s</string>
+    <string name="exchange_goodie_title">Exchange with Goodies</string>
+    <string name="exchange_goodie">%s</string>
+    <string name="exchange_goodie_desc">Exchange for %1$d %2$s</string>
     <string name="exchange_button">Exchange</string>
+
+    <string name="one_k">Gold Coins</string>
+    <string name="two_k">Gold Nuggets</string>
+    <string name="five_k">Gold Bars</string>
+    <string name="diamonds">Diamonds</string>
 
 </resources>

@@ -108,11 +108,24 @@
         </android.support.percent.PercentRelativeLayout>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/exchange_goodie_title"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exchange"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/exchange_title_padding"
+        android:layout_marginTop="@dimen/exchange_title_padding"
+        android:text="@string/exchange_goodie_title"
+        android:textSize="15sp"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/goodies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/exchange"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/exchange_goodie_title"
         android:layout_centerHorizontal="true"
         android:padding="@dimen/checkout_goodie_card_padding"
         android:scrollbars="vertical"/>
