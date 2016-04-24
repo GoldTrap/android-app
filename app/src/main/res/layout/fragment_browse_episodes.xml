@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/header"
-        android:padding="16dp"
+        android:padding="@dimen/episodes_card_padding"
         android:scrollbars="vertical"/>
 
 </RelativeLayout>

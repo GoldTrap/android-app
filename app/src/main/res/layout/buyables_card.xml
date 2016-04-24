@@ -38,8 +38,8 @@
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/buyables_text_padding"
+                android:paddingTop="@dimen/buyables_text_padding"
                 android:text="@string/app_name"
                 android:textSize="13sp"/>
 
@@ -47,8 +47,8 @@
                 android:id="@+id/buyable_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/buyables_text_padding"
+                android:paddingTop="@dimen/buyables_text_padding"
                 android:text="@string/app_name"
                 android:textSize="13sp"/>
         </LinearLayout>
