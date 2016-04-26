@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
+import com.asb.goldtrap.models.dao.BoosterDao;
 import com.asb.goldtrap.models.dao.GoodieDao;
 import com.asb.goldtrap.models.dao.helper.DBHelper;
+import com.asb.goldtrap.models.dao.impl.BoosterDaoImpl;
 import com.asb.goldtrap.models.dao.impl.GoodieDaoImpl;
 import com.asb.goldtrap.models.dao.loaders.GoodiesLoader;
+import com.asb.goldtrap.models.eo.Booster;
+import com.asb.goldtrap.models.eo.BoosterExchangeRate;
+import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Goodie;
 import com.asb.goldtrap.models.goodie.GoodieModel;
 
@@ -22,6 +27,7 @@ public class CursorGoodieModel implements GoodieModel, LoaderManager.LoaderCallb
     public static final int LOADER_ID = 3;
     private final LoaderManager loaderManager;
     private Listener listener;
+    private BoosterDao boosterDao;
     private GoodieDao goodieDao;
     private Context context;
     private Cursor cursor;
@@ -31,7 +37,19 @@ public class CursorGoodieModel implements GoodieModel, LoaderManager.LoaderCallb
         this.context = context;
         this.loaderManager = loaderManager;
         this.listener = listener;
+        this.boosterDao = new BoosterDaoImpl(dbHelper.getWritableDatabase());
         this.goodieDao = new GoodieDaoImpl(dbHelper.getWritableDatabase());
+    }
+
+    @Override
+    public void tradeWithGoodie(Goodie goodie, BoosterType boosterType,
+                                BoosterExchangeRate boosterExchangeRate) {
+        goodie.setCount(
+                goodie.getCount() - boosterExchangeRate.getGoodies().get(goodie.getGoodiesState()));
+        Booster booster = boosterDao.getBooster(BoosterDao.CURRENT, boosterType);
+        booster.setCount(booster.getCount() + 1);
+        goodieDao.updateGoodie(goodie);
+        boosterDao.updateBooster(booster);
     }
 
     @Override

@@ -84,6 +84,13 @@ public class CheckoutRecyclerAdapter
             goodieExchangeRate.setText(
                     context.getString(R.string.exchange_goodie_desc, exchangeRate,
                             context.getString(goodie.getGoodiesState().getNameRes())));
+            if (boosterExchangeRate.getGoodies().get(goodie.getGoodiesState()) <=
+                    goodie.getCount()) {
+                exchange.setEnabled(true);
+            }
+            else {
+                exchange.setEnabled(false);
+            }
         }
 
         @Override

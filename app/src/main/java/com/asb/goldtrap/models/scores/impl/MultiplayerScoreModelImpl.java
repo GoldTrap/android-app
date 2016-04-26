@@ -12,7 +12,7 @@ import com.asb.goldtrap.models.results.Score;
  * MultiplayerScoreModelImpl.
  * Created by arjun on 27/03/16.
  */
-public class MultiplayerScoreModelImpl extends AbstractScoreModelImpl {
+public class MultiplayerScoreModelImpl extends ScoreModelImpl {
     private MultiplayerGameDao multiplayerGameDao;
     private static final String TAG = MultiplayerScoreModelImpl.class.getSimpleName();
 

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.dao.AttemptDao;
+import com.asb.goldtrap.models.dao.BoosterDao;
 import com.asb.goldtrap.models.dao.EpisodeDao;
 import com.asb.goldtrap.models.dao.GoodieDao;
 import com.asb.goldtrap.models.dao.LevelDao;
@@ -13,12 +14,16 @@ import com.asb.goldtrap.models.dao.PropertiesDao;
 import com.asb.goldtrap.models.dao.ScoreDao;
 import com.asb.goldtrap.models.dao.helper.DBHelper;
 import com.asb.goldtrap.models.dao.impl.AttemptDaoImpl;
+import com.asb.goldtrap.models.dao.impl.BoosterDaoImpl;
 import com.asb.goldtrap.models.dao.impl.EpisodeDaoImpl;
 import com.asb.goldtrap.models.dao.impl.GoodieDaoImpl;
 import com.asb.goldtrap.models.dao.impl.LevelDaoImpl;
 import com.asb.goldtrap.models.dao.impl.PropertiesDaoImpl;
 import com.asb.goldtrap.models.dao.impl.ScoreDaoImpl;
 import com.asb.goldtrap.models.eo.Attempt;
+import com.asb.goldtrap.models.eo.Booster;
+import com.asb.goldtrap.models.eo.BoosterExchangeRate;
+import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Goodie;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.eo.migration.Level;
@@ -34,11 +39,12 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * AbstractScoreModelImpl.
+ * ScoreModelImpl.
  * Created by arjun on 26/03/16.
  */
-public abstract class AbstractScoreModelImpl implements ScoreModel {
+public class ScoreModelImpl implements ScoreModel {
     private static final String TAG = PlayScoreModelImpl.class.getSimpleName();
+    private BoosterDao boosterDao;
     private EpisodeDao episodeDao;
     private LevelDao levelDao;
     private PropertiesDao propertiesDao;
@@ -47,8 +53,9 @@ public abstract class AbstractScoreModelImpl implements ScoreModel {
     private GoodieDao goodieDao;
     private SQLiteOpenHelper dbHelper;
 
-    public AbstractScoreModelImpl(Context context) {
+    public ScoreModelImpl(Context context) {
         dbHelper = DBHelper.getInstance(context);
+        boosterDao = new BoosterDaoImpl(dbHelper.getWritableDatabase());
         episodeDao = new EpisodeDaoImpl(dbHelper.getWritableDatabase());
         levelDao = new LevelDaoImpl(dbHelper.getWritableDatabase());
         propertiesDao = new PropertiesDaoImpl(dbHelper.getWritableDatabase());
@@ -62,6 +69,23 @@ public abstract class AbstractScoreModelImpl implements ScoreModel {
         this.doTheLevelUpdate(levelCode, score);
         this.doTheScoreUpdate(score);
         this.doTheGoodieUpdate(score);
+    }
+
+    @Override
+    public com.asb.goldtrap.models.eo.Score getCurrentScore() {
+        return scoreDao.getScore(ScoreDao.CURRENT);
+    }
+
+    @Override
+    public com.asb.goldtrap.models.eo.Score tradeBoosterForScore(BoosterType boosterType,
+                                                                 BoosterExchangeRate boosterExchangeRate) {
+        Booster booster = boosterDao.getBooster(BoosterDao.CURRENT, boosterType);
+        booster.setCount(booster.getCount() + 1);
+        com.asb.goldtrap.models.eo.Score score = scoreDao.getScore(ScoreDao.CURRENT);
+        score.setValue(score.getValue() - boosterExchangeRate.getPoints());
+        scoreDao.updateScore(score);
+        boosterDao.updateBooster(booster);
+        return score;
     }
 
     protected void doTheGoodieUpdate(Score score) {

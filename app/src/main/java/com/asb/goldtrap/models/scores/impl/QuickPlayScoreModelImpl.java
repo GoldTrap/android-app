@@ -8,7 +8,7 @@ import com.asb.goldtrap.models.results.Score;
  * QuickPlayScoreModelImpl.
  * Created by arjun on 26/03/16.
  */
-public class QuickPlayScoreModelImpl extends AbstractScoreModelImpl {
+public class QuickPlayScoreModelImpl extends ScoreModelImpl {
     public QuickPlayScoreModelImpl(Context context) {
         super(context);
     }

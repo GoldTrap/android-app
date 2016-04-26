@@ -82,7 +82,7 @@ public class InitDataMigrationImpl implements Migration {
 
     private void setUpGoodies() {
         List<Goodie> goodies = new ArrayList<>();
-        Goodie.Builder goodieBuilder = Goodie.builder().setCount(0L);
+        Goodie.Builder goodieBuilder = Goodie.builder().setCount(10L);
         for (GoodiesState goodiesState : GoodiesState.values()) {
             if (-1 != goodiesState.getNameRes()) {
                 goodieBuilder.setGoodiesState(goodiesState);

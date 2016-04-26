@@ -15,7 +15,6 @@ import com.asb.goldtrap.iap.util.IabResult;
 import com.asb.goldtrap.iap.util.Key;
 import com.asb.goldtrap.models.buyables.BuyableType;
 import com.asb.goldtrap.models.eo.Buyable;
-import com.asb.goldtrap.models.states.enums.GoodiesState;
 
 public class ShopORamaActivity extends AppCompatActivity
         implements IabBroadcastReceiver.IabBroadcastListener,
@@ -115,16 +114,6 @@ public class ShopORamaActivity extends AppCompatActivity
 
     @Override
     public void buyItem(BuyableType buyableType) {
-
-    }
-
-    @Override
-    public void tradePoints(BuyableType buyableType) {
-
-    }
-
-    @Override
-    public void exchangeGoodie(BuyableType buyableType, GoodiesState goodiesState) {
 
     }
 

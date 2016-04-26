@@ -19,9 +19,11 @@ import com.asb.goldtrap.models.buyables.BuyableType;
 import com.asb.goldtrap.models.eo.BoosterExchangeRate;
 import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Goodie;
+import com.asb.goldtrap.models.eo.Score;
 import com.asb.goldtrap.models.goodie.GoodieModel;
 import com.asb.goldtrap.models.goodie.impl.CursorGoodieModel;
-import com.asb.goldtrap.models.states.enums.GoodiesState;
+import com.asb.goldtrap.models.scores.ScoreModel;
+import com.asb.goldtrap.models.scores.impl.ScoreModelImpl;
 
 
 /**
@@ -33,6 +35,7 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
     private static final String BUYABLE = "buyable";
     private BuyableType buyableType;
     private OnFragmentInteractionListener mListener;
+    private ScoreModel scoreModel;
     private BoosterModel boosterModel;
     private GoodieModel goodieModel;
     private RecyclerView.Adapter adapter;
@@ -53,6 +56,7 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setRetainInstance(true);
+        scoreModel = new ScoreModelImpl(getContext());
         boosterModel = new BoosterModelImpl(getContext());
         goodieModel =
                 new CursorGoodieModel(getContext(), getActivity().getSupportLoaderManager(), this);
@@ -80,11 +84,16 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
         TextView tradeItemDesc = (TextView) view.findViewById(R.id.trade_points_desc);
         tradeItemDesc.setText(
                 getString(R.string.trade_points_desc, getBoosterExchangeRate().getPoints()));
-        Button tradeButton = (Button) view.findViewById(R.id.trade_button);
+        final Button tradeButton = (Button) view.findViewById(R.id.trade_button);
+        Score score = scoreModel.getCurrentScore();
+        handleScoreEnablement(score, tradeButton);
         tradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.tradePoints(buyableType);
+                Score score =
+                        scoreModel.tradeBoosterForScore(BoosterType.valueOf(buyableType.name()),
+                                getBoosterExchangeRate());
+                handleScoreEnablement(score, tradeButton);
             }
         });
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.goodies);
@@ -93,6 +102,15 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
                 getBoosterExchangeRate());
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    private void handleScoreEnablement(Score score, Button tradeButton) {
+        if (getBoosterExchangeRate().getPoints() <= score.getValue()) {
+            tradeButton.setEnabled(true);
+        }
+        else {
+            tradeButton.setEnabled(false);
+        }
     }
 
     private BoosterExchangeRate getBoosterExchangeRate() {
@@ -133,13 +151,12 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
     @Override
     public void onClick(int position) {
         Goodie goodie = goodieModel.getGoodie(position);
+        goodieModel.tradeWithGoodie(goodie, BoosterType.valueOf(buyableType.name()),
+                getBoosterExchangeRate());
+        goodieModel.loadGoodies();
     }
 
     public interface OnFragmentInteractionListener {
         void buyItem(BuyableType buyableType);
-
-        void tradePoints(BuyableType buyableType);
-
-        void exchangeGoodie(BuyableType buyableType, GoodiesState goodiesState);
     }
 }
