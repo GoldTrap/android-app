@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,85 +28,99 @@
         android:layout_below="@+id/header"
         android:orientation="vertical">
 
-        <android.support.percent.PercentRelativeLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/checkout_padding"
-            android:paddingTop="@dimen/checkout_padding">
+            android:layout_margin="@dimen/checkout_card_margin"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardUseCompatPadding="true">
 
-            <LinearLayout
-                android:id="@+id/buy"
-                android:layout_width="wrap_content"
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="vertical"
-                app:layout_widthPercent="70%">
+                android:padding="@dimen/checkout_padding">
 
-                <TextView
-                    android:id="@+id/buy_item"
-                    style="@style/TextAppearance.AppCompat.Title"
+                <LinearLayout
+                    android:id="@+id/buy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/buy_item"
-                    android:textSize="13sp"/>
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    app:layout_widthPercent="70%">
 
-                <TextView
-                    android:id="@+id/buy_item_desc"
+                    <TextView
+                        android:id="@+id/buy_item"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/buy_item"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/buy_item_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/buy_item_desc"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buy_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/buy_item_desc"
-                    android:textSize="13sp"/>
-            </LinearLayout>
+                    android:layout_toEndOf="@+id/buy"
+                    android:layout_toRightOf="@+id/buy"
+                    android:text="@string/buy_button"
+                    app:layout_widthPercent="30%"/>
+            </android.support.percent.PercentRelativeLayout>
+        </android.support.v7.widget.CardView>
 
-            <Button
-                android:id="@+id/buy_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/buy"
-                android:layout_toRightOf="@+id/buy"
-                android:text="@string/buy_button"
-                app:layout_widthPercent="30%"/>
-        </android.support.percent.PercentRelativeLayout>
-
-        <android.support.percent.PercentRelativeLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/checkout_padding"
-            android:paddingTop="@dimen/checkout_padding">
+            android:layout_margin="@dimen/checkout_card_margin"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardUseCompatPadding="true">
 
-            <LinearLayout
-                android:id="@+id/trade"
-                android:layout_width="wrap_content"
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="vertical"
-                app:layout_widthPercent="70%">
+                android:padding="@dimen/checkout_padding">
 
-                <TextView
-                    android:id="@+id/trade_points"
-                    style="@style/TextAppearance.AppCompat.Title"
+                <LinearLayout
+                    android:id="@+id/trade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_points"
-                    android:textSize="13sp"/>
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    app:layout_widthPercent="70%">
 
-                <TextView
-                    android:id="@+id/trade_points_desc"
+                    <TextView
+                        android:id="@+id/trade_points"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trade_points"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/trade_points_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trade_points_desc"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/trade_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_points_desc"
-                    android:textSize="13sp"/>
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/trade_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/trade"
-                android:layout_toRightOf="@+id/trade"
-                android:text="@string/trade_button"
-                app:layout_widthPercent="30%"/>
-        </android.support.percent.PercentRelativeLayout>
+                    android:layout_toEndOf="@+id/trade"
+                    android:layout_toRightOf="@+id/trade"
+                    android:text="@string/trade_button"
+                    app:layout_widthPercent="30%"/>
+            </android.support.percent.PercentRelativeLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
     <TextView
