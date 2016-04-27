@@ -21,6 +21,7 @@ public class ShopORamaActivity extends AppCompatActivity
         ShopORamaFragment.OnFragmentInteractionListener,
         CheckoutFragment.OnFragmentInteractionListener {
 
+    public static final String BOOSTER_TYPE = "BOOSTER_TYPE";
     private static final String TAG = ShopORamaActivity.class.getSimpleName();
     private IabHelper iabHelper;
     private IabBroadcastReceiver mBroadcastReceiver;
@@ -30,7 +31,17 @@ public class ShopORamaActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_orama);
         setupIAP();
-        if (null == getSupportFragmentManager().findFragmentByTag(ShopORamaFragment.TAG)) {
+        if (null != getIntent().getExtras()) {
+            String boosterType = getIntent().getExtras().getString(BOOSTER_TYPE);
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.fragment_container,
+                            CheckoutFragment.newInstance(boosterType),
+                            CheckoutFragment.TAG)
+                    .commit();
+        }
+        else if (null == getSupportFragmentManager().findFragmentByTag(ShopORamaFragment.TAG)
+                && null == getSupportFragmentManager().findFragmentByTag(CheckoutFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,

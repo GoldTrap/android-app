@@ -79,7 +79,7 @@ public class BoosterModelImpl implements BoosterModel {
         Booster booster = boosterDao.getBooster(BoosterDao.CURRENT, boosterType);
         if (booster.getCount() > 0) {
             booster.setCount(booster.getCount() - 1);
-            boosterDao.saveBooster(booster);
+            boosterDao.updateBooster(booster);
             handleAchievements(client, boosterType);
         }
         return booster;
@@ -137,10 +137,10 @@ public class BoosterModelImpl implements BoosterModel {
         Booster booster;
         booster = boosterDao.getBooster(BoosterDao.CURRENT, boosterType);
         booster.setCount(booster.getCount() + 1);
-        boosterDao.saveBooster(booster);
+        boosterDao.updateBooster(booster);
         Booster totalbooster = boosterDao.getBooster(BoosterDao.TOTAL, boosterType);
         totalbooster.setCount(booster.getCount() + 1);
-        boosterDao.saveBooster(totalbooster);
+        boosterDao.updateBooster(totalbooster);
         return booster;
     }
 }

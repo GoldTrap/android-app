@@ -174,6 +174,9 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                             boosterModel.consumeBooster(mListener.getGoogleApiClient(),
                                     BoosterType.SKIP));
                 }
+                else {
+                    mListener.takeMeToStore(BoosterType.SKIP);
+                }
             }
         });
     }
@@ -189,6 +192,9 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                             boosterModel.consumeBooster(mListener.getGoogleApiClient(),
                                     BoosterType.PLUS_ONE));
                 }
+                else {
+                    mListener.takeMeToStore(BoosterType.PLUS_ONE);
+                }
             }
         });
     }
@@ -203,6 +209,9 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                     dotBoard.requestRedraw();
                     boosterMap.put(BoosterType.FLIP, boosterModel
                             .consumeBooster(mListener.getGoogleApiClient(), BoosterType.FLIP));
+                }
+                else {
+                    mListener.takeMeToStore(BoosterType.FLIP);
                 }
             }
         });
@@ -224,7 +233,6 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         Bundle args = getArguments();
         imageHelper = new ImageHelperImpl();
         boosterModel = new BoosterModelImpl(getContext());
-        boosterMap = boosterModel.getBoostersState();
         int resourceId = args.getInt(LEVEL_RESOURCE);
         levelCode = args.getString(LEVEL_CODE);
         gson = new Gson();
@@ -247,6 +255,12 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
             throw new ClassCastException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boosterMap = boosterModel.getBoostersState();
     }
 
     @Override
@@ -273,6 +287,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         GoogleApiClient getGoogleApiClient();
 
         void gameOver(String levelCode, String snapshot, Uri gamePreviewUri);
+
+        void takeMeToStore(BoosterType boosterType);
     }
 
 }

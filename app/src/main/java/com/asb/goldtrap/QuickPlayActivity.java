@@ -17,6 +17,7 @@ import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.models.achievements.AchievementsModel;
 import com.asb.goldtrap.models.achievements.impl.QuickPlayAchievementsModel;
+import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
 import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.Score;
@@ -134,6 +135,13 @@ public class QuickPlayActivity extends AppCompatActivity
                         ScoreFragment.newInstance(snapshot, levelCode),
                         ScoreFragment.TAG)
                 .commit();
+    }
+
+    @Override
+    public void takeMeToStore(BoosterType boosterType) {
+        Intent intent = new Intent(getApplicationContext(), ShopORamaActivity.class);
+        intent.putExtra(ShopORamaActivity.BOOSTER_TYPE, boosterType.name());
+        startActivity(intent);
     }
 
     @Override
