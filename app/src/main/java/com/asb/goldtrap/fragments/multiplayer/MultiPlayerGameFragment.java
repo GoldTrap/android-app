@@ -210,6 +210,9 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                             boosterModel.consumeBooster(mListener.getGoogleApiClient(),
                                     BoosterType.SKIP));
                 }
+                else {
+                    mListener.takeMeToStore(BoosterType.SKIP);
+                }
             }
         });
     }
@@ -225,6 +228,9 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                             boosterModel.consumeBooster(mListener.getGoogleApiClient(),
                                     BoosterType.PLUS_ONE));
                 }
+                else {
+                    mListener.takeMeToStore(BoosterType.PLUS_ONE);
+                }
             }
         });
     }
@@ -239,6 +245,9 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                     dotBoard.requestRedraw();
                     boosterMap.put(BoosterType.FLIP, boosterModel
                             .consumeBooster(mListener.getGoogleApiClient(), BoosterType.FLIP));
+                }
+                else {
+                    mListener.takeMeToStore(BoosterType.FLIP);
                 }
             }
         });
@@ -308,5 +317,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         void gameOver(GameAndLevelSnapshot gameAndLevel);
 
         void showPostGameOverOptions(Uri gamePreviewUri);
+
+        void takeMeToStore(BoosterType boosterType);
     }
 }
