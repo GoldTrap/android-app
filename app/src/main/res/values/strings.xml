@@ -88,4 +88,8 @@
     <string name="five_k">Gold Bars</string>
     <string name="diamonds">Diamonds</string>
 
+    <string name="game_was_cancelled">This game was canceled!</string>
+    <string name="game_is_expired">This game is expired.  So sad!</string>
+    <string name="auto_matching">We\'re still waiting for an automatch partner.</string>
+
 </resources>

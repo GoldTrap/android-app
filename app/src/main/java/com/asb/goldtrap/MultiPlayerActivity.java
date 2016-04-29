@@ -18,6 +18,7 @@ import com.asb.goldtrap.fragments.multiplayer.MultiPlayerMenuFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.models.achievements.AchievementsModel;
 import com.asb.goldtrap.models.achievements.impl.MultiplayerAchievementsModel;
+import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
@@ -226,6 +227,13 @@ public class MultiPlayerActivity extends AppCompatActivity
                         SummaryFragment.TAG)
                 .addToBackStack(SummaryFragment.TAG)
                 .commit();
+    }
+
+    @Override
+    public void takeMeToStore(BoosterType boosterType) {
+        Intent intent = new Intent(getApplicationContext(), ShopORamaActivity.class);
+        intent.putExtra(ShopORamaActivity.BOOSTER_TYPE, boosterType.name());
+        startActivity(intent);
     }
 
     @Override
@@ -507,13 +515,13 @@ public class MultiPlayerActivity extends AppCompatActivity
     private void handleInactiveStates(TurnBasedMatch match) {
         switch (match.getStatus()) {
             case TurnBasedMatch.MATCH_STATUS_CANCELED:
-                showMessage("This game was canceled!");
+                showMessage(getString(R.string.game_was_cancelled));
                 break;
             case TurnBasedMatch.MATCH_STATUS_EXPIRED:
-                showMessage("This game is expired.  So sad!");
+                showMessage(getString(R.string.game_is_expired));
                 break;
             case TurnBasedMatch.MATCH_STATUS_AUTO_MATCHING:
-                showMessage("We're still waiting for an automatch partner.");
+                showMessage(getString(R.string.auto_matching));
                 break;
         }
     }
