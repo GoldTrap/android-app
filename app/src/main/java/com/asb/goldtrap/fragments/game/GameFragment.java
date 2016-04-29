@@ -43,6 +43,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+import tyrantgit.explosionfield.ExplosionField;
+
 /**
  * GameFragment
  */
@@ -68,6 +70,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private BoosterModel boosterModel;
     private Map<BoosterType, Booster> boosterMap;
     private SoundHelper soundHelper;
+    ExplosionField explosionField;
 
     /**
      * Create an instance of GameFragment
@@ -145,6 +148,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
             public void animationComplete() {
                 final Uri gamePreviewUri = imageHelper
                         .writeFileToDisk(gameCompleteDotBoard.getDrawingCache(), getContext());
+                explosionField.explode(gameCompleteDotBoard);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -229,6 +233,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        explosionField = ExplosionField.attach2Window(getActivity());
         soundHelper = SoundHelperImpl.instance(getContext());
         Bundle args = getArguments();
         imageHelper = new ImageHelperImpl();

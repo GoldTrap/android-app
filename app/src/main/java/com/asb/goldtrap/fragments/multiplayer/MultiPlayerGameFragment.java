@@ -40,6 +40,8 @@ import com.google.gson.Gson;
 
 import java.util.Map;
 
+import tyrantgit.explosionfield.ExplosionField;
+
 /**
  * A MultiPlayerGame {@link Fragment} subclass.
  */
@@ -69,7 +71,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private SoundHelper soundHelper;
     private BoosterModel boosterModel;
     private Map<BoosterType, Booster> boosterMap;
-
+    ExplosionField explosionField;
 
     public MultiPlayerGameFragment() {
         // Required empty public constructor
@@ -109,6 +111,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                 GameAndLevelSnapshot.class);
         status = getArguments().getInt(STATUS);
         turnStatus = getArguments().getInt(TURN_STATUS);
+        explosionField = ExplosionField.attach2Window(getActivity());
         initGame();
     }
 
@@ -181,6 +184,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
                     @Override
                     public void run() {
                         if (status == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
+                            explosionField.explode(gameCompleteDotBoard);
                             mListener.showPostGameOverOptions(
                                     gamePreviewUri);
                         }
