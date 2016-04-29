@@ -95,12 +95,12 @@ public class BoosterModelImpl implements BoosterModel {
             case PLUS_ONE:
                 Games.Achievements
                         .unlock(client, context.getString(R.string.achievement_plus_oner));
-                Log.d(TAG, "Table Turner");
+                Log.d(TAG, "Plus Oner");
                 break;
             case SKIP:
                 Games.Achievements
                         .unlock(client, context.getString(R.string.achievement_skipper));
-                Log.d(TAG, "Table Turner");
+                Log.d(TAG, "Skipper");
                 break;
         }
     }
