@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="iap_sku">
+        <item>donate</item>
+        <item>get_flip</item>
+        <item>get_plus_one</item>
+        <item>get_skip</item>
+    </string-array>
+</resources>
