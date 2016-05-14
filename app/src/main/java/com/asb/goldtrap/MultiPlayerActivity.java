@@ -66,6 +66,22 @@ public class MultiPlayerActivity extends AppCompatActivity
     public static final String TAG = MultiPlayerActivity.class.getSimpleName();
     public static final String CHARSET_NAME = "UTF-8";
     public static final String TBM = "tbm";
+    private final ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>
+            initiateMatchResultResultCallback =
+            new ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>() {
+                @Override
+                public void onResult(TurnBasedMultiplayer.InitiateMatchResult result) {
+                    processResult(result);
+                }
+            };
+    private final ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>
+            updateMatchResultResultCallback =
+            new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                @Override
+                public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                    processResult(result, true);
+                }
+            };
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -187,12 +203,7 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     private void startMatch(TurnBasedMatchConfig tbmc) {
         Games.TurnBasedMultiplayer.createMatch(mGoogleApiClient, tbmc)
-                .setResultCallback(new ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>() {
-                    @Override
-                    public void onResult(TurnBasedMultiplayer.InitiateMatchResult result) {
-                        processResult(result);
-                    }
-                });
+                .setResultCallback(initiateMatchResultResultCallback);
     }
 
     @Override
@@ -209,12 +220,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         gameAndLevel.setLastPlayerId(myParticipantId);
         Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, tbm.getMatchId(),
                 gson.toJson(gameAndLevel).getBytes(Charset.forName(CHARSET_NAME)))
-                .setResultCallback(new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
-                    @Override
-                    public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
-                        processResult(result, true);
-                    }
-                });
+                .setResultCallback(updateMatchResultResultCallback);
     }
 
     @Override
