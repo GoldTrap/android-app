@@ -9,9 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -65,9 +65,9 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
     private TextView scoreBoard;
-    private Button flip;
-    private Button extraChance;
-    private Button skip;
+    private ImageButton flip;
+    private ImageButton extraChance;
+    private ImageButton skip;
     private ToggleButton sound;
     private Handler handler = new Handler();
     private ImageHelper imageHelper;
@@ -229,7 +229,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     }
 
     private void handleSkip(View view) {
-        skip = (Button) view.findViewById(R.id.skip);
+        skip = (ImageButton) view.findViewById(R.id.skip);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,7 +248,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     }
 
     private void handleExtraChance(View view) {
-        extraChance = (Button) view.findViewById(R.id.extra_chance);
+        extraChance = (ImageButton) view.findViewById(R.id.extra_chance);
         extraChance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,7 +266,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     }
 
     private void handleFlip(View view) {
-        flip = (Button) view.findViewById(R.id.flip);
+        flip = (ImageButton) view.findViewById(R.id.flip);
         flip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -23,9 +23,9 @@
         <TextView
             android:id="@+id/score_board"
             style="@android:style/TextAppearance.Large"
-            android:text="@string/points"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="@string/points">
         </TextView>
 
         <ToggleButton
@@ -35,22 +35,34 @@
             android:textOff="@string/un_mute"
             android:textOn="@string/mute"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/extra_chance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/round_button"
+            android:elevation="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/plus_one"
             android:text="@string/extra_chance"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/flip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/round_button"
+            android:elevation="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/flip"
             android:text="@string/flip"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/round_button"
+            android:elevation="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/skip"
             android:text="@string/skip"/>
     </LinearLayout>
 

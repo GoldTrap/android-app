@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:board="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -65,32 +66,54 @@
     </FrameLayout>
 
 
-    <LinearLayout
+    <android.support.percent.PercentRelativeLayout
         android:id="@+id/cheat_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <Button
+        <ImageButton
             android:id="@+id/extra_chance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/extra_chance"/>
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/flip"
+            android:layout_toStartOf="@+id/flip"
+            android:background="@drawable/round_button"
+            android:elevation="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/plus_one"
+            android:text="@string/extra_chance"
+            app:layout_marginLeftPercent="8%"
+            app:layout_marginRightPercent="8%"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/flip"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/flip"/>
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/round_button"
+            android:elevation="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/flip"
+            android:text="@string/flip"
+            app:layout_marginLeftPercent="8%"
+            app:layout_marginRightPercent="8%"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/skip"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/skip"/>
-    </LinearLayout>
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/flip"
+            android:layout_toRightOf="@+id/flip"
+            android:background="@drawable/round_button"
+            android:elevation="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/skip"
+            android:text="@string/skip"
+            app:layout_marginLeftPercent="8%"
+            app:layout_marginRightPercent="8%"/>
+    </android.support.percent.PercentRelativeLayout>
 
 </RelativeLayout>

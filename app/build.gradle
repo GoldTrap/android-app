@@ -15,7 +15,7 @@ android {
         applicationId "com.asb.goldtrap"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 2
+        versionCode 3
         versionName "1.0"
         signingConfig signingConfigs.release
     }

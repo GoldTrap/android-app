@@ -64,7 +64,7 @@ public class BuyablesRecyclerAdapter
 
         public void bindMenu(Buyable buyable, Context context) {
             int imageId = context.getResources()
-                    .getIdentifier(buyable.getImage(), "mipmap", context.getPackageName());
+                    .getIdentifier(buyable.getImage(), "drawable", context.getPackageName());
             if (0 == imageId) {
                 buyableImage.setImageResource(R.drawable.spark);
             }

@@ -14,14 +14,14 @@
 
         <ImageView
             android:id="@+id/buyable_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/buyables_image_size"
+            android:layout_height="@dimen/buyables_image_size"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/buyables_image_margin"
             android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"/>
+            android:scaleType="fitCenter"/>
 
         <LinearLayout
             android:layout_width="match_parent"
