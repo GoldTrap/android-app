@@ -70,7 +70,14 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     }
 
     private void handleEpisodeClick(int position) {
-        mListener.onEpisodeClicked(episodeModel.getEpisode(position));
+        Episode episode = episodeModel.getEpisode(position);
+        mListener.onEpisodeClicked(episode);
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Episode Click")
+                .setAction(episode.getCode())
+                .setLabel(episode.getName())
+                .setValue(position)
+                .build());
     }
 
     @Override

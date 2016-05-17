@@ -100,7 +100,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     }
 
     private void handleMenuClick(int position) {
-        switch (homePageMenus.get(position).getType()) {
+        HomePageMenu menu = homePageMenus.get(position);
+        switch (menu.getType()) {
             case PLAY_GAME:
                 mListener.play();
                 break;
@@ -122,6 +123,12 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
             case SHARE:
                 break;
         }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Home Page Menu")
+                .setAction(menu.getType().name())
+                .setLabel(menu.getName())
+                .setValue(menu.getSpanSize())
+                .build());
     }
 
     @Override

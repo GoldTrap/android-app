@@ -64,7 +64,8 @@ public class MultiPlayerMenuFragment extends Fragment {
     }
 
     private void handleMenuClick(int position) {
-        switch (multiPlayerPageMenus.get(position).getType()) {
+        MultiPlayerPageMenu multiPlayerPageMenu = multiPlayerPageMenus.get(position);
+        switch (multiPlayerPageMenu.getType()) {
 
             case AUTO_MATCH:
                 mListener.onAutoMatch();
@@ -76,6 +77,12 @@ public class MultiPlayerMenuFragment extends Fragment {
                 mListener.onGamesInProgress();
                 break;
         }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Multi Player Menu")
+                .setAction(multiPlayerPageMenu.getType().name())
+                .setLabel(multiPlayerPageMenu.getName())
+                .setValue(multiPlayerPageMenu.getSpanSize())
+                .build());
     }
 
 

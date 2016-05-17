@@ -187,14 +187,22 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String label;
                 if (isChecked) {
                     soundModel.updateSoundType(SoundType.GUITAR);
                     soundHelper = soundFactory.getSoundHelper(SoundType.GUITAR, getContext());
+                    label = "Sound Enabled";
                 }
                 else {
                     soundModel.updateSoundType(SoundType.MUTE);
                     soundHelper = soundFactory.getSoundHelper(SoundType.MUTE, getContext());
+                    label = "Sound Disabled";
                 }
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Click")
+                        .setLabel(label)
+                        .build());
             }
         });
     }
@@ -204,16 +212,24 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String label;
                 if (boosterMap.get(BoosterType.SKIP).getCount() > 0) {
                     conductor.skipTurn();
                     dotBoard.requestRedraw();
                     boosterMap.put(BoosterType.SKIP,
                             boosterModel.consumeBooster(mListener.getGoogleApiClient(),
                                     BoosterType.SKIP));
+                    label = "Skip Consume";
                 }
                 else {
                     mListener.takeMeToStore(BoosterType.SKIP);
+                    label = "Skip Shop";
                 }
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Click")
+                        .setLabel(label)
+                        .build());
             }
         });
     }
@@ -223,15 +239,24 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         extraChance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String label;
                 if (boosterMap.get(BoosterType.PLUS_ONE).getCount() > 0) {
                     conductor.setExtraChance(true);
                     boosterMap.put(BoosterType.PLUS_ONE,
                             boosterModel.consumeBooster(mListener.getGoogleApiClient(),
                                     BoosterType.PLUS_ONE));
+                    label = "Plus One Consume";
                 }
                 else {
                     mListener.takeMeToStore(BoosterType.PLUS_ONE);
+                    label = "Plus One Shop";
                 }
+
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Click")
+                        .setLabel(label)
+                        .build());
             }
         });
     }
@@ -241,15 +266,23 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         flip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String label;
                 if (boosterMap.get(BoosterType.FLIP).getCount() > 0) {
                     conductor.flipBoard();
                     dotBoard.requestRedraw();
                     boosterMap.put(BoosterType.FLIP, boosterModel
                             .consumeBooster(mListener.getGoogleApiClient(), BoosterType.FLIP));
+                    label = "Flip Consume";
                 }
                 else {
                     mListener.takeMeToStore(BoosterType.FLIP);
+                    label = "Flip Shop";
                 }
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Click")
+                        .setLabel(label)
+                        .build());
             }
         });
     }

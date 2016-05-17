@@ -65,7 +65,14 @@ public class ShopORamaFragment extends Fragment {
     }
 
     private void handleBuyableClick(int position) {
-        mListener.onBuyableClicked(buyablesModel.getBuyable(position));
+        Buyable buyable = buyablesModel.getBuyable(position);
+        mListener.onBuyableClicked(buyable);
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Buyable Click")
+                .setAction(buyable.getType().name())
+                .setLabel(buyable.getName())
+                .setValue(position)
+                .build());
     }
 
     @Override

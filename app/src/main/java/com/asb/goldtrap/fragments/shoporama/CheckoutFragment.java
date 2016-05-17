@@ -86,6 +86,11 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
             @Override
             public void onClick(View v) {
                 mListener.buyItem(buyableType);
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Buy")
+                        .setLabel(buyableType.name())
+                        .build());
             }
         });
 
@@ -102,6 +107,11 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
                         scoreModel.tradeBoosterForScore(BoosterType.valueOf(buyableType.name()),
                                 getBoosterExchangeRate());
                 handleScoreEnablement(score, tradeButton);
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Trade Score")
+                        .setLabel(buyableType.name())
+                        .build());
             }
         });
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.goodies);
@@ -165,6 +175,12 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
         goodieModel.tradeWithGoodie(goodie, BoosterType.valueOf(buyableType.name()),
                 getBoosterExchangeRate());
         goodieModel.loadGoodies();
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Button")
+                .setAction("Goodie " + goodie.getType())
+                .setLabel(buyableType.name())
+                .setValue(position)
+                .build());
     }
 
     public interface OnFragmentInteractionListener {

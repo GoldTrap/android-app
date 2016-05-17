@@ -81,6 +81,11 @@ public class TasksDisplayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mListener.tasksShownAcknowledgement(levelResourceCode, levelCode);
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Fab")
+                        .setAction("Tasks")
+                        .setLabel(levelCode)
+                        .build());
             }
         });
         return view;

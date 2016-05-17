@@ -106,20 +106,30 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        String label = null;
         switch (v.getId()) {
             case R.id.share:
+                label = "Share";
                 mListener.shareGame();
                 break;
             case R.id.invite:
+                label = "Invite";
                 mListener.invite();
                 break;
             case R.id.replay:
+                label = "Replay";
                 mListener.replayGame();
                 break;
             case R.id.next:
+                label = "Next";
                 mListener.next();
                 break;
         }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Button")
+                .setAction("Click")
+                .setLabel(label)
+                .build());
     }
 
     public interface OnFragmentInteractionListener {

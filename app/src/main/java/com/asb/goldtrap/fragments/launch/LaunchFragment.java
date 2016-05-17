@@ -218,6 +218,10 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
             conductor.setState(conductor.getOtherPlayerState());
             otherPlayerTurn();
         }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Game Demo")
+                .setAction("Demo Start")
+                .build());
     }
 
     private void firstPlayerTurn() {
@@ -259,6 +263,10 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
 
     private void handleLaunch() {
         mListener.launch();
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Fab")
+                .setAction("Launch")
+                .build());
     }
 
     public interface OnFragmentInteractionListener {

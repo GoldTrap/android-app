@@ -119,6 +119,12 @@ public class ScoreFragment extends Fragment {
                 tasksList = score.getCompletedTasks();
                 break;
         }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Result")
+                .setAction(levelCode)
+                .setLabel(score.getResult().name())
+                .setValue(score.basicScore())
+                .build());
         RecyclerView.Adapter adapter = new TasksRecyclerAdapter(getContext(), tasksList);
         taskList.setAdapter(adapter);
         taskList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -127,6 +133,11 @@ public class ScoreFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mListener.onScoreViewed(score, levelCode);
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Fab")
+                        .setAction("Score")
+                        .setLabel(levelCode)
+                        .build());
             }
         });
         points.setText(getString(R.string.points, score.basicScore()));

@@ -90,7 +90,14 @@ public class BrowseLevelsFragment extends Fragment implements LevelModel.Listene
     }
 
     private void handleLevelClick(int position) {
-        mListener.onLevelClicked(levelModel.getLevel(position));
+        Level level = levelModel.getLevel(position);
+        mListener.onLevelClicked(level);
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Level Click")
+                .setAction(level.getCode())
+                .setLabel(level.getName())
+                .setValue(position)
+                .build());
     }
 
     @Override
