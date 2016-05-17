@@ -10,6 +10,9 @@
     <string name="sign_out">Sign Out</string>
     <string name="title_activity_quick_play">QuickPlayActivity</string>
     <string name="points">Points: %d</string>
+    <string name="your_turn">Your Turn</string>
+    <string name="game_over">Game Over</string>
+    <string name="opponents_turn">Their Turn</string>
     <string name="extra_chance">+1</string>
     <string name="flip">Flip</string>
     <string name="skip">Skip</string>

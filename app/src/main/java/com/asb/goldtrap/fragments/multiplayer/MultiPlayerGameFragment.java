@@ -69,6 +69,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
     private TextView scoreBoard;
+    private TextView currentTurn;
     private ImageButton flip;
     private ImageButton extraChance;
     private ImageButton skip;
@@ -165,6 +166,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         gameCompleteDotBoard.setVisibility(View.INVISIBLE);
         updateGameBoard();
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
+        currentTurn = (TextView) view.findViewById(R.id.current_turn);
 
         handleFlip(view);
         handleExtraChance(view);
@@ -344,6 +346,15 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         scoreBoard.setText(
                 getString(R.string.points,
                         conductor.getGameSnapshotMap().get(myPlayerId).getScore().basicScore()));
+        if (conductor.getState() instanceof PlayerTurn) {
+            currentTurn.setText(R.string.your_turn);
+        }
+        else if (conductor.getState() instanceof GameOver) {
+            currentTurn.setText(R.string.game_over);
+        }
+        else {
+            currentTurn.setText(R.string.opponents_turn);
+        }
     }
 
     @Override

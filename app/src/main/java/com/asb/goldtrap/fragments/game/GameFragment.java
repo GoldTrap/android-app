@@ -64,6 +64,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
     private TextView scoreBoard;
+    private TextView currentTurn;
     private ImageButton flip;
     private ImageButton extraChance;
     private ImageButton skip;
@@ -116,7 +117,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         gameCompleteDotBoard
                 .setGameSnapShot(conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT));
         scoreBoard = (TextView) view.findViewById(R.id.score_board);
-
+        currentTurn = (TextView) view.findViewById(R.id.current_turn);
         handleFlip(view);
         handleExtraChance(view);
         handleSkip(view);
@@ -293,6 +294,15 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
                 getString(R.string.points,
                         conductor.getGameSnapshotMap().get(PlayerVsAi.DEFAULT).getScore()
                                 .basicScore()));
+        if (conductor.getState() instanceof PlayerTurn) {
+            currentTurn.setText(R.string.your_turn);
+        }
+        else if (conductor.getState() instanceof GameOver) {
+            currentTurn.setText(R.string.game_over);
+        }
+        else {
+            currentTurn.setText(R.string.opponents_turn);
+        }
     }
 
     @Override
