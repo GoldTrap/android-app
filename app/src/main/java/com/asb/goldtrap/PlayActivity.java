@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.game.GameFragment;
 import com.asb.goldtrap.fragments.play.BrowseEpisodesFragment;
@@ -130,12 +132,18 @@ public class PlayActivity extends AppCompatActivity
         if (!level.isLocked()) {
             int levelResourceCode = getResources()
                     .getIdentifier(level.getCode(), "raw", getPackageName());
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.fragment_container,
-                            TasksDisplayFragment.newInstance(levelResourceCode, level.getCode()),
-                            TasksDisplayFragment.TAG)
-                    .commit();
+            if (0 < levelResourceCode) {
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                        .replace(R.id.fragment_container,
+                                TasksDisplayFragment
+                                        .newInstance(levelResourceCode, level.getCode()),
+                                TasksDisplayFragment.TAG)
+                        .commit();
+            }
+            else {
+                showMessage(getString(R.string.stay_tuned));
+            }
         }
         else {
             // TODO: Take him to the store
@@ -292,6 +300,11 @@ public class PlayActivity extends AppCompatActivity
     @Override
     public GoogleApiClient getGoogleApiClient() {
         return mGoogleApiClient;
+    }
+
+    private void showMessage(String msg) {
+        ViewGroup coordinateLayout = (ViewGroup) findViewById(R.id.fragment_container);
+        Snackbar.make(coordinateLayout, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     public void showSpinner() {
