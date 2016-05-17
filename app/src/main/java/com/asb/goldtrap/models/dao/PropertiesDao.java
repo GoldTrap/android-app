@@ -19,6 +19,8 @@ public interface PropertiesDao {
             + KEY
             + ");";
 
+    String SOUND_TYPE = "SOUND_TYPE";
+
     String getValue(String key);
 
     long setValue(String key, String value);

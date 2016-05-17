@@ -92,5 +92,7 @@
     <string name="game_is_expired">This game is expired.  So sad!</string>
     <string name="auto_matching">We\'re still waiting for an automatch partner.</string>
     <string name="transaction_successful">Transaction Successful</string>
+    <string name="mute">Mute</string>
+    <string name="un_mute">Un-mute</string>
 
 </resources>

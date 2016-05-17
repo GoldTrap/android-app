@@ -1,4 +1,4 @@
-package com.asb.goldtrap.models.sound.impl;
+package com.asb.goldtrap.models.sound.strategy.impl;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.os.Build;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
-import com.asb.goldtrap.models.sound.SoundHelper;
-import com.asb.goldtrap.models.sound.SoundType;
+import com.asb.goldtrap.models.sound.strategy.NoteType;
+import com.asb.goldtrap.models.sound.strategy.SoundHelper;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,10 +19,10 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * SoundHelperImpl.
+ * GuitarSoundHelper.
  * Created by arjun on 27/03/16.
  */
-public class SoundHelperImpl implements SoundHelper {
+public class GuitarSoundHelper implements SoundHelper {
     private static final List<Integer> SOUND_POOL = Arrays
             .asList(R.raw.click_1, R.raw.click_2, R.raw.click_3, R.raw.cell_1, R.raw.win_1,
                     R.raw.lose_1);
@@ -45,16 +45,16 @@ public class SoundHelperImpl implements SoundHelper {
 
     public static SoundHelper instance(Context context) {
         if (null == INSTANCE) {
-            synchronized (SoundHelperImpl.class) {
+            synchronized (GuitarSoundHelper.class) {
                 if (null == INSTANCE) {
-                    INSTANCE = new SoundHelperImpl(context);
+                    INSTANCE = new GuitarSoundHelper(context);
                 }
             }
         }
         return INSTANCE;
     }
 
-    private SoundHelperImpl(Context context) {
+    private GuitarSoundHelper(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             soundPool = createNewSoundPool();
         }
@@ -88,14 +88,14 @@ public class SoundHelperImpl implements SoundHelper {
     }
 
     @Override
-    public void playSound(SoundType soundType) {
-        int resource = getResource(soundType);
+    public void playSound(NoteType noteType) {
+        int resource = getResource(noteType);
         soundPool.play(poolIdMap.get(resource), 1, 1, 1, 0, 1);
     }
 
-    private int getResource(SoundType soundType) {
+    private int getResource(NoteType noteType) {
         int resource = -1;
-        switch (soundType) {
+        switch (noteType) {
             case CLICK:
                 resource = CLICK_POOL.get(random.nextInt(CLICK_POOL.size()));
                 break;
@@ -115,14 +115,14 @@ public class SoundHelperImpl implements SoundHelper {
         return resource;
     }
 
-    private SoundType getSoundType(DotsGameSnapshot snapshot) {
-        SoundType soundType;
+    private NoteType getSoundType(DotsGameSnapshot snapshot) {
+        NoteType noteType;
         if (!snapshot.getLastScoredCells().isEmpty()) {
-            soundType = SoundType.CELL;
+            noteType = NoteType.CELL;
         }
         else {
-            soundType = SoundType.CLICK;
+            noteType = NoteType.CLICK;
         }
-        return soundType;
+        return noteType;
     }
 }

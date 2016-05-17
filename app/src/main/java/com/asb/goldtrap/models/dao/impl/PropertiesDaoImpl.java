@@ -38,6 +38,6 @@ public class PropertiesDaoImpl extends AbstractDao implements PropertiesDao {
         ContentValues values = new ContentValues(1);
         values.put(KEY, key);
         values.put(VALUE, value);
-        return database.insert(TABLE, null, values);
+        return database.replace(TABLE, null, values);
     }
 }

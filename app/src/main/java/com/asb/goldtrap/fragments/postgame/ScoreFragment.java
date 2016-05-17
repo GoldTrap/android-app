@@ -18,9 +18,11 @@ import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
 import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
-import com.asb.goldtrap.models.sound.SoundHelper;
-import com.asb.goldtrap.models.sound.SoundType;
-import com.asb.goldtrap.models.sound.impl.SoundHelperImpl;
+import com.asb.goldtrap.models.sound.SoundModel;
+import com.asb.goldtrap.models.sound.impl.SoundModelImpl;
+import com.asb.goldtrap.models.sound.strategy.NoteType;
+import com.asb.goldtrap.models.sound.strategy.SoundHelper;
+import com.asb.goldtrap.models.sound.strategy.factory.SoundFactory;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -69,7 +71,9 @@ public class ScoreFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (null != getArguments()) {
-            soundHelper = SoundHelperImpl.instance(getContext());
+            SoundModel soundModel = new SoundModelImpl(getContext());
+            SoundFactory soundFactory = new SoundFactory();
+            soundHelper = soundFactory.getSoundHelper(soundModel.getSoundType(), getContext());
             Gson gson = new Gson();
             DotsGameSnapshot snapshot =
                     gson.fromJson(getArguments().getString(SNAPSHOT), DotsGameSnapshot.class);
@@ -91,19 +95,19 @@ public class ScoreFragment extends Fragment {
         List<Task> tasksList = null;
         switch (score.getResult()) {
             case WON:
-                soundHelper.playSound(SoundType.WIN);
+                soundHelper.playSound(NoteType.WIN);
                 result.setText(R.string.won);
                 tasks.setText(R.string.completed_tasks);
                 tasksList = score.getCompletedTasks();
                 break;
             case LOST:
-                soundHelper.playSound(SoundType.LOSE);
+                soundHelper.playSound(NoteType.LOSE);
                 result.setText(R.string.lost);
                 tasks.setText(R.string.incomplete_tasks);
                 tasksList = score.getIncompleteTasks();
                 break;
             case DRAW:
-                soundHelper.playSound(SoundType.DRAW);
+                soundHelper.playSound(NoteType.DRAW);
                 result.setText(R.string.draw);
                 tasks.setText(R.string.completed_tasks);
                 tasksList = score.getCompletedTasks();

@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.boosters.BoosterModel;
@@ -26,8 +28,11 @@ import com.asb.goldtrap.models.file.ImageHelper;
 import com.asb.goldtrap.models.file.impl.ImageHelperImpl;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
 import com.asb.goldtrap.models.results.computers.result.impl.ScoreComputerImpl;
-import com.asb.goldtrap.models.sound.SoundHelper;
-import com.asb.goldtrap.models.sound.impl.SoundHelperImpl;
+import com.asb.goldtrap.models.sound.SoundModel;
+import com.asb.goldtrap.models.sound.SoundType;
+import com.asb.goldtrap.models.sound.impl.SoundModelImpl;
+import com.asb.goldtrap.models.sound.strategy.SoundHelper;
+import com.asb.goldtrap.models.sound.strategy.factory.SoundFactory;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.models.states.impl.PlayerTurn;
@@ -59,6 +64,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private Button flip;
     private Button extraChance;
     private Button skip;
+    private ToggleButton sound;
     private OnFragmentInteractionListener mListener;
     private GameConductor conductor;
     private Handler handler = new Handler();
@@ -69,6 +75,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private String levelCode;
     private BoosterModel boosterModel;
     private Map<BoosterType, Booster> boosterMap;
+    private SoundModel soundModel;
+    private SoundFactory soundFactory;
     private SoundHelper soundHelper;
     ExplosionField explosionField;
 
@@ -108,6 +116,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         handleFlip(view);
         handleExtraChance(view);
         handleSkip(view);
+        handleSound(view);
 
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
 
@@ -164,6 +173,26 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         });
         updateScoreBoard();
         return view;
+    }
+
+    private void handleSound(View view) {
+        sound = (ToggleButton) view.findViewById(R.id.sound);
+        SoundType soundType = soundModel.getSoundType();
+        soundHelper = soundFactory.getSoundHelper(soundType, getContext());
+        sound.setChecked(SoundType.GUITAR == soundType);
+        sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    soundModel.updateSoundType(SoundType.GUITAR);
+                    soundHelper = soundFactory.getSoundHelper(SoundType.GUITAR, getContext());
+                }
+                else {
+                    soundModel.updateSoundType(SoundType.MUTE);
+                    soundHelper = soundFactory.getSoundHelper(SoundType.MUTE, getContext());
+                }
+            }
+        });
     }
 
     private void handleSkip(View view) {
@@ -234,7 +263,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         explosionField = ExplosionField.attach2Window(getActivity());
-        soundHelper = SoundHelperImpl.instance(getContext());
+        soundModel = new SoundModelImpl(getContext());
+        soundFactory = new SoundFactory();
         Bundle args = getArguments();
         imageHelper = new ImageHelperImpl();
         boosterModel = new BoosterModelImpl(getContext());

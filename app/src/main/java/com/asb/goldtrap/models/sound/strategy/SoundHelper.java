@@ -1,4 +1,4 @@
-package com.asb.goldtrap.models.sound;
+package com.asb.goldtrap.models.sound.strategy;
 
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 
@@ -9,5 +9,5 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 public interface SoundHelper {
     void playSound(DotsGameSnapshot snapshot);
 
-    void playSound(SoundType soundType);
+    void playSound(NoteType noteType);
 }

@@ -20,6 +20,7 @@ import com.asb.goldtrap.models.eo.Goodie;
 import com.asb.goldtrap.models.eo.Score;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.gameplay.Migration;
+import com.asb.goldtrap.models.sound.SoundType;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 
 import java.util.ArrayList;
@@ -57,7 +58,12 @@ public class InitDataMigrationImpl implements Migration {
         setUpScores();
         setUpGoodies();
         setUpBoosters();
+        setUpSound();
         propertiesDao.setValue(DATA_MIGRATION_COMPLETE, "YES");
+    }
+
+    private void setUpSound() {
+        propertiesDao.setValue(PropertiesDao.SOUND_TYPE, SoundType.GUITAR.name());
     }
 
     private void unlockFirstLevelOfFirstEpisode() {
