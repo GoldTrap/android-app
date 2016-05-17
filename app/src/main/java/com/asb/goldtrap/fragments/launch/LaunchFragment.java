@@ -10,6 +10,7 @@ import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.conductor.impl.AiVsAi;
@@ -28,6 +30,8 @@ import com.asb.goldtrap.models.states.impl.GameOver;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.Random;
 
@@ -45,6 +49,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton launchButton;
     private Random random = new Random();
+    private Tracker tracker;
     private FrameLayout gameLayout;
     private DotBoard dotBoard;
     private GameCompleteDotBoard gameCompleteDotBoard;
@@ -95,6 +100,7 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver,
                 new IntentFilter(DataInitializationService.INITIALIZATION_COMPLETE));
     }
@@ -108,6 +114,9 @@ public class LaunchFragment extends Fragment implements GameConductor.GameStateO
     @Override
     public void onResume() {
         super.onResume();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
         startGame();
     }
 

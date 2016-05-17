@@ -6,11 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.TasksRecyclerAdapter;
 import com.asb.goldtrap.models.eo.Task;
@@ -23,6 +25,8 @@ import com.asb.goldtrap.models.sound.impl.SoundModelImpl;
 import com.asb.goldtrap.models.sound.strategy.NoteType;
 import com.asb.goldtrap.models.sound.strategy.SoundHelper;
 import com.asb.goldtrap.models.sound.strategy.factory.SoundFactory;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -46,6 +50,7 @@ public class ScoreFragment extends Fragment {
     private ScoreComputer scoreComputer;
     private String levelCode;
     private SoundHelper soundHelper;
+    private Tracker tracker;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -70,6 +75,7 @@ public class ScoreFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         if (null != getArguments()) {
             SoundModel soundModel = new SoundModelImpl(getContext());
             SoundFactory soundFactory = new SoundFactory();
@@ -143,6 +149,14 @@ public class ScoreFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     public interface OnFragmentInteractionListener {

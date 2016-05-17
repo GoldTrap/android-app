@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.MenuRecyclerAdapter;
 import com.asb.goldtrap.models.conductor.GameConductor;
@@ -19,6 +21,8 @@ import com.asb.goldtrap.models.dao.impl.ScoreDaoImpl;
 import com.asb.goldtrap.models.menu.impl.HomePageMenu;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.spansize.MenuSpanSizeLookup;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -38,6 +42,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     private List<HomePageMenu> homePageMenus;
     private ScoreDao scoreDao;
     private TextView points;
+    private Tracker tracker;
 
     /**
      * Get the new instance
@@ -56,6 +61,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         Gson gson = new Gson();
         InputStream inputStream = getResources().openRawResource(R.raw.home_page_menu);
         homePageMenus = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)),
@@ -68,6 +74,9 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     public void onResume() {
         super.onResume();
         points.setText(getString(R.string.points, scoreDao.getScore(ScoreDao.CURRENT).getValue()));
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

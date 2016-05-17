@@ -5,17 +5,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.LevelRecyclerAdapter;
 import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.levels.LevelModel;
 import com.asb.goldtrap.models.levels.impl.CursorLevelModel;
 import com.asb.goldtrap.spansize.LevelSpanSizeLoopkup;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * Browse Lessons Fragment
@@ -29,6 +33,7 @@ public class BrowseLevelsFragment extends Fragment implements LevelModel.Listene
     private OnFragmentInteractionListener mListener;
     private LevelModel levelModel;
     private RecyclerView.Adapter adapter;
+    private Tracker tracker;
 
     public BrowseLevelsFragment() {
     }
@@ -53,6 +58,7 @@ public class BrowseLevelsFragment extends Fragment implements LevelModel.Listene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         if (getArguments() != null) {
             episodeCode = getArguments().getString(EPISODE_CODE);
             name = getArguments().getString(NAME);
@@ -109,6 +115,9 @@ public class BrowseLevelsFragment extends Fragment implements LevelModel.Listene
     public void onResume() {
         super.onResume();
         levelModel.loadLevels(episodeCode);
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

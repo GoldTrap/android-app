@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.boosters.BoosterModel;
 import com.asb.goldtrap.models.boosters.impl.BoosterModelImpl;
@@ -39,6 +41,8 @@ import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.gson.Gson;
@@ -79,7 +83,8 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private SoundFactory soundFactory;
     private BoosterModel boosterModel;
     private Map<BoosterType, Booster> boosterMap;
-    ExplosionField explosionField;
+    private ExplosionField explosionField;
+    private Tracker tracker;
 
     public MultiPlayerGameFragment() {
         // Required empty public constructor
@@ -106,9 +111,18 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         soundModel = new SoundModelImpl(getContext());
         soundFactory = new SoundFactory();
         boosterModel = new BoosterModelImpl(getContext());

@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.boosters.BoosterModel;
 import com.asb.goldtrap.models.boosters.impl.BoosterModelImpl;
@@ -40,6 +41,8 @@ import com.asb.goldtrap.models.states.impl.SecondaryPlayerTurn;
 import com.asb.goldtrap.views.DotBoard;
 import com.asb.goldtrap.views.GameCompleteDotBoard;
 import com.asb.goldtrap.views.LineType;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -78,7 +81,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private SoundModel soundModel;
     private SoundFactory soundFactory;
     private SoundHelper soundHelper;
-    ExplosionField explosionField;
+    private ExplosionField explosionField;
+    private Tracker tracker;
 
     /**
      * Create an instance of GameFragment
@@ -262,6 +266,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         explosionField = ExplosionField.attach2Window(getActivity());
         soundModel = new SoundModelImpl(getContext());
         soundFactory = new SoundFactory();
@@ -296,6 +301,9 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     public void onResume() {
         super.onResume();
         boosterMap = boosterModel.getBoostersState();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.CheckoutRecyclerAdapter;
 import com.asb.goldtrap.models.boosters.BoosterModel;
@@ -24,6 +26,8 @@ import com.asb.goldtrap.models.goodie.GoodieModel;
 import com.asb.goldtrap.models.goodie.impl.CursorGoodieModel;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.ScoreModelImpl;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 
 /**
@@ -39,6 +43,7 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
     private BoosterModel boosterModel;
     private GoodieModel goodieModel;
     private RecyclerView.Adapter adapter;
+    private Tracker tracker;
 
     public CheckoutFragment() {
         // Required empty public constructor
@@ -56,6 +61,7 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         scoreModel = new ScoreModelImpl(getContext());
         boosterModel = new BoosterModelImpl(getContext());
         goodieModel =
@@ -142,6 +148,9 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
     public void onResume() {
         super.onResume();
         goodieModel.loadGoodies();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
 

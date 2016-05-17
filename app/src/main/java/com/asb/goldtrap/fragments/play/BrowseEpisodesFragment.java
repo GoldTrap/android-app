@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.EpisodeRecyclerAdapter;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
 import com.asb.goldtrap.models.episodes.impl.CursorEpisodeModel;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * Browse Episodes Fragment
@@ -23,6 +27,7 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     private OnFragmentInteractionListener mListener;
     private EpisodeModel episodeModel;
     private RecyclerView.Adapter adapter;
+    private Tracker tracker;
 
     public BrowseEpisodesFragment() {
         // Required empty public constructor
@@ -58,6 +63,8 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        tracker =
+                GoldTrapApplication.getInstance().getDefaultTracker();
         episodeModel =
                 new CursorEpisodeModel(getContext(), getActivity().getSupportLoaderManager(), this);
     }
@@ -89,6 +96,9 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     public void onResume() {
         super.onResume();
         episodeModel.loadEpisodes();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

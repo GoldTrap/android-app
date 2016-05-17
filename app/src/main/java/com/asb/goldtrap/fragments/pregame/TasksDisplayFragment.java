@@ -6,13 +6,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.TasksRecyclerAdapter;
 import com.asb.goldtrap.models.eo.Level;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -32,6 +36,8 @@ public class TasksDisplayFragment extends Fragment {
     private Level level;
     private int levelResourceCode;
     private String levelCode;
+    private Tracker tracker;
+
     /**
      * Get new Instance of TasksDisplayFragment
      *
@@ -55,6 +61,7 @@ public class TasksDisplayFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         Bundle args = getArguments();
         levelResourceCode = args.getInt(LEVEL_RESOURCE);
         levelCode = args.getString(LEVEL_CODE);
@@ -100,6 +107,14 @@ public class TasksDisplayFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     public interface OnFragmentInteractionListener {

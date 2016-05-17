@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.BuyablesRecyclerAdapter;
 import com.asb.goldtrap.models.buyables.BuyablesModel;
 import com.asb.goldtrap.models.buyables.impl.BuyablesModelImpl;
 import com.asb.goldtrap.models.eo.Buyable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * ShopORamaFragment.
@@ -23,6 +27,7 @@ public class ShopORamaFragment extends Fragment {
     private BuyablesModel buyablesModel;
     private RecyclerView.Adapter adapter;
     private OnFragmentInteractionListener mListener;
+    private Tracker tracker;
 
     public ShopORamaFragment() {
         // Required empty public constructor
@@ -35,6 +40,8 @@ public class ShopORamaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         buyablesModel = new BuyablesModelImpl(getContext());
     }
 
@@ -77,6 +84,14 @@ public class ShopORamaFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     public interface OnFragmentInteractionListener {

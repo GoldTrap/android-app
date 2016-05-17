@@ -4,13 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * Summary Fragment
@@ -28,6 +32,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
     private Uri uri;
 
     private OnFragmentInteractionListener mListener;
+    private Tracker tracker;
 
     public SummaryFragment() {
         // Required empty public constructor
@@ -50,6 +55,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         if (getArguments() != null) {
             uri = getArguments().getParcelable(IMAGE_URI);
         }
@@ -88,6 +94,14 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "Setting screen name: " + TAG);
+        tracker.setScreenName(TAG);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
