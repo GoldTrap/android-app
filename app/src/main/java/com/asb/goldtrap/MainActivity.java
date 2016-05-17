@@ -2,6 +2,7 @@ package com.asb.goldtrap;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -17,6 +18,7 @@ import com.asb.goldtrap.fragments.launch.HomeFragment;
 import com.asb.goldtrap.fragments.launch.LaunchFragment;
 import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.google.android.gms.appinvite.AppInvite;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final int LEADERBOARD_REQUEST_CODE = 15151;
     public static final int ACHIEVEMENTS_REQUEST_CODE = 16161;
+    private static final int REQUEST_INVITE = 16005;
 
     private static int RC_SIGN_IN = 9001;
     private boolean mResolvingConnectionFailure = false;
@@ -282,6 +285,16 @@ public class MainActivity extends AppCompatActivity implements
         Intent multiPlayer = new Intent(this, MultiPlayerActivity.class);
         multiPlayer.putExtra(Multiplayer.EXTRA_TURN_BASED_MATCH, turnBasedMatch);
         startActivity(multiPlayer);
+    }
+
+    @Override
+    public void share() {
+        Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                .setMessage(getString(R.string.invitation_message))
+                .setCallToActionText(getString(R.string.invitation_cta))
+                .setDeepLink(Uri.parse(getString(R.string.goldtrap_deeplink)))
+                .build();
+        startActivityForResult(intent, REQUEST_INVITE);
     }
 
     @Override

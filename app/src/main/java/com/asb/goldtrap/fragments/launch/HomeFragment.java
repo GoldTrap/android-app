@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
                 mListener.achievements();
                 break;
             case SHARE:
+                mListener.share();
                 break;
         }
         tracker.send(new HitBuilders.EventBuilder()
@@ -169,6 +170,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         void leaderboards();
 
         void achievements();
+
+        void share();
     }
 
 }
