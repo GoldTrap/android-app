@@ -47,6 +47,8 @@ public class GameCompleteDotBoard extends View {
     private List<BoardComponentDrawer> boardComponentDrawers;
     private AnimatedBoardComponentDrawer achievementsDrawer;
     private Paint bitmapPaint;
+    private Paint bitmapPaintFirst;
+    private Paint bitmapPaintSecond;
     private Paint dotsPaint;
     private Paint firstPlayerCellPaint;
     private Paint secondPlayerCellPaint;
@@ -76,6 +78,8 @@ public class GameCompleteDotBoard extends View {
         blockedLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         achievementsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        bitmapPaintFirst = new Paint(Paint.ANTI_ALIAS_FLAG);
+        bitmapPaintSecond = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         int[] colors = getResources().getIntArray(R.array.default_game_complete_theme);
         setColors(colors);
@@ -96,7 +100,8 @@ public class GameCompleteDotBoard extends View {
                         firstPlayerLinePaint, blockedLinePaint),
                 new CellDrawer(secondPlayerCellPaint, firstPlayerCellPaint, blockedCellPaint),
                 new GoodiesDrawer(bitmapPaint, goodiesCollection),
-                new DynamicGoodiesDrawer(bitmapPaint), new PointDrawer(dotsPaint));
+                new DynamicGoodiesDrawer(bitmapPaint, bitmapPaintFirst, bitmapPaintSecond),
+                new PointDrawer(dotsPaint));
         achievementsDrawer = new AchievementsDrawer(achievementsPaint, bitmapPaint, spark);
         this.startTime = System.currentTimeMillis();
 
@@ -113,6 +118,8 @@ public class GameCompleteDotBoard extends View {
             secondPlayerLinePaint.setColor(colors[index++]);
             blockedLinePaint.setColor(colors[index++]);
             bitmapPaint.setColor(colors[index++]);
+            bitmapPaintFirst.setColor(colors[index++]);
+            bitmapPaintSecond.setColor(colors[index++]);
             achievementsPaint.setColor(colors[index]);
         }
     }

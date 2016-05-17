@@ -41,15 +41,17 @@
     <color name="teal_a400">#1DE9B6</color>
     <color name="teal_a200">#64FFDA</color>
 
-    <color name="scheme_1_dt">#3AB229</color>
-    <color name="scheme_1_dt2">#1A9209</color>
-    <color name="scheme_1_fc">#B24B3C</color>
-    <color name="scheme_1_sc">#294CB2</color>
+    <color name="scheme_1_dt">@color/teal_a200</color>
+    <color name="scheme_1_dt2">@color/teal_a700</color>
+    <color name="scheme_1_sc">#B24B3C</color>
+    <color name="scheme_1_fc">#294CB2</color>
     <color name="scheme_1_bc">#4E342E</color>
-    <color name="scheme_1_fl">#A23B2C</color>
-    <color name="scheme_1_sl">#193CA2</color>
+    <color name="scheme_1_sl">#A23B2C</color>
+    <color name="scheme_1_fl">#193CA2</color>
     <color name="scheme_1_bl">#4D332D</color>
-    <color name="scheme_1_bt">#333333</color>
+    <color name="scheme_1_bte">#333333</color>
+    <color name="scheme_1_btf">#CCCCCC</color>
+    <color name="scheme_1_bts">#AAAAAA</color>
     <color name="scheme_1_ac">#FFA4A1</color>
 
     <array name="default_theme">
@@ -60,7 +62,9 @@
         <item>@color/scheme_1_fl</item>
         <item>@color/scheme_1_sl</item>
         <item>@color/scheme_1_bl</item>
-        <item>@color/scheme_1_bt</item>
+        <item>@color/scheme_1_bte</item>
+        <item>@color/scheme_1_btf</item>
+        <item>@color/scheme_1_bts</item>
         <item>@color/scheme_1_ac</item>
     </array>
 
@@ -72,7 +76,9 @@
         <item>@color/scheme_1_fl</item>
         <item>@color/scheme_1_sl</item>
         <item>@color/scheme_1_bl</item>
-        <item>@color/scheme_1_bt</item>
+        <item>@color/scheme_1_bte</item>
+        <item>@color/scheme_1_btf</item>
+        <item>@color/scheme_1_bts</item>
         <item>@color/scheme_1_ac</item>
     </array>
 
@@ -83,6 +89,8 @@
         <item>@color/dot_light_coffee</item>
         <item>@color/dot_blue</item>
         <item>@color/dot_orange</item>
+        <item>@color/dot_coffee</item>
+        <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
@@ -98,6 +106,8 @@
         <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
         <item>@color/dot_coffee</item>
+        <item>@color/dot_coffee</item>
+        <item>@color/dot_coffee</item>
     </array>
 
     <array name="experimental_theme">
@@ -110,6 +120,8 @@
         <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
+        <item>@color/dot_orange</item>
+        <item>@color/dot_orange</item>
     </array>
 
     <array name="experimental_game_complete_theme">
@@ -119,6 +131,8 @@
         <item>@color/dot_light_orange</item>
         <item>@color/super_cream</item>
         <item>@color/super_blue</item>
+        <item>@color/dot_orange</item>
+        <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>
         <item>@color/dot_orange</item>

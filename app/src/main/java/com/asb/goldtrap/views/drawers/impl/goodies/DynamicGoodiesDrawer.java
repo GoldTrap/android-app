@@ -5,6 +5,7 @@ import android.graphics.Paint;
 
 import com.asb.goldtrap.models.components.DynamicGoodie;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
+import com.asb.goldtrap.models.states.enums.CellState;
 import com.asb.goldtrap.models.states.enums.GoodiesState;
 import com.asb.goldtrap.views.drawers.BoardComponentDrawer;
 
@@ -17,10 +18,15 @@ public class DynamicGoodiesDrawer implements BoardComponentDrawer {
 
     public static final float SCALING_FACTOR = 0.85f;
     public static final float PADDING_FACTOR = 0.15f;
-    private Paint bitmapPaint;
+    private Paint bitmapPaintEmpty;
+    private Paint bitmapPaintFirst;
+    private Paint bitmapPaintSecond;
 
-    public DynamicGoodiesDrawer(Paint bitmapPaint) {
-        this.bitmapPaint = bitmapPaint;
+    public DynamicGoodiesDrawer(Paint bitmapPaintEmpty, Paint bitmapPaintFirst,
+                                Paint bitmapPaintSecond) {
+        this.bitmapPaintEmpty = bitmapPaintEmpty;
+        this.bitmapPaintFirst = bitmapPaintFirst;
+        this.bitmapPaintSecond = bitmapPaintSecond;
     }
 
     @Override
@@ -37,16 +43,34 @@ public class DynamicGoodiesDrawer implements BoardComponentDrawer {
                 float x = (lineWidth / 2) + lineWidth * goodie.getCol();
                 float y = (lineHeight / 2) + lineHeight * goodie.getRow();
                 if (goodie.getGoodiesState() == GoodiesState.DYNAMIC_GOODIE) {
-                    drawDynamicGoodie(canvas, lineWidth, lineHeight, goodie, x, y);
+                    Paint paint = resolvePaint(brain.getCells()[goodie.getRow()][goodie.getCol()]);
+                    drawDynamicGoodie(canvas, lineWidth, lineHeight, goodie, x, y, paint);
                 }
             }
         }
     }
 
+    private Paint resolvePaint(CellState cellState) {
+        Paint paint = null;
+        switch (cellState) {
+            case FREE:
+            case BLOCKED:
+                paint = bitmapPaintEmpty;
+                break;
+            case PLAYER:
+                paint = bitmapPaintFirst;
+                break;
+            case SECONDARY_PLAYER:
+                paint = bitmapPaintSecond;
+                break;
+        }
+        return paint;
+    }
+
 
     private void drawDynamicGoodie(Canvas canvas, float lineWidth, float lineHeight,
                                    DynamicGoodie goodie,
-                                   float x, float y) {
+                                   float x, float y, Paint paint) {
         int widthScaled = (int) (lineWidth * SCALING_FACTOR);
         int heightScaled = (int) (lineHeight * SCALING_FACTOR);
         int paddingWidth = (int) (lineWidth * PADDING_FACTOR);
@@ -61,9 +85,10 @@ public class DynamicGoodiesDrawer implements BoardComponentDrawer {
             noOfDigits = 1;
         }
         float textSize = widthScaled / noOfDigits;
-        bitmapPaint.setTextSize(textSize);
+
+        paint.setTextSize(textSize);
         canvas.drawText(String.valueOf(goodie.getDisplayValue()),
-                left + paddingWidth, (top + bottom) / 2 + textSize / 3, bitmapPaint);
+                left + paddingWidth, (top + bottom) / 2 + textSize / 3, paint);
     }
 
     private int getNumberOfDigits(int displayValue) {

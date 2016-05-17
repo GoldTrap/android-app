@@ -45,6 +45,8 @@ public class DotBoard extends View implements View.OnTouchListener {
     private boolean animationRequested = false;
     private int dotBoardType;
     private Paint bitmapPaint;
+    private Paint bitmapPaintFirst;
+    private Paint bitmapPaintSecond;
     private Paint dotsPaint;
     private Paint firstPlayerCellPaint;
     private Paint secondPlayerCellPaint;
@@ -93,6 +95,8 @@ public class DotBoard extends View implements View.OnTouchListener {
         firstPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         secondPlayerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        bitmapPaintFirst = new Paint(Paint.ANTI_ALIAS_FLAG);
+        bitmapPaintSecond = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         int[] colors = getResources().getIntArray(R.array.default_theme);
         setColors(colors);
@@ -118,7 +122,8 @@ public class DotBoard extends View implements View.OnTouchListener {
                                 firstPlayerCellPaint,
                                 blockedCellPaint),
                         new GoodiesDrawer(bitmapPaint, goodiesCollection),
-                        new DynamicGoodiesDrawer(bitmapPaint), new PointDrawer(dotsPaint));
+                        new DynamicGoodiesDrawer(bitmapPaint, bitmapPaintFirst, bitmapPaintSecond),
+                        new PointDrawer(dotsPaint));
         this.startTime = System.currentTimeMillis();
     }
 
@@ -132,7 +137,9 @@ public class DotBoard extends View implements View.OnTouchListener {
             firstPlayerLinePaint.setColor(colors[index++]);
             secondPlayerLinePaint.setColor(colors[index++]);
             blockedLinePaint.setColor(colors[index++]);
-            bitmapPaint.setColor(colors[index]);
+            bitmapPaint.setColor(colors[index++]);
+            bitmapPaintFirst.setColor(colors[index++]);
+            bitmapPaintSecond.setColor(colors[index]);
         }
     }
 
