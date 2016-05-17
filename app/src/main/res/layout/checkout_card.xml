@@ -26,7 +26,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/checkout_image_margin"
                 android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 app:layout_widthPercent="20%"/>
 
             <RelativeLayout
