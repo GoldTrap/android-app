@@ -5,8 +5,8 @@ import com.asb.goldtrap.R;
 public enum GoodiesState {
     NOTHING(-1, -1),
     ONE_K(R.drawable.coins, R.string.one_k),
-    TWO_K(R.drawable.coins, R.string.two_k),
-    FIVE_K(R.drawable.coins, R.string.five_k),
+    TWO_K(R.drawable.gold_nuggets, R.string.two_k),
+    FIVE_K(R.drawable.gold_bars, R.string.five_k),
     DIAMOND(R.drawable.diamond, R.string.diamonds),
     DYNAMIC_GOODIE(-1, -1);
 

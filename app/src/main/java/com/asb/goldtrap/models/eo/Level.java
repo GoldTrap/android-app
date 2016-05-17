@@ -126,10 +126,12 @@ public class Level {
         level.setCols(MIN_COLS + random.nextInt(ADDITIONAL_COLS));
         level.setRows(MIN_ROWS + random.nextInt(ADDITIONAL_ROWS));
         level.setBlocked(random.nextInt(BLOCKED_CELLS));
-        level.setGoodies(Arrays.asList(new GoodieData(GoodiesState.DIAMOND, random.nextInt(3)),
-                new GoodieData(GoodiesState.ONE_K, random.nextInt(3))));
+        level.setGoodies(Arrays.asList(new GoodieData(GoodiesState.DIAMOND, 1 + random.nextInt(2)),
+                new GoodieData(GoodiesState.ONE_K, 1 + random.nextInt(2)),
+                new GoodieData(GoodiesState.TWO_K, 1 + random.nextInt(2)),
+                new GoodieData(GoodiesState.FIVE_K, 1 + random.nextInt(2))));
         level.setDynamicGoodies(
-                Collections.singletonList(new DynamicGoodieData(15, random.nextInt(3))));
+                Collections.singletonList(new DynamicGoodieData(15, 1 + random.nextInt(2))));
         level.setComplications(Collections.singletonList(
                 new Complication(GenericGoodieOperator.DYNAMIC_GOODIE_VALUE_MODIFIER,
                         new StrategyData(ValueModifierGoodieOperator.AP, 5))));

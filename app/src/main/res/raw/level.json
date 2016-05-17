@@ -20,7 +20,15 @@
   "goodies": [
     {
       "type": "ONE_K",
-      "count": 3
+      "count": 1
+    },
+    {
+      "type": "TWO_K",
+      "count": 2
+    },
+    {
+      "type": "FIVE_K",
+      "count": 1
     },
     {
       "type": "DIAMOND",
