@@ -1,7 +1,9 @@
 package com.asb.goldtrap;
 
 import android.app.Application;
+import android.content.Context;
 import android.net.Uri;
+import android.support.multidex.MultiDex;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -30,6 +32,12 @@ public class GoldTrapApplication extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
+    }
+
+    @Override
+    public void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
     }
 
     public Uri getGamePreviewUri() {
