@@ -10,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
     defaultConfig {
         applicationId "com.asb.goldtrap"
         minSdkVersion 15
@@ -31,6 +31,7 @@ android {
     }
     dexOptions {
         incremental true
+        javaMaxHeapSize "4g"
     }
 }
 
