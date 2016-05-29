@@ -34,11 +34,5 @@
     "image": "achievements",
     "type": "ACHIEVEMENTS",
     "spanSize": 2
-  },
-  {
-    "name": "share",
-    "image": "share",
-    "type": "SHARE",
-    "spanSize": 2
   }
 ]

@@ -9,15 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.MenuRecyclerAdapter;
 import com.asb.goldtrap.models.conductor.GameConductor;
-import com.asb.goldtrap.models.dao.ScoreDao;
-import com.asb.goldtrap.models.dao.helper.DBHelper;
-import com.asb.goldtrap.models.dao.impl.ScoreDaoImpl;
 import com.asb.goldtrap.models.menu.impl.HomePageMenu;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.spansize.MenuSpanSizeLookup;
@@ -40,8 +36,6 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
     private List<HomePageMenu> homePageMenus;
-    private ScoreDao scoreDao;
-    private TextView points;
     private Tracker tracker;
 
     /**
@@ -67,13 +61,11 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         homePageMenus = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)),
                 new TypeToken<List<HomePageMenu>>() {
                 }.getType());
-        scoreDao = new ScoreDaoImpl(DBHelper.getInstance(getContext()).getWritableDatabase());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        points.setText(getString(R.string.points, scoreDao.getScore(ScoreDao.CURRENT).getValue()));
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
@@ -83,7 +75,6 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        points = (TextView) view.findViewById(R.id.points);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
         gridLayoutManager.setSpanSizeLookup(new MenuSpanSizeLookup(homePageMenus));
         recyclerView = (RecyclerView) view.findViewById(R.id.menus);

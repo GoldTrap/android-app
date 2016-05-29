@@ -62,7 +62,7 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
 
         public void bindMenu(CardGridMenu homePageMenu, Context context) {
             int imageId = context.getResources()
-                    .getIdentifier(homePageMenu.getImage(), "mipmap", context.getPackageName());
+                    .getIdentifier(homePageMenu.getImage(), "drawable", context.getPackageName());
             if (0 == imageId) {
                 imageView.setImageResource(R.drawable.spark);
             }

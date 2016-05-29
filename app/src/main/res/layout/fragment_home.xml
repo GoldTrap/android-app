@@ -2,27 +2,14 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/fragment_bg"
                 tools:context="com.asb.goldtrap.fragments.launch.HomeFragment">
-
-    <TextView
-        android:id="@+id/header"
-        style="@android:style/TextAppearance.Large"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="@string/app_name"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/menus"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/footer"
-        android:layout_below="@+id/header"
-        android:padding="16dp"
+        android:layout_alignParentTop="true"
         android:scrollbars="vertical"/>
 
     <RelativeLayout
@@ -31,14 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="@string/points"/>
     </RelativeLayout>
 
 </RelativeLayout>
