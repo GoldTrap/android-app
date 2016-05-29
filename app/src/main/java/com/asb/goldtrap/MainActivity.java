@@ -3,7 +3,6 @@ package com.asb.goldtrap;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
@@ -122,22 +121,6 @@ public class MainActivity extends AppCompatActivity implements
             }
             else {
                 loadHomeScreen();
-            }
-        }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            if (hasFocus) {
-                int uiVisibilityCode =
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_FULLSCREEN;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    uiVisibilityCode |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-                }
-                getWindow().getDecorView().setSystemUiVisibility(uiVisibilityCode);
             }
         }
     }

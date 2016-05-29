@@ -28,4 +28,21 @@
     <dimen name="checkout_padding">4dp</dimen>
     <dimen name="exchange_title_padding">8dp</dimen>
     <dimen name="checkout_goodie_card_padding">0dp</dimen>
+
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_micro">4dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+
+    <!-- Main Activity -->
+    <dimen name="main_appbar_height">180dp</dimen>
+    <dimen name="main_image_width">200dp</dimen>
+    <dimen name="main_image_height">80dp</dimen>
+    <dimen name="main_content_padding_top">96dp</dimen>
+    <dimen name="main_content_width">@dimen/match_parent</dimen>
+    <dimen name="main_content_padding">@dimen/padding_normal</dimen>
 </resources>

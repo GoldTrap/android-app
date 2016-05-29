@@ -1,0 +1,6 @@
+<resources>
+    <!-- Launch Fragment -->
+    <dimen name="main_appbar_height">256dp</dimen> <!-- 4 * ?actionBarSize -->
+    <dimen name="main_content_padding_top">192dp</dimen> <!-- 3 * ?actionBarSize -->
+    <dimen name="main_content_padding">64dp</dimen>
+</resources>

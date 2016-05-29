@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="app_white">#FFFEFEFE</color>
     <color name="dot_black">#000000</color>
     <color name="dot_grey">#7C786A</color>
     <color name="dot_blue">#8DCDC1</color>

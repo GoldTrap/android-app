@@ -1,16 +1,43 @@
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuickPlayActivity">
+    tools:context=".MainActivity">
 
     <FrameLayout
-        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_appbar_height"
+        android:background="?colorPrimary">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/molten"/>
+
+    </FrameLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.asb.goldtrap.views.layout.coordinator.FrameLayoutBehaviour"/>
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/padding_normal"
+        android:paddingTop="@dimen/main_content_padding_top"
+        android:scrollbarStyle="outsideOverlay">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="@dimen/main_content_width"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="@dimen/padding_normal"
+            android:layout_marginStart="@dimen/padding_normal"
+            android:paddingTop="@dimen/spacing_normal"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/progressLayout"
@@ -26,4 +53,4 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>
