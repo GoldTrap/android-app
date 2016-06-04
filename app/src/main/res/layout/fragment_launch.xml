@@ -13,7 +13,7 @@
         android:layout_above="@+id/title"
         android:layout_gravity="center_horizontal"
         android:paddingTop="@dimen/spacing_normal"
-        app:cardBackgroundColor="@color/app_white"
+        app:cardBackgroundColor="@color/md_grey_200"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation"
         app:cardPreventCornerOverlap="false">
@@ -65,7 +65,7 @@
             android:layout_height="64dp"
             android:layout_gravity="center"
             android:layout_margin="@dimen/fab_padding"
-            android:src="@drawable/play"
+            app:srcCompat="@drawable/next"
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:fabSize="normal"

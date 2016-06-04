@@ -3,22 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_blue_A100"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_appbar_height"
         android:background="?colorPrimary">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="@dimen/main_image_width"
-            android:layout_height="@dimen/main_image_height"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitCenter"
-            android:src="@drawable/brand"/>
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:text="@string/app_name"
+            android:textColor="@color/md_blue_grey_100"
+            android:textSize="42sp"/>
 
-    </FrameLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

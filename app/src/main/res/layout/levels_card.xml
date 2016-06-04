@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/level_card_margin"
+    android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="8dp"
     card_view:cardUseCompatPadding="true">
 
