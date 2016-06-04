@@ -482,8 +482,10 @@ public class MultiPlayerActivity extends AppCompatActivity
                     ScoreComputer scoreComputer = new ScoreComputerImpl(snapshot);
                     scoreComputer.computeScoreWithResults();
                     scoreModel.updateScore(null, snapshot.getScore(), tbm.getMatchId());
-                    leaderboardsModel.updateLeaderboards(mGoogleApiClient, snapshot.getScore());
-                    achievementsModel.updateAchievements(mGoogleApiClient, snapshot.getScore());
+                    if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+                        leaderboardsModel.updateLeaderboards(mGoogleApiClient, snapshot.getScore());
+                        achievementsModel.updateAchievements(mGoogleApiClient, snapshot.getScore());
+                    }
                     return null;
                 }
             }.execute();
