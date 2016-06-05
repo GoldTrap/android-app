@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
@@ -70,8 +69,6 @@ public class BrowseLevelsFragment extends Fragment implements LevelModel.Listene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_browse_levels, container, false);
-        TextView header = (TextView) view.findViewById(R.id.header);
-        header.setText(getResources().getIdentifier(name, "string", getContext().getPackageName()));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 9);
         gridLayoutManager.setSpanSizeLookup(new LevelSpanSizeLoopkup());
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.levels);

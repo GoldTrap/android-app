@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,8 +7,38 @@
     android:background="@color/activity_bg"
     tools:context="com.asb.goldtrap.BrowseActivity">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</RelativeLayout>
+        android:layout_height="@dimen/browse_appbar_height"
+        android:background="?colorPrimary">
+
+        <ImageView
+            android:id="@+id/browse_image"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/browse_image_height"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/margin_normal"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/play"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/padding_normal"
+        android:paddingTop="@dimen/browse_content_padding_top"
+        android:scrollbarStyle="outsideOverlay">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="@dimen/browse_content_width"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:paddingTop="@dimen/spacing_normal"/>
+
+    </RelativeLayout>
+</FrameLayout>
