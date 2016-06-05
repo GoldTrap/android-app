@@ -2,63 +2,95 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:background="@drawable/fragment_bg"
+                android:background="@color/summary_bg"
                 tools:context="com.asb.goldtrap.fragments.postgame.SummaryFragment">
 
-    <ImageView
-        android:id="@+id/image"
+    <RelativeLayout
+        android:id="@+id/result_block"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/play_appbar_height"
+        android:background="?colorPrimary">
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:text="@string/app_name"
+            android:textColor="@color/primary_text"
+            android:textSize="42sp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/actions"/>
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/padding_normal"
+        android:paddingTop="@dimen/play_content_padding_top"
+        android:scrollbarStyle="outsideOverlay">
 
-    <LinearLayout
-        android:id="@+id/actions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/invite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/invite"/>
-
-            <Button
-                android:id="@+id/next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/next"/>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/actions"
+            android:layout_margin="@dimen/margin_normal"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/actions"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <Button
-                android:id="@+id/replay"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/replay"/>
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/share"
+                <Button
+                    android:id="@+id/invite"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invite"/>
+
+                <Button
+                    android:id="@+id/next"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/share"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/replay"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/replay"/>
+
+                <Button
+                    android:id="@+id/share"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share"/>
+            </LinearLayout>
+
+
         </LinearLayout>
 
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>
