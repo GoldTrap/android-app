@@ -1,10 +1,22 @@
 <resources>
-    <!-- Launch Fragment -->
-    <dimen name="main_appbar_height">256dp</dimen> <!-- 4 * ?actionBarSize -->
-    <dimen name="main_content_padding_top">192dp</dimen> <!-- 3 * ?actionBarSize -->
-    <dimen name="main_content_padding">64dp</dimen>
+    <dimen name="appbar_height">256dp</dimen> <!-- 4 * ?actionBarSize -->
+    <dimen name="content_padding_top">192dp</dimen> <!-- 3 * ?actionBarSize -->
+    <dimen name="content_padding">64dp</dimen>
 
-    <dimen name="browse_appbar_height">256dp</dimen> <!-- 4 * ?actionBarSize -->
-    <dimen name="browse_content_padding_top">192dp</dimen> <!-- 3 * ?actionBarSize -->
-    <dimen name="browse_content_padding">64dp</dimen>
+    <!-- Launch Fragment -->
+    <dimen name="main_appbar_height">@dimen/appbar_height</dimen> <!-- 4 * ?actionBarSize -->
+    <dimen name="main_content_padding_top">@dimen/content_padding_top
+    </dimen> <!-- 3 * ?actionBarSize -->
+    <dimen name="main_content_padding">@dimen/content_padding</dimen>
+
+    <dimen name="browse_appbar_height">@dimen/appbar_height</dimen> <!-- 4 * ?actionBarSize -->
+    <dimen name="browse_content_padding_top">@dimen/content_padding_top
+    </dimen> <!-- 3 * ?actionBarSize -->
+    <dimen name="browse_content_padding">@dimen/content_padding</dimen>
+
+    <dimen name="multi_player_appbar_height">@dimen/appbar_height
+    </dimen> <!-- 4 * ?actionBarSize -->
+    <dimen name="multi_player_content_padding_top">@dimen/content_padding_top
+    </dimen> <!-- 3 * ?actionBarSize -->
+    <dimen name="multi_player_content_padding">@dimen/content_padding</dimen>
 </resources>

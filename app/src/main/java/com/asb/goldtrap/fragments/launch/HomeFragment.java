@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
                 mListener.quickPlay();
                 break;
             case MULTI_PLAYER_GAME:
-                mListener.multiPlayerGame();
+                mListener.multiPlayerGame(v, menu.getName());
                 break;
             case STORE:
                 mListener.onStore();
@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
 
         void quickPlay();
 
-        void multiPlayerGame();
+        void multiPlayerGame(View v, String name);
 
         void onStore();
 

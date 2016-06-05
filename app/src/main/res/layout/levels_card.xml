@@ -7,7 +7,10 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/level_card_margin"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardCornerRadius="8dp"
+    card_view:cardBackgroundColor="@color/md_grey_100"
+    card_view:cardCornerRadius="@dimen/card_corner_radius"
+    card_view:cardElevation="@dimen/card_elevation"
+    card_view:cardPreventCornerOverlap="false"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout

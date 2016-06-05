@@ -1,33 +1,44 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/fragment_bg"
-                tools:context=".fragments.multiplayer.MultiPlayerMenuFragment"
-                tools:showIn="@layout/activity_multi_player">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/multi_player_menu_bg"
+             tools:context=".fragments.multiplayer.MultiPlayerMenuFragment">
 
-    <TextView
-        android:id="@+id/header"
-        style="@android:style/TextAppearance.Large"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="@string/multi_player"/>
+        android:layout_height="@dimen/multi_player_appbar_height"
+        android:background="?colorPrimary">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/menus"
+        <ImageView
+            android:id="@+id/multiplayer_image"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/multi_player_image_height"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/margin_normal"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:transitionName="multi_player_game"
+            app:srcCompat="@drawable/multi_player_game"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/header"
-        android:padding="16dp"
-        android:scrollbars="vertical"/>
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/padding_normal"
+        android:paddingTop="@dimen/multi_player_content_padding_top"
+        android:scrollbarStyle="outsideOverlay">
 
-</RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/menus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:scrollbars="vertical"/>
+    </RelativeLayout>
+
+</FrameLayout>

@@ -22,10 +22,10 @@
     <dimen name="menu_image_size">72dp</dimen>
     <dimen name="buyables_text_left_margin">8dp</dimen>
     <dimen name="buyables_text_padding">4dp</dimen>
-    <dimen name="home_menu_card_margin">4dp</dimen>
-    <dimen name="level_card_margin">4dp</dimen>
+    <dimen name="home_menu_card_margin">0dp</dimen>
+    <dimen name="level_card_margin">0dp</dimen>
     <dimen name="checkout_card_margin">0dp</dimen>
-    <dimen name="episodes_card_margin">4dp</dimen>
+    <dimen name="episodes_card_margin">0dp</dimen>
     <dimen name="checkout_padding">4dp</dimen>
     <dimen name="exchange_title_padding">8dp</dimen>
     <dimen name="checkout_goodie_card_padding">0dp</dimen>
@@ -39,19 +39,36 @@
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
 
+
+    <!-- Generic Activity -->
+    <dimen name="appbar_height">180dp</dimen>
+    <dimen name="image_width">200dp</dimen>
+    <dimen name="image_height">80dp</dimen>
+    <dimen name="content_padding_top">96dp</dimen>
+    <dimen name="content_width">@dimen/match_parent</dimen>
+    <dimen name="content_padding">@dimen/padding_normal</dimen>
+
     <!-- Main Activity -->
-    <dimen name="main_appbar_height">180dp</dimen>
-    <dimen name="main_image_width">200dp</dimen>
-    <dimen name="main_image_height">80dp</dimen>
-    <dimen name="main_content_padding_top">96dp</dimen>
-    <dimen name="main_content_width">@dimen/match_parent</dimen>
-    <dimen name="main_content_padding">@dimen/padding_normal</dimen>
+    <dimen name="main_appbar_height">@dimen/appbar_height</dimen>
+    <dimen name="main_image_width">@dimen/image_width</dimen>
+    <dimen name="main_image_height">@dimen/image_height</dimen>
+    <dimen name="main_content_padding_top">@dimen/content_padding_top</dimen>
+    <dimen name="main_content_width">@dimen/content_width</dimen>
+    <dimen name="main_content_padding">@dimen/content_padding</dimen>
 
     <!-- Browse Activity -->
-    <dimen name="browse_appbar_height">180dp</dimen>
-    <dimen name="browse_image_width">200dp</dimen>
-    <dimen name="browse_image_height">80dp</dimen>
-    <dimen name="browse_content_padding_top">96dp</dimen>
-    <dimen name="browse_content_width">@dimen/match_parent</dimen>
-    <dimen name="browse_content_padding">@dimen/padding_normal</dimen>
+    <dimen name="browse_appbar_height">@dimen/appbar_height</dimen>
+    <dimen name="browse_image_width">@dimen/image_width</dimen>
+    <dimen name="browse_image_height">@dimen/image_height</dimen>
+    <dimen name="browse_content_padding_top">@dimen/content_padding_top</dimen>
+    <dimen name="browse_content_width">@dimen/content_width</dimen>
+    <dimen name="browse_content_padding">@dimen/content_padding</dimen>
+
+    <!-- Multi player Menu Fragment -->
+    <dimen name="multi_player_appbar_height">@dimen/appbar_height</dimen>
+    <dimen name="multi_player_image_width">@dimen/image_width</dimen>
+    <dimen name="multi_player_image_height">@dimen/image_height</dimen>
+    <dimen name="multi_player_content_padding_top">@dimen/content_padding_top</dimen>
+    <dimen name="multi_player_content_width">@dimen/content_width</dimen>
+    <dimen name="multi_player_content_padding">@dimen/content_padding</dimen>
 </resources>

@@ -179,10 +179,17 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void multiPlayerGame() {
+    public void multiPlayerGame(View v, String name) {
         if (NetworkUtils.isConnected(getApplicationContext())) {
             Intent multiPlayer = new Intent(this, MultiPlayerActivity.class);
-            startActivity(multiPlayer);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptions transitionActivityOptions = ActivityOptions
+                        .makeSceneTransitionAnimation(MainActivity.this, v, name);
+                startActivity(multiPlayer, transitionActivityOptions.toBundle());
+            }
+            else {
+                startActivity(multiPlayer);
+            }
         }
         else {
             openWifiSettings();
