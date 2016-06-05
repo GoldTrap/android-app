@@ -1,6 +1,7 @@
 package com.asb.goldtrap.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,9 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
             }
             else {
                 imageView.setImageResource(imageId);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    imageView.setTransitionName(homePageMenu.getName());
+                }
             }
             int nameId = context.getResources()
                     .getIdentifier(homePageMenu.getName(), "string", context.getPackageName());
@@ -76,11 +80,11 @@ public class MenuRecyclerAdapter extends RecyclerView.Adapter<MenuRecyclerAdapte
 
         @Override
         public void onClick(View v) {
-            mListener.onClick(this.getAdapterPosition());
+            mListener.onClick(v, this.getAdapterPosition());
         }
 
         public interface ViewHolderClicks {
-            void onClick(int position);
+            void onClick(View v, int position);
         }
     }
 }

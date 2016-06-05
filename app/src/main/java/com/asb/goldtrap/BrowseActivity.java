@@ -24,7 +24,6 @@ public class BrowseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
                         BrowseEpisodesFragment.newInstance(),
                         BrowseEpisodesFragment.TAG)

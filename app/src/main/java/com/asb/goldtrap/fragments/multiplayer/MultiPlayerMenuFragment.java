@@ -56,7 +56,7 @@ public class MultiPlayerMenuFragment extends Fragment {
         recyclerView.setAdapter(new MenuRecyclerAdapter(getContext(), multiPlayerPageMenus,
                 new MenuRecyclerAdapter.ViewHolder.ViewHolderClicks() {
                     @Override
-                    public void onClick(int position) {
+                    public void onClick(View v, int position) {
                         handleMenuClick(position);
                     }
                 }));

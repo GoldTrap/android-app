@@ -83,18 +83,18 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         recyclerView.setAdapter(new MenuRecyclerAdapter(getContext(), homePageMenus,
                 new MenuRecyclerAdapter.ViewHolder.ViewHolderClicks() {
                     @Override
-                    public void onClick(int position) {
-                        handleMenuClick(position);
+                    public void onClick(View v, int position) {
+                        handleMenuClick(v, position);
                     }
                 }));
         return view;
     }
 
-    private void handleMenuClick(int position) {
+    private void handleMenuClick(View v, int position) {
         HomePageMenu menu = homePageMenus.get(position);
         switch (menu.getType()) {
             case PLAY_GAME:
-                mListener.play();
+                mListener.play(v, menu.getName());
                 break;
             case QUICK_PLAY_GAME:
                 mListener.quickPlay();
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
 
         void signOut();
 
-        void play();
+        void play(View v, String name);
 
         void quickPlay();
 
