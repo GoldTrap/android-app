@@ -3,61 +3,65 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:background="@drawable/fragment_bg"
+                android:background="@color/score_bg"
                 tools:context="com.asb.goldtrap.fragments.postgame.ScoreFragment">
 
-    <TextView
-        android:id="@+id/result"
-        style="@android:style/TextAppearance.Large"
+    <RelativeLayout
+        android:id="@+id/result_block"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="@string/won"/>
+        android:layout_height="@dimen/play_appbar_height"
+        android:background="?colorPrimary">
 
-    <ImageView
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:layout_below="@+id/result"
-        android:background="#1FFFFFFF"
-        android:color="#1FFFFFFF"/>
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:text="@string/won"
+            android:textColor="@color/primary_text"
+            android:textSize="42sp"/>
 
-    <TextView
-        android:id="@+id/points"
-        style="@android:style/TextAppearance.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/points"/>
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:layout_below="@+id/points"
-        android:background="#1FFFFFFF"
-        android:color="#1FFFFFFF"/>
-
-    <TextView
-        android:id="@+id/tasks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/divider2"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/completed_tasks"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/task_list"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/action"
-        android:layout_below="@+id/tasks"
-        android:scrollbars="vertical"/>
+        android:paddingTop="@dimen/score_content_padding_top">
+
+        <TextView
+            android:id="@+id/tasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/completed_tasks"
+            android:textColor="@color/secondary_text"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/task_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/points"
+            android:layout_below="@+id/tasks"
+            android:layout_margin="@dimen/margin_normal"
+            android:scrollbars="vertical"/>
+
+        <TextView
+            android:id="@+id/points"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/points"
+            android:textColor="@color/secondary_text_dark"
+            android:textSize="28sp"/>
+
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/action"
@@ -67,11 +71,12 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="@dimen/fab_padding"
-        app:srcCompat="@drawable/next"
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="normal"
         app:layout_anchorGravity="bottom|right|end"
-        app:pressedTranslationZ="12dp"/>
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/next"/>
+
 
 </RelativeLayout>

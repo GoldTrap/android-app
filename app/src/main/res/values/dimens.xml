@@ -78,6 +78,7 @@
     <dimen name="play_image_width">@dimen/image_width</dimen>
     <dimen name="play_image_height">@dimen/image_height</dimen>
     <dimen name="play_content_padding_top">@dimen/content_padding_top</dimen>
+    <dimen name="score_content_padding_top">80dp</dimen>
     <dimen name="play_content_width">@dimen/content_width</dimen>
     <dimen name="play_content_padding">@dimen/content_padding</dimen>
 </resources>
