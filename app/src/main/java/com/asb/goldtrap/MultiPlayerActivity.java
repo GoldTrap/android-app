@@ -295,19 +295,6 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            this.finish();
-        }
-        else {
-            if (null != getSupportFragmentManager().findFragmentByTag(SummaryFragment.TAG)) {
-                getSupportFragmentManager().popBackStack();
-            }
-            getSupportFragmentManager().popBackStack();
-        }
-    }
-
-    @Override
     public void onTurnBasedMatchReceived(TurnBasedMatch turnBasedMatch) {
         updateMatch(turnBasedMatch);
     }
@@ -340,7 +327,7 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void next() {
-        onBackPressed();
+        finish();
     }
 
     private void processResult(TurnBasedMultiplayer.CancelMatchResult result) {
