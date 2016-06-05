@@ -12,16 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.game.GameFragment;
-import com.asb.goldtrap.fragments.play.BrowseEpisodesFragment;
-import com.asb.goldtrap.fragments.play.BrowseLevelsFragment;
 import com.asb.goldtrap.fragments.postgame.ScoreFragment;
 import com.asb.goldtrap.fragments.postgame.SummaryFragment;
 import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.models.achievements.AchievementsModel;
 import com.asb.goldtrap.models.achievements.impl.PlayAchievementsModel;
 import com.asb.goldtrap.models.eo.BoosterType;
-import com.asb.goldtrap.models.eo.migration.Episode;
-import com.asb.goldtrap.models.eo.migration.Level;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
 import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.Score;
@@ -40,14 +36,14 @@ import com.google.example.games.basegameutils.BaseGameUtils;
 public class PlayActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        BrowseEpisodesFragment.OnFragmentInteractionListener,
-        BrowseLevelsFragment.OnFragmentInteractionListener,
         TasksDisplayFragment.OnFragmentInteractionListener,
         GameFragment.OnFragmentInteractionListener,
         ScoreFragment.OnFragmentInteractionListener,
         SummaryFragment.OnFragmentInteractionListener {
 
     private static final String TAG = PlayActivity.class.getSimpleName();
+    public static final String LEVEL_RESOURCE_CODE = "levelResourceCode";
+    public static final String LEVEL_CODE = "levelCode";
     private static int RC_SIGN_IN = 10001;
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;
@@ -71,23 +67,20 @@ public class PlayActivity extends AppCompatActivity
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addApi(AppInvite.API).addScope(Games.SCOPE_GAMES)
                 .build();
-        if (null == getSupportFragmentManager().findFragmentByTag(
-                BrowseEpisodesFragment.TAG) &&
-                null == getSupportFragmentManager().findFragmentByTag(
-                        BrowseLevelsFragment.TAG) &&
-                null == getSupportFragmentManager().findFragmentByTag(
-                        TasksDisplayFragment.TAG)) {
-            browseGames();
+        if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(ScoreFragment.TAG) &&
+                null == getSupportFragmentManager().findFragmentByTag(SummaryFragment.TAG)) {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.fragment_container,
+                            TasksDisplayFragment
+                                    .newInstance(getIntent()
+                                                    .getIntExtra(LEVEL_RESOURCE_CODE, R.raw.e01c01),
+                                            getIntent().getStringExtra(LEVEL_CODE)),
+                            TasksDisplayFragment.TAG)
+                    .commit();
         }
-    }
-
-    private void browseGames() {
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                .replace(R.id.fragment_container,
-                        BrowseEpisodesFragment.newInstance(),
-                        BrowseEpisodesFragment.TAG)
-                .commit();
     }
 
     @Override
@@ -113,40 +106,6 @@ public class PlayActivity extends AppCompatActivity
         }
         else {
             getSupportFragmentManager().popBackStack();
-        }
-    }
-
-    @Override
-    public void onEpisodeClicked(Episode episode) {
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                .replace(R.id.fragment_container,
-                        BrowseLevelsFragment.newInstance(episode.getCode(), episode.getName()),
-                        BrowseLevelsFragment.TAG)
-                .addToBackStack(BrowseLevelsFragment.TAG)
-                .commit();
-    }
-
-    @Override
-    public void onLevelClicked(Level level) {
-        if (!level.isLocked()) {
-            int levelResourceCode = getResources()
-                    .getIdentifier(level.getCode(), "raw", getPackageName());
-            if (0 < levelResourceCode) {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                        .replace(R.id.fragment_container,
-                                TasksDisplayFragment
-                                        .newInstance(levelResourceCode, level.getCode()),
-                                TasksDisplayFragment.TAG)
-                        .commit();
-            }
-            else {
-                showMessage(getString(R.string.stay_tuned));
-            }
-        }
-        else {
-            // TODO: Take him to the store
         }
     }
 
@@ -204,11 +163,7 @@ public class PlayActivity extends AppCompatActivity
 
     @Override
     public void replayGame() {
-        for (int count = 0; count < getSupportFragmentManager().getBackStackEntryCount();
-             count += 1) {
-            getSupportFragmentManager().popBackStackImmediate();
-        }
-        browseGames();
+        finish();
     }
 
     @Override

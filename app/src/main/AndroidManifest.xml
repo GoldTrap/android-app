@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.asb.goldtrap">
+<manifest package="com.asb.goldtrap"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="com.google.android.gms.all"/>
 
@@ -46,8 +46,35 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".BrowseActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asb.goldtrap.MainActivity"/>
+            <intent-filter android:label="@string/title_activity_play">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="asb-apps.blogspot.in"
+                    android:pathPrefix="/goldtrap/play"
+                    android:scheme="http"/>
+                <data
+                    android:host="goldtrap"
+                    android:pathPrefix="/play"
+                    android:scheme="asb-apps"/>
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".QuickPlayActivity"
-            android:label="@string/title_activity_quick_play">
+            android:label="@string/title_activity_quick_play"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asb.goldtrap.MainActivity"/>
             <intent-filter android:label="@string/quick_play_game">
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -96,29 +123,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PlayActivity"
-            android:label="@string/title_activity_play"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:name=".ShopORamaActivity"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asb.goldtrap.MainActivity"/>
+        </activity>
 
-            <intent-filter android:label="@string/title_activity_play">
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data
-                    android:host="asb-apps.blogspot.in"
-                    android:pathPrefix="/goldtrap/play"
-                    android:scheme="http"/>
-                <data
-                    android:host="goldtrap"
-                    android:pathPrefix="/play"
-                    android:scheme="asb-apps"/>
-            </intent-filter>
+        <activity
+            android:name=".PlayActivity"
+            android:label="@string/title_activity_play"
+            android:parentActivityName=".BrowseActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asb.goldtrap.BrowseActivity"/>
         </activity>
 
         <service
@@ -135,9 +154,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths"/>
         </provider>
-
-        <activity android:name=".ShopORamaActivity">
-        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

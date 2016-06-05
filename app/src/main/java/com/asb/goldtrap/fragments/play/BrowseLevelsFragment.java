@@ -42,7 +42,7 @@ public class BrowseLevelsFragment extends Fragment implements LevelModel.Listene
      * Browse Lessons Fragment Factory Method
      *
      * @param episodeCode Episode Code.
-     * @param name
+     * @param name        Name of the Level.
      * @return A new instance of fragment BrowseLevelsFragment.
      */
     public static BrowseLevelsFragment newInstance(String episodeCode, String name) {
@@ -57,7 +57,6 @@ public class BrowseLevelsFragment extends Fragment implements LevelModel.Listene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         tracker = GoldTrapApplication.getInstance().getDefaultTracker();
         if (getArguments() != null) {
             episodeCode = getArguments().getString(EPISODE_CODE);

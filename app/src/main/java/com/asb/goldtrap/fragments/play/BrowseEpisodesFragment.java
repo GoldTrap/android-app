@@ -62,7 +62,6 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         tracker =
                 GoldTrapApplication.getInstance().getDefaultTracker();
         episodeModel =

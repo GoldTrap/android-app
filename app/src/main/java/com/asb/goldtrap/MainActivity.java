@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void play() {
-        Intent play = new Intent(this, PlayActivity.class);
+        Intent play = new Intent(this, BrowseActivity.class);
         startActivity(play);
     }
 
