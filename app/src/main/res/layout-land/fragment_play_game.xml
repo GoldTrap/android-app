@@ -1,30 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:board="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center_vertical"
-              android:gravity="center_vertical"
-              android:orientation="horizontal"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.asb.goldtrap.fragments.game.GameFragment">
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                                               xmlns:board="http://schemas.android.com/apk/res-auto"
+                                               xmlns:tools="http://schemas.android.com/tools"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="match_parent"
+                                               android:layout_gravity="center_vertical"
+                                               android:gravity="center_vertical"
+                                               android:orientation="horizontal"
+                                               android:paddingBottom="@dimen/activity_vertical_margin"
+                                               android:paddingLeft="@dimen/activity_horizontal_margin"
+                                               android:paddingRight="@dimen/activity_horizontal_margin"
+                                               android:paddingTop="@dimen/activity_vertical_margin"
+                                               tools:context="com.asb.goldtrap.fragments.game.GameFragment">
 
     <LinearLayout
         android:id="@+id/cheat_options"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_toLeftOf="@+id/game_layout"
+        android:layout_toStartOf="@+id/game_layout"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_widthPercent="30%">
 
         <TextView
             android:id="@+id/current_turn"
             style="@android:style/TextAppearance.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
             android:text="@string/your_turn">
         </TextView>
 
@@ -32,6 +37,7 @@
             android:id="@+id/score_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
             android:text="@string/points">
         </TextView>
 
@@ -39,6 +45,7 @@
             android:id="@+id/sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
             android:textOff="@string/un_mute"
             android:textOn="@string/mute"/>
 
@@ -46,6 +53,7 @@
             android:id="@+id/extra_chance"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_margin="@dimen/spacing_normal"
             android:background="@drawable/round_button"
             android:elevation="8dp"
             android:scaleType="fitCenter"
@@ -56,6 +64,7 @@
             android:id="@+id/flip"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_margin="@dimen/spacing_normal"
             android:background="@drawable/round_button"
             android:elevation="8dp"
             android:scaleType="fitCenter"
@@ -66,6 +75,7 @@
             android:id="@+id/skip"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_margin="@dimen/spacing_normal"
             android:background="@drawable/round_button"
             android:elevation="8dp"
             android:scaleType="fitCenter"
@@ -73,27 +83,36 @@
             android:text="@string/skip"/>
     </LinearLayout>
 
-    <FrameLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/game_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="2dp"
-        android:padding="@dimen/dot_board_padding">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="@dimen/spacing_normal"
+        app:cardBackgroundColor="@color/md_grey_200"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardPreventCornerOverlap="false"
+        app:layout_widthPercent="70%">
 
         <com.asb.goldtrap.views.GameCompleteDotBoard
             android:id="@+id/game_complete_dot_board"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/play_content_width"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingTop="@dimen/spacing_normal"
             board:board_style="rectangle_width_longer"/>
 
         <com.asb.goldtrap.views.DotBoard
             android:id="@+id/dot_board"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/play_content_width"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingTop="@dimen/spacing_normal"
             board:board_style="rectangle_width_longer"/>
 
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</android.support.percent.PercentRelativeLayout>

@@ -72,7 +72,6 @@ public class PlayActivity extends AppCompatActivity
                 null == getSupportFragmentManager().findFragmentByTag(ScoreFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(SummaryFragment.TAG)) {
             getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                     .replace(R.id.fragment_container,
                             TasksDisplayFragment
                                     .newInstance(getIntent()

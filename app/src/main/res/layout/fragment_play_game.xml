@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/fragment_bg"
+                android:background="@color/game_bg"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -16,7 +16,9 @@
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/game_status"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/game_layout"
+        android:layout_alignParentTop="true">
 
         <TextView
             android:id="@+id/score_board"
@@ -46,43 +48,49 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:textOff="@string/un_mute"
             android:textOn="@string/mute"
             app:layout_widthPercent="30%"/>
     </android.support.percent.PercentRelativeLayout>
 
-    <FrameLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/game_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/cheat_options"
-        android:layout_below="@+id/game_status"
-        android:layout_centerHorizontal="true"
-        android:elevation="2dp"
-        android:padding="@dimen/dot_board_padding">
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="@dimen/spacing_normal"
+        app:cardBackgroundColor="@color/md_grey_200"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardPreventCornerOverlap="false">
 
         <com.asb.goldtrap.views.GameCompleteDotBoard
             android:id="@+id/game_complete_dot_board"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/play_content_width"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingTop="@dimen/spacing_normal"
             board:board_style="square"/>
 
         <com.asb.goldtrap.views.DotBoard
             android:id="@+id/dot_board"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/play_content_width"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingTop="@dimen/spacing_normal"
             board:board_style="square"/>
 
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 
 
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/cheat_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/game_layout">
 
         <ImageButton
             android:id="@+id/extra_chance"

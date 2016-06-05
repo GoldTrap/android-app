@@ -19,4 +19,10 @@
     <dimen name="multi_player_content_padding_top">@dimen/content_padding_top
     </dimen> <!-- 3 * ?actionBarSize -->
     <dimen name="multi_player_content_padding">@dimen/content_padding</dimen>
+
+    <dimen name="play_player_appbar_height">@dimen/appbar_height
+    </dimen> <!-- 4 * ?actionBarSize -->
+    <dimen name="play_player_content_padding_top">@dimen/content_padding_top
+    </dimen> <!-- 3 * ?actionBarSize -->
+    <dimen name="play_player_content_padding">@dimen/content_padding</dimen>
 </resources>
