@@ -37,7 +37,7 @@
     <string name="share">Share</string>
 
     <!-- Multi Player Menu Items -->
-    <string name="start_match">Start Match</string>
+    <string name="start_match">New Match</string>
     <string name="auto_match">Auto Match</string>
     <string name="in_progress_matches">In Progress Matches</string>
 
