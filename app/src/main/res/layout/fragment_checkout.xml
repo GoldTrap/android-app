@@ -4,35 +4,23 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="com.asb.goldtrap.fragments.shoporama.CheckoutFragment">
-
-    <TextView
-        android:id="@+id/header"
-        style="@android:style/TextAppearance.Large"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="@string/checkout"/>
 
     <LinearLayout
         android:id="@+id/exchange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
+        android:layout_alignParentTop="true"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/checkout_card_margin"
-            card_view:cardCornerRadius="8dp"
+            android:layout_margin="@dimen/episodes_card_margin"
+            card_view:cardBackgroundColor="@color/md_grey_100"
+            card_view:cardCornerRadius="@dimen/card_corner_radius"
+            card_view:cardElevation="@dimen/card_elevation"
+            card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true">
 
             <android.support.percent.PercentRelativeLayout
@@ -50,10 +38,10 @@
 
                     <TextView
                         android:id="@+id/buy_item"
-                        style="@style/TextAppearance.AppCompat.Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/buy_item"
+                        android:textColor="@color/primary_text_dark"
                         android:textSize="13sp"/>
 
                     <TextView
@@ -61,11 +49,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/buy_item_desc"
+                        android:textColor="@color/secondary_text_dark"
                         android:textSize="13sp"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/buy_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/buy"
@@ -76,10 +66,13 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/checkout_card_margin"
-            card_view:cardCornerRadius="8dp"
+            android:layout_margin="@dimen/episodes_card_margin"
+            card_view:cardBackgroundColor="@color/md_grey_100"
+            card_view:cardCornerRadius="@dimen/card_corner_radius"
+            card_view:cardElevation="@dimen/card_elevation"
+            card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true">
 
             <android.support.percent.PercentRelativeLayout
@@ -97,10 +90,10 @@
 
                     <TextView
                         android:id="@+id/trade_points"
-                        style="@style/TextAppearance.AppCompat.Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/trade_points"
+                        android:textColor="@color/primary_text_dark"
                         android:textSize="13sp"/>
 
                     <TextView
@@ -108,11 +101,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/trade_points_desc"
+                        android:textColor="@color/secondary_text_dark"
                         android:textSize="13sp"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/trade_button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/trade"
@@ -125,7 +120,6 @@
 
     <TextView
         android:id="@+id/exchange_goodie_title"
-        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/exchange"
@@ -133,6 +127,7 @@
         android:layout_marginBottom="@dimen/exchange_title_padding"
         android:layout_marginTop="@dimen/exchange_title_padding"
         android:text="@string/exchange_goodie_title"
+        android:textColor="@color/accent"
         android:textSize="15sp"/>
 
     <android.support.v7.widget.RecyclerView

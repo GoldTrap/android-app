@@ -75,8 +75,6 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout, container, false);
-        TextView header = (TextView) view.findViewById(R.id.header);
-        header.setText(getString(R.string.checkout, getString(buyableType.getNameRes())));
         TextView buyItem = (TextView) view.findViewById(R.id.buy_item);
         buyItem.setText(getString(R.string.buy_item, getString(buyableType.getNameRes())));
         TextView buyItemDesc = (TextView) view.findViewById(R.id.buy_item_desc);
