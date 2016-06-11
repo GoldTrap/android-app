@@ -158,7 +158,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_multi_player_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_play_game, container, false);
         dotBoard = (DotBoard) view.findViewById(R.id.dot_board);
         gameCompleteDotBoard =
                 (GameCompleteDotBoard) view.findViewById(R.id.game_complete_dot_board);
