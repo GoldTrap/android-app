@@ -65,7 +65,7 @@
             android:layout_height="64dp"
             android:layout_gravity="center"
             android:layout_margin="@dimen/fab_padding"
-            app:srcCompat="@drawable/next"
+            app:srcCompat="@drawable/play_grey"
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:fabSize="normal"

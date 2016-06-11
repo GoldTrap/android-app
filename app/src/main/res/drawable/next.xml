@@ -5,11 +5,15 @@
         android:viewportWidth="512.00001"
         android:viewportHeight="512.00001">
 
-    <group
-        android:translateY="-540.36216">
-        <path
-            android:fillColor="#b0bec5"
-            android:strokeWidth="1000"
-            android:pathData="M 520,787.60331 L 90.471076,1045.1494 82.194117,544.39338 Z"/>
-    </group>
+    <path
+        android:fillColor="#bdbdbd"
+        android:strokeLineJoin="round"
+        android:pathData="M14.5946,201.737 L324.767,201.737 Q326.248,201.737,326.248,204.724
+L326.248,307.276 Q326.248,310.263,324.767,310.263 L14.5946,310.263
+Q13.1139,310.263,13.1139,307.276 L13.1139,204.724
+Q13.1139,201.737,14.5946,201.737 Z"/>
+    <path
+        android:fillColor="#bdbdbd"
+        android:strokeLineJoin="round"
+        android:pathData="M498.886,250.186 L321.891,464.114 L318.563,47.8861 Z"/>
 </vector>
