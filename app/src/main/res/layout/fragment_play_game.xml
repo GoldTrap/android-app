@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:textColor="@color/accent"
             android:text="@string/your_turn"
             app:layout_widthPercent="35%">
         </TextView>
@@ -64,8 +65,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textOff="@string/un_mute"
-                android:textOn="@string/mute"
-                />
+                android:textOn="@string/mute"/>
         </LinearLayout>
 
     </android.support.percent.PercentRelativeLayout>
@@ -116,12 +116,13 @@
             android:layout_toLeftOf="@+id/flip"
             android:layout_toStartOf="@+id/flip"
             android:background="@drawable/round_button"
-            android:elevation="8dp"
+            android:elevation="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/plus_one"
             android:text="@string/extra_chance"
             app:layout_marginLeftPercent="8%"
-            app:layout_marginRightPercent="8%"/>
+            app:layout_marginRightPercent="8%"
+            app:srcCompat="@drawable/plus_one"/>
 
         <ImageButton
             android:id="@+id/flip"
@@ -129,12 +130,13 @@
             android:layout_height="48dp"
             android:layout_centerInParent="true"
             android:background="@drawable/round_button"
-            android:elevation="8dp"
+            android:elevation="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/flip"
             android:text="@string/flip"
             app:layout_marginLeftPercent="8%"
-            app:layout_marginRightPercent="8%"/>
+            app:layout_marginRightPercent="8%"
+            app:srcCompat="@drawable/flip"/>
 
         <ImageButton
             android:id="@+id/skip"
@@ -144,12 +146,13 @@
             android:layout_toEndOf="@+id/flip"
             android:layout_toRightOf="@+id/flip"
             android:background="@drawable/round_button"
-            android:elevation="8dp"
+            android:elevation="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/skip"
             android:text="@string/skip"
             app:layout_marginLeftPercent="8%"
-            app:layout_marginRightPercent="8%"/>
+            app:layout_marginRightPercent="8%"
+            app:srcCompat="@drawable/skip"/>
     </android.support.percent.PercentRelativeLayout>
 
 </RelativeLayout>

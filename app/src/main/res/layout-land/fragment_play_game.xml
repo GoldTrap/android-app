@@ -31,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_normal"
-            android:text="@string/your_turn">
+            android:text="@string/your_turn"
+            android:textColor="@color/accent">
         </TextView>
 
         <TextView
@@ -72,10 +73,11 @@
             android:layout_height="48dp"
             android:layout_margin="@dimen/spacing_normal"
             android:background="@drawable/round_button"
-            android:elevation="8dp"
+            android:elevation="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/plus_one"
-            android:text="@string/extra_chance"/>
+            android:text="@string/extra_chance"
+            app:srcCompat="@drawable/plus_one"/>
 
         <ImageButton
             android:id="@+id/flip"
@@ -83,10 +85,11 @@
             android:layout_height="48dp"
             android:layout_margin="@dimen/spacing_normal"
             android:background="@drawable/round_button"
-            android:elevation="8dp"
+            android:elevation="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/flip"
-            android:text="@string/flip"/>
+            android:text="@string/flip"
+            app:srcCompat="@drawable/flip"/>
 
         <ImageButton
             android:id="@+id/skip"
@@ -94,10 +97,11 @@
             android:layout_height="48dp"
             android:layout_margin="@dimen/spacing_normal"
             android:background="@drawable/round_button"
-            android:elevation="8dp"
+            android:elevation="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/skip"
-            android:text="@string/skip"/>
+            android:text="@string/skip"
+            app:srcCompat="@drawable/skip"/>
     </LinearLayout>
 
     <android.support.v7.widget.CardView
