@@ -18,18 +18,18 @@
     <color name="super_dark_crimson">#800216</color>
 
 
-    <color name="scheme_1_dt">@color/md_teal_200</color>
-    <color name="scheme_1_dt2">@color/md_teal_700</color>
-    <color name="scheme_1_sc">#B24B3C</color>
-    <color name="scheme_1_fc">#294CB2</color>
-    <color name="scheme_1_bc">#4E342E</color>
-    <color name="scheme_1_sl">#A23B2C</color>
-    <color name="scheme_1_fl">#193CA2</color>
-    <color name="scheme_1_bl">#4D332D</color>
-    <color name="scheme_1_bte">#333333</color>
-    <color name="scheme_1_btf">#CCCCCC</color>
-    <color name="scheme_1_bts">#AAAAAA</color>
-    <color name="scheme_1_ac">#FFA4A1</color>
+    <color name="scheme_1_dt">@color/md_red_500</color>
+    <color name="scheme_1_dt2">@color/md_red_700</color>
+    <color name="scheme_1_sc">@color/md_green_500</color>
+    <color name="scheme_1_fc">@color/md_blue_300</color>
+    <color name="scheme_1_bc">@color/md_brown_300</color>
+    <color name="scheme_1_sl">@color/md_green_700</color>
+    <color name="scheme_1_fl">@color/md_blue_500</color>
+    <color name="scheme_1_bl">@color/md_brown_500</color>
+    <color name="scheme_1_bte">@color/md_grey_500</color>
+    <color name="scheme_1_btf">@color/md_white_1000</color>
+    <color name="scheme_1_bts">@color/md_white_1000</color>
+    <color name="scheme_1_ac">@color/md_orange_500</color>
 
     <array name="default_theme">
         <item>@color/scheme_1_dt</item>
@@ -87,31 +87,4 @@
         <item>@color/dot_coffee</item>
     </array>
 
-    <array name="experimental_theme">
-        <item>@color/super_crimson</item>
-        <item>@color/super_light_cream</item>
-        <item>@color/super_light_blue</item>
-        <item>@color/dot_light_orange</item>
-        <item>@color/super_cream</item>
-        <item>@color/super_blue</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-    </array>
-
-    <array name="experimental_game_complete_theme">
-        <item>@color/super_dark_crimson</item>
-        <item>@color/super_light_cream</item>
-        <item>@color/super_light_blue</item>
-        <item>@color/dot_light_orange</item>
-        <item>@color/super_cream</item>
-        <item>@color/super_blue</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-        <item>@color/dot_orange</item>
-    </array>
 </resources>
