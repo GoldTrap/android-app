@@ -41,7 +41,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/points"
             android:textColor="@color/secondary_text_dark"
-            android:textSize="28sp"/>
+            android:textSize="20sp"/>
 
     </RelativeLayout>
 

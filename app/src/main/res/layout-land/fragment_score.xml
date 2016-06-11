@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/score_bg"
+                tools:context="com.asb.goldtrap.fragments.postgame.ScoreFragment">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:id="@+id/task_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_widthPercent="60%">
+
+            <TextView
+                android:id="@+id/tasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/completed_tasks"
+                android:textColor="@color/accent"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/task_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tasks"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_normal"
+                android:scrollbars="vertical"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/action_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/task_group"
+            android:layout_toRightOf="@+id/task_group"
+            app:layout_widthPercent="40%">
+
+            <TextView
+                android:id="@+id/points"
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/action"
+                android:layout_centerHorizontal="true"
+                android:text="@string/points"
+                android:textColor="@color/secondary_text_dark"
+                android:textSize="20sp"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/action"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/fab_padding"
+                app:borderWidth="0dp"
+                app:elevation="6dp"
+                app:fabSize="normal"
+                app:layout_anchorGravity="bottom|right|end"
+                app:pressedTranslationZ="12dp"
+                app:srcCompat="@drawable/next"/>
+        </RelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
+
+
+</RelativeLayout>
