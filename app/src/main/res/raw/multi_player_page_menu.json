@@ -3,13 +3,13 @@
     "name": "auto_match",
     "image": "auto_match",
     "type": "AUTO_MATCH",
-    "spanSize": 6
+    "spanSize": 3
   },
   {
     "name": "start_match",
     "image": "start_match",
     "type": "START_MATCH",
-    "spanSize": 6
+    "spanSize": 3
   },
   {
     "name": "in_progress_matches",
