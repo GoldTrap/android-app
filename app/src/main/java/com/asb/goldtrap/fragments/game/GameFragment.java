@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
@@ -68,7 +68,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private ImageButton flip;
     private ImageButton extraChance;
     private ImageButton skip;
-    private ToggleButton sound;
+    private SwitchCompat sound;
     private OnFragmentInteractionListener mListener;
     private GameConductor conductor;
     private Handler handler = new Handler();
@@ -181,7 +181,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     }
 
     private void handleSound(View view) {
-        sound = (ToggleButton) view.findViewById(R.id.sound);
+        sound = (SwitchCompat) view.findViewById(R.id.sound);
         SoundType soundType = soundModel.getSoundType();
         soundHelper = soundFactory.getSoundHelper(soundType, getContext());
         sound.setChecked(SoundType.GUITAR == soundType);
