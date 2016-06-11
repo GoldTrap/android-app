@@ -18,7 +18,7 @@
     <dimen name="levels_card_padding">0dp</dimen>
     <dimen name="buyables_card_padding">0dp</dimen>
     <dimen name="buyables_image_margin">8dp</dimen>
-    <dimen name="buyables_image_size">72dp</dimen>
+    <dimen name="buyables_image_size">64dp</dimen>
     <dimen name="menu_image_size">72dp</dimen>
     <dimen name="buyables_text_left_margin">8dp</dimen>
     <dimen name="buyables_text_padding">4dp</dimen>

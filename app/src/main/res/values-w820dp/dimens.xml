@@ -19,7 +19,7 @@
     <dimen name="levels_image_margin">16dp</dimen>
     <dimen name="levels_card_padding">16dp</dimen>
     <dimen name="buyables_card_padding">16dp</dimen>
-    <dimen name="buyables_image_size">108dp</dimen>
+    <dimen name="buyables_image_size">100dp</dimen>
     <dimen name="menu_image_size">108dp</dimen>
     <dimen name="buyables_image_margin">16dp</dimen>
     <dimen name="buyables_text_left_margin">16dp</dimen>
