@@ -98,5 +98,6 @@
     <string name="mute">Mute</string>
     <string name="un_mute">Un-mute</string>
     <string name="stay_tuned">Stay Tuned for the full version of the App!</string>
+    <string name="score">Score</string>
 
 </resources>

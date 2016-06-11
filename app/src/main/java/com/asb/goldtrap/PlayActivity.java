@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,12 +55,17 @@ public class PlayActivity extends AppCompatActivity
     private ScoreModel scoreModel;
     private LeaderboardsModel leaderboardsModel;
     private AchievementsModel achievementsModel;
+    private ActionBar ab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         sharer = new SharerImpl();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
         scoreModel = new PlayScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         achievementsModel = new PlayAchievementsModel(getApplicationContext());
@@ -79,6 +86,7 @@ public class PlayActivity extends AppCompatActivity
                                             getIntent().getStringExtra(LEVEL_CODE)),
                             TasksDisplayFragment.TAG)
                     .commit();
+            ab.setTitle(R.string.tasks);
         }
     }
 
@@ -117,6 +125,7 @@ public class PlayActivity extends AppCompatActivity
                             GameFragment.newInstance(levelResourceCode, levelCode),
                             GameFragment.TAG)
                     .commit();
+            ab.hide();
         }
     }
 
@@ -129,6 +138,8 @@ public class PlayActivity extends AppCompatActivity
                         ScoreFragment.newInstance(snapshot, levelCode),
                         ScoreFragment.TAG)
                 .commit();
+        ab.show();
+        ab.setTitle(R.string.score);
     }
 
     @Override
@@ -158,6 +169,8 @@ public class PlayActivity extends AppCompatActivity
                                 .newInstance(GoldTrapApplication.getInstance().getGamePreviewUri()),
                         SummaryFragment.TAG)
                 .commit();
+        ab.show();
+        ab.setTitle(R.string.app_name);
     }
 
     @Override
