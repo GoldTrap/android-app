@@ -197,9 +197,16 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onStore() {
+    public void onStore(View v, String name) {
         Intent shopORama = new Intent(this, ShopORamaActivity.class);
-        startActivity(shopORama);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions transitionActivityOptions = ActivityOptions
+                    .makeSceneTransitionAnimation(MainActivity.this, v, name);
+            startActivity(shopORama, transitionActivityOptions.toBundle());
+        }
+        else {
+            startActivity(shopORama);
+        }
     }
 
     @Override

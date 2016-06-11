@@ -21,6 +21,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/buyables_image_margin"
+            android:background="@drawable/round_button"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"/>
 
@@ -36,12 +37,12 @@
 
             <TextView
                 android:id="@+id/buyable_name"
-                style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/buyables_text_padding"
                 android:paddingTop="@dimen/buyables_text_padding"
                 android:text="@string/app_name"
+                android:textColor="@color/primary_text_dark"
                 android:textSize="13sp"/>
 
             <TextView
@@ -51,6 +52,7 @@
                 android:paddingBottom="@dimen/buyables_text_padding"
                 android:paddingTop="@dimen/buyables_text_padding"
                 android:text="@string/app_name"
+                android:textColor="@color/secondary_text_dark"
                 android:textSize="13sp"/>
         </LinearLayout>
     </RelativeLayout>
