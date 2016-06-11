@@ -41,7 +41,6 @@ public class ScoreFragment extends Fragment {
     public static final String SNAPSHOT = "snapshot";
     public static final String LEVEL_CODE = "levelCode";
     private Score score;
-    private TextView result;
     private TextView points;
     private TextView tasks;
     private RecyclerView taskList;
@@ -94,7 +93,6 @@ public class ScoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_score, container, false);
-        result = (TextView) view.findViewById(R.id.result);
         points = (TextView) view.findViewById(R.id.points);
         tasks = (TextView) view.findViewById(R.id.tasks);
         taskList = (RecyclerView) view.findViewById(R.id.task_list);
@@ -102,19 +100,19 @@ public class ScoreFragment extends Fragment {
         switch (score.getResult()) {
             case WON:
                 soundHelper.playSound(NoteType.WIN);
-                result.setText(R.string.won);
+                mListener.setTitleAndShowAppbar(R.string.won);
                 tasks.setText(R.string.completed_tasks);
                 tasksList = score.getCompletedTasks();
                 break;
             case LOST:
                 soundHelper.playSound(NoteType.LOSE);
-                result.setText(R.string.lost);
+                mListener.setTitleAndShowAppbar(R.string.lost);
                 tasks.setText(R.string.incomplete_tasks);
                 tasksList = score.getIncompleteTasks();
                 break;
             case DRAW:
                 soundHelper.playSound(NoteType.DRAW);
-                result.setText(R.string.draw);
+                mListener.setTitleAndShowAppbar(R.string.draw);
                 tasks.setText(R.string.completed_tasks);
                 tasksList = score.getCompletedTasks();
                 break;
@@ -172,5 +170,7 @@ public class ScoreFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onScoreViewed(Score score, String levelCode);
+
+        void setTitleAndShowAppbar(int resId);
     }
 }

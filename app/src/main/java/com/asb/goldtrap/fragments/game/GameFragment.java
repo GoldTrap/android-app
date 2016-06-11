@@ -347,6 +347,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mListener.hideAppbar();
     }
 
     @Override
@@ -375,6 +376,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         void gameOver(String levelCode, String snapshot, Uri gamePreviewUri);
 
         void takeMeToStore(BoosterType boosterType);
+
+        void hideAppbar();
     }
 
 }

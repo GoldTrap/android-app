@@ -8,27 +8,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/play_appbar_height"
-        android:background="?colorPrimary">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
-            android:text="@string/tasks"
-            android:textColor="@color/primary_text"
-            android:textSize="42sp"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/padding_normal"
-        android:paddingTop="@dimen/play_content_padding_top"
+        android:paddingTop="?attr/actionBarSize"
         android:scrollbarStyle="outsideOverlay">
 
         <android.support.v7.widget.RecyclerView

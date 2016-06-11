@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +71,10 @@ public class QuickPlayActivity extends AppCompatActivity
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         achievementsModel = new QuickPlayAchievementsModel(getApplicationContext());
         setContentView(R.layout.activity_quick_play);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(ScoreFragment.TAG) &&
@@ -276,6 +282,17 @@ public class QuickPlayActivity extends AppCompatActivity
             }
         }
 
+    }
+
+    @Override
+    public void setTitleAndShowAppbar(int resId) {
+        getSupportActionBar().show();
+        getSupportActionBar().setTitle(resId);
+    }
+
+    @Override
+    public void hideAppbar() {
+        getSupportActionBar().hide();
     }
 
     @Override

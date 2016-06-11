@@ -102,6 +102,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mListener.hideAppbar();
     }
 
     @Override
@@ -140,5 +141,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         void invite();
 
         void next();
+
+        void hideAppbar();
     }
 }

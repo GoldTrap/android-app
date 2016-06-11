@@ -120,9 +120,12 @@ public class TasksDisplayFragment extends Fragment {
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mListener.setTitleAndShowAppbar(R.string.tasks);
     }
 
     public interface OnFragmentInteractionListener {
         void tasksShownAcknowledgement(int levelResourceCode, String levelCode);
+
+        void setTitleAndShowAppbar(int resId);
     }
 }

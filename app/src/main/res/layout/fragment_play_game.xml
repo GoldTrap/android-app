@@ -51,6 +51,7 @@
             android:layout_centerVertical="true"
             android:textOff="@string/un_mute"
             android:textOn="@string/mute"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             app:layout_widthPercent="30%"/>
     </android.support.percent.PercentRelativeLayout>
 

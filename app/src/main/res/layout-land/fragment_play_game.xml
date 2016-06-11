@@ -46,6 +46,7 @@
             android:id="@+id/sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_margin="@dimen/spacing_normal"
             android:textOff="@string/un_mute"
             android:textOn="@string/mute"/>

@@ -8,7 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,6 +116,10 @@ public class MultiPlayerActivity extends AppCompatActivity
             tbm = savedInstanceState.getParcelable(TBM);
         }
         setContentView(R.layout.activity_multi_player);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
         gson = new Gson();
         sharer = new SharerImpl();
         scoreModel = new MultiplayerScoreModelImpl(getApplicationContext());
@@ -664,6 +670,17 @@ public class MultiPlayerActivity extends AppCompatActivity
             BaseGameUtils.showActivityResultError(this, request, response,
                     R.string.signin_other_error);
         }
+    }
+
+    @Override
+    public void setTitleAndShowAppbar(int resId) {
+        getSupportActionBar().show();
+        getSupportActionBar().setTitle(resId);
+    }
+
+    @Override
+    public void hideAppbar() {
+        getSupportActionBar().hide();
     }
 
     @Override

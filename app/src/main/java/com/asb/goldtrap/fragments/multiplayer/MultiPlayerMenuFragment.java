@@ -121,6 +121,7 @@ public class MultiPlayerMenuFragment extends Fragment {
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mListener.hideAppbar();
     }
 
     public interface OnFragmentInteractionListener {
@@ -129,5 +130,9 @@ public class MultiPlayerMenuFragment extends Fragment {
         void onStartMatch();
 
         void onGamesInProgress();
+
+        void setTitleAndShowAppbar(int resId);
+
+        void hideAppbar();
     }
 }
