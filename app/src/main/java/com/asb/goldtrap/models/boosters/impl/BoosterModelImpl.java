@@ -80,7 +80,9 @@ public class BoosterModelImpl implements BoosterModel {
         if (booster.getCount() > 0) {
             booster.setCount(booster.getCount() - 1);
             boosterDao.updateBooster(booster);
-            handleAchievements(client, boosterType);
+            if (null != client && client.isConnected()) {
+                handleAchievements(client, boosterType);
+            }
         }
         return booster;
     }
