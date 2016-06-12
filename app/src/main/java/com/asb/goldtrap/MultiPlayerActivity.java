@@ -208,8 +208,13 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     private void startMatch(TurnBasedMatchConfig tbmc) {
-        Games.TurnBasedMultiplayer.createMatch(mGoogleApiClient, tbmc)
-                .setResultCallback(initiateMatchResultResultCallback);
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            Games.TurnBasedMultiplayer.createMatch(mGoogleApiClient, tbmc)
+                    .setResultCallback(initiateMatchResultResultCallback);
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games));
+        }
     }
 
     @Override
@@ -220,13 +225,18 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void gameOver(final GameAndLevelSnapshot gameAndLevel) {
-        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        final String myParticipantId = tbm.getParticipantId(playerId);
-        gameAndLevelSnapshot = gameAndLevel;
-        gameAndLevel.setLastPlayerId(myParticipantId);
-        Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, tbm.getMatchId(),
-                gson.toJson(gameAndLevel).getBytes(Charset.forName(CHARSET_NAME)))
-                .setResultCallback(updateMatchResultResultCallback);
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+            final String myParticipantId = tbm.getParticipantId(playerId);
+            gameAndLevelSnapshot = gameAndLevel;
+            gameAndLevel.setLastPlayerId(myParticipantId);
+            Games.TurnBasedMultiplayer.finishMatch(mGoogleApiClient, tbm.getMatchId(),
+                    gson.toJson(gameAndLevel).getBytes(Charset.forName(CHARSET_NAME)))
+                    .setResultCallback(updateMatchResultResultCallback);
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games));
+        }
     }
 
     @Override
@@ -250,15 +260,25 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     @Override
     public void onStartMatch() {
-        Intent intent = Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient,
-                1, 1, true);
-        startActivityForResult(intent, RC_SELECT_PLAYERS);
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            Intent intent = Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient,
+                    1, 1, true);
+            startActivityForResult(intent, RC_SELECT_PLAYERS);
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games));
+        }
     }
 
     @Override
     public void onGamesInProgress() {
-        Intent intent = Games.TurnBasedMultiplayer.getInboxIntent(mGoogleApiClient);
-        startActivityForResult(intent, RC_LOOK_AT_MATCHES);
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            Intent intent = Games.TurnBasedMultiplayer.getInboxIntent(mGoogleApiClient);
+            startActivityForResult(intent, RC_LOOK_AT_MATCHES);
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games));
+        }
     }
 
     @Override
@@ -376,20 +396,25 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     public void startMatch(TurnBasedMatch match) {
-        tbm = match;
-        Level level = getMyLevel(R.raw.another_level);
-        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = tbm.getParticipantId(playerId);
-        if (null != match.getData()) {
-            loadGame(match);
-        }
-        if (null != gameAndLevelSnapshot) {
-            initMatchWithMyCopy(myParticipantId);
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            tbm = match;
+            Level level = getMyLevel(R.raw.another_level);
+            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+            String myParticipantId = tbm.getParticipantId(playerId);
+            if (null != match.getData()) {
+                loadGame(match);
+            }
+            if (null != gameAndLevelSnapshot) {
+                initMatchWithMyCopy(myParticipantId);
+            }
+            else {
+                initializeMatch(level, myParticipantId);
+            }
+            takeTurn(gameAndLevelSnapshot, myParticipantId, true);
         }
         else {
-            initializeMatch(level, myParticipantId);
+            showMessage(getString(R.string.connect_to_google_play_games));
         }
-        takeTurn(gameAndLevelSnapshot, myParticipantId, true);
     }
 
     private void initializeMatch(Level level, String myParticipantId) {
@@ -427,61 +452,77 @@ public class MultiPlayerActivity extends AppCompatActivity
 
     private void takeTurn(GameAndLevelSnapshot gameAndLevelSnapshot, String participantId,
                           final boolean updateFragment) {
-        gameAndLevelSnapshot.setLastPlayerId(participantId);
-        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, tbm.getMatchId(),
-                gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName(CHARSET_NAME)),
-                participantId)
-                .setResultCallback(
-                        new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
-                            @Override
-                            public void onResult(
-                                    @NonNull TurnBasedMultiplayer.UpdateMatchResult result) {
-                                processResult(result, updateFragment);
-                            }
-                        });
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            gameAndLevelSnapshot.setLastPlayerId(participantId);
+            Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, tbm.getMatchId(),
+                    gson.toJson(gameAndLevelSnapshot).getBytes(Charset.forName(CHARSET_NAME)),
+                    participantId)
+                    .setResultCallback(
+                            new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                                @Override
+                                public void onResult(
+                                        @NonNull TurnBasedMultiplayer.UpdateMatchResult result) {
+                                    processResult(result, updateFragment);
+                                }
+                            });
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games));
+        }
     }
 
     private void updateFragment() {
-        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        final String myParticipantId = tbm.getParticipantId(playerId);
-        MultiPlayerGameFragment fragment =
-                (MultiPlayerGameFragment) getSupportFragmentManager().findFragmentByTag(
-                        MultiPlayerGameFragment.TAG);
-        updateScore(myParticipantId);
-        if (null != fragment) {
-            fragment.updateGame(gameAndLevelSnapshot, myParticipantId,
-                    tbm.getTurnStatus(), tbm.getStatus());
-        }
-        else {
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.fragment_container,
-                            MultiPlayerGameFragment.newInstance(gson.toJson(gameAndLevelSnapshot),
-                                    myParticipantId, tbm.getTurnStatus(), tbm.getStatus()),
-                            MultiPlayerGameFragment.TAG)
-                    .addToBackStack(MultiPlayerGameFragment.TAG)
-                    .commit();
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+            final String myParticipantId = tbm.getParticipantId(playerId);
+            MultiPlayerGameFragment fragment =
+                    (MultiPlayerGameFragment) getSupportFragmentManager().findFragmentByTag(
+                            MultiPlayerGameFragment.TAG);
+            updateScore(myParticipantId);
+            if (null != fragment && fragment.isAdded()) {
+                fragment.updateGame(gameAndLevelSnapshot, myParticipantId,
+                        tbm.getTurnStatus(), tbm.getStatus());
+            }
+            else {
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                        .replace(R.id.fragment_container,
+                                MultiPlayerGameFragment
+                                        .newInstance(gson.toJson(gameAndLevelSnapshot),
+                                                myParticipantId, tbm.getTurnStatus(),
+                                                tbm.getStatus()),
+                                MultiPlayerGameFragment.TAG)
+                        .addToBackStack(MultiPlayerGameFragment.TAG)
+                        .commit();
+            }
         }
     }
 
     private void updateScore(final String myParticipantId) {
-        if (tbm.getStatus() == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... params) {
-                    Log.d(TAG, "Game over. Let's update the score");
-                    DotsGameSnapshot snapshot =
-                            gameAndLevelSnapshot.getSnapshotMap().get(myParticipantId);
-                    ScoreComputer scoreComputer = new ScoreComputerImpl(snapshot);
-                    scoreComputer.computeScoreWithResults();
-                    scoreModel.updateScore(null, snapshot.getScore(), tbm.getMatchId());
-                    if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
-                        leaderboardsModel.updateLeaderboards(mGoogleApiClient, snapshot.getScore());
-                        achievementsModel.updateAchievements(mGoogleApiClient, snapshot.getScore());
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            if (tbm.getStatus() == TurnBasedMatch.MATCH_STATUS_COMPLETE) {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        Log.d(TAG, "Game over. Let's update the score");
+                        DotsGameSnapshot snapshot =
+                                gameAndLevelSnapshot.getSnapshotMap().get(myParticipantId);
+                        ScoreComputer scoreComputer = new ScoreComputerImpl(snapshot);
+                        scoreComputer.computeScoreWithResults();
+                        scoreModel.updateScore(null, snapshot.getScore(), tbm.getMatchId());
+                        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+                            leaderboardsModel
+                                    .updateLeaderboards(mGoogleApiClient, snapshot.getScore());
+                            achievementsModel
+                                    .updateAchievements(mGoogleApiClient, snapshot.getScore());
+                        }
+                        return null;
                     }
-                    return null;
-                }
-            }.execute();
+                }.execute();
+            }
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games));
         }
     }
 
@@ -591,33 +632,38 @@ public class MultiPlayerActivity extends AppCompatActivity
     }
 
     public String getNextParticipantId() {
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+            String myParticipantId = tbm.getParticipantId(playerId);
 
-        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String myParticipantId = tbm.getParticipantId(playerId);
+            ArrayList<String> participantIds = tbm.getParticipantIds();
 
-        ArrayList<String> participantIds = tbm.getParticipantIds();
+            int desiredIndex = -1;
 
-        int desiredIndex = -1;
+            for (int i = 0; i < participantIds.size(); i++) {
+                if (participantIds.get(i).equals(myParticipantId)) {
+                    desiredIndex = i + 1;
+                }
+            }
 
-        for (int i = 0; i < participantIds.size(); i++) {
-            if (participantIds.get(i).equals(myParticipantId)) {
-                desiredIndex = i + 1;
+            if (desiredIndex < participantIds.size()) {
+                return participantIds.get(desiredIndex);
+            }
+
+            if (tbm.getAvailableAutoMatchSlots() <= 0) {
+                // You've run out of automatch slots, so we start over.
+                return participantIds.get(0);
+            }
+            else {
+                // You have not yet fully automatched, so null will find a new
+                // person to play against.
+                return null;
             }
         }
-
-        if (desiredIndex < participantIds.size()) {
-            return participantIds.get(desiredIndex);
-        }
-
-        if (tbm.getAvailableAutoMatchSlots() <= 0) {
-            // You've run out of automatch slots, so we start over.
-            return participantIds.get(0);
-        }
         else {
-            // You have not yet fully automatched, so null will find a new
-            // person to play against.
-            return null;
+            showMessage(getString(R.string.connect_to_google_play_games));
         }
+        return null;
     }
 
     private void handleCreateMatch(int response, Intent data) {
