@@ -49,6 +49,9 @@ public class LevelRecyclerAdapter
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView imageView;
         private TextView textView;
+        private ImageView star1;
+        private ImageView star2;
+        private ImageView star3;
         private ViewHolderClicks mListener;
 
         public ViewHolder(View itemView, ViewHolderClicks mListener) {
@@ -57,15 +60,26 @@ public class LevelRecyclerAdapter
             itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.level_name);
             imageView = (ImageView) itemView.findViewById(R.id.level_image);
+            star1 = (ImageView) itemView.findViewById(R.id.star_1);
+            star2 = (ImageView) itemView.findViewById(R.id.star_2);
+            star3 = (ImageView) itemView.findViewById(R.id.star_3);
         }
 
         public void bindMenu(Level level, Context context) {
-            int imageIdentifier = R.drawable.coins;
             if (level.isLocked()) {
-                imageIdentifier = R.drawable.golden_lock;
+                imageView.setImageResource(R.drawable.golden_lock);
             }
-            imageView.setImageResource(imageIdentifier);
             textView.setText(context.getString(R.string.level, level.getNumber()));
+            if (1 <= level.getBestStar()) {
+                star1.setImageResource(R.drawable.filled_star);
+            }
+            if (2 <= level.getBestStar()) {
+                star2.setImageResource(R.drawable.filled_star);
+            }
+            if (3 <= level.getBestStar()) {
+                star3.setImageResource(R.drawable.filled_star);
+            }
+
         }
 
         @Override

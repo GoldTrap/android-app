@@ -9,6 +9,7 @@
     <dimen name="loading_app_name">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="level_size">64dp</dimen>
+    <dimen name="star_size">25dp</dimen>
     <dimen name="checkout_size">64dp</dimen>
     <dimen name="home_menu_image_margin">8dp</dimen>
     <dimen name="episodes_image_margin">8dp</dimen>

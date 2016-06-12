@@ -100,5 +100,6 @@
     <string name="stay_tuned">Stay Tuned for the full version of the App!</string>
     <string name="score">Score</string>
     <string name="sound">Sound</string>
+    <string name="star">Star</string>
 
 </resources>

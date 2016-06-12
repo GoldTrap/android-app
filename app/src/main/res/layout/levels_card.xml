@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,21 +22,67 @@
             android:id="@+id/level_image"
             android:layout_width="@dimen/level_size"
             android:layout_height="@dimen/level_size"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/levels_image_margin"
             android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/coins"/>
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/star_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/level_image">
+
+            <ImageView
+                android:id="@+id/star_1"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/levels_image_margin"
+                android:layout_toLeftOf="@+id/star_2"
+                android:layout_toStartOf="@+id/star_2"
+                android:contentDescription="@string/star"
+                android:scaleType="fitCenter"
+                app:layout_widthPercent="35%"
+                app:srcCompat="@drawable/empty_star"/>
+
+            <ImageView
+                android:id="@+id/star_2"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/levels_image_margin"
+                android:contentDescription="@string/star"
+                android:scaleType="fitCenter"
+                app:layout_widthPercent="30%"
+                app:srcCompat="@drawable/empty_star"/>
+
+            <ImageView
+                android:id="@+id/star_3"
+                android:layout_width="@dimen/star_size"
+                android:layout_height="@dimen/star_size"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/levels_image_margin"
+                android:layout_toEndOf="@+id/star_2"
+                android:layout_toRightOf="@+id/star_2"
+                android:contentDescription="@string/star"
+                android:scaleType="fitCenter"
+                app:layout_widthPercent="35%"
+                app:srcCompat="@drawable/empty_star"/>
+        </android.support.percent.PercentRelativeLayout>
 
         <TextView
             android:id="@+id/level_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/level_image"
+            android:layout_below="@+id/star_grid"
             android:layout_centerHorizontal="true"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:text="@string/app_name"
             android:textSize="13sp"/>
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>
