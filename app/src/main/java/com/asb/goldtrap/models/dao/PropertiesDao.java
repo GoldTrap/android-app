@@ -20,6 +20,7 @@ public interface PropertiesDao {
             + ");";
 
     String SOUND_TYPE = "SOUND_TYPE";
+    String LEVEL_SELECTED_FOR_UNLOCK = "LEVEL_SELECTED_FOR_UNLOCK";
 
     String getValue(String key);
 

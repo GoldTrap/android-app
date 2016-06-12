@@ -15,6 +15,8 @@ import com.asb.goldtrap.models.buyables.BuyableType;
 import com.asb.goldtrap.models.iap.IAPCreditor;
 import com.asb.goldtrap.models.iap.factory.IAPCreditorFactory;
 
+import org.json.JSONObject;
+
 /**
  * Abstract Purchase Activity.
  * Created by arjun on 12/06/16.
@@ -63,7 +65,8 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
         });
     }
 
-    protected void handleInAppPurchase(String sku, int requestCode, String developerPayload) {
+    protected void handleInAppPurchase(String sku, int requestCode, String developerPayload,
+                                       final JSONObject item) {
         try {
             if (null != iabHelper) iabHelper.flagEndAsync();
             iabHelper.launchPurchaseFlow(this, sku, requestCode,
@@ -73,7 +76,7 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
                             if (result.isSuccess()) {
                                 Log.i(TAG, "Purchasing " + purchase.getSku() +
                                         " is Successful, let's consume it now");
-                                consumeIAP(purchase);
+                                consumeIAP(purchase, item);
                             }
                         }
                     }, developerPayload);
@@ -84,7 +87,7 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
 
     protected void handleInAppPurchase(BuyableType buyableType) {
         this.handleInAppPurchase(buyableType.getSku(), buyableType.getRequestCode(),
-                buyableType.getDeveloperPayload());
+                buyableType.getDeveloperPayload(), new JSONObject());
     }
 
     public void loadMyInventory() {
@@ -97,7 +100,7 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
                             if (inv.hasPurchase(consumable)) {
                                 Log.i(TAG, "Consumable " + consumable +
                                         " is with me. Let's consume it now.");
-                                consumeIAP(inv.getPurchase(consumable));
+                                consumeIAP(inv.getPurchase(consumable), new JSONObject());
                             }
                         }
                     }
@@ -108,7 +111,7 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
         }
     }
 
-    protected void consumeIAP(Purchase consumable) {
+    protected void consumeIAP(Purchase consumable, final JSONObject item) {
         try {
             iabHelper.consumeAsync(consumable, new IabHelper.OnConsumeFinishedListener() {
                 @Override
@@ -118,7 +121,7 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
                                 " is Successful, let's update the db.");
                         IAPCreditor iapCreditor = iapCreditorFactory
                                 .getIAPCreditor(purchase.getSku(), getApplicationContext());
-                        iapCreditor.creditItems();
+                        iapCreditor.creditItems(item);
                         onConsumptionComplete();
                     }
                 }

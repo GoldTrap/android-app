@@ -7,6 +7,7 @@ import com.asb.goldtrap.models.iap.impl.FlipCreditor;
 import com.asb.goldtrap.models.iap.impl.NullCreditor;
 import com.asb.goldtrap.models.iap.impl.PlusOneCreditor;
 import com.asb.goldtrap.models.iap.impl.SkipCreditor;
+import com.asb.goldtrap.models.iap.impl.UnlockLevelCreditor;
 
 /**
  * IAP Creditor Factory.
@@ -27,6 +28,9 @@ public class IAPCreditorFactory {
                 break;
             case "get_skip":
                 iapCreditor = new SkipCreditor(context);
+                break;
+            case "unlock_level":
+                iapCreditor = new UnlockLevelCreditor(context);
                 break;
         }
         return iapCreditor;
