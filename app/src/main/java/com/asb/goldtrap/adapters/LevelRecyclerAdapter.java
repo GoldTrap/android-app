@@ -69,6 +69,9 @@ public class LevelRecyclerAdapter
             if (level.isLocked()) {
                 imageView.setImageResource(R.drawable.golden_lock);
             }
+            else {
+                imageView.setImageResource(R.drawable.coins);
+            }
             textView.setText(context.getString(R.string.level, level.getNumber()));
             if (1 <= level.getBestStar()) {
                 star1.setImageResource(R.drawable.filled_star);
