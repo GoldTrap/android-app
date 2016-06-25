@@ -93,4 +93,7 @@
     <dimen name="sor_content_padding_top">@dimen/content_padding_top</dimen>
     <dimen name="sor_content_width">@dimen/content_width</dimen>
     <dimen name="sor_content_padding">@dimen/content_padding</dimen>
+    <dimen name="buyables_image_padding">12dp</dimen>
+    <dimen name="checkout_image_padding">8dp</dimen>
+    <dimen name="round_button_padding">6dp</dimen>
 </resources>

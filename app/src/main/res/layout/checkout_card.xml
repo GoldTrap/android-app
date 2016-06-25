@@ -28,6 +28,7 @@
                 android:layout_height="@dimen/checkout_size"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/checkout_image_margin"
+                android:padding="@dimen/checkout_image_padding"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
                 app:layout_widthPercent="20%"/>
