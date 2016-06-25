@@ -59,7 +59,8 @@ public class ShopORamaActivity extends AbstractPurchaseActivity
 
     private void showCheckoutFragment(BuyableType buyableType) {
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                        R.anim.slide_in_left, R.anim.slide_out_right)
                 .replace(R.id.fragment_container,
                         CheckoutFragment.newInstance(buyableType.name()),
                         CheckoutFragment.TAG)

@@ -45,7 +45,8 @@ public class BrowseActivity extends AbstractPurchaseActivity
     @Override
     public void onEpisodeClicked(Episode episode) {
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                        R.anim.slide_in_left, R.anim.slide_out_right)
                 .replace(R.id.fragment_container,
                         BrowseLevelsFragment.newInstance(episode.getCode(), episode.getName()),
                         BrowseLevelsFragment.TAG)
