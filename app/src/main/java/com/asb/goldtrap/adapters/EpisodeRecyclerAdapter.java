@@ -62,7 +62,7 @@ public class EpisodeRecyclerAdapter
 
         public void bindMenu(Episode episode, Context context) {
             int imageId = context.getResources()
-                    .getIdentifier(episode.getImage(), "mipmap", context.getPackageName());
+                    .getIdentifier(episode.getImage(), "drawable", context.getPackageName());
             if (0 == imageId) {
                 imageView.setImageResource(R.drawable.spark);
             }

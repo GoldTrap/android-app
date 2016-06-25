@@ -1,9 +1,7 @@
 <resources>
-    <string name="episode_1">Hopeful</string>
-    <string name="episode_2">Apprentice</string>
-    <string name="episode_3">Knight</string>
-    <string name="episode_4">Master</string>
-    <string name="episode_5">Guardian</string>
-    <string name="episode_6">Consular</string>
-    <string name="episode_7">Sentinel</string>
+    <string name="episode_1">Roșia Montană - Europe</string>
+    <string name="episode_2">Kolar - India</string>
+    <string name="episode_3">Nevada - United States</string>
+    <string name="episode_4">Kalgoorlie - Australia</string>
+    <string name="episode_5">Kimberly - South Africa</string>
 </resources>
