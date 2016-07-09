@@ -23,6 +23,7 @@ import com.asb.goldtrap.models.achievements.impl.MultiplayerAchievementsModel;
 import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
+import com.asb.goldtrap.models.gameplay.GameTypes;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
 import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.computers.result.ScoreComputer;
@@ -31,6 +32,8 @@ import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.MultiplayerScoreModelImpl;
 import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.snapshots.GameAndLevelSnapshot;
+import com.asb.goldtrap.models.tutorial.TutorialModel;
+import com.asb.goldtrap.models.tutorial.impl.TutorialModelImpl;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
 import com.google.android.gms.ads.MobileAds;
@@ -63,6 +66,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
+
 public class MultiPlayerActivity extends AppCompatActivity
         implements MultiPlayerMenuFragment.OnFragmentInteractionListener,
         MultiPlayerGameFragment.OnFragmentInteractionListener,
@@ -73,6 +78,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     public static final String TAG = MultiPlayerActivity.class.getSimpleName();
     public static final String CHARSET_NAME = "UTF-8";
     public static final String TBM = "tbm";
+    private static final int REQUEST_CODE = 21000;
     private final ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>
             initiateMatchResultResultCallback =
             new ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>() {
@@ -114,6 +120,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private LeaderboardsModel leaderboardsModel;
     private AchievementsModel achievementsModel;
     private PlayerStats playerStats;
+    private TutorialModel tutorialModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +139,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         scoreModel = new MultiplayerScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         achievementsModel = new MultiplayerAchievementsModel(getApplicationContext());
+        tutorialModel = new TutorialModelImpl(getApplicationContext(), GameTypes.MULTI_PLAYER);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -534,8 +542,22 @@ public class MultiPlayerActivity extends AppCompatActivity
                                 MultiPlayerGameFragment.TAG)
                         .addToBackStack(MultiPlayerGameFragment.TAG)
                         .commit();
+                if (!tutorialModel.isTutorialShown()) {
+                    tutorialModel.markTutorialShown();
+                    showHelp();
+                }
             }
         }
+    }
+
+
+    private void showHelp() {
+        Intent tutorialActivity =
+                new Intent(MultiPlayerActivity.this, MaterialTutorialActivity.class);
+        tutorialActivity.putParcelableArrayListExtra(
+                MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS,
+                tutorialModel.getTutorialItems());
+        startActivityForResult(tutorialActivity, REQUEST_CODE);
     }
 
     private void updateScore(final String myParticipantId) {
@@ -777,6 +799,11 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     public PlayerStats getPlayerStats() {
         return playerStats;
+    }
+
+    @Override
+    public void helpRequested() {
+        showHelp();
     }
 
     public void showSpinner() {

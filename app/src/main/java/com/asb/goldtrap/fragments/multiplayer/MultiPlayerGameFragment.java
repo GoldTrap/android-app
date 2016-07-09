@@ -73,6 +73,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
     private ImageButton flip;
     private ImageButton extraChance;
     private ImageButton skip;
+    private ImageButton help;
     private SwitchCompat sound;
     private Handler handler = new Handler();
     private ImageHelper imageHelper;
@@ -117,6 +118,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mListener.hideAppbar();
     }
 
     @Override
@@ -172,6 +174,7 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         handleExtraChance(view);
         handleSkip(view);
         handleSound(view);
+        handleHelp(view);
 
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
 
@@ -222,6 +225,21 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         updateScoreBoard();
         selectBoardToDisplay();
         return view;
+    }
+
+    private void handleHelp(View view) {
+        help = (ImageButton) view.findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Click")
+                        .setLabel("Help")
+                        .build());
+                mListener.helpRequested();
+            }
+        });
     }
 
     private void handleSound(View view) {
@@ -407,5 +425,9 @@ public class MultiPlayerGameFragment extends Fragment implements GameConductor.G
         void showPostGameOverOptions(Uri gamePreviewUri);
 
         void takeMeToStore(BoosterType boosterType);
+
+        void helpRequested();
+
+        void hideAppbar();
     }
 }
