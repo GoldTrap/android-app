@@ -11,6 +11,7 @@ import com.asb.goldtrap.fragments.shoporama.CheckoutFragment;
 import com.asb.goldtrap.fragments.shoporama.ShopORamaFragment;
 import com.asb.goldtrap.models.buyables.BuyableType;
 import com.asb.goldtrap.models.eo.Buyable;
+import com.google.android.gms.ads.MobileAds;
 
 public class ShopORamaActivity extends AbstractPurchaseActivity
         implements ShopORamaFragment.OnFragmentInteractionListener,
@@ -23,6 +24,7 @@ public class ShopORamaActivity extends AbstractPurchaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_orama);
+        MobileAds.initialize(getApplicationContext(), getString(R.string.application_id));
         if (null != getIntent().getExtras()) {
             String boosterType = getIntent().getExtras().getString(BOOSTER_TYPE);
             getSupportFragmentManager().beginTransaction()

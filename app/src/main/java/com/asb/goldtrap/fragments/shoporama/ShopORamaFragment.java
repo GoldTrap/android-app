@@ -16,6 +16,8 @@ import com.asb.goldtrap.adapters.BuyablesRecyclerAdapter;
 import com.asb.goldtrap.models.buyables.BuyablesModel;
 import com.asb.goldtrap.models.buyables.impl.BuyablesModelImpl;
 import com.asb.goldtrap.models.eo.Buyable;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -52,7 +54,11 @@ public class ShopORamaFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.buyables);
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        NativeExpressAdView mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
+                .build();
+        mAdView.loadAd(adRequest);
         adapter = new BuyablesRecyclerAdapter(getContext(), buyablesModel,
                 new BuyablesRecyclerAdapter.ViewHolder.ViewHolderClicks() {
                     @Override

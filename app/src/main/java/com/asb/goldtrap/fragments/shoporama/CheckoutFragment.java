@@ -26,6 +26,8 @@ import com.asb.goldtrap.models.goodie.GoodieModel;
 import com.asb.goldtrap.models.goodie.impl.CursorGoodieModel;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.ScoreModelImpl;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -117,6 +119,11 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
         adapter = new CheckoutRecyclerAdapter(getContext(), goodieModel, this,
                 getBoosterExchangeRate());
         recyclerView.setAdapter(adapter);
+        NativeExpressAdView mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
+                .build();
+        mAdView.loadAd(adRequest);
         return view;
     }
 
