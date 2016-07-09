@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "1067011111209",
-    "project_id": "api-project-1067011111209"
+    "firebase_url": "https://api-project-1067011111209.firebaseio.com",
+    "project_id": "api-project-1067011111209",
+    "storage_bucket": "api-project-1067011111209.appspot.com"
   },
   "client": [
     {
@@ -27,6 +29,14 @@
             "package_name": "com.asb.goldtrap",
             "certificate_hash": "E372F8775B3A819C56A5A4988E1D2808499BBF41"
           }
+        },
+        {
+          "client_id": "1067011111209-rg82vgcnvjcpb94bunch5bd0p2j1142j.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1067011111209-m9vqq9ohhhtu3qhb590q7l7c2gtdjmvl.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -43,14 +53,15 @@
         },
         "appinvite_service": {
           "status": 2,
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067011111209-rg82vgcnvjcpb94bunch5bd0p2j1142j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 2,
-          "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
-          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712",
-          "wide_rect": "ca-app-pub-3256900861325505/7783238068",
-          "square": "ca-app-pub-3256900861325505/9142220061"
+          "status": 2
         }
       }
     }
