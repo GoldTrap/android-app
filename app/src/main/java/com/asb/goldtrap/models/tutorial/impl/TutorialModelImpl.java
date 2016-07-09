@@ -20,6 +20,7 @@ import za.co.riggaroo.materialhelptutorial.TutorialItem;
  */
 public class TutorialModelImpl implements TutorialModel {
 
+    private static final String TUTORIAL = "TUTORIAL_";
     private GameTypes gameTypes;
     private Context context;
     private PropertiesDao propertiesDao;
@@ -50,7 +51,7 @@ public class TutorialModelImpl implements TutorialModel {
      */
     @Override
     public boolean isTutorialShown() {
-        return (null != propertiesDao.getValue(gameTypes.name()));
+        return (null != propertiesDao.getValue(TUTORIAL + gameTypes.name()));
     }
 
     /**
@@ -58,7 +59,7 @@ public class TutorialModelImpl implements TutorialModel {
      */
     @Override
     public void markTutorialShown() {
-        propertiesDao.setValue(gameTypes.name(), String.valueOf(true));
+        propertiesDao.setValue(TUTORIAL + gameTypes.name(), String.valueOf(true));
     }
 
     private TutorialItem clickSkip(Context context) {
