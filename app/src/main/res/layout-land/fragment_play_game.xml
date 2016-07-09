@@ -67,44 +67,70 @@
                 android:textOn="@string/mute"/>
         </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/extra_chance"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="@dimen/spacing_normal"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:padding="@dimen/round_button_padding"
-            android:scaleType="fitCenter"
-            android:src="@drawable/plus_one"
-            android:text="@string/extra_chance"
-            app:srcCompat="@drawable/plus_one"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/flip"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="@dimen/spacing_normal"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:padding="@dimen/round_button_padding"
-            android:scaleType="fitCenter"
-            android:src="@drawable/flip"
-            android:text="@string/flip"
-            app:srcCompat="@drawable/flip"/>
+            <ImageButton
+                android:id="@+id/extra_chance"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/spacing_normal"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:padding="@dimen/round_button_padding"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plus_one"
+                android:text="@string/extra_chance"
+                app:srcCompat="@drawable/plus_one"/>
 
-        <ImageButton
-            android:id="@+id/skip"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="@dimen/spacing_normal"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:padding="@dimen/round_button_padding"
-            android:scaleType="fitCenter"
-            android:src="@drawable/skip"
-            android:text="@string/skip"
-            app:srcCompat="@drawable/skip"/>
+            <ImageButton
+                android:id="@+id/flip"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/spacing_normal"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:padding="@dimen/round_button_padding"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flip"
+                android:text="@string/flip"
+                app:srcCompat="@drawable/flip"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/skip"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/spacing_normal"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:padding="@dimen/round_button_padding"
+                android:scaleType="fitCenter"
+                android:src="@drawable/skip"
+                android:text="@string/skip"
+                app:srcCompat="@drawable/skip"/>
+
+            <ImageButton
+                android:id="@+id/help"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/spacing_normal"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:padding="@dimen/round_button_padding"
+                android:scaleType="fitCenter"
+                android:text="@string/help"
+                app:srcCompat="@drawable/help"/>
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.v7.widget.CardView

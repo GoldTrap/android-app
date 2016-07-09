@@ -15,5 +15,5 @@
     <color name="summary_bg">@color/md_blue_A100</color>
     <color name="score_bg">@color/md_blue_A100</color>
     <color name="multi_player_menu_bg">@color/md_blue_A100</color>
-    <color name="game_bg">@color/md_blue_A100</color>
+    <color name="game_bg">@color/md_blue_A200</color>
 </resources>

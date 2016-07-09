@@ -38,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="@color/accent"
             android:text="@string/your_turn"
+            android:textColor="@color/accent"
             app:layout_widthPercent="35%">
         </TextView>
 
@@ -106,36 +106,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:gravity="center"
         android:layout_below="@+id/game_layout">
 
         <ImageButton
             android:id="@+id/extra_chance"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/flip"
-            android:layout_toStartOf="@+id/flip"
             android:background="@drawable/round_button"
-            android:padding="@dimen/round_button_padding"
             android:elevation="2dp"
+            android:padding="@dimen/round_button_padding"
             android:scaleType="fitCenter"
             android:text="@string/extra_chance"
-            app:layout_marginLeftPercent="8%"
-            app:layout_marginRightPercent="8%"
+            app:layout_marginLeftPercent="4%"
+            app:layout_marginRightPercent="4%"
             app:srcCompat="@drawable/plus_one"/>
 
         <ImageButton
             android:id="@+id/flip"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/extra_chance"
+            android:layout_toRightOf="@+id/extra_chance"
             android:background="@drawable/round_button"
-            android:padding="@dimen/round_button_padding"
             android:elevation="2dp"
+            android:padding="@dimen/round_button_padding"
             android:scaleType="fitCenter"
             android:text="@string/flip"
-            app:layout_marginLeftPercent="8%"
-            app:layout_marginRightPercent="8%"
+            app:layout_marginLeftPercent="4%"
+            app:layout_marginRightPercent="4%"
             app:srcCompat="@drawable/flip"/>
 
         <ImageButton
@@ -146,13 +149,29 @@
             android:layout_toEndOf="@+id/flip"
             android:layout_toRightOf="@+id/flip"
             android:background="@drawable/round_button"
-            android:padding="@dimen/round_button_padding"
             android:elevation="2dp"
+            android:padding="@dimen/round_button_padding"
             android:scaleType="fitCenter"
             android:text="@string/skip"
-            app:layout_marginLeftPercent="8%"
-            app:layout_marginRightPercent="8%"
+            app:layout_marginLeftPercent="4%"
+            app:layout_marginRightPercent="4%"
             app:srcCompat="@drawable/skip"/>
+
+        <ImageButton
+            android:id="@+id/help"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/skip"
+            android:layout_toRightOf="@+id/skip"
+            android:background="@drawable/round_button"
+            android:elevation="2dp"
+            android:padding="@dimen/round_button_padding"
+            android:scaleType="fitCenter"
+            android:text="@string/help"
+            app:layout_marginLeftPercent="4%"
+            app:layout_marginRightPercent="4%"
+            app:srcCompat="@drawable/help"/>
     </android.support.percent.PercentRelativeLayout>
 
 </RelativeLayout>

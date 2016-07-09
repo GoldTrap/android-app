@@ -300,6 +300,11 @@ public class QuickPlayActivity extends AppCompatActivity
         return mGoogleApiClient;
     }
 
+    @Override
+    public void helpRequested() {
+
+    }
+
     public void showSpinner() {
         findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
     }

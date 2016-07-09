@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="click_title">Hola!</string>
+    <string name="click_subtitle">Click between points to occupy the line</string>
+    <string name="points_title">Points</string>
+    <string name="points_subtitle">Complete the cells to get points and extra chance!</string>
+    <string name="flip_title">Flip</string>
+    <string name="flip_subtitle">Are you losing? Just click this, you points and their points will be interchanged!</string>
+    <string name="plus_one_title">Extra Chance</string>
+    <string name="plus_one_subtitle">Want an extra chance? Click this before your turn and Voila! You\'ll get an extra chance!</string>
+    <string name="skip_title">Skip</string>
+    <string name="skip_subtitle">Don\'t wanna play a turn? Click this to skip!</string>
+</resources>

@@ -68,6 +68,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
     private ImageButton flip;
     private ImageButton extraChance;
     private ImageButton skip;
+    private ImageButton help;
     private SwitchCompat sound;
     private OnFragmentInteractionListener mListener;
     private GameConductor conductor;
@@ -121,6 +122,7 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         handleFlip(view);
         handleExtraChance(view);
         handleSkip(view);
+        handleHelp(view);
         handleSound(view);
 
         gameLayout = (FrameLayout) view.findViewById(R.id.game_layout);
@@ -178,6 +180,21 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         });
         updateScoreBoard();
         return view;
+    }
+
+    private void handleHelp(View view) {
+        help = (ImageButton) view.findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Button")
+                        .setAction("Click")
+                        .setLabel("Help")
+                        .build());
+                mListener.helpRequested();
+            }
+        });
     }
 
     private void handleSound(View view) {
@@ -378,6 +395,8 @@ public class GameFragment extends Fragment implements GameConductor.GameStateObs
         void takeMeToStore(BoosterType boosterType);
 
         void hideAppbar();
+
+        void helpRequested();
     }
 
 }

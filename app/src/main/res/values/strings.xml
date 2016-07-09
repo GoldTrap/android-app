@@ -57,6 +57,7 @@
     <string name="sign_in_successful">Sign in successful</string>
 
     <string name="title_activity_play">Play</string>
+    <string name="title_activity_tutorial">Tutorial</string>
 
     <string name="no_internet">Please enable your internet</string>
     <string name="settings">Settings</string>
@@ -102,5 +103,6 @@
     <string name="sound">Sound</string>
     <string name="star">Star</string>
     <string name="connect_to_google_play_games">Please connect to Google Play Games for playing multi-player games!</string>
+    <string name="help">Help</string>
 
 </resources>
