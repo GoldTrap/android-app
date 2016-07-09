@@ -31,6 +31,7 @@ import com.asb.goldtrap.models.tutorial.impl.TutorialModelImpl;
 import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.appinvite.AppInviteInvitationResult;
@@ -83,6 +84,7 @@ public class QuickPlayActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        MobileAds.initialize(getApplicationContext(), getString(R.string.application_id));
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(ScoreFragment.TAG) &&

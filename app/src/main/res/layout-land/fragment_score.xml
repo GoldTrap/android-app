@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:ads="http://schemas.android.com/apk/res-auto"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -17,24 +18,15 @@
             android:layout_height="match_parent"
             app:layout_widthPercent="60%">
 
-            <TextView
-                android:id="@+id/tasks"
+            <com.google.android.gms.ads.NativeExpressAdView
+                android:id="@+id/ad_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="8dp"
-                android:layout_centerHorizontal="true"
-                android:text="@string/completed_tasks"
-                android:textColor="@color/accent"/>
+                android:layout_centerInParent="true"
+                ads:adSize="300x250"
+                ads:adUnitId="@string/square">
+            </com.google.android.gms.ads.NativeExpressAdView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/task_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tasks"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/margin_normal"
-                android:scrollbars="vertical"/>
         </RelativeLayout>
 
 
@@ -51,17 +43,39 @@
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/action"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:text="@string/points"
                 android:textColor="@color/secondary_text_dark"
                 android:textSize="20sp"/>
 
+            <TextView
+                android:id="@+id/tasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/points"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/completed_tasks"
+                android:textColor="@color/accent"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/task_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/action"
+                android:layout_below="@+id/tasks"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_normal"
+                android:scrollbars="vertical"/>
+
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/action"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/fab_padding"
                 app:borderWidth="0dp"

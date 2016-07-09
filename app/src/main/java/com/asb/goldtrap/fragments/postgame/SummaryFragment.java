@@ -13,6 +13,8 @@ import android.widget.ImageView;
 
 import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -75,6 +77,11 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         invite.setOnClickListener(this);
         image = (ImageView) view.findViewById(R.id.image);
         image.setImageURI(uri);
+        NativeExpressAdView mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
+                .build();
+        mAdView.loadAd(adRequest);
         return view;
     }
 

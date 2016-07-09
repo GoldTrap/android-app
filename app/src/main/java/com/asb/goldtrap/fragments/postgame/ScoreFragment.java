@@ -25,6 +25,8 @@ import com.asb.goldtrap.models.sound.impl.SoundModelImpl;
 import com.asb.goldtrap.models.sound.strategy.NoteType;
 import com.asb.goldtrap.models.sound.strategy.SoundHelper;
 import com.asb.goldtrap.models.sound.strategy.factory.SoundFactory;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
@@ -139,6 +141,11 @@ public class ScoreFragment extends Fragment {
             }
         });
         points.setText(getString(R.string.points, score.basicScore()));
+        NativeExpressAdView mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
+                .build();
+        mAdView.loadAd(adRequest);
         return view;
     }
 
