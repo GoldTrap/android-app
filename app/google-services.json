@@ -48,7 +48,9 @@
         "ads_service": {
           "status": 2,
           "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
-          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712"
+          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712",
+          "wide_rect": "ca-app-pub-3256900861325505/7783238068",
+          "square": "ca-app-pub-3256900861325505/9142220061"
         }
       }
     }

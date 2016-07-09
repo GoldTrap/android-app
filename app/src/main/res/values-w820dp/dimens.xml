@@ -37,4 +37,5 @@
     <dimen name="buyables_image_padding">12dp</dimen>
     <dimen name="checkout_image_padding">8dp</dimen>
     <dimen name="round_button_padding">6dp</dimen>
+    <dimen name="tasks_horizontal_margin">8dp</dimen>
 </resources>

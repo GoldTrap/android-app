@@ -15,6 +15,8 @@ import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.TasksRecyclerAdapter;
 import com.asb.goldtrap.models.eo.Level;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
@@ -77,6 +79,11 @@ public class TasksDisplayFragment extends Fragment {
         RecyclerView.Adapter adapter = new TasksRecyclerAdapter(getContext(), level.getTasks());
         toDoRecyclerView.setAdapter(adapter);
         play = (FloatingActionButton) view.findViewById(R.id.play);
+        NativeExpressAdView mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
+                .build();
+        mAdView.loadAd(adRequest);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

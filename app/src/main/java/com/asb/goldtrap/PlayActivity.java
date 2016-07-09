@@ -31,6 +31,7 @@ import com.asb.goldtrap.models.tutorial.impl.TutorialModelImpl;
 import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.common.ConnectionResult;
@@ -72,6 +73,7 @@ public class PlayActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        MobileAds.initialize(getApplicationContext(), getString(R.string.application_id));
         scoreModel = new PlayScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         achievementsModel = new PlayAchievementsModel(getApplicationContext());
