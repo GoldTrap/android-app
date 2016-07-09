@@ -36,7 +36,12 @@ import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.stats.PlayerStats;
+import com.google.android.gms.games.stats.Stats;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
@@ -63,6 +68,7 @@ public class PlayActivity extends AppCompatActivity
     private LeaderboardsModel leaderboardsModel;
     private AchievementsModel achievementsModel;
     private TutorialModel tutorialModel;
+    private PlayerStats playerStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +87,9 @@ public class PlayActivity extends AppCompatActivity
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addApi(AppInvite.API).addScope(Games.SCOPE_GAMES)
+                .addApi(Games.API)
+                .addApi(AppInvite.API)
+                .addScope(Games.SCOPE_GAMES)
                 .build();
         if (null == getSupportFragmentManager().findFragmentByTag(TasksDisplayFragment.TAG) &&
                 null == getSupportFragmentManager().findFragmentByTag(GameFragment.TAG) &&
@@ -96,6 +104,38 @@ public class PlayActivity extends AppCompatActivity
                             TasksDisplayFragment.TAG)
                     .commit();
         }
+    }
+
+    private void checkPlayerStats() {
+        PendingResult<Stats.LoadPlayerStatsResult> result =
+                Games.Stats.loadPlayerStats(mGoogleApiClient, false);
+        result.setResultCallback(new ResultCallback<Stats.LoadPlayerStatsResult>() {
+            public void onResult(Stats.LoadPlayerStatsResult result) {
+                Status status = result.getStatus();
+                if (status.isSuccess()) {
+                    playerStats = result.getPlayerStats();
+                    if (playerStats != null) {
+                        Log.d(TAG, "Player stats loaded");
+                        if (playerStats.getDaysSinceLastPlayed() > 7) {
+                            Log.d(TAG,
+                                    "It's been longer than a week");
+                        }
+                        if (playerStats.getNumberOfSessions() > 1000) {
+                            Log.d(TAG, "Veteran player");
+                        }
+                        if (playerStats.getChurnProbability() == 1) {
+                            Log.d(TAG,
+                                    "Player is at high risk of churn");
+                        }
+                    }
+                }
+                else {
+                    Log.d(TAG,
+                            "Failed to fetch Stats Data status: "
+                                    + status.getStatusMessage());
+                }
+            }
+        });
     }
 
     @Override
@@ -252,6 +292,7 @@ public class PlayActivity extends AppCompatActivity
     @Override
     public void onConnected(Bundle bundle) {
         dismissSpinner();
+        checkPlayerStats();
     }
 
     @Override
@@ -305,6 +346,11 @@ public class PlayActivity extends AppCompatActivity
     private void showMessage(String msg) {
         ViewGroup coordinateLayout = (ViewGroup) findViewById(R.id.fragment_container);
         Snackbar.make(coordinateLayout, msg, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public PlayerStats getPlayerStats() {
+        return playerStats;
     }
 
     public void showSpinner() {

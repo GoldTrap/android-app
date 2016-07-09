@@ -17,6 +17,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.games.stats.PlayerStats;
 
 /**
  * Summary Fragment
@@ -35,6 +36,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     private Tracker tracker;
+    private NativeExpressAdView mAdView;
 
     public SummaryFragment() {
         // Required empty public constructor
@@ -77,7 +79,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         invite.setOnClickListener(this);
         image = (ImageView) view.findViewById(R.id.image);
         image.setImageURI(uri);
-        NativeExpressAdView mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
+        mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
                 .build();
@@ -110,6 +112,11 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
         mListener.hideAppbar();
+        PlayerStats stats = mListener.getPlayerStats();
+        if (null != stats &&
+                (stats.getChurnProbability() > 0.85 || stats.getSpendProbability() > 0.5)) {
+            mAdView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -150,5 +157,7 @@ public class SummaryFragment extends Fragment implements View.OnClickListener {
         void next();
 
         void hideAppbar();
+
+        PlayerStats getPlayerStats();
     }
 }

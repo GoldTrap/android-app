@@ -29,6 +29,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.games.stats.PlayerStats;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class ScoreFragment extends Fragment {
     private String levelCode;
     private SoundHelper soundHelper;
     private Tracker tracker;
+    private NativeExpressAdView mAdView;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -141,7 +143,7 @@ public class ScoreFragment extends Fragment {
             }
         });
         points.setText(getString(R.string.points, score.basicScore()));
-        NativeExpressAdView mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
+        mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
                 .build();
@@ -173,11 +175,18 @@ public class ScoreFragment extends Fragment {
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        PlayerStats stats = mListener.getPlayerStats();
+        if (null != stats &&
+                (stats.getChurnProbability() > 0.85 || stats.getSpendProbability() > 0.5)) {
+            mAdView.setVisibility(View.GONE);
+        }
     }
 
     public interface OnFragmentInteractionListener {
         void onScoreViewed(Score score, String levelCode);
 
         void setTitleAndShowAppbar(int resId);
+
+        PlayerStats getPlayerStats();
     }
 }

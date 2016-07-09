@@ -33,10 +33,13 @@ import com.asb.goldtrap.models.snapshots.DotsGameSnapshot;
 import com.asb.goldtrap.models.snapshots.GameAndLevelSnapshot;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesStatusCodes;
 import com.google.android.gms.games.multiplayer.Multiplayer;
@@ -45,6 +48,8 @@ import com.google.android.gms.games.multiplayer.turnbased.OnTurnBasedMatchUpdate
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
+import com.google.android.gms.games.stats.PlayerStats;
+import com.google.android.gms.games.stats.Stats;
 import com.google.android.gms.plus.Plus;
 import com.google.example.games.basegameutils.BaseGameUtils;
 import com.google.gson.Gson;
@@ -108,6 +113,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private ScoreModel scoreModel;
     private LeaderboardsModel leaderboardsModel;
     private AchievementsModel achievementsModel;
+    private PlayerStats playerStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +126,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        MobileAds.initialize(getApplicationContext(), getString(R.string.application_id));
         gson = new Gson();
         sharer = new SharerImpl();
         scoreModel = new MultiplayerScoreModelImpl(getApplicationContext());
@@ -141,6 +148,38 @@ public class MultiPlayerActivity extends AppCompatActivity
                     .commit();
         }
         retrieveMatchFromHint(getIntent().getExtras());
+    }
+
+    private void checkPlayerStats() {
+        PendingResult<Stats.LoadPlayerStatsResult> result =
+                Games.Stats.loadPlayerStats(mGoogleApiClient, false);
+        result.setResultCallback(new ResultCallback<Stats.LoadPlayerStatsResult>() {
+            public void onResult(Stats.LoadPlayerStatsResult result) {
+                Status status = result.getStatus();
+                if (status.isSuccess()) {
+                    playerStats = result.getPlayerStats();
+                    if (playerStats != null) {
+                        Log.d(TAG, "Player stats loaded");
+                        if (playerStats.getDaysSinceLastPlayed() > 7) {
+                            Log.d(TAG,
+                                    "It's been longer than a week");
+                        }
+                        if (playerStats.getNumberOfSessions() > 1000) {
+                            Log.d(TAG, "Veteran player");
+                        }
+                        if (playerStats.getChurnProbability() == 1) {
+                            Log.d(TAG,
+                                    "Player is at high risk of churn");
+                        }
+                    }
+                }
+                else {
+                    Log.d(TAG,
+                            "Failed to fetch Stats Data status: "
+                                    + status.getStatusMessage());
+                }
+            }
+        });
     }
 
     @Override
@@ -291,6 +330,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         if (null != tbm) {
             updateMatch(tbm);
         }
+        checkPlayerStats();
         Games.TurnBasedMultiplayer.registerMatchUpdateListener(mGoogleApiClient, this);
     }
 
@@ -732,6 +772,11 @@ public class MultiPlayerActivity extends AppCompatActivity
     @Override
     public GoogleApiClient getGoogleApiClient() {
         return mGoogleApiClient;
+    }
+
+    @Override
+    public PlayerStats getPlayerStats() {
+        return playerStats;
     }
 
     public void showSpinner() {

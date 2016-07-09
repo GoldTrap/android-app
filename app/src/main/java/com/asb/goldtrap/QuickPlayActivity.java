@@ -37,8 +37,12 @@ import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.appinvite.AppInviteInvitationResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.stats.PlayerStats;
+import com.google.android.gms.games.stats.Stats;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
@@ -64,6 +68,7 @@ public class QuickPlayActivity extends AppCompatActivity
     private LeaderboardsModel leaderboardsModel;
     private AchievementsModel achievementsModel;
     private TutorialModel tutorialModel;
+    private PlayerStats playerStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +109,39 @@ public class QuickPlayActivity extends AppCompatActivity
                                 // an Activity to launch to handle the deep link here.
                             }
                         });
+    }
+
+    private void checkPlayerStats() {
+        PendingResult<Stats.LoadPlayerStatsResult> result =
+                Games.Stats.loadPlayerStats(
+                        mGoogleApiClient, false /* forceReload */);
+        result.setResultCallback(new ResultCallback<Stats.LoadPlayerStatsResult>() {
+            public void onResult(Stats.LoadPlayerStatsResult result) {
+                Status status = result.getStatus();
+                if (status.isSuccess()) {
+                    playerStats = result.getPlayerStats();
+                    if (playerStats != null) {
+                        Log.d(TAG, "Player stats loaded");
+                        if (playerStats.getDaysSinceLastPlayed() > 7) {
+                            Log.d(TAG,
+                                    "It's been longer than a week");
+                        }
+                        if (playerStats.getNumberOfSessions() > 1000) {
+                            Log.d(TAG, "Veteran player");
+                        }
+                        if (playerStats.getChurnProbability() == 1) {
+                            Log.d(TAG,
+                                    "Player is at high risk of churn");
+                        }
+                    }
+                }
+                else {
+                    Log.d(TAG,
+                            "Failed to fetch Stats Data status: "
+                                    + status.getStatusMessage());
+                }
+            }
+        });
     }
 
     private void startANewGame() {
@@ -321,6 +359,11 @@ public class QuickPlayActivity extends AppCompatActivity
     @Override
     public GoogleApiClient getGoogleApiClient() {
         return mGoogleApiClient;
+    }
+
+    @Override
+    public PlayerStats getPlayerStats() {
+        return playerStats;
     }
 
     @Override
