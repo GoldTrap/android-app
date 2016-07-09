@@ -3,6 +3,7 @@ package com.asb.goldtrap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -86,7 +87,8 @@ public class ShopORamaActivity extends AbstractPurchaseActivity
 
     @Override
     public void receivedBroadcast() {
-
+        Log.i(TAG, "Received a broadcast from IAP!");
+        loadMyInventory();
     }
 
     @Override

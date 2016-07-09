@@ -3,6 +3,8 @@ package com.asb.goldtrap;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -84,13 +86,25 @@ public class BrowseActivity extends AbstractPurchaseActivity
 
     @Override
     protected void onConsumptionComplete() {
+        Log.i(TAG, "Consumption Complete");
         showMessage(getString(R.string.transaction_successful));
-        finish();
+        refreshLevelFragment();
+    }
+
+    private void refreshLevelFragment() {
+        Fragment frg = getSupportFragmentManager().findFragmentByTag(BrowseLevelsFragment.TAG);
+        if (null != frg) {
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.detach(frg);
+            ft.attach(frg);
+            ft.commit();
+        }
     }
 
     @Override
     public void receivedBroadcast() {
-
+        Log.i(TAG, "Received a broadcast from IAP!");
+        loadMyInventory();
     }
 
     private void showMessage(String msg) {

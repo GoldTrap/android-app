@@ -34,12 +34,25 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         iapCreditorFactory = new IAPCreditorFactory();
         consumables = getResources().getStringArray(R.array.iap_sku);
-        setupIAP();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupIAP();
+        mBroadcastReceiver = new IabBroadcastReceiver(AbstractPurchaseActivity.this);
+        IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
+        registerReceiver(mBroadcastReceiver, broadcastFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         if (mBroadcastReceiver != null) {
             unregisterReceiver(mBroadcastReceiver);
         }
@@ -56,9 +69,6 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
             public void onIabSetupFinished(IabResult result) {
                 Log.d(TAG, "Setup finished.");
                 if (null != iabHelper && result.isSuccess()) {
-                    mBroadcastReceiver = new IabBroadcastReceiver(AbstractPurchaseActivity.this);
-                    IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
-                    registerReceiver(mBroadcastReceiver, broadcastFilter);
                     loadMyInventory();
                 }
             }
@@ -78,6 +88,9 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
                                         " is Successful, let's consume it now");
                                 consumeIAP(purchase, item);
                             }
+                            else {
+                                Log.i(TAG, "Purchasing  was a failure");
+                            }
                         }
                     }, developerPayload);
         } catch (IabHelper.IabAsyncInProgressException e) {
@@ -92,6 +105,7 @@ public abstract class AbstractPurchaseActivity extends AppCompatActivity
 
     public void loadMyInventory() {
         try {
+            Log.i(TAG, "Loading my inventory");
             iabHelper.queryInventoryAsync(new IabHelper.QueryInventoryFinishedListener() {
                 @Override
                 public void onQueryInventoryFinished(IabResult result, Inventory inv) {
