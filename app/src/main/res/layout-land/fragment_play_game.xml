@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_normal"
             android:text="@string/your_turn"
-            android:textColor="@color/accent">
+            android:textColor="@color/primary_text"
+            android:textSize="18sp">
         </TextView>
 
         <TextView
@@ -40,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_normal"
-            android:text="@string/points">
+            android:text="@string/points"
+            android:textColor="@color/secondary_text">
         </TextView>
 
         <RelativeLayout
@@ -51,11 +53,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/sound"
                 android:layout_toStartOf="@+id/sound"
-                android:text="@string/sound"/>
+                android:text="@string/sound"
+                android:textColor="@color/secondary_text"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/sound"
