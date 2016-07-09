@@ -20,11 +20,14 @@ import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.models.achievements.AchievementsModel;
 import com.asb.goldtrap.models.achievements.impl.QuickPlayAchievementsModel;
 import com.asb.goldtrap.models.eo.BoosterType;
+import com.asb.goldtrap.models.gameplay.GameTypes;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
 import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
 import com.asb.goldtrap.models.results.Score;
 import com.asb.goldtrap.models.scores.ScoreModel;
 import com.asb.goldtrap.models.scores.impl.QuickPlayScoreModelImpl;
+import com.asb.goldtrap.models.tutorial.TutorialModel;
+import com.asb.goldtrap.models.tutorial.impl.TutorialModelImpl;
 import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.asb.goldtrap.models.utils.sharer.Sharer;
 import com.asb.goldtrap.models.utils.sharer.impl.SharerImpl;
@@ -37,6 +40,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
+import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
+
 public class QuickPlayActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
         GameFragment.OnFragmentInteractionListener,
@@ -46,6 +51,7 @@ public class QuickPlayActivity extends AppCompatActivity
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = QuickPlayActivity.class.getSimpleName();
+    private static final int REQUEST_CODE = 21000;
     private static int RC_SIGN_IN = 11001;
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;
@@ -56,6 +62,7 @@ public class QuickPlayActivity extends AppCompatActivity
     private ScoreModel scoreModel;
     private LeaderboardsModel leaderboardsModel;
     private AchievementsModel achievementsModel;
+    private TutorialModel tutorialModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +77,7 @@ public class QuickPlayActivity extends AppCompatActivity
         scoreModel = new QuickPlayScoreModelImpl(getApplicationContext());
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         achievementsModel = new QuickPlayAchievementsModel(getApplicationContext());
+        tutorialModel = new TutorialModelImpl(getApplicationContext(), GameTypes.QUICK_PLAY);
         setContentView(R.layout.activity_quick_play);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -176,6 +184,19 @@ public class QuickPlayActivity extends AppCompatActivity
                             GameFragment.TAG)
                     .commit();
         }
+        if (!tutorialModel.isTutorialShown()) {
+            tutorialModel.markTutorialShown();
+            showHelp();
+        }
+    }
+
+    private void showHelp() {
+        Intent tutorialActivity =
+                new Intent(QuickPlayActivity.this, MaterialTutorialActivity.class);
+        tutorialActivity.putParcelableArrayListExtra(
+                MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS,
+                tutorialModel.getTutorialItems());
+        startActivityForResult(tutorialActivity, REQUEST_CODE);
     }
 
     @Override
@@ -302,7 +323,7 @@ public class QuickPlayActivity extends AppCompatActivity
 
     @Override
     public void helpRequested() {
-
+        showHelp();
     }
 
     public void showSpinner() {
