@@ -1,0 +1,30 @@
+{
+  "solver": "BASIC_GREEDY",
+  "rows": 2,
+  "cols": 3,
+  "blocked": 2,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "points": 30
+    },
+    {
+      "taskType": "ONE_K",
+      "count": 2
+    }
+  ],
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 2
+    }
+  ],
+  "dynamicGoodies": [
+  ],
+  "firstPlayer": "ANY",
+  "adType": "NONE",
+  "complications": [
+  ],
+  "unlocks": [
+  ]
+}
