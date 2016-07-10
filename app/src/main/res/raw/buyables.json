@@ -1,15 +1,15 @@
 [
   {
-    "type": "FLIP",
-    "name": "flip_name",
-    "description": "flip_desc",
-    "image": "flip"
-  },
-  {
     "type": "PLUS_ONE",
     "name": "plus_one_name",
     "description": "plus_one_desc",
     "image": "plus_one"
+  },
+  {
+    "type": "FLIP",
+    "name": "flip_name",
+    "description": "flip_desc",
+    "image": "flip"
   },
   {
     "type": "SKIP",

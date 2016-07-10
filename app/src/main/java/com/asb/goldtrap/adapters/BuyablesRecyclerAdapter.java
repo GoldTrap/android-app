@@ -18,9 +18,18 @@ import com.asb.goldtrap.models.eo.Buyable;
  */
 public class BuyablesRecyclerAdapter
         extends RecyclerView.Adapter<BuyablesRecyclerAdapter.ViewHolder> {
+
+    private static final int[] buttonColors = {
+            R.drawable.round_button_1,
+            R.drawable.round_button_2,
+            R.drawable.round_button_3,
+            R.drawable.round_button_5
+    };
+
     private Context context;
     private BuyablesModel buyablesModel;
     private ViewHolder.ViewHolderClicks listener;
+
 
     public BuyablesRecyclerAdapter(Context context, BuyablesModel buyablesModel,
                                    ViewHolder.ViewHolderClicks listener) {
@@ -39,7 +48,7 @@ public class BuyablesRecyclerAdapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bindMenu(buyablesModel.getBuyable(position), context);
+        holder.bindMenu(buyablesModel.getBuyable(position), context, position);
     }
 
     @Override
@@ -62,7 +71,7 @@ public class BuyablesRecyclerAdapter
             buyableImage = (ImageView) itemView.findViewById(R.id.buyable_image);
         }
 
-        public void bindMenu(Buyable buyable, Context context) {
+        public void bindMenu(Buyable buyable, Context context, int position) {
             int imageId = context.getResources()
                     .getIdentifier(buyable.getImage(), "drawable", context.getPackageName());
             if (0 == imageId) {
@@ -71,6 +80,7 @@ public class BuyablesRecyclerAdapter
             else {
                 buyableImage.setImageResource(imageId);
             }
+            buyableImage.setBackgroundResource(buttonColors[position % buttonColors.length]);
             int nameId = context.getResources()
                     .getIdentifier(buyable.getName(), "string", context.getPackageName());
             buyableName.setText(nameId);
