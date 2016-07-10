@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
+import com.bumptech.glide.Glide;
 
 /**
  * Created by arjun on 06/02/16.
@@ -64,10 +65,10 @@ public class EpisodeRecyclerAdapter
             int imageId = context.getResources()
                     .getIdentifier(episode.getImage(), "drawable", context.getPackageName());
             if (0 == imageId) {
-                imageView.setImageResource(R.drawable.spark);
+                Glide.with(context).load(R.drawable.spark).into(imageView);
             }
             else {
-                imageView.setImageResource(imageId);
+                Glide.with(context).load(imageId).into(imageView);
             }
             int nameId = context.getResources()
                     .getIdentifier(episode.getName(), "string", context.getPackageName());
