@@ -1,7 +1,7 @@
 {
   "solver": "BASIC_GREEDY",
   "rows": 2,
-  "cols": 3,
+  "cols": 4,
   "blocked": 2,
   "tasks": [
     {
