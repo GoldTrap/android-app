@@ -1,23 +1,15 @@
 {
-  "solver": "RANDOM_GREEDY",
-  "rows": 3,
-  "cols": 4,
+  "solver": "RANDOM",
+  "rows": 1,
+  "cols": 2,
   "blocked": 0,
   "tasks": [
     {
       "taskType": "POINTS",
-      "points": 60
+      "points": 10
     }
   ],
   "goodies": [
-    {
-      "type": "TWO_K",
-      "count": 2
-    },
-    {
-      "type": "FIVE_K",
-      "count": 1
-    }
   ],
   "dynamicGoodies": [
   ],
@@ -26,9 +18,5 @@
   "complications": [
   ],
   "unlocks": [
-    {
-      "unlockType": "EXPLORER",
-      "points": 1000
-    }
   ]
 }
