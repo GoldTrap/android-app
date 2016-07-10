@@ -1,0 +1,37 @@
+{
+  "solver": "RANDOM",
+  "rows": 3,
+  "cols": 2,
+  "blocked": 0,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "points": 40
+    },
+    {
+      "taskType": "ONE_K",
+      "count": 3
+    }
+  ],
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 3
+    }
+  ],
+  "dynamicGoodies": [
+  ],
+  "firstPlayer": "ME",
+  "adType": "NONE",
+  "complications": [
+    {
+      "operator": "GOODIE_POSITION_MODIFIER",
+      "strategy": {
+        "type": "VERTICAL",
+        "value": 0
+      }
+    }
+  ],
+  "unlocks": [
+  ]
+}
