@@ -10,7 +10,7 @@ import com.asb.goldtrap.models.results.examiners.TaskCompletionExaminer;
 public class DynamicGoodieTaskCompletionExaminer implements TaskCompletionExaminer {
     @Override
     public void examine(Score score, Task task) {
-        if (score.getDynamicGoodies().size() > task.getCount()) {
+        if (score.getDynamicGoodies().size() >= task.getCount()) {
             score.getCompletedTasks().add(task);
         }
         else {

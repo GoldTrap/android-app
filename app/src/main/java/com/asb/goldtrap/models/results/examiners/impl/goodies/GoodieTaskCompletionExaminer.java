@@ -14,7 +14,7 @@ public class GoodieTaskCompletionExaminer implements TaskCompletionExaminer {
     public void examine(Score score, Task task) {
         GoodiesState goodiesState = getGoodieStateForTaskType(task.getTaskType());
         if (null != score.getGoodies().get(goodiesState) &&
-                score.getGoodies().get(goodiesState).size() > task.getCount()) {
+                score.getGoodies().get(goodiesState).size() >= task.getCount()) {
             score.getCompletedTasks().add(task);
         }
         else {
