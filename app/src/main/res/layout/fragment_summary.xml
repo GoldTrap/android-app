@@ -28,6 +28,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ad_view"
         android:layout_margin="@dimen/spacing_normal"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/padding_normal"
@@ -60,7 +61,7 @@
             android:id="@+id/actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/ad_view"
+            android:layout_alignParentBottom="true"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp">
@@ -105,17 +106,16 @@
                     android:text="@string/share"/>
             </LinearLayout>
         </LinearLayout>
-
-        <com.google.android.gms.ads.NativeExpressAdView
-            android:id="@+id/ad_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            ads:adSize="@string/ads_rect"
-            ads:adUnitId="@string/wide_rect">
-        </com.google.android.gms.ads.NativeExpressAdView>
     </RelativeLayout>
 
+    <com.google.android.gms.ads.NativeExpressAdView
+        android:id="@+id/ad_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="@string/ads_rect"
+        ads:adUnitId="@string/wide_rect">
+    </com.google.android.gms.ads.NativeExpressAdView>
 
 </RelativeLayout>
