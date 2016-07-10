@@ -55,12 +55,13 @@
     <dimen name="summary_card_margin">8dp</dimen>
     <dimen name="checkout_card_margin">8dp</dimen>
     <dimen name="episodes_card_margin">8dp</dimen>
+    <dimen name="buyables_card_margin">2dp</dimen>
     <dimen name="tasks_card_margin">16dp</dimen>
     <dimen name="checkout_padding">8dp</dimen>
     <dimen name="exchange_title_padding">8dp</dimen>
     <dimen name="checkout_goodie_card_padding">8dp</dimen>
     <dimen name="buyables_image_padding">12dp</dimen>
-    <dimen name="checkout_image_padding">8dp</dimen>
+    <dimen name="checkout_image_padding">4dp</dimen>
     <dimen name="round_button_padding">6dp</dimen>
     <dimen name="tasks_horizontal_margin">8dp</dimen>
     <dimen name="tasks_card_padding">2dp</dimen>
