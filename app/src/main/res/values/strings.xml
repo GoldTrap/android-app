@@ -103,6 +103,7 @@
     <string name="sound">Sound</string>
     <string name="star">Star</string>
     <string name="connect_to_google_play_games">Please connect to Google Play Games for playing multi-player games!</string>
+    <string name="connect_to_google_play_games_menu">Please connect to Google Play Games</string>
     <string name="help">Help</string>
 
 </resources>

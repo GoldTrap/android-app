@@ -211,14 +211,24 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void leaderboards() {
-        startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
-                LEADERBOARD_REQUEST_CODE);
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
+                    LEADERBOARD_REQUEST_CODE);
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games_menu));
+        }
     }
 
     @Override
     public void achievements() {
-        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                ACHIEVEMENTS_REQUEST_CODE);
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                    ACHIEVEMENTS_REQUEST_CODE);
+        }
+        else {
+            showMessage(getString(R.string.connect_to_google_play_games_menu));
+        }
     }
 
     @Override
