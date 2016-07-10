@@ -16,7 +16,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 9
+        versionCode 10
         versionName "1.0"
         signingConfig signingConfigs.release
         // Enabling multidex support.
