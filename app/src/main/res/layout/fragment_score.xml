@@ -13,22 +13,11 @@
         android:layout_above="@+id/action"
         android:paddingTop="?attr/actionBarSize">
 
-        <com.google.android.gms.ads.NativeExpressAdView
-            android:id="@+id/ad_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_normal"
-            ads:adSize="320x80"
-            ads:adUnitId="@string/wide_rect">
-        </com.google.android.gms.ads.NativeExpressAdView>
-
         <TextView
             android:id="@+id/tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ad_view"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="8dp"
@@ -61,7 +50,7 @@
         android:id="@+id/action"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/ad_view"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="@dimen/fab_padding"
@@ -72,5 +61,15 @@
         app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/next"/>
 
+    <com.google.android.gms.ads.NativeExpressAdView
+        android:id="@+id/ad_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_normal"
+        ads:adSize="@string/ads_rect"
+        ads:adUnitId="@string/wide_rect">
+    </com.google.android.gms.ads.NativeExpressAdView>
 
 </RelativeLayout>

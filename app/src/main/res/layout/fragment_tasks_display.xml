@@ -15,23 +15,12 @@
         android:paddingTop="?attr/actionBarSize"
         android:scrollbarStyle="outsideOverlay">
 
-        <com.google.android.gms.ads.NativeExpressAdView
-            android:id="@+id/ad_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/margin_normal"
-            ads:adSize="@string/ads_rect"
-            ads:adUnitId="@string/wide_rect">
-        </com.google.android.gms.ads.NativeExpressAdView>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/to_do_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/play"
-            android:layout_below="@+id/ad_view"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/margin_normal"
             android:layout_marginStart="@dimen/margin_normal"
@@ -42,7 +31,7 @@
             android:id="@+id/play"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/ad_view"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_margin="@dimen/fab_padding"
@@ -55,6 +44,17 @@
             app:layout_anchorGravity="bottom|right|end"
             app:pressedTranslationZ="12dp"
             app:srcCompat="@drawable/next"/>
+
+        <com.google.android.gms.ads.NativeExpressAdView
+            android:id="@+id/ad_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_normal"
+            ads:adSize="@string/ads_rect"
+            ads:adUnitId="@string/wide_rect">
+        </com.google.android.gms.ads.NativeExpressAdView>
 
     </RelativeLayout>
 

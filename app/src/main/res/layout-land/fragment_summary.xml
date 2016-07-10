@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        ads:adSize="450x80"
+        ads:adSize="@string/ads_rect_wide"
         ads:adUnitId="@string/wide_rect">
     </com.google.android.gms.ads.NativeExpressAdView>
 </RelativeLayout>

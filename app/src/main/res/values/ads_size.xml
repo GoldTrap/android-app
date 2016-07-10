@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ads_rect">320x80</string>
+    <string name="ads_rect_wide">450x80</string>
     <string name="ads_square">300x250</string>
 </resources>

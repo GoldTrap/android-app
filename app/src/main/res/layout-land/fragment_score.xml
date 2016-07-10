@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                ads:adSize="300x250"
+                ads:adSize="@string/ads_square"
                 ads:adUnitId="@string/square">
             </com.google.android.gms.ads.NativeExpressAdView>
 
