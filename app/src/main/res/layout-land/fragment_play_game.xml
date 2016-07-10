@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingTop="@dimen/spacing_normal"
-            board:board_style="rectangle_width_longer"/>
+            board:board_style="square"/>
 
         <com.asb.goldtrap.views.DotBoard
             android:id="@+id/dot_board"
@@ -163,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingTop="@dimen/spacing_normal"
-            board:board_style="rectangle_width_longer"/>
+            board:board_style="square"/>
 
     </android.support.v7.widget.CardView>
 
