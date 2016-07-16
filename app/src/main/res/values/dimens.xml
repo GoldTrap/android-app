@@ -49,6 +49,7 @@
     <dimen name="image_width">200dp</dimen>
     <dimen name="image_height">80dp</dimen>
     <dimen name="content_padding_top">96dp</dimen>
+    <dimen name="summary_padding_top">64dp</dimen>
     <dimen name="content_width">@dimen/match_parent</dimen>
     <dimen name="content_padding">@dimen/padding_normal</dimen>
     <dimen name="tasks_horizontal_margin">4dp</dimen>
@@ -85,6 +86,7 @@
     <dimen name="play_image_width">@dimen/image_width</dimen>
     <dimen name="play_image_height">@dimen/image_height</dimen>
     <dimen name="play_content_padding_top">@dimen/content_padding_top</dimen>
+    <dimen name="summary_content_padding_top">@dimen/summary_padding_top</dimen>
     <dimen name="score_content_padding_top">80dp</dimen>
     <dimen name="play_content_width">@dimen/content_width</dimen>
     <dimen name="play_content_padding">@dimen/content_padding</dimen>

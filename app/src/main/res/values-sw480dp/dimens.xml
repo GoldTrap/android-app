@@ -1,6 +1,7 @@
 <resources>
     <dimen name="appbar_height">224dp</dimen> <!-- 4 * ?actionBarSize -->
     <dimen name="content_padding_top">114dp</dimen> <!-- 3 * ?actionBarSize -->
+    <dimen name="summary_padding_top">82dp</dimen> <!-- 3 * ?actionBarSize -->
     <dimen name="content_padding">@dimen/padding_normal</dimen>
 
     <!-- Launch Fragment -->

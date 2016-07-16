@@ -86,7 +86,7 @@
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/margin_normal"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="fitXY"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
