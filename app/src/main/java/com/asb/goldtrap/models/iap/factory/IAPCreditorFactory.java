@@ -7,6 +7,7 @@ import com.asb.goldtrap.models.iap.impl.FlipCreditor;
 import com.asb.goldtrap.models.iap.impl.NullCreditor;
 import com.asb.goldtrap.models.iap.impl.PlusOneCreditor;
 import com.asb.goldtrap.models.iap.impl.SkipCreditor;
+import com.asb.goldtrap.models.iap.impl.UnlockAllLevelCreditor;
 import com.asb.goldtrap.models.iap.impl.UnlockLevelCreditor;
 
 /**
@@ -31,6 +32,9 @@ public class IAPCreditorFactory {
                 break;
             case "unlock_level":
                 iapCreditor = new UnlockLevelCreditor(context);
+                break;
+            case "unlock_all":
+                iapCreditor = new UnlockAllLevelCreditor(context);
                 break;
         }
         return iapCreditor;

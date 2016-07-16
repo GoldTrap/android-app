@@ -1,5 +1,6 @@
 package com.asb.goldtrap.models.dao;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.asb.goldtrap.models.eo.migration.Level;
@@ -49,4 +50,6 @@ public interface LevelDao {
     Level getLevelFromCursor(Cursor cursor);
 
     Level getLevel(String code);
+
+    int updateAllLevels(ContentValues contentValues);
 }

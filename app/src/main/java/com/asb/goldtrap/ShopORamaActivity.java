@@ -55,6 +55,7 @@ public class ShopORamaActivity extends AbstractPurchaseActivity
                 showCheckoutFragment(buyable.getType());
                 break;
             case DONATE:
+            case UNLOCK:
                 handleInAppPurchase(buyable.getType());
                 break;
         }

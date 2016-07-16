@@ -21,6 +21,7 @@ public class BuyablesRecyclerAdapter
 
     private static final int[] buttonColors = {
             R.drawable.round_button_1,
+            R.drawable.round_button_6,
             R.drawable.round_button_2,
             R.drawable.round_button_3,
             R.drawable.round_button_5

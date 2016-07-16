@@ -73,6 +73,11 @@ public class LevelDaoImpl extends AbstractDao implements LevelDao {
         return this.database.update(TABLE, getContentValuesForUpdate(level), CODE + " = ?", args);
     }
 
+    @Override
+    public int updateAllLevels(ContentValues contentValues) {
+        return this.database.update(TABLE, contentValues, null, null);
+    }
+
     private ContentValues getContentValuesForUpdate(Level level) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(BEST_SCORE, level.getBestScore());

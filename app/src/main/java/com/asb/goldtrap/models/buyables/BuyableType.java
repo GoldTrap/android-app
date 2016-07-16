@@ -10,7 +10,8 @@ public enum BuyableType {
     FLIP(R.string.flip, "get_flip", 18001, "Let\'s Flip Maccha"),
     PLUS_ONE(R.string.extra_chance, "get_plus_one", 18002, "Let\'s Play Again Maccha"),
     SKIP(R.string.skip, "get_skip", 18003, "Let\'s Skip Maccha"),
-    DONATE(R.string.donate_name, "donate", 18004, "Let\'s Donate");
+    UNLOCK(R.string.unlock_all_name, "unlock_all", 18004, "God Mode is here"),
+    DONATE(R.string.donate_name, "donate", 18005, "Let\'s Donate");
 
     private int nameRes;
     private String sku;

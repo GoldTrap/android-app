@@ -1,5 +1,11 @@
 [
   {
+    "type": "UNLOCK",
+    "name": "unlock_all_name",
+    "description": "unlock_all_desc",
+    "image": "unlock"
+  },
+  {
     "type": "PLUS_ONE",
     "name": "plus_one_name",
     "description": "plus_one_desc",

@@ -73,6 +73,9 @@
     <string name="skip_name">Get Skips</string>
     <string name="skip_desc">Skips will help you to skip a turn.</string>
 
+    <string name="unlock_all_name">Unlock</string>
+    <string name="unlock_all_desc">Unlock all levels.</string>
+
     <string name="donate_name">Donate</string>
     <string name="donate_desc">If you like this game, please donate to help me maintain this game :).</string>
 
