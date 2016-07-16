@@ -39,4 +39,5 @@
     <dimen name="checkout_image_padding">8dp</dimen>
     <dimen name="round_button_padding">6dp</dimen>
     <dimen name="tasks_horizontal_margin">8dp</dimen>
+    <dimen name="episode_circular_text_size">108dp</dimen>
 </resources>

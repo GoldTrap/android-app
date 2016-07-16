@@ -5,13 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
-import com.bumptech.glide.Glide;
 
 /**
  * Created by arjun on 06/02/16.
@@ -22,6 +20,14 @@ public class EpisodeRecyclerAdapter
     private Context context;
     private EpisodeModel episodeModel;
     private ViewHolder.ViewHolderClicks listener;
+
+    private static final int[] buttonColors = {
+            R.drawable.round_button_1,
+            R.drawable.round_button_2,
+            R.drawable.round_button_3,
+            R.drawable.round_button_4,
+            R.drawable.round_button_5
+    };
 
     public EpisodeRecyclerAdapter(Context context, EpisodeModel episodeModel,
                                   ViewHolder.ViewHolderClicks listener) {
@@ -49,30 +55,26 @@ public class EpisodeRecyclerAdapter
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageView;
-        private TextView textView;
+        private TextView textImage;
+        private TextView textName;
         private ViewHolderClicks mListener;
 
         public ViewHolder(View itemView, ViewHolderClicks mListener) {
             super(itemView);
             this.mListener = mListener;
             itemView.setOnClickListener(this);
-            textView = (TextView) itemView.findViewById(R.id.episode_name);
-            imageView = (ImageView) itemView.findViewById(R.id.episode_image);
+            textImage = (TextView) itemView.findViewById(R.id.episode_image);
+            textName = (TextView) itemView.findViewById(R.id.episode_name);
         }
 
         public void bindMenu(Episode episode, Context context) {
-            int imageId = context.getResources()
-                    .getIdentifier(episode.getImage(), "drawable", context.getPackageName());
-            if (0 == imageId) {
-                Glide.with(context).load(R.drawable.spark).into(imageView);
-            }
-            else {
-                Glide.with(context).load(imageId).into(imageView);
-            }
             int nameId = context.getResources()
                     .getIdentifier(episode.getName(), "string", context.getPackageName());
-            textView.setText(nameId);
+            String name = context.getString(nameId);
+            textImage.setText(String.valueOf(name.charAt(0)).toUpperCase());
+            textImage.setBackgroundResource(
+                    buttonColors[this.getAdapterPosition() % buttonColors.length]);
+            textName.setText(name);
         }
 
         @Override

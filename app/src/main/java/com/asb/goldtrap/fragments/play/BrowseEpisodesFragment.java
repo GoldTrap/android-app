@@ -3,7 +3,7 @@ package com.asb.goldtrap.fragments.play;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import com.asb.goldtrap.adapters.EpisodeRecyclerAdapter;
 import com.asb.goldtrap.models.eo.migration.Episode;
 import com.asb.goldtrap.models.episodes.EpisodeModel;
 import com.asb.goldtrap.models.episodes.impl.CursorEpisodeModel;
+import com.asb.goldtrap.spansize.EpisodeSpanSizeLoopkup;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -44,9 +45,10 @@ public class BrowseEpisodesFragment extends Fragment implements EpisodeModel.Lis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_browse_episodes, container, false);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 6);
+        gridLayoutManager.setSpanSizeLookup(new EpisodeSpanSizeLoopkup());
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.episodes);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
         adapter = new EpisodeRecyclerAdapter(getContext(), episodeModel,
                 new EpisodeRecyclerAdapter.ViewHolder.ViewHolderClicks() {

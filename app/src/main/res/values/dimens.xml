@@ -65,11 +65,12 @@
     <dimen name="browse_appbar_height">@dimen/appbar_height</dimen>
     <dimen name="browse_image_width">@dimen/image_width</dimen>
     <dimen name="episodes_image_width">@dimen/match_parent</dimen>
-    <dimen name="episodes_image_height">135dp</dimen>
+    <dimen name="episodes_image_height">180dp</dimen>
     <dimen name="browse_image_height">@dimen/image_height</dimen>
     <dimen name="browse_content_padding_top">@dimen/content_padding_top</dimen>
     <dimen name="browse_content_width">@dimen/content_width</dimen>
     <dimen name="browse_content_padding">@dimen/content_padding</dimen>
+    <dimen name="episode_circular_text_size">96dp</dimen>
 
     <!-- Multi player Menu Fragment -->
     <dimen name="multi_player_appbar_height">@dimen/appbar_height</dimen>
