@@ -6,25 +6,22 @@
   "tasks": [
     {
       "taskType": "POINTS",
-      "points": 20
+      "count": 0,
+      "points": 30
     },
     {
       "taskType": "ONE_K",
-      "count": 2
+      "count": 1,
+      "points": 0
     }
   ],
   "goodies": [
     {
       "type": "ONE_K",
-      "count": 2
+      "count": 1
     }
   ],
-  "dynamicGoodies": [
-  ],
+  "dynamicGoodies": [],
   "firstPlayer": "ANY",
-  "adType": "NONE",
-  "complications": [
-  ],
-  "unlocks": [
-  ]
+  "complications": []
 }

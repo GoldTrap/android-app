@@ -6,17 +6,12 @@
   "tasks": [
     {
       "taskType": "POINTS",
+      "count": 0,
       "points": 10
     }
   ],
-  "goodies": [
-  ],
-  "dynamicGoodies": [
-  ],
+  "goodies": [],
+  "dynamicGoodies": [],
   "firstPlayer": "THEY",
-  "adType": "NONE",
-  "complications": [
-  ],
-  "unlocks": [
-  ]
+  "complications": []
 }

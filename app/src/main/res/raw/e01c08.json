@@ -1,37 +1,27 @@
 {
   "solver": "RANDOM",
-  "rows": 3,
-  "cols": 2,
+  "rows": 1,
+  "cols": 4,
   "blocked": 0,
   "tasks": [
     {
       "taskType": "POINTS",
-      "points": 40
+      "count": 0,
+      "points": 30
     },
     {
-      "taskType": "ONE_K",
-      "count": 3
+      "taskType": "DYNAMIC_GOODIE",
+      "count": 1,
+      "points": 15
     }
   ],
-  "goodies": [
-    {
-      "type": "ONE_K",
-      "count": 3
-    }
-  ],
+  "goodies": [],
   "dynamicGoodies": [
+    {
+      "value": 15,
+      "count": 1
+    }
   ],
   "firstPlayer": "ME",
-  "adType": "NONE",
-  "complications": [
-    {
-      "operator": "GOODIE_POSITION_MODIFIER",
-      "strategy": {
-        "type": "VERTICAL",
-        "value": 0
-      }
-    }
-  ],
-  "unlocks": [
-  ]
+  "complications": []
 }
