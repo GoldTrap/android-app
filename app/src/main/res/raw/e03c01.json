@@ -1,0 +1,17 @@
+{
+  "solver": "RANDOM",
+  "rows": 2,
+  "cols": 2,
+  "blocked": 0,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "count": 0,
+      "points": 30
+    }
+  ],
+  "goodies": [],
+  "dynamicGoodies": [],
+  "firstPlayer": "THEY",
+  "complications": []
+}

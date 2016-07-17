@@ -1,30 +1,58 @@
 {
-  "solver": "RANDOM_GREEDY",
-  "rows": 4,
-  "cols": 4,
-  "blocked": 0,
+  "solver": "RANDOM",
+  "rows": 5,
+  "cols": 5,
+  "blocked": 3,
   "tasks": [
     {
+      "taskType": "POINTS",
+      "count": 0,
+      "points": 130
+    },
+    {
       "taskType": "LINES",
-      "count": 1
+      "count": 2,
+      "points": 0
     },
     {
       "taskType": "GOODIES",
-      "count": 2
+      "count": 3,
+      "points": 0
+    },
+    {
+      "taskType": "ONE_K",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "TWO_K",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "FIVE_K",
+      "count": 1,
+      "points": 0
     },
     {
       "taskType": "DIAMOND",
-      "count": 1
+      "count": 3,
+      "points": 0
+    },
+    {
+      "taskType": "DYNAMIC_GOODIE",
+      "count": 2,
+      "points": 20
     }
   ],
   "goodies": [
     {
       "type": "ONE_K",
-      "count": 1
+      "count": 2
     },
     {
       "type": "TWO_K",
-      "count": 2
+      "count": 3
     },
     {
       "type": "FIVE_K",
@@ -37,40 +65,29 @@
   ],
   "dynamicGoodies": [
     {
-      "value": 100,
-      "count": 1
+      "value": 15,
+      "count": 2
     },
     {
-      "value": 150,
-      "count": 3
+      "value": 25,
+      "count": 1
     }
   ],
-  "firstPlayer": "ANY",
-  "adType": "NONE",
+  "firstPlayer": "ME",
   "complications": [
-    {
-      "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
-      "strategy": {
-        "type": "AP",
-        "value": -2
-      }
-    },
     {
       "operator": "GOODIE_POSITION_MODIFIER",
       "strategy": {
         "type": "HORIZONTAL",
         "value": 0
       }
-    }
-  ],
-  "unlocks": [
-    {
-      "unlockType": "EXPLORER",
-      "points": 1000
     },
     {
-      "unlockType": "BRAVE_HEART",
-      "points": 1000
+      "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
+      "strategy": {
+        "type": "AP",
+        "value": 2
+      }
     }
   ]
 }
