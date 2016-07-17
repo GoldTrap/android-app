@@ -17,16 +17,24 @@
         <item quantity="other">Score at least %d Vertical lines</item>
     </plurals>
     <plurals name="get_goodies">
-        <item quantity="one">Score at least %d Goodie</item>
-        <item quantity="other">Score at least %d Goodies</item>
+        <item quantity="one">Get at least %d Goodie</item>
+        <item quantity="other">Get at least %d Goodies</item>
     </plurals>
     <plurals name="get_diamonds">
         <item quantity="one">Get %d Diamond</item>
         <item quantity="other">Get %d Diamonds</item>
     </plurals>
     <plurals name="get_golds">
-        <item quantity="one">Get %d Gold</item>
-        <item quantity="other">Get %d Golds</item>
+        <item quantity="one">Get %d Gold Coin</item>
+        <item quantity="other">Get %d Gold Coins</item>
+    </plurals>
+    <plurals name="get_gold_nuggets">
+        <item quantity="one">Get %d Gold Nugget</item>
+        <item quantity="other">Get %d Gold Nuggets</item>
+    </plurals>
+    <plurals name="get_gold_bars">
+        <item quantity="one">Get %d Gold Bar</item>
+        <item quantity="other">Get %d Gold Bars</item>
     </plurals>
     <plurals name="get_dynamic_goodies">
         <item quantity="one">Get %1$d Goodies with at least %2$d points</item>
