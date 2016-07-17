@@ -1,0 +1,27 @@
+{
+  "solver": "RANDOM",
+  "rows": 2,
+  "cols": 2,
+  "blocked": 0,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "count": 0,
+      "points": 30
+    },
+    {
+      "taskType": "TWO_K",
+      "count": 1,
+      "points": 0
+    }
+  ],
+  "goodies": [
+    {
+      "type": "TWO_K",
+      "count": 2
+    }
+  ],
+  "dynamicGoodies": [],
+  "firstPlayer": "ANY",
+  "complications": []
+}

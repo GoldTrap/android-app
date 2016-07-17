@@ -1,0 +1,36 @@
+{
+  "solver": "RANDOM",
+  "rows": 2,
+  "cols": 3,
+  "blocked": 0,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "count": 0,
+      "points": 40
+    },
+    {
+      "taskType": "ONE_K",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "TWO_K",
+      "count": 1,
+      "points": 0
+    }
+  ],
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 1
+    },
+    {
+      "type": "TWO_K",
+      "count": 1
+    }
+  ],
+  "dynamicGoodies": [],
+  "firstPlayer": "ANY",
+  "complications": []
+}

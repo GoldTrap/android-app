@@ -1,34 +1,17 @@
 {
   "solver": "RANDOM",
-  "rows": 3,
-  "cols": 3,
+  "rows": 2,
+  "cols": 1,
   "blocked": 0,
   "tasks": [
     {
       "taskType": "POINTS",
-      "points": 60
+      "count": 0,
+      "points": 20
     }
   ],
-  "goodies": [
-    {
-      "type": "ONE_K",
-      "count": 2
-    },
-    {
-      "type": "DIAMOND",
-      "count": 1
-    }
-  ],
-  "dynamicGoodies": [
-  ],
-  "firstPlayer": "ME",
-  "adType": "NONE",
-  "complications": [
-  ],
-  "unlocks": [
-    {
-      "unlockType": "EXPLORER",
-      "points": 1000
-    }
-  ]
+  "goodies": [],
+  "dynamicGoodies": [],
+  "firstPlayer": "THEY",
+  "complications": []
 }
