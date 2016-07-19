@@ -52,6 +52,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asb.goldtrap.MainActivity"/>
+
             <intent-filter android:label="@string/title_activity_play">
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -68,7 +69,6 @@
                     android:scheme="asb-apps"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".QuickPlayActivity"
             android:label="@string/title_activity_quick_play"
@@ -76,6 +76,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asb.goldtrap.MainActivity"/>
+
             <intent-filter android:label="@string/quick_play_game">
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -131,7 +132,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asb.goldtrap.MainActivity"/>
         </activity>
-
         <activity
             android:name=".PlayActivity"
             android:label="@string/title_activity_play"
@@ -141,7 +141,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asb.goldtrap.BrowseActivity"/>
         </activity>
-
         <activity
             android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
             android:label="@string/title_activity_tutorial"
@@ -201,6 +200,12 @@
         </receiver>
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
+
+        <service android:name=".models.services.GoldTrapFCMService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

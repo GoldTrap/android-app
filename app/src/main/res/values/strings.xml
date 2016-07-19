@@ -108,5 +108,6 @@
     <string name="connect_to_google_play_games">Please connect to Google Play Games for playing multi-player games!</string>
     <string name="connect_to_google_play_games_menu">Please connect to Google Play Games</string>
     <string name="help">Help</string>
+    <string name="goodie">Goodie</string>
 
 </resources>

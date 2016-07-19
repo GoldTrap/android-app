@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 
 import com.asb.goldtrap.fragments.launch.HomeFragment;
 import com.asb.goldtrap.fragments.launch.LaunchFragment;
+import com.asb.goldtrap.models.notifications.SwagHandler;
+import com.asb.goldtrap.models.notifications.impl.AllSwagHandler;
 import com.asb.goldtrap.models.utils.NetworkUtils;
 import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addApi(AppInvite.API).addScope(Games.SCOPE_GAMES)
                 .build();
-
+        SwagHandler swagHandler = new AllSwagHandler();
         if (!isHomeFragmentVisible()) {
             if (null == getSupportFragmentManager().findFragmentByTag(LaunchFragment.TAG)) {
                 getSupportFragmentManager().beginTransaction()
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements
                         .commit();
             }
         }
+        swagHandler.handleAllSwags(getApplicationContext(), getIntent());
     }
 
     @Override

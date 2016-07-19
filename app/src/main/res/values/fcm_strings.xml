@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="take_gold_coins">
+        <item quantity="one">You\'ve earned a Gold Coin</item>
+        <item quantity="other">You\'ve been awarded with %d Gold Coins</item>
+    </plurals>
+    <plurals name="take_gold_nuggets">
+        <item quantity="one">You\'ve earned a Gold Nugget</item>
+        <item quantity="other">You\'ve been awarded with %d Gold Nuggets</item>
+    </plurals>
+    <plurals name="take_gold_bars">
+        <item quantity="one">You\'ve earned a Gold Bar</item>
+        <item quantity="other">You\'ve been awarded with %d Gold Bars</item>
+    </plurals>
+    <plurals name="take_diamonds">
+        <item quantity="one">You\'ve earned a Diamond</item>
+        <item quantity="other">You\'ve been awarded with %d Diamonds</item>
+    </plurals>
+</resources>
