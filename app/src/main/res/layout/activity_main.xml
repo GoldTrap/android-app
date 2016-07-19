@@ -27,7 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/padding_normal"
         android:paddingTop="@dimen/main_content_padding_top"
         android:scrollbarStyle="outsideOverlay">
 
@@ -36,8 +35,6 @@
             android:layout_width="@dimen/main_content_width"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="@dimen/margin_normal"
-            android:layout_marginStart="@dimen/margin_normal"
             android:paddingTop="@dimen/spacing_normal"/>
 
     </RelativeLayout>

@@ -1,5 +1,7 @@
 package com.asb.goldtrap.fragments.launch;
 
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,12 +11,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.asb.goldtrap.GoldTrapApplication;
 import com.asb.goldtrap.R;
 import com.asb.goldtrap.adapters.MenuRecyclerAdapter;
 import com.asb.goldtrap.models.conductor.GameConductor;
 import com.asb.goldtrap.models.menu.impl.HomePageMenu;
+import com.asb.goldtrap.models.scores.ScoreModel;
+import com.asb.goldtrap.models.scores.impl.ScoreModelImpl;
 import com.asb.goldtrap.models.states.GameState;
 import com.asb.goldtrap.spansize.MenuSpanSizeLookup;
 import com.google.android.gms.analytics.HitBuilders;
@@ -35,8 +42,11 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
     public static final String TAG = HomeFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
+    private ImageView morePoints;
+    private TextView points;
     private List<HomePageMenu> homePageMenus;
     private Tracker tracker;
+    private ScoreModel scoreModel;
 
     /**
      * Get the new instance
@@ -61,6 +71,7 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         homePageMenus = gson.fromJson(new JsonReader(new InputStreamReader(inputStream)),
                 new TypeToken<List<HomePageMenu>>() {
                 }.getType());
+        scoreModel = new ScoreModelImpl(getContext());
     }
 
     @Override
@@ -69,6 +80,24 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         Log.i(TAG, "Setting screen name: " + TAG);
         tracker.setScreenName(TAG);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        setPointsWithAnimation();
+    }
+
+    private void setPointsWithAnimation() {
+        ValueAnimator animator = new ValueAnimator();
+        animator.setObjectValues(0L, scoreModel.getCurrentScore().getValue());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                points.setText(String.valueOf(animation.getAnimatedValue()));
+            }
+        });
+        animator.setEvaluator(new TypeEvaluator<Long>() {
+            public Long evaluate(float fraction, Long startValue, Long endValue) {
+                return Math.round(startValue + (endValue - startValue) * (double) fraction);
+            }
+        });
+        animator.setDuration(1000);
+        animator.start();
     }
 
     @Override
@@ -87,6 +116,19 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
                         handleMenuClick(v, position);
                     }
                 }));
+        morePoints = (ImageButton) view.findViewById(R.id.more_points);
+        morePoints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Home Page Menu")
+                        .setAction("Points")
+                        .setLabel("More Points")
+                        .build());
+                mListener.showPoints();
+            }
+        });
+        points = (TextView) view.findViewById(R.id.points);
         return view;
     }
 
@@ -163,6 +205,8 @@ public class HomeFragment extends Fragment implements GameConductor.GameStateObs
         void achievements();
 
         void share();
+
+        void showPoints();
     }
 
 }

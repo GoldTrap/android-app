@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -10,13 +11,61 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/footer"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginStart="@dimen/margin_normal"
         android:scrollbars="vertical"/>
 
     <RelativeLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/md_blue_A100"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/points_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:text="@string/points_title"
+            android:textColor="@color/primary_text_dark"/>
+
+        <ImageButton
+            android:id="@+id/more_points"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_toEndOf="@+id/points_title"
+            android:layout_toLeftOf="@+id/points"
+            android:layout_toRightOf="@+id/points_title"
+            android:layout_toStartOf="@+id/points"
+            android:background="@color/activity_bg"
+            android:padding="@dimen/round_button_padding"
+            android:scaleType="fitCenter"
+            android:text="@string/extra_chance"
+            app:srcCompat="@drawable/next_accent"/>
+
+        <TextView
+            android:id="@+id/points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:gravity="end"
+            android:text="234500"
+            android:textColor="@color/primary_text_dark"
+            tools:ignore="HardcodedText"/>
+
 
     </RelativeLayout>
 

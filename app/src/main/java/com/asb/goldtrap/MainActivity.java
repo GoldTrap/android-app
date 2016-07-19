@@ -239,6 +239,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void showPoints() {
+
+    }
+
+    @Override
     public void migrationComplete() {
         migrationComplete = true;
         if (mSignInComplete) {

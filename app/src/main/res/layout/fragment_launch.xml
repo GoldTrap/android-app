@@ -4,6 +4,9 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:paddingBottom="@dimen/padding_normal"
                 tools:context="com.asb.goldtrap.fragments.launch.LaunchFragment">
 
     <android.support.v7.widget.CardView
@@ -65,12 +68,12 @@
             android:layout_height="64dp"
             android:layout_gravity="center"
             android:layout_margin="@dimen/fab_padding"
-            app:srcCompat="@drawable/play_grey"
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:fabSize="normal"
             app:layout_anchorGravity="bottom|right|end"
-            app:pressedTranslationZ="12dp"/>
+            app:pressedTranslationZ="12dp"
+            app:srcCompat="@drawable/play_grey"/>
     </LinearLayout>
 
 </RelativeLayout>
