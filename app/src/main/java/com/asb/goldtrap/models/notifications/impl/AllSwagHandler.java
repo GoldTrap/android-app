@@ -12,14 +12,13 @@ import com.asb.goldtrap.models.notifications.factory.SwagHandlerFactory;
  * All Swag Handler.
  * Created by arjun on 18/07/16.
  */
-public class AllSwagHandler extends AbstractSwagHandler {
+public class AllSwagHandler {
     private static final String TAG = AllSwagHandler.class.getSimpleName();
     public static final String GOLD_COINS = "GOLD_COINS";
     public static final String GOLD_NUGGETS = "GOLD_NUGGETS";
     public static final String GOLD_BARS = "GOLD_BARS";
     public static final String DIAMONDS = "DIAMONDS";
 
-    @Override
     public void handleAllSwags(Context context, Intent intent) {
         if (null != intent) {
             Bundle data = intent.getExtras();
