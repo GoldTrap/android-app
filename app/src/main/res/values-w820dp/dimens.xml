@@ -13,9 +13,11 @@
     <dimen name="level_size">64dp</dimen>
     <dimen name="star_size">25dp</dimen>
     <dimen name="checkout_size">64dp</dimen>
+    <dimen name="points_size">64dp</dimen>
     <dimen name="home_menu_image_margin">16dp</dimen>
     <dimen name="episodes_image_margin">16dp</dimen>
     <dimen name="checkout_image_margin">16dp</dimen>
+    <dimen name="points_image_margin">16dp</dimen>
     <dimen name="episodes_card_padding">16dp</dimen>
     <dimen name="levels_image_margin">16dp</dimen>
     <dimen name="levels_card_padding">16dp</dimen>
@@ -30,6 +32,7 @@
     <dimen name="summary_card_margin">8dp</dimen>
     <dimen name="checkout_card_margin">8dp</dimen>
     <dimen name="episodes_card_margin">8dp</dimen>
+    <dimen name="points_card_margin">16dp</dimen>
     <dimen name="buyables_card_margin">8dp</dimen>
     <dimen name="tasks_card_margin">8dp</dimen>
     <dimen name="checkout_padding">8dp</dimen>
@@ -37,6 +40,7 @@
     <dimen name="checkout_goodie_card_padding">16dp</dimen>
     <dimen name="buyables_image_padding">12dp</dimen>
     <dimen name="checkout_image_padding">8dp</dimen>
+    <dimen name="points_image_padding">8dp</dimen>
     <dimen name="round_button_padding">6dp</dimen>
     <dimen name="tasks_horizontal_margin">8dp</dimen>
     <dimen name="episode_circular_text_size">108dp</dimen>

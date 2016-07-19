@@ -133,6 +133,31 @@
                 android:value="com.asb.goldtrap.MainActivity"/>
         </activity>
         <activity
+            android:name=".PointsActivity"
+            android:label="@string/title_activity_points"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asb.goldtrap.MainActivity"/>
+            <intent-filter android:label="@string/title_activity_points">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="asb-apps.blogspot.in"
+                    android:pathPrefix="/goldtrap/points"
+                    android:scheme="http"/>
+                <data
+                    android:host="goldtrap"
+                    android:pathPrefix="/points"
+                    android:scheme="asb-apps"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".PlayActivity"
             android:label="@string/title_activity_play"
             android:parentActivityName=".BrowseActivity"
@@ -200,7 +225,6 @@
         </receiver>
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
-
         <service android:name=".models.services.GoldTrapFCMService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

@@ -240,7 +240,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void showPoints() {
-
+        Intent pointsActivity = new Intent(this, PointsActivity.class);
+        startActivity(pointsActivity);
     }
 
     @Override

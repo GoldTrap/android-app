@@ -109,5 +109,8 @@
     <string name="connect_to_google_play_games_menu">Please connect to Google Play Games</string>
     <string name="help">Help</string>
     <string name="goodie">Goodie</string>
+    <string name="title_activity_points">Points</string>
+    <string name="points_value_name">%1$d Points</string>
+    <string name="goodie_value_name">%1$d %2$s</string>
 
 </resources>
