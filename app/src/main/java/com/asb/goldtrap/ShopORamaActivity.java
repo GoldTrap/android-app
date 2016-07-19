@@ -99,7 +99,8 @@ public class ShopORamaActivity extends AbstractPurchaseActivity
         handleInAppPurchase(buyableType);
     }
 
-    protected void onConsumptionComplete() {
+    @Override
+    public void onConsumptionComplete() {
         ViewGroup coordinateLayout = (ViewGroup) findViewById(R.id.fragment_container);
         Snackbar.make(coordinateLayout, getString(R.string.transaction_successful),
                 Snackbar.LENGTH_SHORT).show();

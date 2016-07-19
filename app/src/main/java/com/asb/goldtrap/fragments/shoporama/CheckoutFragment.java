@@ -112,6 +112,7 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
                         .setAction("Trade Score")
                         .setLabel(buyableType.name())
                         .build());
+                mListener.onConsumptionComplete();
             }
         });
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.goodies);
@@ -186,9 +187,12 @@ public class CheckoutFragment extends Fragment implements GoodieModel.Listener,
                 .setLabel(buyableType.name())
                 .setValue(position)
                 .build());
+        mListener.onConsumptionComplete();
     }
 
     public interface OnFragmentInteractionListener {
         void buyItem(BuyableType buyableType);
+
+        void onConsumptionComplete();
     }
 }
