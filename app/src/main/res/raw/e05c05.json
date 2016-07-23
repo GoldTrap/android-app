@@ -1,0 +1,45 @@
+{
+  "solver": "RANDOM_GREEDY",
+  "rows": 3,
+  "cols": 5,
+  "blocked": 1,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "count": 0,
+      "points": 80
+    },
+    {
+      "taskType": "ONE_K",
+      "count": 0,
+      "points": 0
+    },
+    {
+      "taskType": "FIVE_K",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "DIAMOND",
+      "count": 1,
+      "points": 0
+    }
+  ],
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 0
+    },
+    {
+      "type": "FIVE_K",
+      "count": 1
+    },
+    {
+      "type": "DIAMOND",
+      "count": 2
+    }
+  ],
+  "dynamicGoodies": [],
+  "firstPlayer": "ANY",
+  "complications": []
+}
