@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="goldtrap_deeplink">asb-apps://goldtrap</string>
-    <string name="quick_play_deeplink">asb-apps://goldtrap/quickplay</string>
-    <string name="multiplayer_deeplink">asb-apps://goldtrap/multiplayer</string>
-    <string name="player_deeplink">asb-apps://goldtrap/play</string>
+    <string name="goldtrap_deeplink" translatable="false">asb-apps://goldtrap</string>
+    <string name="quick_play_deeplink" translatable="false">asb-apps://goldtrap/quickplay</string>
+    <string name="multiplayer_deeplink" translatable="false">asb-apps://goldtrap/multiplayer</string>
+    <string name="player_deeplink" translatable="false">asb-apps://goldtrap/play</string>
 </resources>

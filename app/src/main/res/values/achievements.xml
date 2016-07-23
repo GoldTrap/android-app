@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="achievement_newbie">CgkIqfLF9oYfEAIQBw</string>
-    <string name="achievement_super_star">CgkIqfLF9oYfEAIQFA</string>
-    <string name="achievement_table_turner">CgkIqfLF9oYfEAIQDw</string>
-    <string name="achievement_plus_oner">CgkIqfLF9oYfEAIQEQ</string>
-    <string name="achievement_skipper">CgkIqfLF9oYfEAIQEA</string>
-    <string name="achievement_coins_master">CgkIqfLF9oYfEAIQCQ</string>
-    <string name="achievement_nuggets_hoarder">CgkIqfLF9oYfEAIQCg</string>
-    <string name="achievement_gold_bar_swag">CgkIqfLF9oYfEAIQCw</string>
-    <string name="achievement_diamond_merchant">CgkIqfLF9oYfEAIQDA</string>
-    <string name="achievement_quick_winner">CgkIqfLF9oYfEAIQCA</string>
-    <string name="achievement_multiplayer_guru">CgkIqfLF9oYfEAIQDQ</string>
-    <string name="achievement_commander">CgkIqfLF9oYfEAIQEw</string>
-    <string name="achievement_playmaster">CgkIqfLF9oYfEAIQDg</string>
-    <string name="achievement_points_swag">CgkIqfLF9oYfEAIQEg</string>
+    <string name="achievement_newbie" translatable="false">CgkIqfLF9oYfEAIQBw</string>
+    <string name="achievement_super_star" translatable="false">CgkIqfLF9oYfEAIQFA</string>
+    <string name="achievement_table_turner" translatable="false">CgkIqfLF9oYfEAIQDw</string>
+    <string name="achievement_plus_oner" translatable="false">CgkIqfLF9oYfEAIQEQ</string>
+    <string name="achievement_skipper" translatable="false">CgkIqfLF9oYfEAIQEA</string>
+    <string name="achievement_coins_master" translatable="false">CgkIqfLF9oYfEAIQCQ</string>
+    <string name="achievement_nuggets_hoarder" translatable="false">CgkIqfLF9oYfEAIQCg</string>
+    <string name="achievement_gold_bar_swag" translatable="false">CgkIqfLF9oYfEAIQCw</string>
+    <string name="achievement_diamond_merchant" translatable="false">CgkIqfLF9oYfEAIQDA</string>
+    <string name="achievement_quick_winner" translatable="false">CgkIqfLF9oYfEAIQCA</string>
+    <string name="achievement_multiplayer_guru" translatable="false">CgkIqfLF9oYfEAIQDQ</string>
+    <string name="achievement_commander" translatable="false">CgkIqfLF9oYfEAIQEw</string>
+    <string name="achievement_playmaster" translatable="false">CgkIqfLF9oYfEAIQDg</string>
+    <string name="achievement_points_swag" translatable="false">CgkIqfLF9oYfEAIQEg</string>
 </resources>
