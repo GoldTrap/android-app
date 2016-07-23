@@ -177,7 +177,7 @@ public class ScoreFragment extends Fragment {
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
         PlayerStats stats = mListener.getPlayerStats();
         if (null != stats &&
-                (stats.getChurnProbability() > 0.85 || stats.getSpendProbability() > 0.5)) {
+                (stats.getChurnProbability() == 1 || stats.getSpendProbability() > 0.5)) {
             mAdView.setVisibility(View.INVISIBLE);
         }
     }
