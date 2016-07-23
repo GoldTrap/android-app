@@ -12,6 +12,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/ad_view"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginStart="@dimen/margin_normal"
         android:scrollbars="vertical"/>
 
     <com.google.android.gms.ads.NativeExpressAdView

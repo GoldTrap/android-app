@@ -20,7 +20,7 @@
             android:layout_marginBottom="@dimen/title_margin"
             android:text="@string/app_name"
             android:textColor="@color/primary_text"
-            android:textSize="56sp"/>
+            android:textSize="48sp"/>
 
     </RelativeLayout>
 
