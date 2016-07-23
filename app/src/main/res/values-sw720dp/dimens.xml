@@ -11,7 +11,7 @@
     <dimen name="level_size">72dp</dimen>
     <dimen name="star_size">24dp</dimen>
     <dimen name="checkout_size">84dp</dimen>
-    <dimen name="points_size">84dp</dimen>
+    <dimen name="points_size">96dp</dimen>
     <dimen name="home_menu_image_margin">24dp</dimen>
     <dimen name="episodes_image_margin">24dp</dimen>
     <dimen name="checkout_image_margin">24dp</dimen>
