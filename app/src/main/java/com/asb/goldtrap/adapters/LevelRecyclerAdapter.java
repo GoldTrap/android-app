@@ -70,7 +70,7 @@ public class LevelRecyclerAdapter
                 imageView.setImageResource(R.drawable.golden_lock);
             }
             else {
-                imageView.setImageResource(R.drawable.coins);
+                imageView.setImageResource(R.drawable.unlocked_play);
             }
             textView.setText(context.getString(R.string.level, level.getNumber()));
             if (1 <= level.getBestStar()) {

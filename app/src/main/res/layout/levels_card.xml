@@ -27,7 +27,7 @@
             android:layout_margin="@dimen/levels_image_margin"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/coins"/>
+            app:srcCompat="@drawable/unlocked_play"/>
 
         <android.support.percent.PercentRelativeLayout
             android:id="@+id/star_grid"
