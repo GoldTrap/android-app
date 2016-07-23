@@ -48,5 +48,15 @@
       "numberOfLevels": 12,
       "code": "c"
     }
+  },
+  {
+    "number": 6,
+    "name": "episode_6",
+    "image": "episode_6",
+    "code": "e06",
+    "level": {
+      "numberOfLevels": 12,
+      "code": "c"
+    }
   }
 ]

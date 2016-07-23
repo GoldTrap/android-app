@@ -1,0 +1,71 @@
+{
+  "solver": "BASIC_GREEDY",
+  "rows": 6,
+  "cols": 4,
+  "blocked": 0,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "count": 0,
+      "points": 130
+    },
+    {
+      "taskType": "ONE_K",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "TWO_K",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "FIVE_K",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "DYNAMIC_GOODIE",
+      "count": 1,
+      "points": 15
+    }
+  ],
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 1
+    },
+    {
+      "type": "TWO_K",
+      "count": 1
+    },
+    {
+      "type": "FIVE_K",
+      "count": 2
+    },
+    {
+      "type": "DIAMOND",
+      "count": 1
+    }
+  ],
+  "dynamicGoodies": [
+    {
+      "value": 150,
+      "count": 1
+    },
+    {
+      "value": 200,
+      "count": 1
+    }
+  ],
+  "firstPlayer": "ANY",
+  "complications": [
+    {
+      "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
+      "strategy": {
+        "type": "AP",
+        "value": -4
+      }
+    }
+  ]
+}

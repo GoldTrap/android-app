@@ -1,0 +1,73 @@
+{
+  "solver": "RANDOM_GREEDY",
+  "rows": 7,
+  "cols": 4,
+  "blocked": 1,
+  "tasks": [
+    {
+      "taskType": "POINTS",
+      "count": 0,
+      "points": 150
+    },
+    {
+      "taskType": "FIVE_K",
+      "count": 2,
+      "points": 0
+    },
+    {
+      "taskType": "DIAMOND",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "taskType": "DYNAMIC_GOODIE",
+      "count": 1,
+      "points": 18
+    }
+  ],
+  "goodies": [
+    {
+      "type": "ONE_K",
+      "count": 1
+    },
+    {
+      "type": "TWO_K",
+      "count": 1
+    },
+    {
+      "type": "FIVE_K",
+      "count": 3
+    },
+    {
+      "type": "DIAMOND",
+      "count": 1
+    }
+  ],
+  "dynamicGoodies": [
+    {
+      "value": 18,
+      "count": 1
+    },
+    {
+      "value": 20,
+      "count": 1
+    }
+  ],
+  "firstPlayer": "ANY",
+  "complications": [
+    {
+      "operator": "GOODIE_POSITION_MODIFIER",
+      "strategy": {
+        "type": "HORIZONTAL",
+        "value": 0
+      }
+    },
+    {
+      "operator": "DYNAMIC_GOODIE_VALUE_MODIFIER",
+      "strategy": {
+        "type": "AP",
+        "value": 2
+      }
+    }
+  ]
+}
