@@ -14,7 +14,7 @@
     <application
         android:name=".GoldTrapApplication"
         android:allowBackup="true"
-        android:icon="@drawable/coins"
+        android:icon="@drawable/gold_trap_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <meta-data
