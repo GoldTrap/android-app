@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_horizontal_margin">24dp</dimen>
-    <dimen name="activity_vertical_margin">24dp</dimen>
-    <dimen name="dot_board_padding">4dp</dimen>
-    <dimen name="title_padding">12dp</dimen>
-    <dimen name="loading_padding">12dp</dimen>
-    <dimen name="fab_padding">12dp</dimen>
-    <dimen name="loading_app_name">12dp</dimen>
-    <dimen name="fab_margin">24dp</dimen>
-    <dimen name="level_size">64dp</dimen>
-    <dimen name="star_size">30dp</dimen>
-    <dimen name="checkout_size">72dp</dimen>
+    <dimen name="activity_horizontal_margin">36dp</dimen>
+    <dimen name="activity_vertical_margin">36dp</dimen>
+    <dimen name="dot_board_padding">6dp</dimen>
+    <dimen name="title_padding">24dp</dimen>
+    <dimen name="loading_padding">24dp</dimen>
+    <dimen name="fab_padding">24dp</dimen>
+    <dimen name="loading_app_name">24dp</dimen>
+    <dimen name="fab_margin">36dp</dimen>
+    <dimen name="level_size">72dp</dimen>
+    <dimen name="star_size">24dp</dimen>
+    <dimen name="checkout_size">84dp</dimen>
     <dimen name="points_size">84dp</dimen>
-    <dimen name="home_menu_image_margin">12dp</dimen>
-    <dimen name="episodes_image_margin">12dp</dimen>
-    <dimen name="checkout_image_margin">12dp</dimen>
+    <dimen name="home_menu_image_margin">24dp</dimen>
+    <dimen name="episodes_image_margin">24dp</dimen>
+    <dimen name="checkout_image_margin">24dp</dimen>
     <dimen name="points_image_margin">6dp</dimen>
-    <dimen name="episodes_card_padding">4dp</dimen>
-    <dimen name="levels_image_margin">12dp</dimen>
-    <dimen name="levels_card_padding">4dp</dimen>
-    <dimen name="buyables_card_padding">4dp</dimen>
-    <dimen name="buyables_image_margin">12dp</dimen>
-    <dimen name="buyables_image_size">72dp</dimen>
-    <dimen name="tasks_image_size">64dp</dimen>
-    <dimen name="menu_image_size">84dp</dimen>
-    <dimen name="episode_circular_text_size">108dp</dimen>
-    <dimen name="buyables_text_left_margin">12dp</dimen>
-    <dimen name="buyables_text_padding">4dp</dimen>
-    <dimen name="home_menu_card_margin">4dp</dimen>
-    <dimen name="level_card_margin">4dp</dimen>
-    <dimen name="summary_card_margin">12dp</dimen>
-    <dimen name="checkout_card_margin">4dp</dimen>
-    <dimen name="episodes_card_margin">4dp</dimen>
-    <dimen name="buyables_card_margin">4dp</dimen>
-    <dimen name="tasks_card_margin">16dp</dimen>
-    <dimen name="points_card_margin">16dp</dimen>
-    <dimen name="checkout_padding">4dp</dimen>
-    <dimen name="exchange_title_padding">12dp</dimen>
-    <dimen name="checkout_goodie_card_padding">4dp</dimen>
+    <dimen name="episodes_card_padding">6dp</dimen>
+    <dimen name="levels_image_margin">16dp</dimen>
+    <dimen name="levels_card_padding">6dp</dimen>
+    <dimen name="buyables_card_padding">6dp</dimen>
+    <dimen name="buyables_image_margin">16dp</dimen>
+    <dimen name="buyables_image_size">96dp</dimen>
+    <dimen name="tasks_image_size">72dp</dimen>
+    <dimen name="menu_image_size">96dp</dimen>
+    <dimen name="episode_circular_text_size">120dp</dimen>
+    <dimen name="buyables_text_left_margin">24dp</dimen>
+    <dimen name="buyables_text_padding">6dp</dimen>
+    <dimen name="home_menu_card_margin">6dp</dimen>
+    <dimen name="level_card_margin">6dp</dimen>
+    <dimen name="summary_card_margin">24dp</dimen>
+    <dimen name="checkout_card_margin">6dp</dimen>
+    <dimen name="episodes_card_margin">6dp</dimen>
+    <dimen name="buyables_card_margin">16dp</dimen>
+    <dimen name="tasks_card_margin">24dp</dimen>
+    <dimen name="points_card_margin">24dp</dimen>
+    <dimen name="checkout_padding">6dp</dimen>
+    <dimen name="exchange_title_padding">24dp</dimen>
+    <dimen name="checkout_goodie_card_padding">6dp</dimen>
 
-    <dimen name="spacing_normal">12dp</dimen>
-    <dimen name="spacing_micro">4dp</dimen>
-    <dimen name="padding_normal">24dp</dimen>
-    <dimen name="margin_normal">24dp</dimen>
+    <dimen name="spacing_normal">24dp</dimen>
+    <dimen name="spacing_micro">6dp</dimen>
+    <dimen name="padding_normal">36dp</dimen>
+    <dimen name="margin_normal">36dp</dimen>
 
     <item name="match_parent" format="integer" type="dimen">-1</item>
     <dimen name="card_elevation">2dp</dimen>
@@ -50,16 +50,17 @@
 
 
     <!-- Generic Activity -->
-    <dimen name="appbar_height">224dp</dimen>
+    <dimen name="appbar_height">256dp</dimen>
     <dimen name="image_width">204dp</dimen>
-    <dimen name="image_height">84dp</dimen>
-    <dimen name="content_padding_top">96dp</dimen>
+    <dimen name="image_height">120dp</dimen>
+    <dimen name="content_padding_top">136dp</dimen>
     <dimen name="summary_padding_top">64dp</dimen>
     <dimen name="content_width">@dimen/match_parent</dimen>
     <dimen name="content_padding">@dimen/padding_normal</dimen>
-    <dimen name="tasks_horizontal_margin">4dp</dimen>
+    <dimen name="tasks_horizontal_margin">6dp</dimen>
 
     <!-- Main Activity -->
+    <dimen name="title_margin">24dp</dimen>
     <dimen name="main_appbar_height">@dimen/appbar_height</dimen>
     <dimen name="main_image_width">@dimen/image_width</dimen>
     <dimen name="main_image_height">@dimen/image_height</dimen>
@@ -102,12 +103,12 @@
     <dimen name="sor_content_padding_top">@dimen/content_padding_top</dimen>
     <dimen name="sor_content_width">@dimen/content_width</dimen>
     <dimen name="sor_content_padding">@dimen/content_padding</dimen>
-    <dimen name="buyables_image_padding">12dp</dimen>
+    <dimen name="buyables_image_padding">24dp</dimen>
     <dimen name="checkout_image_padding">2dp</dimen>
     <dimen name="round_button_padding">6dp</dimen>
     <dimen name="tasks_card_padding">2dp</dimen>
 
-    <dimen name="points_image_padding">12dp</dimen>
+    <dimen name="points_image_padding">24dp</dimen>
     <dimen name="points_appbar_height">@dimen/appbar_height</dimen>
     <dimen name="points_image_height">@dimen/image_height</dimen>
 </resources>

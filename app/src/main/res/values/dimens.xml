@@ -110,5 +110,6 @@
     <dimen name="points_image_height">@dimen/image_height</dimen>
     <dimen name="points_image_padding">8dp</dimen>
     <dimen name="tasks_image_size">56dp</dimen>
+    <dimen name="title_margin">8dp</dimen>
 
 </resources>
