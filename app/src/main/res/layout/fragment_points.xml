@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/points_card_margin"
+        android:layout_marginStart="@dimen/points_card_margin"
         card_view:cardBackgroundColor="@color/md_grey_100"
         card_view:cardCornerRadius="@dimen/card_corner_radius"
         card_view:cardElevation="@dimen/card_elevation"
@@ -20,8 +22,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/points_card_margin">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/points_image"

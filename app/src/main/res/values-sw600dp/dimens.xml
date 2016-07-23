@@ -1,46 +1,47 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">24dp</dimen>
+    <dimen name="activity_vertical_margin">24dp</dimen>
     <dimen name="dot_board_padding">4dp</dimen>
-    <dimen name="title_padding">8dp</dimen>
-    <dimen name="loading_padding">8dp</dimen>
-    <dimen name="fab_padding">8dp</dimen>
-    <dimen name="loading_app_name">8dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="level_size">56dp</dimen>
-    <dimen name="star_size">24dp</dimen>
-    <dimen name="checkout_size">56dp</dimen>
-    <dimen name="points_size">56dp</dimen>
-    <dimen name="home_menu_image_margin">8dp</dimen>
-    <dimen name="episodes_image_margin">8dp</dimen>
-    <dimen name="checkout_image_margin">8dp</dimen>
-    <dimen name="points_image_margin">8dp</dimen>
-    <dimen name="episodes_card_padding">0dp</dimen>
-    <dimen name="levels_image_margin">8dp</dimen>
-    <dimen name="levels_card_padding">0dp</dimen>
-    <dimen name="buyables_card_padding">0dp</dimen>
-    <dimen name="buyables_image_margin">8dp</dimen>
-    <dimen name="buyables_image_size">64dp</dimen>
-    <dimen name="menu_image_size">72dp</dimen>
-    <dimen name="buyables_text_left_margin">8dp</dimen>
+    <dimen name="title_padding">12dp</dimen>
+    <dimen name="loading_padding">12dp</dimen>
+    <dimen name="fab_padding">12dp</dimen>
+    <dimen name="loading_app_name">12dp</dimen>
+    <dimen name="fab_margin">24dp</dimen>
+    <dimen name="level_size">64dp</dimen>
+    <dimen name="star_size">30dp</dimen>
+    <dimen name="checkout_size">72dp</dimen>
+    <dimen name="points_size">84dp</dimen>
+    <dimen name="home_menu_image_margin">12dp</dimen>
+    <dimen name="episodes_image_margin">12dp</dimen>
+    <dimen name="checkout_image_margin">12dp</dimen>
+    <dimen name="points_image_margin">6dp</dimen>
+    <dimen name="episodes_card_padding">4dp</dimen>
+    <dimen name="levels_image_margin">12dp</dimen>
+    <dimen name="levels_card_padding">4dp</dimen>
+    <dimen name="buyables_card_padding">4dp</dimen>
+    <dimen name="buyables_image_margin">12dp</dimen>
+    <dimen name="buyables_image_size">72dp</dimen>
+    <dimen name="tasks_image_size">64dp</dimen>
+    <dimen name="menu_image_size">84dp</dimen>
+    <dimen name="episode_circular_text_size">108dp</dimen>
+    <dimen name="buyables_text_left_margin">12dp</dimen>
     <dimen name="buyables_text_padding">4dp</dimen>
-    <dimen name="home_menu_card_margin">0dp</dimen>
-    <dimen name="level_card_margin">0dp</dimen>
-    <dimen name="summary_card_margin">8dp</dimen>
-    <dimen name="checkout_card_margin">0dp</dimen>
-    <dimen name="episodes_card_margin">0dp</dimen>
-    <dimen name="buyables_card_margin">0dp</dimen>
-    <dimen name="tasks_card_margin">0dp</dimen>
-    <dimen name="points_card_margin">0dp</dimen>
+    <dimen name="home_menu_card_margin">4dp</dimen>
+    <dimen name="level_card_margin">4dp</dimen>
+    <dimen name="summary_card_margin">12dp</dimen>
+    <dimen name="checkout_card_margin">4dp</dimen>
+    <dimen name="episodes_card_margin">4dp</dimen>
+    <dimen name="buyables_card_margin">4dp</dimen>
+    <dimen name="tasks_card_margin">16dp</dimen>
+    <dimen name="points_card_margin">16dp</dimen>
     <dimen name="checkout_padding">4dp</dimen>
-    <dimen name="exchange_title_padding">8dp</dimen>
-    <dimen name="checkout_goodie_card_padding">0dp</dimen>
+    <dimen name="exchange_title_padding">12dp</dimen>
+    <dimen name="checkout_goodie_card_padding">4dp</dimen>
 
-    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_normal">12dp</dimen>
     <dimen name="spacing_micro">4dp</dimen>
-    <dimen name="padding_normal">16dp</dimen>
-    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="padding_normal">24dp</dimen>
+    <dimen name="margin_normal">24dp</dimen>
 
     <item name="match_parent" format="integer" type="dimen">-1</item>
     <dimen name="card_elevation">2dp</dimen>
@@ -48,14 +49,14 @@
 
 
     <!-- Generic Activity -->
-    <dimen name="appbar_height">180dp</dimen>
-    <dimen name="image_width">200dp</dimen>
-    <dimen name="image_height">80dp</dimen>
+    <dimen name="appbar_height">224dp</dimen>
+    <dimen name="image_width">204dp</dimen>
+    <dimen name="image_height">84dp</dimen>
     <dimen name="content_padding_top">96dp</dimen>
     <dimen name="summary_padding_top">64dp</dimen>
     <dimen name="content_width">@dimen/match_parent</dimen>
     <dimen name="content_padding">@dimen/padding_normal</dimen>
-    <dimen name="tasks_horizontal_margin">2dp</dimen>
+    <dimen name="tasks_horizontal_margin">4dp</dimen>
 
     <!-- Main Activity -->
     <dimen name="main_appbar_height">@dimen/appbar_height</dimen>
@@ -69,12 +70,11 @@
     <dimen name="browse_appbar_height">@dimen/appbar_height</dimen>
     <dimen name="browse_image_width">@dimen/image_width</dimen>
     <dimen name="episodes_image_width">@dimen/match_parent</dimen>
-    <dimen name="episodes_image_height">180dp</dimen>
+    <dimen name="episodes_image_height">184dp</dimen>
     <dimen name="browse_image_height">@dimen/image_height</dimen>
     <dimen name="browse_content_padding_top">@dimen/content_padding_top</dimen>
     <dimen name="browse_content_width">@dimen/content_width</dimen>
     <dimen name="browse_content_padding">@dimen/content_padding</dimen>
-    <dimen name="episode_circular_text_size">96dp</dimen>
 
     <!-- Multi player Menu Fragment -->
     <dimen name="multi_player_appbar_height">@dimen/appbar_height</dimen>
@@ -90,7 +90,7 @@
     <dimen name="play_image_height">@dimen/image_height</dimen>
     <dimen name="play_content_padding_top">@dimen/content_padding_top</dimen>
     <dimen name="summary_content_padding_top">@dimen/summary_padding_top</dimen>
-    <dimen name="score_content_padding_top">80dp</dimen>
+    <dimen name="score_content_padding_top">84dp</dimen>
     <dimen name="play_content_width">@dimen/content_width</dimen>
     <dimen name="play_content_padding">@dimen/content_padding</dimen>
 
@@ -106,9 +106,7 @@
     <dimen name="round_button_padding">6dp</dimen>
     <dimen name="tasks_card_padding">2dp</dimen>
 
+    <dimen name="points_image_padding">12dp</dimen>
     <dimen name="points_appbar_height">@dimen/appbar_height</dimen>
     <dimen name="points_image_height">@dimen/image_height</dimen>
-    <dimen name="points_image_padding">8dp</dimen>
-    <dimen name="tasks_image_size">56dp</dimen>
-
 </resources>
