@@ -1,5 +1,7 @@
 package com.asb.goldtrap.fragments.postgame;
 
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -142,13 +144,30 @@ public class ScoreFragment extends Fragment {
                         .build());
             }
         });
-        points.setText(getString(R.string.points, score.basicScore()));
+        setPointsWithAnimation();
         mAdView = (NativeExpressAdView) view.findViewById(R.id.ad_view);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("EAA51803F0D6A92C418E5D37FE508ACB")
                 .build();
         mAdView.loadAd(adRequest);
         return view;
+    }
+
+    private void setPointsWithAnimation() {
+        ValueAnimator animator = new ValueAnimator();
+        animator.setObjectValues(0, score.basicScore());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                points.setText(getString(R.string.points, (Integer) animation.getAnimatedValue()));
+            }
+        });
+        animator.setEvaluator(new TypeEvaluator<Integer>() {
+            public Integer evaluate(float fraction, Integer startValue, Integer endValue) {
+                return Math.round(startValue + (endValue - startValue) * fraction);
+            }
+        });
+        animator.setDuration(2500);
+        animator.start();
     }
 
     @Override

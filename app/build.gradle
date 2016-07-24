@@ -16,7 +16,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 16
+        versionCode 17
         versionName "1.0"
         signingConfig signingConfigs.release
         // Enabling multidex support.
@@ -40,13 +40,13 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':BaseGameUtils')
     compile 'com.google.code.gson:gson:2.4'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
-    compile 'com.android.support:cardview-v7:24.0.0'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
-    compile 'com.android.support:palette-v7:24.0.0'
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.android.support:percent:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:cardview-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:palette-v7:24.1.1'
+    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.android.support:percent:24.1.1'
     compile 'com.google.firebase:firebase-messaging:9.2.1'
     compile 'com.google.android.gms:play-services-analytics:9.2.1'
     compile 'com.google.android.gms:play-services:9.2.1'
@@ -56,7 +56,7 @@ dependencies {
     compile 'com.google.firebase:firebase-invites:9.2.1'
     compile 'com.google.android.gms:play-services-auth:9.2.1'
     compile 'com.google.android.gms:play-services-gcm:9.2.1'
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'tyrantgit:explosionfield:1.0.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'za.co.riggaroo:materialhelptutorial:1.2.0'
