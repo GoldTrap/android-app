@@ -1,29 +1,29 @@
 {
   "FLIP": {
-    "points": 75000,
+    "points": 100000,
     "goodies" : {
-      "ONE_K": 25,
-      "TWO_K": 12,
-      "FIVE_K": 5,
-      "DIAMOND": 4
+      "ONE_K": 50,
+      "TWO_K": 25,
+      "FIVE_K": 15,
+      "DIAMOND": 10
     }
   },
   "PLUS_ONE": {
-    "points": 25000,
+    "points": 75000,
     "goodies" : {
-      "ONE_K": 20,
-      "TWO_K": 9,
-      "FIVE_K": 4,
-      "DIAMOND": 3
+      "ONE_K": 30,
+      "TWO_K": 15,
+      "FIVE_K": 10,
+      "DIAMOND": 5
     }
   },
   "SKIP": {
-    "points": 15000,
+    "points": 50000,
     "goodies" : {
-      "ONE_K": 15,
-      "TWO_K": 7,
-      "FIVE_K": 3,
-      "DIAMOND": 2
+      "ONE_K": 25,
+      "TWO_K": 15,
+      "FIVE_K": 10,
+      "DIAMOND": 5
     }
   }
 }
