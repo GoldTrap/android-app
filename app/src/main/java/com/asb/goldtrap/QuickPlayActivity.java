@@ -252,8 +252,10 @@ public class QuickPlayActivity extends AppCompatActivity
             @Override
             protected Void doInBackground(Void... params) {
                 scoreModel.updateScore(levelCode, score, null);
-                leaderboardsModel.updateLeaderboards(mGoogleApiClient, score);
-                achievementsModel.updateAchievements(mGoogleApiClient, score);
+                if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+                    leaderboardsModel.updateLeaderboards(mGoogleApiClient, score);
+                    achievementsModel.updateAchievements(mGoogleApiClient, score);
+                }
                 return null;
             }
         }.execute();
