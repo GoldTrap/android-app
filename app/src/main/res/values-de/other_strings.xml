@@ -1,0 +1,104 @@
+<resources>
+    <!--Multiplayer game-->
+    <string name="status_multiplayer_error_not_trusted_tester">"Jeder laden Sie ein, muss ein Trusted Tester sein"</string>
+    <string name="match_error_already_rematched">"Diese Neuauflage wurde bereits begonnen!"</string>
+    <string name="client_reconnect_required">"Spiele Wiederverbindung von Clients erforderlich"</string>
+    <string name="network_error_operation_failed">"Netzwerkfehler: Der Vorgang ist fehlgeschlagen"</string>
+    <string name="internal_error">"Interner Fehler"</string>
+    <string name="unexpected_status">"Unerwarteter Status"</string>
+    <string name="match_error_inactive_match">"Dieses Spiel ist nicht aktiv."</string>
+    <string name="match_error_locally_modified">"Das Spiel ist lokal geänderten Daten. Dieser Vorgang kann nicht ausgeführt werden, bis das Spiel an den Server gesendet wird."</string>
+
+    <!--Episodes-->
+    <string name="episode_1">"Paris, Frankreich"</string>
+    <string name="episode_2">"Bangalore - Indien"</string>
+    <string name="episode_3">"New York - Vereinigte Staaten"</string>
+    <string name="episode_4">"London, England"</string>
+    <string name="episode_5">"Mailand, Italien"</string>
+    <string name="episode_6">"Peking, China"</string>
+
+    <!--Tutorial-->
+    <string name="click_title">"Hallo!"</string>
+    <string name="click_subtitle">"Klicken Sie zwischen den Punkten, die Linie zu besetzen"</string>
+    <string name="points_title">"Punkte"</string>
+    <string name="points_subtitle">"Füllen Sie die Zellen zu bekommen Punkte und zusätzliche Chance!"</string>
+    <string name="flip_title">"Flip"</string>
+    <string name="flip_subtitle">"Sind Sie verlieren? Klicken Sie einfach auf das Sie Punkte und ihre Punkte werden untereinander ausgetauscht werden!"</string>
+    <string name="plus_one_title">"Extra-Chance"</string>
+    <string name="plus_one_subtitle">"Möchten Sie eine zusätzliche Chance? Klicken Sie auf diese, bevor Sie an der Reihe und Voila! Sie erhalten eine zusätzliche Chance bekommen!"</string>
+    <string name="skip_title">"Überspringen"</string>
+    <string name="skip_subtitle">"Ich will nicht eine Wende spielen? Klicken Sie auf diese zu überspringen!"</string>
+
+    <!--Loading-->
+    <string name="loading1">"Die Bohrungen, die Minen …"</string>
+    <string name="loading2">"Strahlen in den Ofen …"</string>
+    <string name="loading3">"Kaufen Sie etwas Koks …"</string>
+    <string name="loading4">"Die Anwendung des Flusses …"</string>
+    <string name="loading5">"Ausfiltern der gangue …"</string>
+    <string name="loading6">"Röstung das Erz …"</string>
+    <string name="loading7">"Oxidieren der Kohlenstoff …"</string>
+    <string name="loading8">"Die Reduzierung der Erz …"</string>
+    <string name="loading9">"Das Entfernen der Schlacke …"</string>
+    <string name="loading10">"Entpacken des Metall …"</string>
+    <string name="loading11">"Verhüttung die neue Charge …"</string>
+
+    <!--FCM-->
+    <plurals name="take_gold_coins">
+        <item quantity="one">"Sie haben eine Goldmünze verdient"</item>
+        <item quantity="other">"Sie wurden mit ausgezeichnet %d Goldmünzen"</item>
+    </plurals>
+    <plurals name="take_gold_nuggets">
+        <item quantity="one">"Sie haben ein Goldnugget verdient"</item>
+        <item quantity="other">"Sie wurden mit ausgezeichnet %d Goldnuggets"</item>
+    </plurals>
+    <plurals name="take_gold_bars">
+        <item quantity="one">"Sie haben eine Gold Bar verdient"</item>
+        <item quantity="other">"Sie wurden mit ausgezeichnet %d Goldbarren"</item>
+    </plurals>
+    <plurals name="take_diamonds">
+        <item quantity="one">"Sie haben ein Diamant verdient"</item>
+        <item quantity="other">"Sie wurden mit ausgezeichnet %d Diamanten"</item>
+    </plurals>
+
+    <!--Tasks-->
+    <plurals name="get_points">
+        <item quantity="one">"Score %d Punkt"</item>
+        <item quantity="other">"Score %d Punkte"</item>
+    </plurals>
+    <plurals name="get_lines">
+        <item quantity="one">"Ergebnis mindestens %d horizontale oder vertikale Linie"</item>
+        <item quantity="other">"Ergebnis mindestens %d horizontale oder vertikale Linien"</item>
+    </plurals>
+    <plurals name="get_horizontal_lines">
+        <item quantity="one">"Ergebnis mindestens %d Horizontale Linie"</item>
+        <item quantity="other">"Ergebnis mindestens %d Horizontale Linien"</item>
+    </plurals>
+    <plurals name="get_vertical_lines">
+        <item quantity="one">"Ergebnis mindestens %d vertikale Linie"</item>
+        <item quantity="other">"Ergebnis mindestens %d Vertikale Linien"</item>
+    </plurals>
+    <plurals name="get_goodies">
+        <item quantity="one">"Holen Sie sich mindestens %d Goodie"</item>
+        <item quantity="other">"Holen Sie sich mindestens %d Goodies"</item>
+    </plurals>
+    <plurals name="get_diamonds">
+        <item quantity="one">"Holen %d Diamant"</item>
+        <item quantity="other">"Holen %d Diamanten"</item>
+    </plurals>
+    <plurals name="get_golds">
+        <item quantity="one">"Holen %d Goldmünze"</item>
+        <item quantity="other">"Holen %d Goldmünzen"</item>
+    </plurals>
+    <plurals name="get_gold_nuggets">
+        <item quantity="one">"Holen %d Gold Nugget"</item>
+        <item quantity="other">"Holen %d Goldnuggets"</item>
+    </plurals>
+    <plurals name="get_gold_bars">
+        <item quantity="one">"Holen %d Gold Bar"</item>
+        <item quantity="other">"Holen %d Goldbarren"</item>
+    </plurals>
+    <plurals name="get_dynamic_goodies">
+        <item quantity="one">"Holen %1$d Goodies mit mindestens %2$d Punkte"</item>
+        <item quantity="other">"Holen %1$d Goodie mit mindestens %2$d Punkte"</item>
+    </plurals>
+</resources>

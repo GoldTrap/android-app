@@ -1,0 +1,104 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--Multiplayer game-->
+    <string name="status_multiplayer_error_not_trusted_tester">"Любой вы приглашаете должен быть доверенным тестером"</string>
+    <string name="match_error_already_rematched">"Этот матч-реванш уже началась!"</string>
+    <string name="client_reconnect_required">"Игры требуется клиент переподключение"</string>
+    <string name="network_error_operation_failed">"Сетевая ошибка: Не удалось выполнить операцию"</string>
+    <string name="internal_error">"Внутренняя ошибка"</string>
+    <string name="unexpected_status">"Неожиданный статус"</string>
+    <string name="match_error_inactive_match">"Этот матч является неактивным."</string>
+    <string name="match_error_locally_modified">"Этот матч имеет локально-модифицированных данных. Эта операция не может быть выполнена, пока матч не отправляется на сервер."</string>
+
+    <!--Episodes-->
+    <string name="episode_1">"Париж, Франция"</string>
+    <string name="episode_2">"Бангалор - Индия"</string>
+    <string name="episode_3">"Нью-Йорк - США"</string>
+    <string name="episode_4">"Лондон, Англия"</string>
+    <string name="episode_5">"Милан - Италия"</string>
+    <string name="episode_6">"Пекин, Китай"</string>
+
+    <!--Tutorial-->
+    <string name="click_title">"Hola!"</string>
+    <string name="click_subtitle">"Нажмите между точками, чтобы занять линию"</string>
+    <string name="points_title">"Точки"</string>
+    <string name="points_subtitle">"Заполните клетки, чтобы получить очки и дополнительный шанс!"</string>
+    <string name="flip_title">"кувырок"</string>
+    <string name="flip_subtitle">"Вы теряете? Просто нажмите на это, вам очки и их баллы будут взаимозаменяемы!"</string>
+    <string name="plus_one_title">"Дополнительный шанс"</string>
+    <string name="plus_one_subtitle">"Хотите дополнительный шанс? Нажмите эту кнопку, прежде чем ваш ход и вуаля! Вы получите дополнительный шанс!"</string>
+    <string name="skip_title">"Пропускать"</string>
+    <string name="skip_subtitle">"Не хочу играть поворот? Нажмите эту кнопку, чтобы пропустить!"</string>
+
+    <!--Loading-->
+    <string name="loading1">"Бурение шахты …"</string>
+    <string name="loading2">"Взрывные печи …"</string>
+    <string name="loading3">"Покупка некоторый кокс …"</string>
+    <string name="loading4">"Применяя поток …"</string>
+    <string name="loading5">"Фильтрация жильных …"</string>
+    <string name="loading6">"Обжиг руды …"</string>
+    <string name="loading7">"Окисление углерода …"</string>
+    <string name="loading8">"Снижение руды …"</string>
+    <string name="loading9">"Удаление шлака …"</string>
+    <string name="loading10">"Извлечение металла …"</string>
+    <string name="loading11">"Выплавка новую партию …"</string>
+
+    <!--FCM-->
+    <plurals name="take_gold_coins" tools:ignore="MissingQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">"Вы заработали золотую монету"</item>
+        <item quantity="other">"Вы были награждены %d золотых монет"</item>
+    </plurals>
+    <plurals name="take_gold_nuggets" tools:ignore="MissingQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">"Вы заработали Золотой Самородок"</item>
+        <item quantity="other">"Вы были награждены %d золотых самородков"</item>
+    </plurals>
+    <plurals name="take_gold_bars" tools:ignore="MissingQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">"Вы заработали золотой слиток"</item>
+        <item quantity="other">"Вы были награждены %d золотых слитков"</item>
+    </plurals>
+    <plurals name="take_diamonds" tools:ignore="MissingQuantity">
+        <item quantity="one" tools:ignore="ImpliedQuantity">"Вы заработали Алмазная"</item>
+        <item quantity="other">"Вы были награждены %d Diamonds"</item>
+    </plurals>
+
+    <!--Tasks-->
+    <plurals name="get_points" tools:ignore="MissingQuantity">
+        <item quantity="one">"Оценка %d точки"</item>
+        <item quantity="other">"Оценка %d Очки"</item>
+    </plurals>
+    <plurals name="get_lines" tools:ignore="MissingQuantity">
+        <item quantity="one">"Оценка по крайней мере %d горизонтальная или вертикальная линия"</item>
+        <item quantity="other">"Оценка по крайней мере %d горизонтальные или вертикальные линии"</item>
+    </plurals>
+    <plurals name="get_horizontal_lines" tools:ignore="MissingQuantity">
+        <item quantity="one">"Оценка по крайней мере %d Горизонтальная линия"</item>
+        <item quantity="other">"Оценка по крайней мере %d Горизонтальные линии"</item>
+    </plurals>
+    <plurals name="get_vertical_lines" tools:ignore="MissingQuantity">
+        <item quantity="one">"Оценка по крайней мере %d Вертикальная линия"</item>
+        <item quantity="other">"Оценка по крайней мере %d Вертикальные линии"</item>
+    </plurals>
+    <plurals name="get_goodies" tools:ignore="MissingQuantity">
+        <item quantity="one">"Получите по крайней мере %d Гуди"</item>
+        <item quantity="other">"Получите по крайней мере %d Сл"</item>
+    </plurals>
+    <plurals name="get_diamonds" tools:ignore="MissingQuantity">
+        <item quantity="one">"Получить %d алмаз"</item>
+        <item quantity="other">"Получить %d Diamonds"</item>
+    </plurals>
+    <plurals name="get_golds" tools:ignore="MissingQuantity">
+        <item quantity="one">"Получить %d Золотая монета"</item>
+        <item quantity="other">"Получить %d Золотые монеты"</item>
+    </plurals>
+    <plurals name="get_gold_nuggets" tools:ignore="MissingQuantity">
+        <item quantity="one">"Получить %d Золотой Самородок"</item>
+        <item quantity="other">"Получить %d золотых самородков"</item>
+    </plurals>
+    <plurals name="get_gold_bars" tools:ignore="MissingQuantity">
+        <item quantity="one">"Получить %d Gold Bar"</item>
+        <item quantity="other">"Получить %d золотых слитков"</item>
+    </plurals>
+    <plurals name="get_dynamic_goodies" tools:ignore="MissingQuantity">
+        <item quantity="one">"Получить %1$d Goodies, по крайней мере , %2$d точек"</item>
+        <item quantity="other">"Получить %1$d Гуди по крайней мере %2$d точек"</item>
+    </plurals>
+</resources>

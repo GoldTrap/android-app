@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">"ゴールドトラップ"</string>
+    <string name="signin_other_error">"サインインに問題がありました。しばらくしてからもう一度お試しください。"</string>
+    <string name="loading">"読み込んでいます…"</string>
+    <string name="play">"遊びます"</string>
+    <string name="quick_play">"クイックプレイ"</string>
+    <string name="heart">"ハート"</string>
+    <string name="multi_player">"マルチプレーヤー"</string>
+    <string name="episodes">"エピソード"</string>
+    <string name="sign_out">"サインアウト"</string>
+    <string name="title_activity_quick_play">"QuickPlayActivity"</string>
+    <string name="points">"ポイント： %d"</string>
+    <string name="your_turn">"あなたの番"</string>
+    <string name="game_over">"ゲームオーバー"</string>
+    <string name="opponents_turn">"自分の順番"</string>
+    <string name="extra_chance">"1"</string>
+    <string name="flip">"フリップ"</string>
+    <string name="skip">"スキップ"</string>
+    <string name="tasks">"タスク"</string>
+    <string name="share_with_others">"ゴールドトラップで私のスコアをチェックアウト。 http://bit.ly/gold-trapでそれを入手"</string>
+    <string name="google_play_services_error">"Googleのプレイサービスのエラー"</string>
+
+    <string name="won">"あなたウォン！"</string>
+    <string name="lost">"あなたが負けた"</string>
+    <string name="draw">"それはドローです！"</string>
+    <string name="completed_tasks">"完了したタスク"</string>
+    <string name="incomplete_tasks">"不完全なタスク"</string>
+
+    <!-- Menu Items -->
+    <string name="play_game">"遊びます"</string>
+    <string name="quick_play_game">"クイックプレイ"</string>
+    <string name="multi_player_game">"マルチプレーヤー"</string>
+    <string name="store">"ラマO 'ショップ"</string>
+    <string name="checkout">"チェックアウト%1$s"</string>
+    <string name="leaderboards">"リーダーボード"</string>
+    <string name="achievements">"実績"</string>
+    <string name="share">"シェア"</string>
+
+    <!-- Multi Player Menu Items -->
+    <string name="start_match">"新しいマッチ"</string>
+    <string name="auto_match">"オートマッチ"</string>
+    <string name="in_progress_matches">"プログレス試合で"</string>
+
+
+    <string name="replay">"リプレイ"</string>
+    <string name="invite">"チャレンジ"</string>
+    <string name="next">"次"</string>
+
+    <string name="invitation_title">"あなたの友人に挑戦"</string>
+    <string name="invitation_message">"あなたはこのゲームを試してみてください。それは超楽しいです！"</string>
+    <string name="invitation_cta">"インストール！"</string>
+    <string formatted="false" name="sent_invitations_fmt">"送信された%d招待状"</string>
+    <string name="send_failed">"送信招待状に失敗しました"</string>
+    <string name="title_activity_multi_player">"マルチプレーヤー"</string>
+    <string name="action_settings">"設定"</string>
+
+    <string name="sign_in_successful">"成功したログイン"</string>
+
+    <string name="title_activity_play">"遊びます"</string>
+    <string name="title_activity_tutorial">"チュートリアル"</string>
+
+    <string name="no_internet">"あなたのインターネットを有効にしてください"</string>
+    <string name="settings">"設定"</string>
+    <string name="level">"レベル%d"</string>
+
+    <!-- Buyables -->
+    <string name="flip_name">"フリップを取得"</string>
+    <string name="flip_desc">"フリップは、あなたと対戦相手によって占められた細胞を交換するのに役立ちます。"</string>
+
+    <string name="plus_one_name">"1を取得"</string>
+    <string name="plus_one_desc">"+1は余分なチャンスを得るのに役立ちます。"</string>
+
+    <string name="skip_name">"スキップを取得"</string>
+    <string name="skip_desc">"スキップは、あなたがターンをスキップするのに役立ちます。"</string>
+
+    <string name="unlock_all_name">"アンロック"</string>
+    <string name="unlock_all_desc">"すべてのレベルのロックを解除します。"</string>
+
+    <string name="donate_name">"寄付します"</string>
+    <string name="donate_desc">"あなたはこのゲームが好きなら、私はこのゲームを維持するのを助けるために寄付してください:)。"</string>
+
+    <string name="buy_item">"購入%s"</string>
+    <string name="buy_item_desc">"購入%s Google Playの中を"</string>
+    <string name="buy_button">"購入"</string>
+    <string name="trade_points">"トレード"</string>
+    <string name="trade_points_desc">"以下のための貿易%dポイント"</string>
+    <string name="trade_button">"トレード"</string>
+    <string name="exchange_goodie_title">"グッズと交換"</string>
+    <string name="exchange_goodie">"%s"</string>
+    <string name="exchange_goodie_desc">"引き換え%1$d %2$s"</string>
+    <string name="exchange_button">"交換"</string>
+
+    <string name="one_k">"ゴールドコイン"</string>
+    <string name="two_k">"ゴールドナゲッツ"</string>
+    <string name="five_k">"金の延べ棒"</string>
+    <string name="diamonds">"ダイヤモンド"</string>
+
+    <string name="game_was_cancelled">"このゲームはキャンセルされました！"</string>
+    <string name="game_is_expired">"このゲームは有効期限が切れています。とても悲しい！"</string>
+    <string name="auto_matching">"我々はまだautomatch相手を待っています。"</string>
+    <string name="transaction_successful">"取引成功"</string>
+    <string name="mute">"ミュート"</string>
+    <string name="un_mute">"ミュートを解除"</string>
+    <string name="stay_tuned">"アプリのフルバージョンをお楽しみに！"</string>
+    <string name="score">"スコア"</string>
+    <string name="sound">"音"</string>
+    <string name="star">"星"</string>
+    <string name="connect_to_google_play_games">"マルチプレイヤーゲームをプレイするためのゲームをGoogle Playに接続してください！"</string>
+    <string name="connect_to_google_play_games_menu">"Google Playのゲームに接続してください"</string>
+    <string name="help">"助けて"</string>
+    <string name="goodie">"グッディー"</string>
+    <string name="title_activity_points">"点数"</string>
+    <string name="points_value_name">"%1$dポイント"</string>
+    <string name="goodie_value_name">"%1$d %2$s"</string>
+
+</resources>

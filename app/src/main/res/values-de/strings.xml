@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">"Goldfalle"</string>
+    <string name="signin_other_error">"Es gab ein Problem mit Anmeldung, bitte versuchen Sie es später noch einmal."</string>
+    <string name="loading">"Laden…"</string>
+    <string name="play">"Spielen"</string>
+    <string name="quick_play">"Schnelles Spiel"</string>
+    <string name="heart">"Herz"</string>
+    <string name="multi_player">"Multi Player"</string>
+    <string name="episodes">"Folgen"</string>
+    <string name="sign_out">"Ausloggen"</string>
+    <string name="title_activity_quick_play">"QuickPlayActivity"</string>
+    <string name="points">"Punkte: %d"</string>
+    <string name="your_turn">"Du bist dran"</string>
+    <string name="game_over">"Spiel ist aus"</string>
+    <string name="opponents_turn">"Sie sind dran"</string>
+    <string name="extra_chance">"+1"</string>
+    <string name="flip">"Flip"</string>
+    <string name="skip">"Überspringen"</string>
+    <string name="tasks">"Tasks"</string>
+    <string name="share_with_others">"Zur Kasse Meine Punktzahl an der Gold-Falle. Holen Sie sich bei http://bit.ly/gold-trap"</string>
+    <string name="google_play_services_error">"Google Play-Dienste Fehler"</string>
+
+    <string name="won">"Du hast gewonnen!"</string>
+    <string name="lost">"Du hast verloren"</string>
+    <string name="draw">"Es ist eine Zeichnung!"</string>
+    <string name="completed_tasks">"Erledigte Aufgaben"</string>
+    <string name="incomplete_tasks">"Unvollständige Aufgaben"</string>
+
+    <!-- Menu Items -->
+    <string name="play_game">"Spielen"</string>
+    <string name="quick_play_game">"Schnelles Spiel"</string>
+    <string name="multi_player_game">"Multi Player"</string>
+    <string name="store">"Shop 'o Rama"</string>
+    <string name="checkout">"Checkout %1$s"</string>
+    <string name="leaderboards">"Bestenlisten"</string>
+    <string name="achievements">"Erfolge"</string>
+    <string name="share">"Aktie"</string>
+
+    <!-- Multi Player Menu Items -->
+    <string name="start_match">"Neues Spiel"</string>
+    <string name="auto_match">"Auto Spiel"</string>
+    <string name="in_progress_matches">"In Progress Spiele"</string>
+
+
+    <string name="replay">"Wiederholung"</string>
+    <string name="invite">"Herausforderung"</string>
+    <string name="next">"Nächster"</string>
+
+    <string name="invitation_title">"Fordern Sie Ihre Freunde"</string>
+    <string name="invitation_message">"Sie sollten versuchen, dieses Spiel. Es ist super Spaß!"</string>
+    <string name="invitation_cta">"Installieren!"</string>
+    <string formatted="false" name="sent_invitations_fmt">"Sent %d Einladungen"</string>
+    <string name="send_failed">"Senden Einladungen fehlgeschlagen"</string>
+    <string name="title_activity_multi_player">"Multi Player"</string>
+    <string name="action_settings">"Einstellungen"</string>
+
+    <string name="sign_in_successful">"Anmeldung erfolgreich"</string>
+
+    <string name="title_activity_play">"Spielen"</string>
+    <string name="title_activity_tutorial">"Lernprogramm"</string>
+
+    <string name="no_internet">"Bitte aktivieren Sie Ihre Internet"</string>
+    <string name="settings">"Settings"</string>
+    <string name="level">"Level %d"</string>
+
+    <!-- Buyables -->
+    <string name="flip_name">"Erhalten Sie Flips"</string>
+    <string name="flip_desc">"Flips wird Ihnen helfen, die Zellen von Ihnen und dem Gegner besetzt auszutauschen."</string>
+
+    <string name="plus_one_name">"Erhalten Sie +1"</string>
+    <string name="plus_one_desc">"1s + wird Ihnen helfen, eine zusätzliche Chance zu bekommen."</string>
+
+    <string name="skip_name">"Get Skips"</string>
+    <string name="skip_desc">"Skips wird Ihnen helfen, eine Wendung zu überspringen."</string>
+
+    <string name="unlock_all_name">"aufschließen"</string>
+    <string name="unlock_all_desc">"Schalte alle Ebenen."</string>
+
+    <string name="donate_name">"Spenden"</string>
+    <string name="donate_desc">"Wenn Sie dieses Spiel Spaß macht, spenden Sie bitte mich, dieses Spiel zu helfen, halten :)."</string>
+
+    <string name="buy_item">"Buy %s"</string>
+    <string name="buy_item_desc">"Kaufen %s in Google Play"</string>
+    <string name="buy_button">"Kaufen"</string>
+    <string name="trade_points">"Handel"</string>
+    <string name="trade_points_desc">"Handel für %d Punkte"</string>
+    <string name="trade_button">"Handel"</string>
+    <string name="exchange_goodie_title">"Der Austausch mit Extras"</string>
+    <string name="exchange_goodie">"%s"</string>
+    <string name="exchange_goodie_desc">"Austausch für %1$d %2$s"</string>
+    <string name="exchange_button">"Austausch"</string>
+
+    <string name="one_k">"Goldmünzen"</string>
+    <string name="two_k">"Gold Nuggets"</string>
+    <string name="five_k">"Goldbarren"</string>
+    <string name="diamonds">"Diamanten"</string>
+
+    <string name="game_was_cancelled">"Dieses Spiel wurde abgesagt!"</string>
+    <string name="game_is_expired">"Dieses Spiel ist abgelaufen. So traurig!"</string>
+    <string name="auto_matching">"Wir warten immer noch auf eine Automatch-Partner."</string>
+    <string name="transaction_successful">"Transaktion erfolgreich"</string>
+    <string name="mute">"Stumm"</string>
+    <string name="un_mute">"Un-mute"</string>
+    <string name="stay_tuned">"Bleiben Sie für die Vollversion der App Tuned!"</string>
+    <string name="score">"Ergebnis"</string>
+    <string name="sound">"Klingen"</string>
+    <string name="star">"Star"</string>
+    <string name="connect_to_google_play_games">"Bitte schließen Sie Google Play Games zum Spielen Multi-Player-Spiele!"</string>
+    <string name="connect_to_google_play_games_menu">"Bitte schließen Sie Google Play Games"</string>
+    <string name="help">"Hilfe"</string>
+    <string name="goodie">"Goodie"</string>
+    <string name="title_activity_points">"Punkte"</string>
+    <string name="points_value_name">"%1$d Punkte"</string>
+    <string name="goodie_value_name">"%1$d %2$s"</string>
+
+</resources>

@@ -1,0 +1,104 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--Multiplayer game-->
+    <string name="status_multiplayer_error_not_trusted_tester">"أي شخص تدعوه يجب أن يكون اختبار موثوق به"</string>
+    <string name="match_error_already_rematched">"وقد بدأت بالفعل هذه مباراة العودة!"</string>
+    <string name="client_reconnect_required">"ألعاب إعادة الاتصال العميل المطلوبة"</string>
+    <string name="network_error_operation_failed">"فشلت العملية: خطأ في الشبكة"</string>
+    <string name="internal_error">"خطأ داخلي"</string>
+    <string name="unexpected_status">"وضع غير متوقع"</string>
+    <string name="match_error_inactive_match">"هذه المباراة غير نشطة."</string>
+    <string name="match_error_locally_modified">"هذه المباراة ديها البيانات المعدلة محليا. لا يمكن إجراء هذه العملية حتى يتم إرسال المباراة إلى الملقم."</string>
+
+    <!--Episodes-->
+    <string name="episode_1">"باريس، فرنسا"</string>
+    <string name="episode_2">"بنغالور - الهند"</string>
+    <string name="episode_3">"نيويورك - الولايات المتحدة الأمريكية"</string>
+    <string name="episode_4">"لندن، إنجلترا"</string>
+    <string name="episode_5">"ميلان، إيطاليا"</string>
+    <string name="episode_6">"بكين الصين"</string>
+
+    <!--Tutorial-->
+    <string name="click_title">"حولا!"</string>
+    <string name="click_subtitle">"انقر بين نقاط ليحتل الخط"</string>
+    <string name="points_title">"نقاط"</string>
+    <string name="points_subtitle">"استكمال خلايا للحصول على نقاط وفرصة إضافية!"</string>
+    <string name="flip_title">"نقف"</string>
+    <string name="flip_subtitle">"أنت تخسر؟ فقط انقر على ذلك، المزيد من النقاط، وسوف يكون متبادل وجهات نظرهم!"</string>
+    <string name="plus_one_title">"فرصة اضافية"</string>
+    <string name="plus_one_subtitle">"نريد فرصة إضافية؟ فوق هذا قبل دورك وفويلا! ستحصل على فرصة إضافية!"</string>
+    <string name="skip_title">"تخطى"</string>
+    <string name="skip_subtitle">"لا أريد أن يلعب بدوره؟ فوق هذا لتخطي!"</string>
+
+    <!--Loading-->
+    <string name="loading1">"حفر مناجم …"</string>
+    <string name="loading2">"التفجير الفرن …"</string>
+    <string name="loading3">"شراء بعض فحم الكوك …"</string>
+    <string name="loading4">"تطبيق التمويه …"</string>
+    <string name="loading5">"تسربت الغث …"</string>
+    <string name="loading6">"تحميص الخام …"</string>
+    <string name="loading7">"المؤكسدة الكربون …"</string>
+    <string name="loading8">"الحد من خام …"</string>
+    <string name="loading9">"إزالة الخبث …"</string>
+    <string name="loading10">"استخراج المعادن …"</string>
+    <string name="loading11">"صهر الدفعة الجديدة …"</string>
+
+    <!--FCM-->
+    <plurals name="take_gold_coins" tools:ignore="MissingQuantity">
+        <item quantity="one">"لقد حصل على عملة ذهبية"</item>
+        <item quantity="other">"لقد تم منح مع %d عملات ذهبية"</item>
+    </plurals>
+    <plurals name="take_gold_nuggets" tools:ignore="MissingQuantity">
+        <item quantity="one">"لقد حصل على الكتلة الذهب"</item>
+        <item quantity="other">"لقد تم منح مع %d شذرات الذهب"</item>
+    </plurals>
+    <plurals name="take_gold_bars" tools:ignore="MissingQuantity">
+        <item quantity="one">"كنت قد حصلت على شريط الذهب"</item>
+        <item quantity="other">"لقد تم منح مع %d قضبان الذهب"</item>
+    </plurals>
+    <plurals name="take_diamonds" tools:ignore="MissingQuantity">
+        <item quantity="one">"كنت قد حصلت على الماس"</item>
+        <item quantity="other">"لقد تم منح مع %d الماس"</item>
+    </plurals>
+
+    <!--Tasks-->
+    <plurals name="get_points" tools:ignore="MissingQuantity">
+        <item quantity="one">"النتيجة %d نقطة"</item>
+        <item quantity="other">"النتيجة %d نقاط"</item>
+    </plurals>
+    <plurals name="get_lines" tools:ignore="MissingQuantity">
+        <item quantity="one">"تسجيل ما لا يقل عن %d خط أفقي أو عمودي"</item>
+        <item quantity="other">"تسجيل ما لا يقل عن %d خطوط أفقية أو عمودية"</item>
+    </plurals>
+    <plurals name="get_horizontal_lines" tools:ignore="MissingQuantity">
+        <item quantity="one">"يسجل على الأقل %d خط أفقي"</item>
+        <item quantity="other">"تسجيل ما لا يقل عن %d خطوط أفقية"</item>
+    </plurals>
+    <plurals name="get_vertical_lines" tools:ignore="MissingQuantity">
+        <item quantity="one">"يسجل على الأقل %d خط عمودي"</item>
+        <item quantity="other">"تسجيل ما لا يقل عن %d الخطوط العمودية"</item>
+    </plurals>
+    <plurals name="get_goodies" tools:ignore="MissingQuantity">
+        <item quantity="one">"الحصول على ما لا يقل عن %d الشيء الجيد"</item>
+        <item quantity="other">"الحصول على ما لا يقل عن %d الأشياء الجيدة"</item>
+    </plurals>
+    <plurals name="get_diamonds" tools:ignore="MissingQuantity">
+        <item quantity="one">"الحصول على %d الماس"</item>
+        <item quantity="other">"الحصول على %d الماس"</item>
+    </plurals>
+    <plurals name="get_golds" tools:ignore="MissingQuantity">
+        <item quantity="one">"الحصول على %d العملة الذهبية"</item>
+        <item quantity="other">"الحصول على %d عملات ذهبية"</item>
+    </plurals>
+    <plurals name="get_gold_nuggets" tools:ignore="MissingQuantity">
+        <item quantity="one">"الحصول على %d الذهب الكتلة"</item>
+        <item quantity="other">"الحصول على %d شذرات الذهب"</item>
+    </plurals>
+    <plurals name="get_gold_bars" tools:ignore="MissingQuantity">
+        <item quantity="one">"الحصول على %d الذهب بار"</item>
+        <item quantity="other">"الحصول على %d قضبان الذهب"</item>
+    </plurals>
+    <plurals name="get_dynamic_goodies" tools:ignore="MissingQuantity">
+        <item quantity="one">"الحصول على %1$d الأشياء الجيدة مع ما لا يقل عن %2$d نقطة"</item>
+        <item quantity="other">"الحصول على %1$d الشيء الجيد مع ما لا يقل عن %2$d نقطة"</item>
+    </plurals>
+</resources>

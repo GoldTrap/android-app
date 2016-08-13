@@ -1,0 +1,104 @@
+<resources>
+    <!--Multiplayer game-->
+    <string name="status_multiplayer_error_not_trusted_tester">"Chiunque si invita deve essere un tester di fiducia"</string>
+    <string name="match_error_already_rematched">"Questo rivincita è già stato avviato!"</string>
+    <string name="client_reconnect_required">"Giochi client riconnessione richiesto"</string>
+    <string name="network_error_operation_failed">"Errore di rete: Operazione non riuscita"</string>
+    <string name="internal_error">"Errore interno"</string>
+    <string name="unexpected_status">"stato imprevisto"</string>
+    <string name="match_error_inactive_match">"Questa partita non è attiva."</string>
+    <string name="match_error_locally_modified">"Questa partita non ha dati in locale modificati. Questa operazione non può essere eseguita fino a quando la partita viene inviato al server."</string>
+
+    <!--Episodes-->
+    <string name="episode_1">"Parigi, Francia"</string>
+    <string name="episode_2">"Bangalore - India"</string>
+    <string name="episode_3">"New York - Stati Uniti d'America"</string>
+    <string name="episode_4">"Londra, Inghilterra"</string>
+    <string name="episode_5">"Milano - Italia"</string>
+    <string name="episode_6">"Pechino, Cina"</string>
+
+    <!--Tutorial-->
+    <string name="click_title">"Hola!"</string>
+    <string name="click_subtitle">"Fare clic tra i punti di occupare la linea"</string>
+    <string name="points_title">"Punti"</string>
+    <string name="points_subtitle">"Completare le celle per ottenere punti e chance in più!"</string>
+    <string name="flip_title">"Capovolgere"</string>
+    <string name="flip_subtitle">"Stai perdendo? Basta fare clic su questo, voi i punti ed i loro punti saranno scambiati!"</string>
+    <string name="plus_one_title">"Chance Extra"</string>
+    <string name="plus_one_subtitle">"Vuoi una chance in più? Fare clic su questo prima del tuo turno e Voila! Avrai una chance in più!"</string>
+    <string name="skip_title">"Salta"</string>
+    <string name="skip_subtitle">"Non voglio giocare un turno? Fare clic su questo per saltare!"</string>
+
+    <!--Loading-->
+    <string name="loading1">"Foratura le miniere …"</string>
+    <string name="loading2">"Blasting il forno …"</string>
+    <string name="loading3">"L'acquisto di un po 'di coca …"</string>
+    <string name="loading4">"Applicando il flusso …"</string>
+    <string name="loading5">"Filtrando la ganga …"</string>
+    <string name="loading6">"Torrefazione del minerale …"</string>
+    <string name="loading7">"Ossidanti il ​​carbonio …"</string>
+    <string name="loading8">"La riduzione del minerale …"</string>
+    <string name="loading9">"La rimozione della scoria …"</string>
+    <string name="loading10">"Estrazione del metallo …"</string>
+    <string name="loading11">"Fusione il nuovo lotto …"</string>
+
+    <!--FCM-->
+    <plurals name="take_gold_coins">
+        <item quantity="one">"Hai guadagnato una moneta d'oro"</item>
+        <item quantity="other">"Sei stato premiato con %d monete d'oro"</item>
+    </plurals>
+    <plurals name="take_gold_nuggets">
+        <item quantity="one">"Hai guadagnato un Gold Nugget"</item>
+        <item quantity="other">"Sei stato premiato con %d Gold Nuggets"</item>
+    </plurals>
+    <plurals name="take_gold_bars">
+        <item quantity="one">"Hai guadagnato un Gold Bar"</item>
+        <item quantity="other">"Sei stato premiato con %d Gold Bars"</item>
+    </plurals>
+    <plurals name="take_diamonds">
+        <item quantity="one">"Hai guadagnato un diamante"</item>
+        <item quantity="other">"Sei stato premiato con %d diamanti"</item>
+    </plurals>
+
+    <!--Tasks-->
+    <plurals name="get_points">
+        <item quantity="one">"Score %d Point"</item>
+        <item quantity="other">"Punteggio %d Punti"</item>
+    </plurals>
+    <plurals name="get_lines">
+        <item quantity="one">"Segnare almeno %d linea orizzontale o verticale"</item>
+        <item quantity="other">"Segna almeno %d linee orizzontali o verticali"</item>
+    </plurals>
+    <plurals name="get_horizontal_lines">
+        <item quantity="one">"Segnare almeno %d linea orizzontale"</item>
+        <item quantity="other">"Segna almeno %d linee orizzontali"</item>
+    </plurals>
+    <plurals name="get_vertical_lines">
+        <item quantity="one">"Segnare almeno %d linea verticale"</item>
+        <item quantity="other">"Segna almeno %d linee verticali"</item>
+    </plurals>
+    <plurals name="get_goodies">
+        <item quantity="one">"Ottenere almeno %d Goodie"</item>
+        <item quantity="other">"Ottenere almeno %d Gli extra"</item>
+    </plurals>
+    <plurals name="get_diamonds">
+        <item quantity="one">"Ottenere %d diamante"</item>
+        <item quantity="other">"Ottenere %d Diamanti"</item>
+    </plurals>
+    <plurals name="get_golds">
+        <item quantity="one">"Ottenere %d Gold Coin"</item>
+        <item quantity="other">"Ottenere %d monete d'oro"</item>
+    </plurals>
+    <plurals name="get_gold_nuggets">
+        <item quantity="one">"Ottenere %d Gold Nugget"</item>
+        <item quantity="other">"Ottenere %d Nuggets oro"</item>
+    </plurals>
+    <plurals name="get_gold_bars">
+        <item quantity="one">"Ottenere %d Gold Bar"</item>
+        <item quantity="other">"Ottenere %d Gold Bars"</item>
+    </plurals>
+    <plurals name="get_dynamic_goodies">
+        <item quantity="one">"Ottenere %1$d extra con almeno %2$d punti"</item>
+        <item quantity="other">"Ottenere %1$d Goodie con almeno %2$d punti"</item>
+    </plurals>
+</resources>

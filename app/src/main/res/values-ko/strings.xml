@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">"골드 함정"</string>
+    <string name="signin_other_error">"로그인에 문제가 발생했습니다 나중에 다시 시도하십시오."</string>
+    <string name="loading">"로드 중 …"</string>
+    <string name="play">"놀이"</string>
+    <string name="quick_play">"빠른 재생"</string>
+    <string name="heart">"심장"</string>
+    <string name="multi_player">"멀티 플레이어"</string>
+    <string name="episodes">"에피소드"</string>
+    <string name="sign_out">"아웃"</string>
+    <string name="title_activity_quick_play">"QuickPlayActivity"</string>
+    <string name="points">"포인트 : %d"</string>
+    <string name="your_turn">"네 차례 야"</string>
+    <string name="game_over">"게임 끝"</string>
+    <string name="opponents_turn">"자신의 차례"</string>
+    <string name="extra_chance">"+1"</string>
+    <string name="flip">"튀기다"</string>
+    <string name="skip">"버킷"</string>
+    <string name="tasks">"작업"</string>
+    <string name="share_with_others">"골드 트랩에서 내 점수를 체크 아웃. http://bit.ly/gold-trap에서 그것을 얻을"</string>
+    <string name="google_play_services_error">"구글 플레이 서비스 오류"</string>
+
+    <string name="won">"당신은 원!"</string>
+    <string name="lost">"당신은 분실"</string>
+    <string name="draw">"그것은 그리기입니다!"</string>
+    <string name="completed_tasks">"완성 된 작업"</string>
+    <string name="incomplete_tasks">"불완전한 작업"</string>
+
+    <!-- Menu Items -->
+    <string name="play_game">"놀이"</string>
+    <string name="quick_play_game">"빠른 재생"</string>
+    <string name="multi_player_game">"멀티 플레이어"</string>
+    <string name="store">"라마 오 쇼핑"</string>
+    <string name="checkout">"체크 아웃 %1$s"</string>
+    <string name="leaderboards">"리더"</string>
+    <string name="achievements">"업적"</string>
+    <string name="share">"몫"</string>
+
+    <!-- Multi Player Menu Items -->
+    <string name="start_match">"새로운 경기"</string>
+    <string name="auto_match">"자동 일치"</string>
+    <string name="in_progress_matches">"진행 매치에서"</string>
+
+
+    <string name="replay">"다시 하다"</string>
+    <string name="invite">"도전"</string>
+    <string name="next">"다음 것"</string>
+
+    <string name="invitation_title">"친구 도전"</string>
+    <string name="invitation_message">"당신은이 게임을 시도해야합니다. 그것은 슈퍼 재미!"</string>
+    <string name="invitation_cta">"설치!"</string>
+    <string formatted="false" name="sent_invitations_fmt">"보낸 %d 초대장"</string>
+    <string name="send_failed">"보내는 초대장 실패"</string>
+    <string name="title_activity_multi_player">"멀티 플레이어"</string>
+    <string name="action_settings">"설정"</string>
+
+    <string name="sign_in_successful">"성공적으로 로그인"</string>
+
+    <string name="title_activity_play">"놀이"</string>
+    <string name="title_activity_tutorial">"지도 시간"</string>
+
+    <string name="no_internet">"인터넷을 사용하시기 바랍니다"</string>
+    <string name="settings">"설정"</string>
+    <string name="level">"레벨 %d"</string>
+
+    <!-- Buyables -->
+    <string name="flip_name">"뒤집 가져 오기"</string>
+    <string name="flip_desc">"당신이 당신과 상대가 차지하는 세포를 교환하는 데 도움이 될 것입니다 전환합니다."</string>
+
+    <string name="plus_one_name">"+1 가져 오기"</string>
+    <string name="plus_one_desc">"1 초를 +하면 더 기회를 얻을하는 데 도움이됩니다."</string>
+
+    <string name="skip_name">"스킵 가져 오기"</string>
+    <string name="skip_desc">"스킵은 차례를 건너 뛸하는 데 도움이 될 것입니다."</string>
+
+    <string name="unlock_all_name">"잠금 해제"</string>
+    <string name="unlock_all_desc">"모든 수준의 잠금을 해제합니다."</string>
+
+    <string name="donate_name">"기부"</string>
+    <string name="donate_desc">"이 게임이 마음에 들면 내가이 게임을 :) 유지하는 데 도움 기부하시기 바랍니다."</string>
+
+    <string name="buy_item">"구매 %s"</string>
+    <string name="buy_item_desc">"구매 %s 구글 플레이에서"</string>
+    <string name="buy_button">"사다"</string>
+    <string name="trade_points">"무역"</string>
+    <string name="trade_points_desc">"대한 무역 %d 지점"</string>
+    <string name="trade_button">"무역"</string>
+    <string name="exchange_goodie_title">"서비스와의 교류"</string>
+    <string name="exchange_goodie">"%s"</string>
+    <string name="exchange_goodie_desc">"교환 %1$d %2$s"</string>
+    <string name="exchange_button">"교환"</string>
+
+    <string name="one_k">"금화"</string>
+    <string name="two_k">"골드 너기츠"</string>
+    <string name="five_k">"골드 바"</string>
+    <string name="diamonds">"다이아 패 한 벌"</string>
+
+    <string name="game_was_cancelled">"이 게임은 취소되었습니다!"</string>
+    <string name="game_is_expired">"이 게임은 만료되었습니다. 너무 슬퍼!"</string>
+    <string name="auto_matching">"우리는 여전히 자동 게임 파트너를 기다리고 있습니다."</string>
+    <string name="transaction_successful">"성공적인 거래"</string>
+    <string name="mute">"묵자"</string>
+    <string name="un_mute">"음소거"</string>
+    <string name="stay_tuned">"앱의 전체 버전에 대한 계속 지켜봐 주시기 바랍니다!"</string>
+    <string name="score">"점수"</string>
+    <string name="sound">"소리"</string>
+    <string name="star">"별"</string>
+    <string name="connect_to_google_play_games">"멀티 플레이어 게임을위한 게임을 Google Play에 연결하십시오!"</string>
+    <string name="connect_to_google_play_games_menu">"구글 플레이 게임에 접속하세요"</string>
+    <string name="help">"도움"</string>
+    <string name="goodie">"좋아요 ~"</string>
+    <string name="title_activity_points">"전철기"</string>
+    <string name="points_value_name">"%1$d 포인트"</string>
+    <string name="goodie_value_name">"%1$d %2$s"</string>
+
+</resources>

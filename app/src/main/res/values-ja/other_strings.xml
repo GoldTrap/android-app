@@ -1,0 +1,104 @@
+<resources>
+    <!--Multiplayer game-->
+    <string name="status_multiplayer_error_not_trusted_tester">"あなたが招待誰もが信頼できるテスターでなければなりません"</string>
+    <string name="match_error_already_rematched">"この再戦は既に開始されています！"</string>
+    <string name="client_reconnect_required">"ゲームクライアントの再接続が必要"</string>
+    <string name="network_error_operation_failed">"ネットワークエラー：操作が失敗しました"</string>
+    <string name="internal_error">"内部エラー"</string>
+    <string name="unexpected_status">"予期しない状況"</string>
+    <string name="match_error_inactive_match">"この試合は無効です。"</string>
+    <string name="match_error_locally_modified">"この試合は、ローカルに変更されたデータを持っています。一致がサーバに送信されるまで、この操作を行うことができません。"</string>
+
+    <!--Episodes-->
+    <string name="episode_1">"フランス・パリ"</string>
+    <string name="episode_2">"バンガロール - インド"</string>
+    <string name="episode_3">"ニューヨーク - 米国"</string>
+    <string name="episode_4">"ロンドン、イギリス"</string>
+    <string name="episode_5">"ミラノ - イタリア"</string>
+    <string name="episode_6">"北京 - 中国"</string>
+
+    <!--Tutorial-->
+    <string name="click_title">"オラ！"</string>
+    <string name="click_subtitle">"ラインを占有する点の間をクリックします"</string>
+    <string name="points_title">"点数"</string>
+    <string name="points_subtitle">"ポイントと余分なチャンスを得るために細胞を完了します！"</string>
+    <string name="flip_title">"フリップ"</string>
+    <string name="flip_subtitle">"あなたは失っていますか？ただ、この、あなたのポイントをクリックするとそのポイントが交換されます！"</string>
+    <string name="plus_one_title">"エクストラチャンス"</string>
+    <string name="plus_one_subtitle">"余分なチャンスをしたいですか？あなたのターンと出来上がり前にこれをクリックしてください！あなたは余分なチャンスを得るでしょう！"</string>
+    <string name="skip_title">"スキップ"</string>
+    <string name="skip_subtitle">"たくはターンをプレイしないでください？スキップするために、これをクリックしてください！"</string>
+
+    <!--Loading-->
+    <string name="loading1">"地雷をドリル…"</string>
+    <string name="loading2">"炉ブラスト…"</string>
+    <string name="loading3">"いくつかのコークスを購入…"</string>
+    <string name="loading4">"フラックスを塗布…"</string>
+    <string name="loading5">"脈石をフィルタリング…"</string>
+    <string name="loading6">"鉱石を焙焼…"</string>
+    <string name="loading7">"炭素を酸化…"</string>
+    <string name="loading8">"鉱石を減らします…"</string>
+    <string name="loading9">"スラグを削除…"</string>
+    <string name="loading10">"金属の抽出…"</string>
+    <string name="loading11">"新しいバッチを製錬…"</string>
+
+    <!--FCM-->
+    <plurals name="take_gold_coins">
+        <item quantity="one">"あなたはゴールドコインを獲得しました"</item>
+        <item quantity="other">"あなたが授与されてきた%dゴールドコイン"</item>
+    </plurals>
+    <plurals name="take_gold_nuggets">
+        <item quantity="one">"あなたはゴールドナゲットを獲得しました"</item>
+        <item quantity="other">"あなたが授与されてきた%dゴールドナゲッツ"</item>
+    </plurals>
+    <plurals name="take_gold_bars">
+        <item quantity="one">"あなたはゴールドバーを獲得しました"</item>
+        <item quantity="other">"あなたが授与されてきた%dゴールドバー"</item>
+    </plurals>
+    <plurals name="take_diamonds">
+        <item quantity="one">"あなたはダイヤモンドを獲得しました"</item>
+        <item quantity="other">"あなたが授与されてきた%dダイヤモンド"</item>
+    </plurals>
+
+    <!--Tasks-->
+    <plurals name="get_points">
+        <item quantity="one">"スコア%dポイント"</item>
+        <item quantity="other">"スコア%dポイント"</item>
+    </plurals>
+    <plurals name="get_lines">
+        <item quantity="one">"スコア少なくとも%d水平または垂直線"</item>
+        <item quantity="other">"少なくともスコア%d水平または垂直の線"</item>
+    </plurals>
+    <plurals name="get_horizontal_lines">
+        <item quantity="one">"少なくともスコア%d水平線を"</item>
+        <item quantity="other">"少なくともスコア%d横線"</item>
+    </plurals>
+    <plurals name="get_vertical_lines">
+        <item quantity="one">"スコア少なくとも%d縦線"</item>
+        <item quantity="other">"少なくともスコア%d縦線"</item>
+    </plurals>
+    <plurals name="get_goodies">
+        <item quantity="one">"少なくとも取得%dグッディーを"</item>
+        <item quantity="other">"少なくとも取得%dグッズを"</item>
+    </plurals>
+    <plurals name="get_diamonds">
+        <item quantity="one">"取得%dダイヤモンドを"</item>
+        <item quantity="other">"取得%dダイヤモンドを"</item>
+    </plurals>
+    <plurals name="get_golds">
+        <item quantity="one">"取得%dゴールドコイン"</item>
+        <item quantity="other">"取得%dゴールドコインを"</item>
+    </plurals>
+    <plurals name="get_gold_nuggets">
+        <item quantity="one">"取得%dゴールドナゲット"</item>
+        <item quantity="other">"取得%d金塊を"</item>
+    </plurals>
+    <plurals name="get_gold_bars">
+        <item quantity="one">"取得%dゴールドバー"</item>
+        <item quantity="other">"取得%d金の延べ棒を"</item>
+    </plurals>
+    <plurals name="get_dynamic_goodies">
+        <item quantity="one">"入手%1$d少なくともでグッズを%2$dポイント"</item>
+        <item quantity="other">"入手%1$d少なくともでグッディを%2$dポイント"</item>
+    </plurals>
+</resources>

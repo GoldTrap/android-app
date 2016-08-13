@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">"فخ الذهب"</string>
+    <string name="signin_other_error">"كان هناك مشكلة مع تسجيل الدخول، يرجى المحاولة مرة أخرى في وقت لاحق."</string>
+    <string name="loading">"جار التحميل…"</string>
+    <string name="play">"لعب"</string>
+    <string name="quick_play">"التشغيل السريع"</string>
+    <string name="heart">"قلب"</string>
+    <string name="multi_player">"لاعب متعدد"</string>
+    <string name="episodes">"الحلقات"</string>
+    <string name="sign_out">"خروج"</string>
+    <string name="title_activity_quick_play">"QuickPlayActivity"</string>
+    <string name="points">"نقاط: %d"</string>
+    <string name="your_turn">"دورك"</string>
+    <string name="game_over">"انتهت اللعبة"</string>
+    <string name="opponents_turn">"دورهم"</string>
+    <string name="extra_chance">"+1"</string>
+    <string name="flip">"نقف"</string>
+    <string name="skip">"تخطى"</string>
+    <string name="tasks">"المهام"</string>
+    <string name="share_with_others">"الخروج بنتيجة لي في الذهب فخ. احصل عليه في http://bit.ly/gold-trap"</string>
+    <string name="google_play_services_error">"جوجل خطأ تشغيل الخدمات"</string>
+
+    <string name="won">"لقد فزت!"</string>
+    <string name="lost">"لقد خسرت"</string>
+    <string name="draw">"انه رسم!"</string>
+    <string name="completed_tasks">"المهام المكتملة"</string>
+    <string name="incomplete_tasks">"مهام غير مكتملة"</string>
+
+    <!-- Menu Items -->
+    <string name="play_game">"لعب"</string>
+    <string name="quick_play_game">"التشغيل السريع"</string>
+    <string name="multi_player_game">"لاعب متعدد"</string>
+    <string name="store">"متجر 'س راما"</string>
+    <string name="checkout">"الخروج %1$s"</string>
+    <string name="leaderboards">"المتصدرين"</string>
+    <string name="achievements">"الإنجازات"</string>
+    <string name="share">"شارك"</string>
+
+    <!-- Multi Player Menu Items -->
+    <string name="start_match">"مباراة جديدة"</string>
+    <string name="auto_match">"مباراة السيارات"</string>
+    <string name="in_progress_matches">"في التقدم المباريات"</string>
+
+
+    <string name="replay">"إعادة"</string>
+    <string name="invite">"التحدي"</string>
+    <string name="next">"التالى"</string>
+
+    <string name="invitation_title">"تحدي أصدقائك"</string>
+    <string name="invitation_message">"عليك أن تحاول هذه اللعبة. انها متعة فائقة!"</string>
+    <string name="invitation_cta">"تثبيت!"</string>
+    <string formatted="false" name="sent_invitations_fmt">"أرسلت %d دعوات"</string>
+    <string name="send_failed">"فشلت دعوات إرسال"</string>
+    <string name="title_activity_multi_player">"لاعب متعدد"</string>
+    <string name="action_settings">"إعدادات"</string>
+
+    <string name="sign_in_successful">"تسجيل الدخول ناجحة"</string>
+
+    <string name="title_activity_play">"لعب"</string>
+    <string name="title_activity_tutorial">"البرنامج التعليمي"</string>
+
+    <string name="no_internet">"يرجى تمكين الإنترنت"</string>
+    <string name="settings">"إعدادات"</string>
+    <string name="level">"مستوى %d"</string>
+
+    <!-- Buyables -->
+    <string name="flip_name">"الحصول على رحلات قصيرة"</string>
+    <string name="flip_desc">"تقلب سوف تساعدك لتبادل الخلايا من قبلك والخصم المحتلة."</string>
+
+    <string name="plus_one_name">"الحصول على +1"</string>
+    <string name="plus_one_desc">"و+ 1S تساعدك على الحصول على فرصة إضافية."</string>
+
+    <string name="skip_name">"الحصول على التخطي"</string>
+    <string name="skip_desc">"سوف يتخطى تساعدك على تخطي بدوره."</string>
+
+    <string name="unlock_all_name">"فتح"</string>
+    <string name="unlock_all_desc">"فتح جميع المستويات."</string>
+
+    <string name="donate_name">"تبرع"</string>
+    <string name="donate_desc">"إذا كنت تحب هذه اللعبة، يرجى التبرع لمساعدتي في الحفاظ على هذه اللعبة :)."</string>
+
+    <string name="buy_item">"شراء %s"</string>
+    <string name="buy_item_desc">"شراء %s على Google Play"</string>
+    <string name="buy_button">"يشترى"</string>
+    <string name="trade_points">"تجارة"</string>
+    <string name="trade_points_desc">"التجارة ل %d نقطة"</string>
+    <string name="trade_button">"تجارة"</string>
+    <string name="exchange_goodie_title">"التبادل مع الأشياء الجيدة"</string>
+    <string name="exchange_goodie">"%s"</string>
+    <string name="exchange_goodie_desc">"مقابل %1$d %2$s"</string>
+    <string name="exchange_button">"تبادل"</string>
+
+    <string name="one_k">"عملات ذهبية"</string>
+    <string name="two_k">"شذرات الذهب"</string>
+    <string name="five_k">"سبائك ذهب"</string>
+    <string name="diamonds">"الماس"</string>
+
+    <string name="game_was_cancelled">"ألغيت هذه اللعبة!"</string>
+    <string name="game_is_expired">"وانتهت هذه المباراة. حزين جدا!"</string>
+    <string name="auto_matching">"ونحن ما زلنا في انتظار شريك automatch."</string>
+    <string name="transaction_successful">"عملية ناجحة"</string>
+    <string name="mute">"كتم الصوت"</string>
+    <string name="un_mute">"الامم المتحدة والبكم"</string>
+    <string name="stay_tuned">"ترقبوا النسخة الكاملة من التطبيق!"</string>
+    <string name="score">"أحرز هدفاً"</string>
+    <string name="sound">"صوت"</string>
+    <string name="star">"نجمة"</string>
+    <string name="connect_to_google_play_games">"الرجاء الاتصال ب Google Play ألعاب للعب ألعاب متعددة اللاعبين!"</string>
+    <string name="connect_to_google_play_games_menu">"يرجى الاتصال الألعاب في Google Play"</string>
+    <string name="help">"مساعدة"</string>
+    <string name="goodie">"الشيء الجيد"</string>
+    <string name="title_activity_points">"نقاط"</string>
+    <string name="points_value_name">"%1$d النقاط"</string>
+    <string name="goodie_value_name">"%1$d %2$s"</string>
+
+</resources>

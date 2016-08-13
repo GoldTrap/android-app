@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">"金陷阱"</string>
+    <string name="signin_other_error">"有一个与登录问题，请稍后再试。"</string>
+    <string name="loading">"载入中…"</string>
+    <string name="play">"玩"</string>
+    <string name="quick_play">"快玩"</string>
+    <string name="heart">"心"</string>
+    <string name="multi_player">"多人游戏"</string>
+    <string name="episodes">"情节"</string>
+    <string name="sign_out">"退出"</string>
+    <string name="title_activity_quick_play">"QuickPlayActivity"</string>
+    <string name="points">"要点： %d"</string>
+    <string name="your_turn">"到你了"</string>
+    <string name="game_over">"游戏结束"</string>
+    <string name="opponents_turn">"轮到自己"</string>
+    <string name="extra_chance">"+1"</string>
+    <string name="flip">"翻动"</string>
+    <string name="skip">"跳跃"</string>
+    <string name="tasks">"任务"</string>
+    <string name="share_with_others">"结帐我的成绩在金牌陷阱。在http://bit.ly/gold-trap得到它"</string>
+    <string name="google_play_services_error">"谷歌播放服务错误"</string>
+
+    <string name="won">"你赢了！"</string>
+    <string name="lost">"你输了"</string>
+    <string name="draw">"这是一个平局！"</string>
+    <string name="completed_tasks">"已完成的任务"</string>
+    <string name="incomplete_tasks">"未完成的任务"</string>
+
+    <!-- Menu Items -->
+    <string name="play_game">"玩"</string>
+    <string name="quick_play_game">"快玩"</string>
+    <string name="multi_player_game">"多人游戏"</string>
+    <string name="store">"铺'O拉玛"</string>
+    <string name="checkout">"结帐%1$s"</string>
+    <string name="leaderboards">"排行榜"</string>
+    <string name="achievements">"成就"</string>
+    <string name="share">"分享"</string>
+
+    <!-- Multi Player Menu Items -->
+    <string name="start_match">"新的匹配"</string>
+    <string name="auto_match">"自动匹配"</string>
+    <string name="in_progress_matches">"在比赛的进展"</string>
+
+
+    <string name="replay">"重播"</string>
+    <string name="invite">"挑战"</string>
+    <string name="next">"下一个"</string>
+
+    <string name="invitation_title">"挑战你的朋友"</string>
+    <string name="invitation_message">"你应该试试这个游戏。它的超级乐趣！"</string>
+    <string name="invitation_cta">"安装！"</string>
+    <string formatted="false" name="sent_invitations_fmt">"发送%d邀请"</string>
+    <string name="send_failed">"发送邀请函失败"</string>
+    <string name="title_activity_multi_player">"多人游戏"</string>
+    <string name="action_settings">"设置"</string>
+
+    <string name="sign_in_successful">"登录成功"</string>
+
+    <string name="title_activity_play">"玩"</string>
+    <string name="title_activity_tutorial">"教程"</string>
+
+    <string name="no_internet">"请启用您的互联网"</string>
+    <string name="settings">"设置"</string>
+    <string name="level">"级别%d"</string>
+
+    <!-- Buyables -->
+    <string name="flip_name">"获取翻转"</string>
+    <string name="flip_desc">"翻转将帮助你交换你和对手占据的单元格。"</string>
+
+    <string name="plus_one_name">"获得+1"</string>
+    <string name="plus_one_desc">"+1都会帮助你得到一个额外的机会。"</string>
+
+    <string name="skip_name">"获取跳过"</string>
+    <string name="skip_desc">"跳过会帮你跳过一转。"</string>
+
+    <string name="unlock_all_name">"开锁"</string>
+    <string name="unlock_all_desc">"解锁所有级别。"</string>
+
+    <string name="donate_name">"捐"</string>
+    <string name="donate_desc">"如果你喜欢本游戏，请捐出来帮助我维持这个游戏:)。"</string>
+
+    <string name="buy_item">"购买%s"</string>
+    <string name="buy_item_desc">"购买%s在谷歌播放"</string>
+    <string name="buy_button">"购买"</string>
+    <string name="trade_points">"贸易"</string>
+    <string name="trade_points_desc">"贸易为%d点"</string>
+    <string name="trade_button">"贸易"</string>
+    <string name="exchange_goodie_title">"交流与超值服务"</string>
+    <string name="exchange_goodie">"%s"</string>
+    <string name="exchange_goodie_desc">"交易所%1$d %2$s"</string>
+    <string name="exchange_button">"交换"</string>
+
+    <string name="one_k">"金币"</string>
+    <string name="two_k">"黄金掘金"</string>
+    <string name="five_k">"金条"</string>
+    <string name="diamonds">"钻石"</string>
+
+    <string name="game_was_cancelled">"这场比赛被取消了！"</string>
+    <string name="game_is_expired">"此游戏已过期。好难过！"</string>
+    <string name="auto_matching">"我们还在等待自动匹配的合作伙伴。"</string>
+    <string name="transaction_successful">"交易成功"</string>
+    <string name="mute">"静音"</string>
+    <string name="un_mute">"取消静音"</string>
+    <string name="stay_tuned">"请继续关注应用程序的完整版！"</string>
+    <string name="score">"得分了"</string>
+    <string name="sound">"声音"</string>
+    <string name="star">"星"</string>
+    <string name="connect_to_google_play_games">"请连接到谷歌玩游戏玩多玩家游戏！"</string>
+    <string name="connect_to_google_play_games_menu">"请连接到谷歌玩游戏"</string>
+    <string name="help">"帮帮我"</string>
+    <string name="goodie">"礼包"</string>
+    <string name="title_activity_points">"点"</string>
+    <string name="points_value_name">"%1$d点"</string>
+    <string name="goodie_value_name">"%1$d %2$s"</string>
+
+</resources>

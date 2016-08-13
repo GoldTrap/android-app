@@ -1,0 +1,104 @@
+<resources>
+    <!--Multiplayer game-->
+    <string name="status_multiplayer_error_not_trusted_tester">"有人邀请你必须是一个值得信赖的测试仪"</string>
+    <string name="match_error_already_rematched">"这复赛已经开始了！"</string>
+    <string name="client_reconnect_required">"所需的游戏客户端重新连接"</string>
+    <string name="network_error_operation_failed">"网络错误：操作失败"</string>
+    <string name="internal_error">"内部错误"</string>
+    <string name="unexpected_status">"意外状况"</string>
+    <string name="match_error_inactive_match">"本场比赛是无效的。"</string>
+    <string name="match_error_locally_modified">"这场比赛在本地修改的数据。直至匹配被发送到服务器不能执行此操作。"</string>
+
+    <!--Episodes-->
+    <string name="episode_1">"法国巴黎"</string>
+    <string name="episode_2">"班加罗尔 - 印度"</string>
+    <string name="episode_3">"纽约 - 美国"</string>
+    <string name="episode_4">"伦敦，英国"</string>
+    <string name="episode_5">"米兰 - 意大利"</string>
+    <string name="episode_6">"北京 - 中国"</string>
+
+    <!--Tutorial-->
+    <string name="click_title">"你好！"</string>
+    <string name="click_subtitle">"点击点之间占据行"</string>
+    <string name="points_title">"点"</string>
+    <string name="points_subtitle">"完成细胞获得积分和额外的机会！"</string>
+    <string name="flip_title">"翻动"</string>
+    <string name="flip_subtitle">"你一定是昏了头？只要按一下这个，你点，他们的积分将被互换！"</string>
+    <string name="plus_one_title">"额外的机会"</string>
+    <string name="plus_one_subtitle">"需要一份额外的机会呢？前轮到你瞧，点击此！你会得到一个额外的机会！"</string>
+    <string name="skip_title">"跳跃"</string>
+    <string name="skip_subtitle">"不想玩一转？单击此跳过！"</string>
+
+    <!--Loading-->
+    <string name="loading1">"钻矿…"</string>
+    <string name="loading2">"爆破炉…"</string>
+    <string name="loading3">"买一些焦炭…"</string>
+    <string name="loading4">"应用流量…"</string>
+    <string name="loading5">"过滤掉煤矸石…"</string>
+    <string name="loading6">"焙烧矿石…"</string>
+    <string name="loading7">"氧化碳…"</string>
+    <string name="loading8">"减少矿石…"</string>
+    <string name="loading9">"卸下渣…"</string>
+    <string name="loading10">"提取金属…"</string>
+    <string name="loading11">"冶炼新批…"</string>
+
+    <!--FCM-->
+    <plurals name="take_gold_coins">
+        <item quantity="one">"您赢得了金币"</item>
+        <item quantity="other">"你已经荣获%d金币"</item>
+    </plurals>
+    <plurals name="take_gold_nuggets">
+        <item quantity="one">"您赢得了金块"</item>
+        <item quantity="other">"你已经荣获%d金块"</item>
+    </plurals>
+    <plurals name="take_gold_bars">
+        <item quantity="one">"您赢得了金条"</item>
+        <item quantity="other">"你已经荣获%d金条"</item>
+    </plurals>
+    <plurals name="take_diamonds">
+        <item quantity="one">"您赢得了钻石"</item>
+        <item quantity="other">"你已经荣获%d钻石"</item>
+    </plurals>
+
+    <!--Tasks-->
+    <plurals name="get_points">
+        <item quantity="one">"得分%d点"</item>
+        <item quantity="other">"得分%d点"</item>
+    </plurals>
+    <plurals name="get_lines">
+        <item quantity="one">"拿下至少%d水平或垂直线"</item>
+        <item quantity="other">"拿下至少%d水平或垂直线"</item>
+    </plurals>
+    <plurals name="get_horizontal_lines">
+        <item quantity="one">"拿下至少%d水平线"</item>
+        <item quantity="other">"拿下至少%d水平线"</item>
+    </plurals>
+    <plurals name="get_vertical_lines">
+        <item quantity="one">"拿下至少%d垂直线"</item>
+        <item quantity="other">"拿下至少%d垂直线"</item>
+    </plurals>
+    <plurals name="get_goodies">
+        <item quantity="one">"得到至少%d Goodie的"</item>
+        <item quantity="other">"得到至少%d超值服务"</item>
+    </plurals>
+    <plurals name="get_diamonds">
+        <item quantity="one">"获取%d钻石"</item>
+        <item quantity="other">"获取%d钻石"</item>
+    </plurals>
+    <plurals name="get_golds">
+        <item quantity="one">"获取%d金币"</item>
+        <item quantity="other">"获取%d金币"</item>
+    </plurals>
+    <plurals name="get_gold_nuggets">
+        <item quantity="one">"获取%d金块"</item>
+        <item quantity="other">"获取%d金块"</item>
+    </plurals>
+    <plurals name="get_gold_bars">
+        <item quantity="one">"获取%d金条"</item>
+        <item quantity="other">"获取%d金条"</item>
+    </plurals>
+    <plurals name="get_dynamic_goodies">
+        <item quantity="one">"获取%1$d超值至少%2$d点"</item>
+        <item quantity="other">"获取%1$d Goodie的至少%2$d点"</item>
+    </plurals>
+</resources>

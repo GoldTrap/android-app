@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">"Золотая ловушка"</string>
+    <string name="signin_other_error">"Был вопрос с входа, пожалуйста, повторите попытку позже."</string>
+    <string name="loading">"загрузка …"</string>
+    <string name="play">"Играть"</string>
+    <string name="quick_play">"Быстрая игра"</string>
+    <string name="heart">"Сердце"</string>
+    <string name="multi_player">"Multi Player"</string>
+    <string name="episodes">"Эпизоды"</string>
+    <string name="sign_out">"Выход"</string>
+    <string name="title_activity_quick_play">"QuickPlayActivity"</string>
+    <string name="points">"Очки: %d"</string>
+    <string name="your_turn">"Твой ход"</string>
+    <string name="game_over">"Игра закончена"</string>
+    <string name="opponents_turn">"Их Turn"</string>
+    <string name="extra_chance">"+1"</string>
+    <string name="flip">"кувырок"</string>
+    <string name="skip">"Пропускать"</string>
+    <string name="tasks">"Задания"</string>
+    <string name="share_with_others">"Оформить заказ мой счет в Gold Trap. Получить его на http://bit.ly/gold-trap"</string>
+    <string name="google_play_services_error">"Google Play Error Услуги"</string>
+
+    <string name="won">"Ты победил!"</string>
+    <string name="lost">"Ты проиграла"</string>
+    <string name="draw">"Это ничья!"</string>
+    <string name="completed_tasks">"завершенные задачи"</string>
+    <string name="incomplete_tasks">"Неполные задачи"</string>
+
+    <!-- Menu Items -->
+    <string name="play_game">"Играть"</string>
+    <string name="quick_play_game">"Быстрая игра"</string>
+    <string name="multi_player_game">"Multi Player"</string>
+    <string name="store">"Магазин 'о Раме"</string>
+    <string name="checkout">"Оформление заказа : %1$s"</string>
+    <string name="leaderboards">"РЕЙТИНГИ"</string>
+    <string name="achievements">"достижения"</string>
+    <string name="share">"Поделиться"</string>
+
+    <!-- Multi Player Menu Items -->
+    <string name="start_match">"Новый матч"</string>
+    <string name="auto_match">"Auto Match"</string>
+    <string name="in_progress_matches">"В ходе матчей"</string>
+
+
+    <string name="replay">"переигровка"</string>
+    <string name="invite">"Вызов"</string>
+    <string name="next">"следующий"</string>
+
+    <string name="invitation_title">"Бросьте вызов своим друзьям"</string>
+    <string name="invitation_message">"Вы должны попробовать эту игру. Это супер весело!"</string>
+    <string name="invitation_cta">"Установить!"</string>
+    <string formatted="false" name="sent_invitations_fmt">"Переданные %d приглашений"</string>
+    <string name="send_failed">"Не удалось отправить приглашения"</string>
+    <string name="title_activity_multi_player">"Multi Player"</string>
+    <string name="action_settings">"настройки"</string>
+
+    <string name="sign_in_successful">"Вход успешным"</string>
+
+    <string name="title_activity_play">"Играть"</string>
+    <string name="title_activity_tutorial">"Руководство"</string>
+
+    <string name="no_internet">"Пожалуйста, включите ваш Интернет"</string>
+    <string name="settings">"настройки"</string>
+    <string name="level">"Уровень %d"</string>
+
+    <!-- Buyables -->
+    <string name="flip_name">"Получить переворачивает"</string>
+    <string name="flip_desc">"Зеркальное поможет вам поменять местами клетки, занятые вами и противником."</string>
+
+    <string name="plus_one_name">"Получить +1"</string>
+    <string name="plus_one_desc">"+ 1s поможет вам получить дополнительный шанс."</string>
+
+    <string name="skip_name">"Получить Кузова"</string>
+    <string name="skip_desc">"Пропуски поможет вам пропустить поворот."</string>
+
+    <string name="unlock_all_name">"отпереть"</string>
+    <string name="unlock_all_desc">"Разблокировать все уровни."</string>
+
+    <string name="donate_name">"жертвовать"</string>
+    <string name="donate_desc">"Если вам понравилась эта игра, пожалуйста, пожертвовать, чтобы помочь мне сохранить эту игру :)."</string>
+
+    <string name="buy_item">"Купить %s"</string>
+    <string name="buy_item_desc">"Купить %s в Google Play"</string>
+    <string name="buy_button">"купить"</string>
+    <string name="trade_points">"Сделка"</string>
+    <string name="trade_points_desc">"Торговля для %d точек"</string>
+    <string name="trade_button">"Сделка"</string>
+    <string name="exchange_goodie_title">"Обмен с гостинцами"</string>
+    <string name="exchange_goodie">"%s"</string>
+    <string name="exchange_goodie_desc">"Обмен на %1$d %2$s"</string>
+    <string name="exchange_button">"обмен"</string>
+
+    <string name="one_k">"Золотые монеты"</string>
+    <string name="two_k">"самородков"</string>
+    <string name="five_k">"Золотые слитки"</string>
+    <string name="diamonds">"бриллианты"</string>
+
+    <string name="game_was_cancelled">"Эта игра была отменена!"</string>
+    <string name="game_is_expired">"Эта игра истек. Так грустно!"</string>
+    <string name="auto_matching">"Мы по-прежнему ждет automatch партнера."</string>
+    <string name="transaction_successful">"сделка Успешная"</string>
+    <string name="mute">"сурдинка"</string>
+    <string name="un_mute">"Un-отключения звука"</string>
+    <string name="stay_tuned">"Оставайтесь с нами для полной версии приложения!"</string>
+    <string name="score">"Гол"</string>
+    <string name="sound">"звук"</string>
+    <string name="star">"звезда"</string>
+    <string name="connect_to_google_play_games">"Подключитесь к Google Play Игры для игры в многопользовательские игры!"</string>
+    <string name="connect_to_google_play_games_menu">"Пожалуйста подключиться к Google Play Игры"</string>
+    <string name="help">"Помогите"</string>
+    <string name="goodie">"Goodie"</string>
+    <string name="title_activity_points">"Точки"</string>
+    <string name="points_value_name">"%1$d Очки"</string>
+    <string name="goodie_value_name">"%1$d %2$s"</string>
+
+</resources>
