@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Multiplayer game-->
+    <string name="status_multiplayer_error_not_trusted_tester">Anyone you invite must be a trusted tester</string>
+    <string name="match_error_already_rematched">This rematch has already been started!</string>
+    <string name="client_reconnect_required">Games client reconnect required</string>
+    <string name="network_error_operation_failed">Network error: Operation failed</string>
+    <string name="internal_error">Internal error</string>
+    <string name="unexpected_status">Unexpected status</string>
+    <string name="match_error_inactive_match">This match is inactive.</string>
+    <string name='match_error_locally_modified'>This match has locally-modified data.  This operation cannot be performed until the match is sent to the server.</string>
+
+    <!--Episodes-->
+    <string name="episode_1">Paris - France</string>
+    <string name="episode_2">Bangalore - India</string>
+    <string name="episode_3">New York - United States</string>
+    <string name="episode_4">London - England</string>
+    <string name="episode_5">Milan - Italy</string>
+    <string name="episode_6">Beijing - China</string>
+
+    <!--Tutorial-->
+    <string name="click_title">Hola!</string>
+    <string name="click_subtitle">Click between points to occupy the line</string>
+    <string name="points_title">Points</string>
+    <string name="points_subtitle">Complete the cells to get points and extra chance!</string>
+    <string name="flip_title">Flip</string>
+    <string name="flip_subtitle">Are you losing? Just click this, you points and their points will be interchanged!</string>
+    <string name="plus_one_title">Extra Chance</string>
+    <string name="plus_one_subtitle">Want an extra chance? Click this before your turn and Voila! You\'ll get an extra chance!</string>
+    <string name="skip_title">Skip</string>
+    <string name="skip_subtitle">Don\'t wanna play a turn? Click this to skip!</string>
+
+    <!--Loading-->
+    <string name="loading1">Drilling the mines&#8230;</string>
+    <string name="loading2">Blasting the furnace&#8230;</string>
+    <string name="loading3">Buying some coke&#8230;</string>
+    <string name="loading4">Applying the flux&#8230;</string>
+    <string name="loading5">Filtering out the gangue&#8230;</string>
+    <string name="loading6">Roasting the ore&#8230;</string>
+    <string name="loading7">Oxidising the carbon&#8230;</string>
+    <string name="loading8">Reducing the ore&#8230;</string>
+    <string name="loading9">Removing the slag&#8230;</string>
+    <string name="loading10">Extracting the metal&#8230;</string>
+    <string name="loading11">Smelting the new batch&#8230;</string>
+
+    <string-array name="loading">
+        <item>@string/loading1</item>
+        <item>@string/loading2</item>
+        <item>@string/loading3</item>
+        <item>@string/loading4</item>
+        <item>@string/loading5</item>
+        <item>@string/loading6</item>
+        <item>@string/loading7</item>
+        <item>@string/loading8</item>
+        <item>@string/loading9</item>
+        <item>@string/loading10</item>
+        <item>@string/loading11</item>
+    </string-array>
+
+    <!--FCM-->
+    <plurals name="take_gold_coins">
+        <item quantity="one">You\'ve earned a Gold Coin</item>
+        <item quantity="other">You\'ve been awarded with %d Gold Coins</item>
+    </plurals>
+    <plurals name="take_gold_nuggets">
+        <item quantity="one">You\'ve earned a Gold Nugget</item>
+        <item quantity="other">You\'ve been awarded with %d Gold Nuggets</item>
+    </plurals>
+    <plurals name="take_gold_bars">
+        <item quantity="one">You\'ve earned a Gold Bar</item>
+        <item quantity="other">You\'ve been awarded with %d Gold Bars</item>
+    </plurals>
+    <plurals name="take_diamonds">
+        <item quantity="one">You\'ve earned a Diamond</item>
+        <item quantity="other">You\'ve been awarded with %d Diamonds</item>
+    </plurals>
+
+    <!--Tasks-->
+    <plurals name="get_points">
+        <item quantity="one">Score %d Point</item>
+        <item quantity="other">Score %d Points</item>
+    </plurals>
+    <plurals name="get_lines">
+        <item quantity="one">Score at least %d Horizontal or Vertical line</item>
+        <item quantity="other">Score at least %d Horizontal or Vertical lines</item>
+    </plurals>
+    <plurals name="get_horizontal_lines">
+        <item quantity="one">Score at least %d Horizontal line</item>
+        <item quantity="other">Score at least %d Horizontal lines</item>
+    </plurals>
+    <plurals name="get_vertical_lines">
+        <item quantity="one">Score at least %d Vertical line</item>
+        <item quantity="other">Score at least %d Vertical lines</item>
+    </plurals>
+    <plurals name="get_goodies">
+        <item quantity="one">Get at least %d Goodie</item>
+        <item quantity="other">Get at least %d Goodies</item>
+    </plurals>
+    <plurals name="get_diamonds">
+        <item quantity="one">Get %d Diamond</item>
+        <item quantity="other">Get %d Diamonds</item>
+    </plurals>
+    <plurals name="get_golds">
+        <item quantity="one">Get %d Gold Coin</item>
+        <item quantity="other">Get %d Gold Coins</item>
+    </plurals>
+    <plurals name="get_gold_nuggets">
+        <item quantity="one">Get %d Gold Nugget</item>
+        <item quantity="other">Get %d Gold Nuggets</item>
+    </plurals>
+    <plurals name="get_gold_bars">
+        <item quantity="one">Get %d Gold Bar</item>
+        <item quantity="other">Get %d Gold Bars</item>
+    </plurals>
+    <plurals name="get_dynamic_goodies">
+        <item quantity="one">Get %1$d Goodies with at least %2$d points</item>
+        <item quantity="other">Get %1$d Goodie with at least %2$d points</item>
+    </plurals>
+</resources>
