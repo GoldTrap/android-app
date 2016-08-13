@@ -20,6 +20,8 @@ import com.asb.goldtrap.fragments.pregame.TasksDisplayFragment;
 import com.asb.goldtrap.models.achievements.AchievementsModel;
 import com.asb.goldtrap.models.achievements.impl.QuickPlayAchievementsModel;
 import com.asb.goldtrap.models.eo.BoosterType;
+import com.asb.goldtrap.models.game.GameGenerator;
+import com.asb.goldtrap.models.game.impl.RandomGameGenerator;
 import com.asb.goldtrap.models.gameplay.GameTypes;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
 import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
@@ -69,6 +71,7 @@ public class QuickPlayActivity extends AppCompatActivity
     private AchievementsModel achievementsModel;
     private TutorialModel tutorialModel;
     private PlayerStats playerStats;
+    private GameGenerator gameGenerator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class QuickPlayActivity extends AppCompatActivity
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         achievementsModel = new QuickPlayAchievementsModel(getApplicationContext());
         tutorialModel = new TutorialModelImpl(getApplicationContext(), GameTypes.QUICK_PLAY);
+        gameGenerator = new RandomGameGenerator();
         setContentView(R.layout.activity_quick_play);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -145,10 +149,13 @@ public class QuickPlayActivity extends AppCompatActivity
     }
 
     private void startANewGame() {
+        String levelCode = gameGenerator.generateGame(getApplicationContext());
+        int resource = getResources().getIdentifier(levelCode, "raw", getPackageName());
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment_container,
-                        TasksDisplayFragment.newInstance(R.raw.level, ""),
+                        TasksDisplayFragment
+                                .newInstance(resource, levelCode),
                         TasksDisplayFragment.TAG)
                 .commit();
     }
