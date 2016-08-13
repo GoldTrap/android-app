@@ -22,7 +22,8 @@
             android:layout_marginBottom="4dp"
             android:layout_marginTop="8dp"
             android:text="@string/completed_tasks"
-            android:textColor="@color/accent"/>
+            android:textColor="@color/primary_text_dark"
+            android:textSize="20sp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/task_list"
