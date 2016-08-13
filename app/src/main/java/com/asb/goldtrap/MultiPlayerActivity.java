@@ -455,6 +455,9 @@ public class MultiPlayerActivity extends AppCompatActivity
             if (null != match.getData()) {
                 loadGame(match);
             }
+            else {
+                gameAndLevelSnapshot = null;
+            }
             if (null != gameAndLevelSnapshot) {
                 initMatchWithMyCopy(myParticipantId);
             }
