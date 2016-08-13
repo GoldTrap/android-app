@@ -2,7 +2,7 @@
 <resources>
     <string name="test_banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="test_interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="application_id">ca-app-pub-3256900861325505~5322626062</string>
+    <string name="application_id" translatable="false">ca-app-pub-3256900861325505~5322626062</string>
     <string name="wide_rect" translatable="false">ca-app-pub-3256900861325505/7783238068</string>
     <string name="square" translatable="false">ca-app-pub-3256900861325505/9142220061</string>
 </resources>

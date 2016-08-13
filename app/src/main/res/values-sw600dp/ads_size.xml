@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ads_rect">480x80</string>
-    <string name="ads_rect_wide">540x80</string>
-    <string name="ads_square">460x360</string>
+    <string name="ads_rect" translatable="false">480x80</string>
+    <string name="ads_rect_wide" translatable="false">540x80</string>
+    <string name="ads_square" translatable="false">460x360</string>
 </resources>
