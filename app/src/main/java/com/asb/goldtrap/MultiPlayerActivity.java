@@ -23,6 +23,8 @@ import com.asb.goldtrap.models.achievements.impl.MultiplayerAchievementsModel;
 import com.asb.goldtrap.models.eo.BoosterType;
 import com.asb.goldtrap.models.eo.Level;
 import com.asb.goldtrap.models.factory.GameSnapshotCreator;
+import com.asb.goldtrap.models.game.GameGenerator;
+import com.asb.goldtrap.models.game.impl.RandomGameGenerator;
 import com.asb.goldtrap.models.gameplay.GameTypes;
 import com.asb.goldtrap.models.leaderboards.LeaderboardsModel;
 import com.asb.goldtrap.models.leaderboards.impl.LeaderboardsModelImpl;
@@ -121,6 +123,7 @@ public class MultiPlayerActivity extends AppCompatActivity
     private AchievementsModel achievementsModel;
     private PlayerStats playerStats;
     private TutorialModel tutorialModel;
+    private GameGenerator gameGenerator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +143,7 @@ public class MultiPlayerActivity extends AppCompatActivity
         leaderboardsModel = new LeaderboardsModelImpl(getApplicationContext());
         achievementsModel = new MultiplayerAchievementsModel(getApplicationContext());
         tutorialModel = new TutorialModelImpl(getApplicationContext(), GameTypes.MULTI_PLAYER);
+        gameGenerator = new RandomGameGenerator();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -446,7 +450,6 @@ public class MultiPlayerActivity extends AppCompatActivity
     public void startMatch(TurnBasedMatch match) {
         if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
             tbm = match;
-            Level level = getMyLevel(R.raw.another_level);
             String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
             String myParticipantId = tbm.getParticipantId(playerId);
             if (null != match.getData()) {
@@ -456,6 +459,9 @@ public class MultiPlayerActivity extends AppCompatActivity
                 initMatchWithMyCopy(myParticipantId);
             }
             else {
+                String levelCode = gameGenerator.generateGame(getApplicationContext());
+                int resource = getResources().getIdentifier(levelCode, "raw", getPackageName());
+                Level level = getMyLevel(resource);
                 initializeMatch(level, myParticipantId);
             }
             takeTurn(gameAndLevelSnapshot, myParticipantId, true);
